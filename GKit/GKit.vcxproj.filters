@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{e20f2114-4da1-4675-897d-08f256d79cc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="inc">
+      <UniqueIdentifier>{2496b5fb-20f4-4242-ba15-1c559f551d7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{aa50367b-3799-4151-af40-5cca3c0eeee3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="inc\gk">
+      <UniqueIdentifier>{2200d8b7-15c9-4b13-8d84-3efa5ac1d605}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\gk\camera_2d.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\camera_3d.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\clock.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\context.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\data_types.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\dynamic_mesh.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\dynamic_mesh_renderer.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\file.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\frame_renderer.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\framebuffer.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\graphics.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\matrix.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\mdl_format.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\mesh.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\mesh_data.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\mesh_util.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\node.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\particle.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\particle_array.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\particle_renderer_3d.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\quad.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\random.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\shader.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\skybox.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\skybox_renderer.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\sprite.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\sprite_renderer.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\static_mesh.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\static_mesh_renderer.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\sun.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\texture.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\tga_image.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\transform_2d.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\transform_3d.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\vertex_array.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\vertex_buffer.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\view.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\assert.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\blur_shader.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\bone.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\config.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\gaussian_blur.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\gaussian_blur.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\particle.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\particle.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\skybox_renderer.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\skybox_renderer.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\sprite_renderer.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\sprite_renderer.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\static_mesh_renderer.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\static_mesh_renderer.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\dynamic_mesh_renderer.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\dynamic_mesh_renderer.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\frame_renderer.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\frame_renderer.vert">
+      <Filter>shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\static_mesh.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\static_mesh_renderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sun.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\texture.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tga_image.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\transform_2d.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\transform_3d.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vertex_array.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vertex_buffer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\view.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\blur_shader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bone.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\camera_2d.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\camera_3d.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\clock.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\context.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dynamic_mesh.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dynamic_mesh_renderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\file.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\frame_renderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\framebuffer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\matrix.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mesh.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mesh_data.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mesh_util.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\node.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particle_array.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particle_renderer_3d.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\quad.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\random.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skybox.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skybox_renderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite_renderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
