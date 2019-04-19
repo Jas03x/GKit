@@ -65,6 +65,7 @@ void ParticleRenderer3D::Render(const ParticleArray& particle_array)
 
 	particle_array.Bind();
 	particle_array.GetTexture()->Bind(Instance->m_SpriteTexture, 0);
+
 	context->LoadConstantArray2F(Instance->m_SpriteSize, 1, &particle_array.GetSpriteSize()[0]);
 	context->LoadConstantMatrix4F(Instance->m_Matrix, 1, false, &matrix[0][0]);
 	context->DrawArray(GFX_POINTS, 0, particle_array.GetParticleCount());

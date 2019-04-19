@@ -1,43 +1,52 @@
 #include <gk/clock.hpp>
 
-/*
-Clock::Clock()
+#include <gk/context.hpp>
+
+uint32_t Clock::GetTime()
 {
-    m_Previous = 0;
-    m_Current = 0;
+	return Context::GetTime();
 }
 
-void Clock::Update()
+Timer::Timer(uint32_t period)
 {
-    m_Previous = m_Current;
-    m_Current = SDL_GetTicks();
-}
-
-uint32_t Clock::Delta()
-{
-    return (m_Current - m_Previous);
-}
-
-Timer::Timer(uint32_t period) : Clock()
-{
-    m_Period = period;
+	uint32_t time = Clock::GetTime();
+	
+	m_Previous = time;
+	m_Current  = time;
+	m_Period   = period;
 }
 
 bool Timer::Tick()
 {
-    m_Current = SDL_GetTicks();
+	bool ret = false;
+	m_Current = Clock::GetTime();
 
-    if((m_Current - m_Previous) >= m_Period)
-    {
-        m_Previous = m_Current;
-        return true;
-    }
+	if (m_Current - m_Previous > m_Period)
+	{
+		m_Previous = m_Current;
+		ret = true;
+	}
 
-    return false;
+	return ret;
 }
 
-float Timer::Delta()
+float Timer::GetDelta()
 {
-    return (static_cast<float>(Clock::Delta()) / static_cast<float>(m_Period));
+	float n = static_cast<float>(m_Current - m_Previous);
+	float d = static_cast<float>(m_Period);
+	
+	return n / d;
 }
-*/
+
+CallbackTimer::CallbackTimer(uint32_t period, void(*callback)()) : Timer(period)
+{
+	m_Callback = callback;
+}
+
+void CallbackTimer::Tick()
+{
+	if (Timer::Tick())
+	{
+		m_Callback();
+	}
+}

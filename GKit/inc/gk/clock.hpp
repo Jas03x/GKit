@@ -1,33 +1,37 @@
 #ifndef GK_CLOCK_H
 #define GK_CLOCK_H
 
-/*
-#include <SDL2/SDL.h>
+#include <stdint.h>
 
 class Clock
 {
-protected:
-    uint32_t m_Previous;
-    uint32_t m_Current;
-
 public:
-    Clock();
-
-    void Update();
-    uint32_t Delta();
+	static uint32_t GetTime();
 };
 
-class Timer : protected Clock
+class Timer
 {
-protected:
-    uint32_t m_Period;
+private:
+	uint32_t m_Previous;
+	uint32_t m_Current;
+	uint32_t m_Period;
 
 public:
-    Timer(uint32_t period = 0);
+	Timer(uint32_t period);
 
-    bool Tick();
-    float Delta();
+	bool  Tick();
+	float GetDelta();
 };
-*/
+
+class CallbackTimer : protected Timer
+{
+private:
+	void (*m_Callback)();
+
+public:
+	CallbackTimer(uint32_t period, void (*callback)());
+
+	void Tick();
+};
 
 #endif // GK_CLOCK_H

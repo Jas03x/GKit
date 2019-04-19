@@ -115,6 +115,9 @@
     <ClCompile Include="src\vertex_buffer.cpp" />
     <ClCompile Include="src\view.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Todo.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{80E4C6C2-FFC7-403A-88E9-7C2DCBEB377F}</ProjectGuid>
@@ -203,7 +206,7 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_AMD64_</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Jas\Documents\Projects\GKit\GKit\inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Jas\Documents\Projects\GKit\GKit\inc;C:\Users\Jas\Documents\Libraries\SDL\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -241,7 +244,7 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_AMD64_</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Jas\Documents\Projects\GKit\GKit\inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Jas\Documents\Projects\GKit\GKit\inc;C:\Users\Jas\Documents\Libraries\SDL\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

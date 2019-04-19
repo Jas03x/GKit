@@ -1,334 +1,155 @@
-#include <windows.h>
-
 #include <gk/context.hpp>
 
+#include <assert.h>
 #include <stdio.h>
+#include <string.h>
 
-#include <string>
-
-#include <gk/assert.hpp>
+#include <gk/context.hpp>
 #include <gk/graphics.hpp>
 
-struct CTX_PRIVATE_DATA
+#define SDL_MAIN_HANDLED
+#include <SDL2/SDL.h>
+
+class ContextImpl
 {
-	HMODULE hProcess;
-	HWND	hWindow;
-	HDC		hDeviceCtx;
-	HGLRC	hRenderCtx;
+private:
+	SDL_Window*   m_Window;
+	SDL_GLContext m_Context;
 
-	unsigned int width;
-	unsigned int height;
+	uint16_t      m_KeyMap[SDL_NUM_SCANCODES];
 
-	bool is_running;
+public:
+	ContextImpl(const char* title, unsigned int width, unsigned int height);
+	~ContextImpl();
 
-	byte key_map[Context::KEYBOARD_LENGTH]; // Windows key codes: https://docs.microsoft.com/en-us/windows/desktop/inputdev/virtual-key-codes
-	byte keyboard[Context::KEYBOARD_LENGTH];
+	void Update();
+	bool PollEvent(Event& e);
 };
 
-Context* Instance = nullptr;
-
-const char GK_WIN_CLS[] = "GK_GL_CTX";
-const wchar_t W_GK_WIN_CLS[] = L"GK_GL_CTX";
-
-// callback function to process events
-LRESULT WinProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
-void InitializeKeyboard(byte* key_map)
-{
-	memset(key_map, 0, Context::KEYBOARD_LENGTH);
-
-	key_map['Q']       = Context::KEY_Q;
-	key_map['W']       = Context::KEY_W;
-	key_map['E']       = Context::KEY_E;
-	key_map['A']       = Context::KEY_A;
-	key_map['S']       = Context::KEY_S;
-	key_map['D']	   = Context::KEY_D;
-	key_map[VK_UP]	   = Context::KEY_UP;
-	key_map[VK_DOWN]   = Context::KEY_DOWN;
-	key_map[VK_LEFT]   = Context::KEY_LEFT;
-	key_map[VK_RIGHT]  = Context::KEY_RIGHT;
-	key_map[VK_SPACE]  = Context::KEY_SPACE;
-	key_map[VK_ESCAPE] = Context::KEY_ESCAPE;
+void SDL_ERROR(const char* msg) {
+	printf("%s:\n%s\n", msg, SDL_GetError());
 }
 
-bool Context::CreateInstance(unsigned int x, unsigned int y, unsigned int width, unsigned int height, const char* title)
+#define SDL_ASSERT(b, e) if(!(b)) { SDL_ERROR(e); throw -1; }
+
+ContextImpl::ContextImpl(const char* title, unsigned int width, unsigned int height)
 {
-	if (Instance == nullptr)
-	{
-		Instance = new Context();
-		
-		RenderingContext* rCtx = nullptr;
+	SDL_ASSERT(SDL_Init(SDL_INIT_EVERYTHING) >= 0, "SDL initialization failure");
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-		CTX_PRIVATE_DATA* pData = new CTX_PRIVATE_DATA();
-		Instance->DATA = pData;
+	m_Window = SDL_CreateWindow(
+		title,
+		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+		width, height,
+		SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
+	);
+	SDL_ASSERT(m_Window != NULL, "SDL window creation failure");
 
-		pData->hProcess = GetModuleHandle(nullptr);
-		pData->hWindow = nullptr;
-		pData->hDeviceCtx = nullptr;
-		pData->hRenderCtx = nullptr;
+	m_Context = SDL_GL_CreateContext(m_Window);
+	SDL_ASSERT(m_Context != NULL, "SDL OpenGL context creation failure");
 
-		//wchar_t _title[64] = { 0 };									// wide char title buffer
-		unsigned int pixel_format = 0;								// pixel format
-		unsigned int win_style = WS_CLIPSIBLINGS | WS_CLIPCHILDREN; // window style
-		unsigned int ext_style = 0;									// window extended style
-
-		WNDCLASS wClass;
-		PIXELFORMATDESCRIPTOR descriptor = { 0 };
-
-		wClass.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
-		wClass.lpfnWndProc = (WNDPROC)WinProc;
-		wClass.cbClsExtra = 0;
-		wClass.cbWndExtra = 0;
-		wClass.hInstance = pData->hProcess;
-		wClass.hIcon = LoadIcon(nullptr, IDI_WINLOGO);
-		wClass.hCursor = LoadCursor(nullptr, IDC_ARROW);
-		wClass.hbrBackground = nullptr;
-		wClass.lpszMenuName = nullptr;
-		wClass.lpszClassName = GK_WIN_CLS;
-
-		if (!RegisterClass(&wClass))
-		{
-			printf("Error: Failed to register class\n");
-			goto FAILURE;
-		}
-
-		//swprintf(_title, 63, L"%s", title);
-
-		pData->hWindow = CreateWindowEx(ext_style, GK_WIN_CLS, title,
-			win_style, x, y, width, height,
-			nullptr, nullptr, pData->hProcess, nullptr
-		);
-
-		if (pData->hWindow == nullptr)
-		{
-			printf("Error: Failed to create window\n");
-			goto FAILURE;
-		}
-
-		pData->hDeviceCtx = GetDC(pData->hWindow);
-		if (pData->hDeviceCtx == nullptr)
-		{
-			printf("Error: Failed to get create Win32 drawing context\n");
-			goto FAILURE;
-		}
-
-		descriptor.nSize = sizeof(PIXELFORMATDESCRIPTOR);
-		descriptor.nVersion = 1;
-		descriptor.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
-		descriptor.iPixelType = PFD_TYPE_RGBA;
-		descriptor.cColorBits = 32;
-		descriptor.cRedBits = 0;
-		descriptor.cRedShift = 0;
-		descriptor.cGreenBits = 0;
-		descriptor.cGreenShift = 0;
-		descriptor.cBlueBits = 0;
-		descriptor.cBlueShift = 0;
-		descriptor.cAlphaBits = 0;
-		descriptor.cAlphaShift = 0;
-		descriptor.cAccumBits = 0;
-		descriptor.cAccumRedBits = 0;
-		descriptor.cAccumGreenBits = 0;
-		descriptor.cAccumBlueBits = 0;
-		descriptor.cAccumAlphaBits = 0;
-		descriptor.cDepthBits = 24;
-		descriptor.cStencilBits = 8;
-		descriptor.cAuxBuffers = 0;
-		descriptor.iLayerType = PFD_MAIN_PLANE;
-		descriptor.bReserved = 0;
-		descriptor.dwLayerMask = 0;
-		descriptor.dwVisibleMask = 0;
-		descriptor.dwDamageMask = 0;
-
-		pixel_format = ChoosePixelFormat(pData->hDeviceCtx, &descriptor);
-		if (pixel_format == 0)
-		{
-			printf("Error: Could not find appropriate pixel format\n");
-			goto FAILURE;
-		}
-
-		if (!SetPixelFormat(pData->hDeviceCtx, pixel_format, &descriptor))
-		{
-			printf("Error: Could not set the pixel format\n");
-			goto FAILURE;
-		}
-
-		pData->hRenderCtx = wglCreateContext(pData->hDeviceCtx);
-		if (pData->hRenderCtx == nullptr)
-		{
-			printf("Error: Could not create rendering context\n");
-			goto FAILURE;
-		}
-
-		if (wglMakeCurrent(pData->hDeviceCtx, pData->hRenderCtx) != TRUE)
-		{
-			printf("Error: Could not bind render context\n");
-			goto FAILURE;
-		}
-
-		if (!RenderingContext::CreateInstance()) {
-			goto FAILURE;
-		}
-		rCtx = RenderingContext::GetInstance();
-
-		InitializeKeyboard(pData->key_map);
-
-		ShowWindow(pData->hWindow, SW_SHOW);
-		SetForegroundWindow(pData->hWindow);
-		SetFocus(pData->hWindow);
-
-		pData->is_running = true;
-		rCtx->SetViewport(0, 0, pData->width, pData->height);
-
-		return true;
-
-		FAILURE:
-		{
-			RenderingContext::DeleteInstance();
-			DeleteInstance();
-			return false;
-		}
-	}
-	else
-	{
-		printf("Error: Context already exists\n");
-		return false;
-	}
+	memset(m_KeyMap, 0, sizeof(m_KeyMap));
+	m_KeyMap[SDL_SCANCODE_UP]     = INPUT::KEY_UP;
+	m_KeyMap[SDL_SCANCODE_DOWN]   = INPUT::KEY_DOWN;
+	m_KeyMap[SDL_SCANCODE_LEFT]   = INPUT::KEY_LEFT;
+	m_KeyMap[SDL_SCANCODE_RIGHT]  = INPUT::KEY_RIGHT;
+	m_KeyMap[SDL_SCANCODE_W]	  = INPUT::KEY_W;
+	m_KeyMap[SDL_SCANCODE_A]	  = INPUT::KEY_A;
+	m_KeyMap[SDL_SCANCODE_S]	  = INPUT::KEY_S;
+	m_KeyMap[SDL_SCANCODE_D]	  = INPUT::KEY_D;
+	m_KeyMap[SDL_SCANCODE_Q]	  = INPUT::KEY_Q;
+	m_KeyMap[SDL_SCANCODE_E]	  = INPUT::KEY_E;
+	m_KeyMap[SDL_SCANCODE_RETURN] = INPUT::KEY_RETURN;
+	m_KeyMap[SDL_SCANCODE_ESCAPE] = INPUT::KEY_ESCAPE;
 }
 
-bool Context::DeleteInstance()
+ContextImpl::~ContextImpl()
 {
-	if (Instance != nullptr)
-	{
-		CTX_PRIVATE_DATA* pData = reinterpret_cast<CTX_PRIVATE_DATA*>(Instance->DATA);
-
-		if (pData->hRenderCtx != nullptr)
-		{
-			wglMakeCurrent(nullptr, nullptr);
-			wglDeleteContext(pData->hRenderCtx);
-		}
-
-		if (pData->hDeviceCtx != nullptr)
-		{
-			ReleaseDC(pData->hWindow, pData->hDeviceCtx);
-		}
-
-		if (pData->hWindow != nullptr)
-		{
-			DestroyWindow(pData->hWindow);
-		}
-
-		UnregisterClass(GK_WIN_CLS, pData->hProcess);
-
-		delete Instance->DATA;
-		delete Instance;
-		Instance = nullptr;
-
-		return true;
-	}
-	else
-	{
-		printf("Error: Context is not allocated\n");
-		return false;
-	}
-}
-
-Context* Context::GetInstance()
-{
-	GK_ASSERT(Instance != nullptr, ("Error: Context does not exist\n"));
-	return Instance;
-}
-
-void* Context::GetPrivateData()
-{
-	GK_ASSERT(Instance != nullptr, ("Error: Context does not exist\n"));
-	return Instance->DATA;
-}
-
-byte* Context::GetKeyboard()
-{
-	GK_ASSERT(Instance != nullptr, ("Error: Context does not exist\n"));
-	return reinterpret_cast<CTX_PRIVATE_DATA*>(Instance->DATA)->keyboard;
-}
-
-bool Context::Running()
-{
-	GK_ASSERT(Instance != nullptr, ("Error: Context does not exist\n"));
-	return reinterpret_cast<CTX_PRIVATE_DATA*>(Instance->DATA)->is_running;
-}
-
-LRESULT WinProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam)
-{
-	CTX_PRIVATE_DATA* pData = reinterpret_cast<CTX_PRIVATE_DATA*>(Instance->GetPrivateData());
-
-	switch (uMsg)
-	{
-		case WM_SIZE:
-		{
-			pData->width  = LOWORD(lParam);
-			pData->height = HIWORD(lParam);
-			break;
-		}
-		default:
-		{
-			return DefWindowProc(hWindow, uMsg, wParam, lParam);
-		}
-	};
-
-	return 0;
-}
-
-void Context::ProcessEvents()
-{
-	GK_ASSERT(Instance != nullptr, ("Error: Context does not exist\n"));
-
-	MSG msg;
-	CTX_PRIVATE_DATA* pData = reinterpret_cast<CTX_PRIVATE_DATA*>(Instance->GetPrivateData());
-	RenderingContext* rCtx = RenderingContext::GetInstance();
-
-	while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-	{
-		switch (msg.message)
-		{
-			case WM_SIZE:
-			{
-				pData->width  = LOWORD(msg.lParam);
-				pData->height = HIWORD(msg.lParam);
-				rCtx->SetViewport(0, 0, pData->width, pData->height);
-			}
-			case WM_QUIT:
-			case WM_CLOSE:
-			{
-				pData->is_running = false;
-				break;
-			}
-			case WM_KEYDOWN:
-			{
-				printf("Key down: %u => %hu\n", (unsigned int) msg.wParam, pData->key_map[msg.wParam]);
-				pData->keyboard[pData->key_map[msg.wParam]] = true;
-				break;
-			}
-			case WM_KEYUP:
-			{
-				printf("Key release: %u => %hu\n", (unsigned int)msg.wParam, pData->key_map[msg.wParam]);
-
-				pData->keyboard[pData->key_map[msg.wParam]] = false;
-				break;
-			}
-			default:
-			{
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
-			}
-		}
+	if (m_Context != nullptr) {
+		SDL_GL_DeleteContext(m_Context);
 	}
 
-	return;
+	if (m_Window != nullptr) {
+		SDL_DestroyWindow(m_Window);
+	}
+
+	SDL_Quit();
+}
+
+void ContextImpl::Update()
+{
+	SDL_GL_SwapWindow(m_Window);
+}
+
+bool ContextImpl::PollEvent(Event& e)
+{
+	SDL_Event event;
+
+	while (SDL_PollEvent(&event) != 0)
+	{
+		switch (event.type)
+		{
+			case SDL_QUIT:
+			{
+				e.Type = EVENT_TYPE::QUIT;
+
+				return true;
+			}
+			case SDL_KEYUP:
+			case SDL_KEYDOWN:
+			{
+				e.KeyArgs.Key = m_KeyMap[event.key.keysym.scancode];
+				e.Type = EVENT_TYPE::KEY_INPUT;
+				e.KeyArgs.Action = (event.type == SDL_KEYDOWN) ? INPUT::KEY_PRESSED : INPUT::KEY_RELEASED;
+
+				return true;
+			}
+			default: break;
+		}
+	}
+	
+	return false;
+}
+
+static ContextImpl* g_ContextImpl = nullptr;
+
+bool Context::CreateInstance(const char* title, unsigned int width, unsigned int height)
+{
+	assert(g_ContextImpl == nullptr);
+
+	g_ContextImpl = new ContextImpl(title, width, height);
+
+	return (g_ContextImpl != nullptr);
+}
+
+void Context::DeleteInstance()
+{
+	assert(g_ContextImpl != nullptr);
+
+	if (g_ContextImpl != nullptr)
+	{
+		delete g_ContextImpl;
+		g_ContextImpl = nullptr;
+	}
 }
 
 void Context::Update()
 {
-	GK_ASSERT(Instance != nullptr, ("Error: Context does not exist\n"));
+	assert(g_ContextImpl != nullptr);
 
-	CTX_PRIVATE_DATA* pData = reinterpret_cast<CTX_PRIVATE_DATA*>(Instance->DATA);
-	SwapBuffers(pData->hDeviceCtx);
+	g_ContextImpl->Update();
+}
+
+bool Context::PollEvent(Event& e)
+{
+	assert(g_ContextImpl != nullptr);
+
+	return g_ContextImpl->PollEvent(e);
+}
+
+uint32_t Context::GetTime()
+{
+	return SDL_GetTicks();
 }

@@ -657,7 +657,20 @@ Matrix4F Matrix::Transpose(const Matrix4F& m)
 // ------------------------------ Quaternion -----------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------
 
-// See Wikipedia
+/*
+
+Quaternion basics: https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation
+
+- Background: https://en.wikipedia.org/wiki/Complex_number#Matrix_representation_of_complex_numbers
+	- The basic idea behind quaternions is that complex numbers can be represented as rotation matrices
+
+- A quaternion has 4 elements (x, y, z, w) and is written as xi + yj + zk + w where i, j, and k are imaginary components
+- x, y, and z represent the axis of rotation and w is the rotation
+- The hamiltonian product is used to multiply and combine quaternions
+
+- Turning quaternions into matrices: https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Using_quaternion_as_rotations (and subsection "quaternion derived rotation matrix")
+
+*/
 
 Quaternion::Quaternion() : Vector4F(0, 0, 0, 1) {}
 Quaternion::Quaternion(const Vector3F& v) : Quaternion(v.x, v.y, v.z) {}
@@ -670,6 +683,8 @@ Quaternion::Quaternion(float _x, float _y, float _z, float _w)
     w = _w;
     normalize();
 }
+
+// https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles#Source_Code
 Quaternion::Quaternion(float pitch, float yaw, float roll)
 {
     const float hp = pitch * 0.5f;
@@ -689,6 +704,7 @@ Quaternion::Quaternion(float pitch, float yaw, float roll)
     normalize();
 }
 
+// https://en.wikipedia.org/wiki/Quaternion#Hamilton_product
 Quaternion Quaternion::operator * (const Quaternion& other) const
 {
     const Quaternion& a = *this;
@@ -704,6 +720,7 @@ Quaternion Quaternion::operator * (const Quaternion& other) const
     return q;
 }
 
+// https://en.wikipedia.org/wiki/Quaternion#Hamilton_product
 Quaternion Quaternion::operator *= (const Quaternion& other)
 {
     const Quaternion a(*this);
@@ -757,8 +774,11 @@ void Quaternion::normalize()
     }
 }
 
+// https://en.wikipedia.org/wiki/Rotation_matrix#Quaternion
 Matrix4F Quaternion::matrix() const
 {
+	// since our quaternion is normalized, n = 1 => s = 2 / n = 2 / 1 = 2
+	
     const float xx = 2 * x * x;
     const float xy = 2 * x * y;
     const float xz = 2 * x * z;
