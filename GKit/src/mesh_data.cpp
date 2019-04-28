@@ -80,15 +80,14 @@ unsigned int MeshData::ReadNodes(const byte* data)
 		MeshData::Node& n = Nodes.back();
 		n.name   = std::string(node->name.string);
 		n.parent = std::string(node->parent.string);
-		memcpy(n.position.data, node->translation.values, sizeof(Vector3F));
-		memcpy(n.rotation.data, node->rotation.values,    sizeof(Vector4F));
-		memcpy(n.scale.data,    node->scale.values,       sizeof(Vector3F));
+		memcpy(n.offset_matrix.data, node->offset_matrix.values, sizeof(float) * 16);
 
-		DEBUG_PRINT("Node %s: (%s, (%f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f))\n",
+		DEBUG_PRINT("Node %s => %s\n[%f, %f, %f, %f]\n\t[%f, %f, %f, %f]\n\t[%f, %f, %f, %f]\n\t[%f, %f, %f, %f]\n",
 			n.name.c_str(), n.parent.c_str(),
-			n.position.x, n.position.y, n.position.z,
-			n.rotation.x, n.rotation.y, n.rotation.z, n.rotation.w,
-			n.scale.x,    n.scale.y,    n.scale.z
+			n.offset_matrix[0][0], n.offset_matrix[0][1], n.offset_matrix[0][2], n.offset_matrix[0][3],
+			n.offset_matrix[1][0], n.offset_matrix[1][1], n.offset_matrix[1][2], n.offset_matrix[1][3],
+			n.offset_matrix[2][0], n.offset_matrix[2][1], n.offset_matrix[2][2], n.offset_matrix[2][3],
+			n.offset_matrix[3][0], n.offset_matrix[3][1], n.offset_matrix[3][2], n.offset_matrix[3][3]
 		);
 	}
 
@@ -112,14 +111,14 @@ unsigned int MeshData::ReadBones(const byte* data)
 
 		MeshData::Bone& b = Bones.back();
 		b.name = std::string(bone->name.string);
-		memcpy(b.matrix.data, bone->offset_matrix.values, sizeof(Matrix4F));
+		memcpy(b.offset_matrix.data, bone->offset_matrix.values, sizeof(Matrix4F));
 
 		DEBUG_PRINT("Bone %s:\n", b.name.c_str());
 		DEBUG_PRINT("Matrix:\n{ %f, %f, %f, %f }\n{ %f, %f, %f, %f }\n{ %f, %f, %f, %f }\n{ %f, %f, %f, %f }\n",
-			b.matrix[0][0], b.matrix[0][1], b.matrix[0][2], b.matrix[0][3],
-			b.matrix[1][0], b.matrix[1][1], b.matrix[1][2], b.matrix[1][3],
-			b.matrix[2][0], b.matrix[2][1], b.matrix[2][2], b.matrix[2][3],
-			b.matrix[3][0], b.matrix[3][1], b.matrix[3][2], b.matrix[3][3]
+			b.offset_matrix[0][0], b.offset_matrix[0][1], b.offset_matrix[0][2], b.offset_matrix[0][3],
+			b.offset_matrix[1][0], b.offset_matrix[1][1], b.offset_matrix[1][2], b.offset_matrix[1][3],
+			b.offset_matrix[2][0], b.offset_matrix[2][1], b.offset_matrix[2][2], b.offset_matrix[2][3],
+			b.offset_matrix[3][0], b.offset_matrix[3][1], b.offset_matrix[3][2], b.offset_matrix[3][3]
 		);
 		
 		if(bone->animation.num_frames > 0)
@@ -267,4 +266,3 @@ MeshData::~MeshData()
 {
 
 }
-

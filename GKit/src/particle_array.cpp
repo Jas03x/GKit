@@ -64,9 +64,11 @@ unsigned int ParticleArray::GetParticleLimit() const {
     return m_ParticleLimit;
 }
 
-void ParticleArray::UpdateBuffer()
+void ParticleArray::UpdateBuffer(unsigned int particle_count)
 {
     RenderingContext* context = RenderingContext::GetInstance();
+
+	m_ParticleCount = particle_count;
 
     context->BindAllocation(GFX_ARRAY_BUFFER, m_VBO);
     context->CreateBuffer(GFX_ARRAY_BUFFER,    sizeof(Particle) * m_ParticleLimit, NULL, GFX_DYNAMIC_DRAW);

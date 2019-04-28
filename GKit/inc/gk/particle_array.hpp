@@ -19,12 +19,12 @@ private:
     Vector2F m_SpriteSize;
 
     unsigned int m_ParticleLimit; // maximum number of particles
+	unsigned int m_ParticleCount; // number of particles in the buffer
 
 protected:
     Particle* m_Particles;
-    unsigned int m_ParticleCount; // number of particles in the buffer
 
-    void UpdateBuffer();
+    void UpdateBuffer(unsigned int particle_count);
 
 public:
     typedef enum

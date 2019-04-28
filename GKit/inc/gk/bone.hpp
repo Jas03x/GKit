@@ -9,9 +9,9 @@
 class Bone
 {
 private:
-    std::string m_Name;
+	const Node* m_Node;
 
-    const Node* m_Node;
+    std::string m_Name;
     Matrix4F    m_OffsetMatrix;
 
 public:

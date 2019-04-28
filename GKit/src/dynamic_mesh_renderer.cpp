@@ -86,14 +86,17 @@ void DynamicMeshRenderer::Render(const DynamicMesh& mesh)
 	for (unsigned int i = 0; i < mesh.Bones.size(); i++)
 	{
         const Bone& bone = mesh.Bones[i];
+		//vertex_matrices[i] = Matrix4F(1.0f);
 		vertex_matrices[i] = inverse * bone.GetNode()->GetGlobalMatrix() * bone.GetOffsetMatrix();
+		//vertex_matrices[i] = bone.GetNode()->GetGlobalMatrix();
+		//vertex_matrices[i] = inverse * bone.GetOffsetMatrix();
 		normal_matrices[i] = Matrix::Inverse(Matrix::Transpose(vertex_matrices[i]));
 	}
 
 	context->LoadConstantMatrix4F(Instance->m_VertexMatricies, mesh.Bones.size(), GFX_FALSE, &vertex_matrices[0][0][0]);
     context->LoadConstantMatrix4F(Instance->m_NormalMatricies, mesh.Bones.size(), GFX_FALSE, &normal_matrices[0][0][0]);
 
-	Matrix4F mvp = Camera3D::GetInstance()->GetProjectionMatrix() * v_matrix * mesh.RootNode.GetLocalMatrix();
+	Matrix4F mvp = Camera3D::GetInstance()->GetProjectionMatrix() * v_matrix;// *mesh.RootNode.GetLocalMatrix();
 	context->LoadConstantMatrix4F(Instance->m_ProjectionMatrix, 1, GFX_FALSE, &mvp[0][0]);
 
 	Vector3F sun_position = (v_matrix * Vector4F(Sun::Position, 1.0f)).xyz;

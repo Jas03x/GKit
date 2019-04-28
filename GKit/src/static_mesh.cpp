@@ -8,13 +8,13 @@
 
 StaticMesh::StaticMesh() :
     Mesh(),
-    RootNode("Root", Vector3F(0.0f), Quaternion(Vector3F(0.0f)), Vector3F(1.0f))
+    RootNode("Root")
 {
     m_DiffuseTexture = nullptr;
 }
 
 StaticMesh::StaticMesh(const MeshData& data, const std::string& texture_directory) :
-	RootNode("Root", Vector3F(0.0f), Quaternion(Vector3F(0.0f)), Vector3F(1.0f))
+	RootNode("Root")
 {
 	GK_ASSERT(data.Nodes.size() <= NODE_LIMIT, ("Error: Model exceeds node limit!\n"));
 	GK_ASSERT(data.Textures.size() != 0, ("Error: Model has zero textures!\n"));
@@ -26,7 +26,7 @@ StaticMesh::StaticMesh(const MeshData& data, const std::string& texture_director
 	for (unsigned int i = 0; i < data.Nodes.size(); i++)
 	{
 		const MeshData::Node& node = data.Nodes[i];
-		Nodes.push_back(Node(node.name, node.position, Quaternion(node.rotation), node.scale));
+		Nodes.push_back(Node(node.name, node.offset_matrix));
 		node_map[node.name] = i;
 	}
 

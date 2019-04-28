@@ -53,9 +53,7 @@ struct MDL_Node
     MDL_String   name;
     MDL_String   parent;
 
-    MDL_Vector3F translation;
-    MDL_Vector4F rotation;
-    MDL_Vector3F scale;
+	MDL_Matrix4F offset_matrix;
 };
 
 struct MDL_Frame

@@ -10,9 +10,6 @@ private:
 	GFX_HANDLE m_Handle;
 
 protected:
-	int GetAttributeLocation(const char* name);
-	int GetUniformLocation(const char* name);
-
 	void Load(const char* vsrc, const char* fsrc, void(*pfn_bind)(GFX_HANDLE));
 
 public:
@@ -21,6 +18,8 @@ public:
 	~Shader();
 
 	void Bind() const;
+	int GetAttributeLocation(const char* name);
+	int GetUniformLocation(const char* name);
 };
 
 #endif // GK_SHADER_H

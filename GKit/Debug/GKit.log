@@ -1,0 +1,83 @@
+﻿  blur_shader.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\blur_shader.cpp(93): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  bone.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\bone.cpp(29): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  camera_2d.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\camera_2d.cpp(49): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  camera_3d.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\camera_3d.cpp(40): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  clock.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\clock.cpp(53): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  context.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\context.cpp(156): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  dynamic_mesh.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\dynamic_mesh.cpp(160): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  dynamic_mesh_renderer.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\dynamic_mesh_renderer.cpp(111): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  file.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\file.cpp(64): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  framebuffer.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\framebuffer.cpp(156): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  frame_renderer.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\frame_renderer.cpp(69): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  graphics.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\graphics.cpp(52): warning C4005: 'GetFunctionAddress': macro redefinition
+  c:\users\jas\documents\projects\gkit\gkit\src\graphics.cpp(44): note: see previous definition of 'GetFunctionAddress'
+c:\users\jas\documents\projects\gkit\gkit\src\graphics.cpp(205): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  matrix.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\matrix.cpp(305): warning C4005: '_DOT': macro redefinition
+  c:\users\jas\documents\projects\gkit\gkit\src\matrix.cpp(197): note: see previous definition of '_DOT'
+c:\users\jas\documents\projects\gkit\gkit\src\matrix.cpp(445): warning C4005: '_DOT': macro redefinition
+  c:\users\jas\documents\projects\gkit\gkit\src\matrix.cpp(305): note: see previous definition of '_DOT'
+c:\users\jas\documents\projects\gkit\gkit\src\matrix.cpp(804): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  mesh.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\mesh.cpp(38): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  mesh_data.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\mesh_data.cpp(12): warning C4005: 'DEBUG_PRINT': macro redefinition
+  c:\users\jas\documents\projects\gkit\gkit\src\mesh_data.cpp(10): note: see previous definition of 'DEBUG_PRINT'
+c:\users\jas\documents\projects\gkit\gkit\src\mesh_data.cpp(270): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  mesh_util.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\mesh_util.cpp(76): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  node.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\node.cpp(47): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  particle_array.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\particle_array.cpp(82): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  particle_renderer_3d.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\particle_renderer_3d.cpp(73): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  quad.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\quad.cpp(94): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  Generating Code...
+  Compiling...
+  random.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\random.cpp(28): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  shader.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\shader.cpp(148): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  skybox.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\skybox.cpp(49): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  skybox_renderer.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\skybox_renderer.cpp(73): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  sprite.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\sprite.cpp(22): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  sprite_renderer.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\sprite_renderer.cpp(90): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  static_mesh.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\static_mesh.cpp(136): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  static_mesh_renderer.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\static_mesh_renderer.cpp(139): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  sun.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\sun.cpp(5): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  texture.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\texture.cpp(49): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  tga_image.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\tga_image.cpp(120): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  transform_2d.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\transform_2d.cpp(19): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  transform_3d.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\transform_3d.cpp(19): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  vertex_array.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\vertex_array.cpp(47): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  vertex_buffer.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\vertex_buffer.cpp(56): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  view.cpp
+c:\users\jas\documents\projects\gkit\gkit\src\view.cpp(53): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  Generating Code...

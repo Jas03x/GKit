@@ -1,6 +1,6 @@
 #include <gk/transform_3d.hpp>
 
-Transform3D::Transform3D() : Transform3D(Vector3F(0.0f), Quaternion(), Vector3F(0.0f)) {}
+Transform3D::Transform3D() : Transform3D(Vector3F(0.0f), Quaternion(), Vector3F(1.0f)) {}
 
 Transform3D::Transform3D(const Vector3F& t, const Quaternion& r, const Vector3F& s)
 {

@@ -7,14 +7,14 @@
 
 DynamicMesh::DynamicMesh() :
     Mesh(),
-    RootNode("Root", Vector3F(0.0f), Quaternion(Vector3F(0.0f)), Vector3F(1.0f))
+    RootNode("Root")
 {
     m_DiffuseTexture = nullptr;
 }
 
 DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_directory) :
     Mesh(),
-    RootNode("Root", Vector3F(0.0f), Quaternion(Vector3F(0.0f)), Vector3F(1.0f))
+    RootNode("Root")
 {
 	GK_ASSERT((data.Bones.size() <= BONE_LIMIT) && (data.Nodes.size() <= NODE_LIMIT), ("Error: Mode exceeds bone/node limit!\n"));
 	GK_ASSERT(data.Textures.size() != 0, ("Error: Model has zero textures\n"));
@@ -25,9 +25,10 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
 	Nodes.reserve(NODE_LIMIT);
 	for (unsigned int i = 0; i < data.Nodes.size(); i++)
 	{
-		const MeshData::Node& node = data.Nodes[i];
-		Nodes.push_back(Node(node.name, node.position, Quaternion(node.rotation), node.scale));
-		node_map[node.name] = i;
+		const MeshData::Node& node_data = data.Nodes[i];
+		
+		Nodes.push_back(Node(node_data.name, node_data.offset_matrix));
+		node_map[node_data.name] = i;
 	}
 
 	// process parent hierchy
@@ -36,8 +37,8 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
 		const MeshData::Node& node = data.Nodes[i];
 
 		if (node.parent == "None") {
-			//Nodes[i].SetParent(&RootNode);
-			Nodes[i].SetParent(nullptr);
+			Nodes[i].SetParent(&RootNode);
+			//Nodes[i].SetParent(nullptr);
 		} else {
 			Nodes[i].SetParent(&Nodes[node_map.at(node.parent)]);
 		}
@@ -47,10 +48,10 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
 	for(unsigned int i = 0; i < data.Bones.size(); i++)
 	{
 		const MeshData::Bone& bone = data.Bones[i];
-		Bones.push_back(Bone(bone.name, &Nodes[node_map.at(bone.name)], bone.matrix));
+		Bones.push_back(Bone(bone.name, &Nodes[node_map.at(bone.name)], bone.offset_matrix));
 	}
 
-	DynamicMesh::Vertex* vertex_buffer = new Vertex[data.VertexCount];
+	DynamicMesh::Vertex* vertex_buffer = new DynamicMesh::Vertex[data.VertexCount];
 	DynamicMesh::Vertex* vertex_iterator = vertex_buffer;
 	for (unsigned int m = 0; m < data.Meshes.size(); m++)
 	{
@@ -70,11 +71,13 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
 				{ vertices[i].bones[0].weight, vertices[i].bones[1].weight, vertices[i].bones[2].weight, vertices[i].bones[3].weight }
 			};
 
+			/*
 			printf("Vertex: (%f, %f, %f), (%hhu, %hhu, %hhu, %hhu), (%f, %f, %f, %f)\n",
 				vertex_iterator->position[0], vertex_iterator->position[1], vertex_iterator->position[2],
 				vertex_iterator->bone_indices[0], vertex_iterator->bone_indices[1], vertex_iterator->bone_indices[2], vertex_iterator->bone_indices[3], 
 				vertex_iterator->bone_weights[0], vertex_iterator->bone_weights[1], vertex_iterator->bone_weights[2], vertex_iterator->bone_weights[3]
 			);
+			*/
 			
 			//float sum = vertices[i].bones[0].weight + vertices[i].bones[1].weight + vertices[i].bones[2].weight + vertices[i].bones[3].weight;
 			//GK_ASSERT((sum >= 0.99f) && (sum <= 1.01f), ("Error: Vertex weights do not add to one: %f + %f + %f + %f = %f\n", vertices[i].bones[0].weight, vertices[i].bones[1].weight, vertices[i].bones[2].weight, vertices[i].bones[3].weight, sum));

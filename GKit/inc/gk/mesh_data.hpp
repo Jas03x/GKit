@@ -29,9 +29,7 @@ public:
 		std::string name;
 		std::string parent;
 	
-		Vector3F position;
-		Vector4F rotation;
-		Vector3F scale;
+		Matrix4F    offset_matrix;
 	};
 
 	struct Frame
@@ -51,7 +49,7 @@ public:
 	struct Bone
 	{
 		std::string name;
-		Matrix4F    matrix;
+		Matrix4F    offset_matrix;
 		Animation   animation;
 	};
 
