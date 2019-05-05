@@ -1,6 +1,7 @@
 #ifndef GK_MATRIX_H
 #define GK_MATRIX_H
 
+#define _USE_MATH_DEFINES // for M_PI
 #include <cmath>
 
 /*
@@ -14,7 +15,7 @@ struct Vector2
 {
     union {
         struct { T x, y; };
-        T data[2];
+        T values[2];
     };
 
     Vector2();
@@ -43,7 +44,7 @@ template <typename T>
 struct Vector3
 {
     union {
-        T data[3];
+        T values[3];
         struct { T x, y, z; };
         
         Vector2<T> xy;
@@ -76,7 +77,7 @@ template <typename T>
 struct Vector4
 {
     union {
-        T data[4];
+        T values[4];
         struct { T x, y, z, w; };
 
         Vector3<T> xyz;
@@ -138,7 +139,7 @@ typedef Vector4<unsigned int> Vector4U;
 
 struct Matrix2F
 {
-    Vector2F data[2];
+    Vector2F values[2];
 
     Matrix2F();
     Matrix2F(float v);
@@ -175,7 +176,7 @@ struct Matrix3F
     static const Vector3F Y_AXIS;
     static const Vector3F Z_AXIS;
 
-    Vector3F data[3];
+    Vector3F values[3];
 
     Matrix3F();
     Matrix3F(float v);
@@ -217,7 +218,7 @@ struct Matrix4F
     static const Vector4F Z_AXIS;
     static const Vector4F W_AXIS;
 
-    Vector4F data[4];
+    Vector4F values[4];
 
     Matrix4F();
     Matrix4F(float v);

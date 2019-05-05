@@ -48,8 +48,8 @@ unsigned int MeshData::ReadMaterials(const byte* data)
 		Materials.push_back(MeshData::Material());
 
 		MeshData::Material& mat = Materials.back();
-		memcpy(mat.diffuse.data,  material->color.values,    sizeof(Vector3F));
-		memcpy(mat.specular.data, material->specular.values, sizeof(Vector3F));
+		memcpy(mat.diffuse.values,  material->color.values,    sizeof(Vector3F));
+		memcpy(mat.specular.values, material->specular.values, sizeof(Vector3F));
 		mat.texture_index = material->texture_index;
 
 		DEBUG_PRINT("Material: ((%f, %f, %f), (%f, %f, %f), %hhu)\n",
@@ -80,7 +80,7 @@ unsigned int MeshData::ReadNodes(const byte* data)
 		MeshData::Node& n = Nodes.back();
 		n.name   = std::string(node->name.string);
 		n.parent = std::string(node->parent.string);
-		memcpy(n.offset_matrix.data, node->offset_matrix.values, sizeof(float) * 16);
+		memcpy(n.offset_matrix.values, node->offset_matrix.values, sizeof(float) * 16);
 
 		DEBUG_PRINT("Node %s => %s\n[%f, %f, %f, %f]\n\t[%f, %f, %f, %f]\n\t[%f, %f, %f, %f]\n\t[%f, %f, %f, %f]\n",
 			n.name.c_str(), n.parent.c_str(),
@@ -111,7 +111,7 @@ unsigned int MeshData::ReadBones(const byte* data)
 
 		MeshData::Bone& b = Bones.back();
 		b.name = std::string(bone->name.string);
-		memcpy(b.offset_matrix.data, bone->offset_matrix.values, sizeof(Matrix4F));
+		memcpy(b.offset_matrix.values, bone->offset_matrix.values, sizeof(Matrix4F));
 
 		DEBUG_PRINT("Bone %s:\n", b.name.c_str());
 		DEBUG_PRINT("Matrix:\n{ %f, %f, %f, %f }\n{ %f, %f, %f, %f }\n{ %f, %f, %f, %f }\n{ %f, %f, %f, %f }\n",
@@ -134,9 +134,9 @@ unsigned int MeshData::ReadBones(const byte* data)
 
 				MeshData::Frame& f = b.animation.frames.back();
 				f.time = frame->time;
-				memcpy(f.position.data, frame->position.values, sizeof(Vector3F));
-				memcpy(f.rotation.data, frame->rotation.values, sizeof(Vector4F));
-				memcpy(f.scale.data,    frame->scale.values,    sizeof(Vector3F));
+				memcpy(f.position.values, frame->position.values, sizeof(Vector3F));
+				memcpy(f.rotation.values, frame->rotation.values, sizeof(Vector4F));
+				memcpy(f.scale.values,    frame->scale.values,    sizeof(Vector3F));
 
 				DEBUG_PRINT("Animation frame: Time = %f, Transformation = ((%f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f))\n",
 					f.time,
@@ -185,9 +185,9 @@ unsigned int MeshData::ReadMeshes(const byte* data)
 			m.vertices.push_back(MeshData::Vertex());
 			
 			MeshData::Vertex& v = m.vertices.back();
-			memcpy(v.position.data, vertex->position.values, sizeof(Vector3F));
-			memcpy(v.normal.data,   vertex->normal.values,   sizeof(Vector3F));
-			memcpy(v.uv.data,       vertex->uv.values,       sizeof(Vector2F));
+			memcpy(v.position.values, vertex->position.values, sizeof(Vector3F));
+			memcpy(v.normal.values,   vertex->normal.values,   sizeof(Vector3F));
+			memcpy(v.uv.values,       vertex->uv.values,       sizeof(Vector2F));
 			v.node     = vertex->node_index;
 			v.material = vertex->material;
 			for(unsigned int k = 0; k < 4; k++)

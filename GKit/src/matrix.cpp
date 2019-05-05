@@ -17,8 +17,8 @@ template <typename T> Vector2<T>::Vector2(T v) : Vector2(v, v) {}
 template <typename T> Vector2<T>::Vector2(const Vector2<T>& v) : Vector2(v.x, v.y) {}
 template <typename T> Vector2<T>::Vector2(T _x, T _y) { x = _x; y = _y; }
 
-template <typename T> T&       Vector2<T>::operator [] (unsigned int i)       { return data[i]; }
-template <typename T> const T& Vector2<T>::operator [] (unsigned int i) const { return data[i]; }
+template <typename T> T&       Vector2<T>::operator [] (unsigned int i)       { return values[i]; }
+template <typename T> const T& Vector2<T>::operator [] (unsigned int i) const { return values[i]; }
 
 template <typename T> Vector2<T> Vector2<T>::operator - () const { return (Vector2<T>(*this) * -1); }
 
@@ -43,8 +43,8 @@ template <typename T> Vector3<T>::Vector3(const Vector2<T>& v, T z) : Vector3(v.
 template <typename T> Vector3<T>::Vector3(const Vector3<T>& v) : Vector3(v.x, v.y, v.z) {}
 template <typename T> Vector3<T>::Vector3(T _x, T _y, T _z) { x = _x; y = _y; z = _z; }
 
-template <typename T> T&        Vector3<T>::operator [] (unsigned int i)       { return data[i]; }
-template <typename T> const T&  Vector3<T>::operator [] (unsigned int i) const { return data[i]; }
+template <typename T> T&        Vector3<T>::operator [] (unsigned int i)       { return values[i]; }
+template <typename T> const T&  Vector3<T>::operator [] (unsigned int i) const { return values[i]; }
 
 template <typename T> Vector3<T> Vector3<T>::operator - () const { return (Vector3<T>(*this) * -1); }
 
@@ -69,8 +69,8 @@ template <typename T> Vector4<T>::Vector4(const Vector3<T>& v, T w) : Vector4(v.
 template <typename T> Vector4<T>::Vector4(const Vector4& v) : Vector4(v.x, v.y, v.z, v.w) {}
 template <typename T> Vector4<T>::Vector4(T _x, T _y, T _z, T _w) { x = _x; y = _y; z = _z; w = _w;}
 
-template <typename T> T&        Vector4<T>::operator [] (unsigned int i)       { return data[i]; }
-template <typename T> const T&  Vector4<T>::operator [] (unsigned int i) const { return data[i]; }
+template <typename T> T&        Vector4<T>::operator [] (unsigned int i)       { return values[i]; }
+template <typename T> const T&  Vector4<T>::operator [] (unsigned int i) const { return values[i]; }
 
 template <typename T> Vector4<T> Vector4<T>::operator - () const { return (Vector4<T>(*this) * -1); }
 
@@ -151,65 +151,65 @@ INSTANTIATE_VECTOR_TEMPLATE(float);
 Matrix2F::Matrix2F() : Matrix2F(1.0f) {}
 
 Matrix2F::Matrix2F(float v) {
-    data[0] = Vector2F(v, 0);
-    data[1] = Vector2F(0, v);
+	values[0] = Vector2F(v, 0);
+	values[1] = Vector2F(0, v);
 }
 
 Matrix2F::Matrix2F(const Vector2F& v0, const Vector2F& v1) {
-    data[0] = v0;
-    data[1] = v1;
+	values[0] = v0;
+	values[1] = v1;
 }
 
-Matrix2F::Matrix2F(const Matrix2F& other) : Matrix2F(&other.data[0][0]) {}
+Matrix2F::Matrix2F(const Matrix2F& other) : Matrix2F(&other.values[0][0]) {}
 Matrix2F::Matrix2F(const Vector2F* v) : Matrix2F(&v[0][0]) {}
-Matrix2F::Matrix2F(const float* v) { memcpy(data, v, sizeof(data)); }
+Matrix2F::Matrix2F(const float* v) { memcpy(values, v, sizeof(values)); }
 
-Vector2F&       Matrix2F::operator [] (unsigned int i)       { return data[i]; }
-const Vector2F& Matrix2F::operator [] (unsigned int i) const { return data[i]; }
+Vector2F&       Matrix2F::operator [] (unsigned int i)       { return values[i]; }
+const Vector2F& Matrix2F::operator [] (unsigned int i) const { return values[i]; }
 
-Matrix2F& Matrix2F::operator = (const Matrix2F& other) { memcpy(this->data, other.data, sizeof(data)); return *this; }
+Matrix2F& Matrix2F::operator = (const Matrix2F& other) { memcpy(this->values, other.values, sizeof(values)); return *this; }
 
 Matrix2F Matrix2F::operator + (const Matrix2F& other) const {
     Matrix2F result;
-    result[0] = data[0] + other.data[0];
-    result[1] = data[1] + other.data[1];
+    result[0] = values[0] + other.values[0];
+    result[1] = values[1] + other.values[1];
     return result;
 }
 
 Matrix2F& Matrix2F::operator += (const Matrix2F& other) {
-    data[0] += other.data[0];
-    data[1] += other.data[1];
+	values[0] += other.values[0];
+	values[1] += other.values[1];
     return *this;
 }
 
 Matrix2F Matrix2F::operator - (const Matrix2F& other) const {
     Matrix2F result;
-    result[0] = data[0] - other.data[0];
-    result[1] = data[1] - other.data[1];
+    result[0] = values[0] - other.values[0];
+    result[1] = values[1] - other.values[1];
     return result;
 }
 
 Matrix2F& Matrix2F::operator -= (const Matrix2F& other) {
-    data[0] -= other.data[0];
-    data[1] -= other.data[1];
+	values[0] -= other.values[0];
+	values[1] -= other.values[1];
     return *this;
 }
 #define _DOT(m, m0, m1, r, c) (m)[c][r] = _DOT2((m0)[0][r], (m0)[1][r], (m1)[c][0], (m1)[c][1])
 Matrix2F Matrix2F::operator * (const Matrix2F& other) const {
     Matrix2F result;
-    _DOT(result.data, this->data, other.data, 0, 0);
-    _DOT(result.data, this->data, other.data, 0, 1);
-    _DOT(result.data, this->data, other.data, 1, 0);
-    _DOT(result.data, this->data, other.data, 1, 1);
+    _DOT(result.values, this->values, other.values, 0, 0);
+    _DOT(result.values, this->values, other.values, 0, 1);
+    _DOT(result.values, this->values, other.values, 1, 0);
+    _DOT(result.values, this->values, other.values, 1, 1);
     return result;
 }
 
 Matrix2F& Matrix2F::operator *= (const Matrix2F& other) {
     Matrix2F copy = *this;
-    _DOT(this->data, copy.data, other.data, 0, 0);
-    _DOT(this->data, copy.data, other.data, 0, 1);
-    _DOT(this->data, copy.data, other.data, 1, 0);
-    _DOT(this->data, copy.data, other.data, 1, 1);
+    _DOT(this->values, copy.values, other.values, 0, 0);
+    _DOT(this->values, copy.values, other.values, 0, 1);
+    _DOT(this->values, copy.values, other.values, 1, 0);
+    _DOT(this->values, copy.values, other.values, 1, 1);
     return *this;
 }
 #undef _DOT
@@ -221,22 +221,22 @@ Matrix2F Matrix2F::operator * (float v) const {
 }
 
 Matrix2F& Matrix2F::operator *= (float v) {
-    data[0] *= v;
-    data[1] *= v;
+	values[0] *= v;
+	values[1] *= v;
     return *this;
 }
 
 Vector2F Matrix2F::operator * (const Vector2F& v) const {
     return Vector2F(
-        _DOT2(v.x, v.y, data[0][0], data[0][1]),
-        _DOT2(v.x, v.y, data[1][0], data[1][1])
+        _DOT2(v.x, v.y, values[0][0], values[0][1]),
+        _DOT2(v.x, v.y, values[1][0], values[1][1])
     );
 }
 
 void Matrix2F::print() {
     printf("[%f, %f]\n[%f, %f]\n",
-        data[0][0], data[1][0],
-        data[0][1], data[1][1]
+        values[0][0], values[1][0],
+		values[0][1], values[1][1]
     );
 }
 
@@ -248,86 +248,84 @@ const Vector3F Matrix3F::X_AXIS = Vector3F(1, 0, 0);
 const Vector3F Matrix3F::Y_AXIS = Vector3F(0, 1, 0);
 const Vector3F Matrix3F::Z_AXIS = Vector3F(0, 0, 1);
 
-Vector3F data[3];
-
 Matrix3F::Matrix3F() : Matrix3F(1.0f) {}
 
 Matrix3F::Matrix3F(float v) {
-    data[0] = Vector3F(v, 0, 0);
-    data[1] = Vector3F(0, v, 0);
-    data[2] = Vector3F(0, 0, v);
+	values[0] = Vector3F(v, 0, 0);
+	values[1] = Vector3F(0, v, 0);
+	values[2] = Vector3F(0, 0, v);
 }
 
 Matrix3F::Matrix3F(const Vector3F& v0, const Vector3F& v1, const Vector3F& v2) {
-    data[0] = v0;
-    data[1] = v1;
-    data[2] = v2;
+	values[0] = v0;
+	values[1] = v1;
+	values[2] = v2;
 }
 
-Matrix3F::Matrix3F(const Matrix3F& other) : Matrix3F(&other.data[0][0]) {}
+Matrix3F::Matrix3F(const Matrix3F& other) : Matrix3F(&other.values[0][0]) {}
 Matrix3F::Matrix3F(const Vector3F* v) : Matrix3F(&v[0][0]) {}
-Matrix3F::Matrix3F(const float* v) { memcpy(data, v, sizeof(data)); }
+Matrix3F::Matrix3F(const float* v) { memcpy(values, v, sizeof(values)); }
 
-Vector3F&       Matrix3F::operator [] (unsigned int i)       { return data[i]; }
-const Vector3F& Matrix3F::operator [] (unsigned int i) const { return data[i]; }
+Vector3F&       Matrix3F::operator [] (unsigned int i)       { return values[i]; }
+const Vector3F& Matrix3F::operator [] (unsigned int i) const { return values[i]; }
 
-Matrix3F& Matrix3F::operator = (const Matrix3F& other) { memcpy(this->data, other.data, sizeof(data)); return *this; }
+Matrix3F& Matrix3F::operator = (const Matrix3F& other) { memcpy(this->values, other.values, sizeof(values)); return *this; }
 
 Matrix3F Matrix3F::operator + (const Matrix3F& other) const {
     Matrix3F result;
-    result[0] = data[0] + other.data[0];
-    result[1] = data[1] + other.data[1];
-    result[2] = data[2] + other.data[2];
+    result[0] = values[0] + other.values[0];
+    result[1] = values[1] + other.values[1];
+    result[2] = values[2] + other.values[2];
     return result;
 }
 
 Matrix3F& Matrix3F::operator += (const Matrix3F& other) {
-    data[0] += other.data[0];
-    data[1] += other.data[1];
-    data[2] += other.data[2];
+	values[0] += other.values[0];
+	values[1] += other.values[1];
+	values[2] += other.values[2];
     return *this;
 }
 
 Matrix3F Matrix3F::operator - (const Matrix3F& other) const {
     Matrix3F result;
-    result[0] = data[0] - other.data[0];
-    result[1] = data[1] - other.data[1];
-    result[2] = data[2] - other.data[2];
+    result[0] = values[0] - other.values[0];
+    result[1] = values[1] - other.values[1];
+    result[2] = values[2] - other.values[2];
     return result;
 }
 
 Matrix3F& Matrix3F::operator -= (const Matrix3F& other) {
-    data[0] -= other.data[0];
-    data[1] -= other.data[1];
-    data[2] -= other.data[2];
+    values[0] -= other.values[0];
+    values[1] -= other.values[1];
+    values[2] -= other.values[2];
     return *this;
 }
 #define _DOT(m, m0, m1, r, c) (m)[c][r] = _DOT3((m0)[0][r], (m0)[1][r], (m0)[2][r], (m1)[c][0], (m1)[c][1], (m1)[c][2])
 Matrix3F Matrix3F::operator * (const Matrix3F& other) const {
     Matrix3F result;
-    _DOT(result.data, this->data, other.data, 0, 0);
-    _DOT(result.data, this->data, other.data, 0, 1);
-    _DOT(result.data, this->data, other.data, 0, 2);
-    _DOT(result.data, this->data, other.data, 1, 0);
-    _DOT(result.data, this->data, other.data, 1, 1);
-    _DOT(result.data, this->data, other.data, 1, 2);
-    _DOT(result.data, this->data, other.data, 2, 0);
-    _DOT(result.data, this->data, other.data, 2, 1);
-    _DOT(result.data, this->data, other.data, 2, 2);
+    _DOT(result.values, this->values, other.values, 0, 0);
+    _DOT(result.values, this->values, other.values, 0, 1);
+    _DOT(result.values, this->values, other.values, 0, 2);
+    _DOT(result.values, this->values, other.values, 1, 0);
+    _DOT(result.values, this->values, other.values, 1, 1);
+    _DOT(result.values, this->values, other.values, 1, 2);
+    _DOT(result.values, this->values, other.values, 2, 0);
+    _DOT(result.values, this->values, other.values, 2, 1);
+    _DOT(result.values, this->values, other.values, 2, 2);
     return result;
 }
 
 Matrix3F& Matrix3F::operator *= (const Matrix3F& other) {
     Matrix3F copy = *this;
-    _DOT(this->data, copy.data, other.data, 0, 0);
-    _DOT(this->data, copy.data, other.data, 0, 1);
-    _DOT(this->data, copy.data, other.data, 0, 2);
-    _DOT(this->data, copy.data, other.data, 1, 0);
-    _DOT(this->data, copy.data, other.data, 1, 1);
-    _DOT(this->data, copy.data, other.data, 1, 2);
-    _DOT(this->data, copy.data, other.data, 2, 0);
-    _DOT(this->data, copy.data, other.data, 2, 1);
-    _DOT(this->data, copy.data, other.data, 2, 2);
+    _DOT(this->values, copy.values, other.values, 0, 0);
+    _DOT(this->values, copy.values, other.values, 0, 1);
+    _DOT(this->values, copy.values, other.values, 0, 2);
+    _DOT(this->values, copy.values, other.values, 1, 0);
+    _DOT(this->values, copy.values, other.values, 1, 1);
+    _DOT(this->values, copy.values, other.values, 1, 2);
+    _DOT(this->values, copy.values, other.values, 2, 0);
+    _DOT(this->values, copy.values, other.values, 2, 1);
+    _DOT(this->values, copy.values, other.values, 2, 2);
     return *this;
 }
 #undef _DOT
@@ -339,17 +337,17 @@ Matrix3F Matrix3F::operator * (float v) const {
 }
 
 Matrix3F& Matrix3F::operator *= (float v) {
-    data[0] *= v;
-    data[1] *= v;
-    data[2] *= v;
+    values[0] *= v;
+    values[1] *= v;
+    values[2] *= v;
     return *this;
 }
 
 Vector3F Matrix3F::operator * (const Vector3F& v) const {
     return Vector3F {
-        _DOT3(v.x, v.y, v.z, data[0][0], data[1][0], data[2][0]),
-        _DOT3(v.x, v.y, v.z, data[0][1], data[1][1], data[2][1]),
-        _DOT3(v.x, v.y, v.z, data[0][2], data[1][2], data[2][2])
+        _DOT3(v.x, v.y, v.z, values[0][0], values[1][0], values[2][0]),
+        _DOT3(v.x, v.y, v.z, values[0][1], values[1][1], values[2][1]),
+        _DOT3(v.x, v.y, v.z, values[0][2], values[1][2], values[2][2])
     };
 }
 
@@ -368,9 +366,9 @@ Matrix3F Matrix3F::Rotate(float v)
 
 void Matrix3F::print() {
     printf("[%f, %f, %f]\n[%f, %f, %f]\n[%f, %f, %f]\n",
-        data[0][0], data[0][1], data[0][2],
-        data[1][0], data[1][1], data[1][2],
-        data[2][0], data[2][1], data[2][2]
+        values[0][0], values[0][1], values[0][2],
+        values[1][0], values[1][1], values[1][2],
+        values[2][0], values[2][1], values[2][2]
     );
 }
 
@@ -386,102 +384,102 @@ const Vector4F Matrix4F::W_AXIS = Vector4F(0, 0, 0, 1);
 Matrix4F::Matrix4F() : Matrix4F(1.0f) {}
     
 Matrix4F::Matrix4F(float v) {
-    data[0] = Vector4F(v, 0, 0, 0);
-    data[1] = Vector4F(0, v, 0, 0);
-    data[2] = Vector4F(0, 0, v, 0);
-    data[3] = Vector4F(0, 0, 0, v);
+    values[0] = Vector4F(v, 0, 0, 0);
+    values[1] = Vector4F(0, v, 0, 0);
+    values[2] = Vector4F(0, 0, v, 0);
+    values[3] = Vector4F(0, 0, 0, v);
 }
 
 Matrix4F::Matrix4F(const Vector4F& v0, const Vector4F& v1, const Vector4F& v2, const Vector4F& v3) {
-    data[0] = v0;
-    data[1] = v1;
-    data[2] = v2;
-    data[3] = v3;
+    values[0] = v0;
+    values[1] = v1;
+    values[2] = v2;
+    values[3] = v3;
 }
 
-Matrix4F::Matrix4F(const Matrix4F& other) : Matrix4F(&other.data[0][0]) {}
+Matrix4F::Matrix4F(const Matrix4F& other) : Matrix4F(&other.values[0][0]) {}
 Matrix4F::Matrix4F(const Vector4F* v) : Matrix4F(&v[0][0]) {}
-Matrix4F::Matrix4F(const float* v) { memcpy(data, v, sizeof(data)); }
+Matrix4F::Matrix4F(const float* v) { memcpy(values, v, sizeof(values)); }
 
-Vector4F&       Matrix4F::operator [] (unsigned int i)       { return data[i]; }
-const Vector4F& Matrix4F::operator [] (unsigned int i) const { return data[i]; }
+Vector4F&       Matrix4F::operator [] (unsigned int i)       { return values[i]; }
+const Vector4F& Matrix4F::operator [] (unsigned int i) const { return values[i]; }
 
-Matrix4F& Matrix4F::operator = (const Matrix4F& other) { memcpy(this->data, other.data, sizeof(data)); return *this; }
+Matrix4F& Matrix4F::operator = (const Matrix4F& other) { memcpy(this->values, other.values, sizeof(values)); return *this; }
 
 Matrix4F Matrix4F::operator + (const Matrix4F& other) const {
     Matrix4F result;
-    result[0] = data[0] + other.data[0];
-    result[1] = data[1] + other.data[1];
-    result[2] = data[2] + other.data[2];
-    result[3] = data[3] + other.data[3];
+    result[0] = values[0] + other.values[0];
+    result[1] = values[1] + other.values[1];
+    result[2] = values[2] + other.values[2];
+    result[3] = values[3] + other.values[3];
     return result;
 }
 
 Matrix4F& Matrix4F::operator += (const Matrix4F& other) {
-    data[0] += other.data[0];
-    data[1] += other.data[1];
-    data[2] += other.data[2];
-    data[3] += other.data[3];
+    values[0] += other.values[0];
+    values[1] += other.values[1];
+    values[2] += other.values[2];
+    values[3] += other.values[3];
     return *this;
 }
 
 Matrix4F Matrix4F::operator - (const Matrix4F& other) const {
     Matrix4F result;
-    result[0] = data[0] - other.data[0];
-    result[1] = data[1] - other.data[1];
-    result[2] = data[2] - other.data[2];
-    result[3] = data[3] - other.data[3];
+    result[0] = values[0] - other.values[0];
+    result[1] = values[1] - other.values[1];
+    result[2] = values[2] - other.values[2];
+    result[3] = values[3] - other.values[3];
     return result;
 }
 
 Matrix4F& Matrix4F::operator -= (const Matrix4F& other) {
-    data[0] -= other.data[0];
-    data[1] -= other.data[1];
-    data[2] -= other.data[2];
-    data[3] -= other.data[3];
+    values[0] -= other.values[0];
+    values[1] -= other.values[1];
+    values[2] -= other.values[2];
+    values[3] -= other.values[3];
     return *this;
 }
 
 #define _DOT(m, m0, m1, r, c) (m)[c][r] = _DOT4((m0)[0][r], (m0)[1][r], (m0)[2][r], (m0)[3][r], (m1)[c][0], (m1)[c][1], (m1)[c][2], (m1)[c][3])
 Matrix4F Matrix4F::operator * (const Matrix4F& other) const {
     Matrix4F result;
-    _DOT(result.data, this->data, other.data, 0, 0);
-    _DOT(result.data, this->data, other.data, 0, 1);
-    _DOT(result.data, this->data, other.data, 0, 2);
-    _DOT(result.data, this->data, other.data, 0, 3);
-    _DOT(result.data, this->data, other.data, 1, 0);
-    _DOT(result.data, this->data, other.data, 1, 1);
-    _DOT(result.data, this->data, other.data, 1, 2);
-    _DOT(result.data, this->data, other.data, 1, 3);
-    _DOT(result.data, this->data, other.data, 2, 0);
-    _DOT(result.data, this->data, other.data, 2, 1);
-    _DOT(result.data, this->data, other.data, 2, 2);
-    _DOT(result.data, this->data, other.data, 2, 3);
-    _DOT(result.data, this->data, other.data, 3, 0);
-    _DOT(result.data, this->data, other.data, 3, 1);
-    _DOT(result.data, this->data, other.data, 3, 2);
-    _DOT(result.data, this->data, other.data, 3, 3);
+    _DOT(result.values, this->values, other.values, 0, 0);
+    _DOT(result.values, this->values, other.values, 0, 1);
+    _DOT(result.values, this->values, other.values, 0, 2);
+    _DOT(result.values, this->values, other.values, 0, 3);
+    _DOT(result.values, this->values, other.values, 1, 0);
+    _DOT(result.values, this->values, other.values, 1, 1);
+    _DOT(result.values, this->values, other.values, 1, 2);
+    _DOT(result.values, this->values, other.values, 1, 3);
+    _DOT(result.values, this->values, other.values, 2, 0);
+    _DOT(result.values, this->values, other.values, 2, 1);
+    _DOT(result.values, this->values, other.values, 2, 2);
+    _DOT(result.values, this->values, other.values, 2, 3);
+    _DOT(result.values, this->values, other.values, 3, 0);
+    _DOT(result.values, this->values, other.values, 3, 1);
+    _DOT(result.values, this->values, other.values, 3, 2);
+    _DOT(result.values, this->values, other.values, 3, 3);
     return result;
 }
 
 Matrix4F& Matrix4F::operator *= (const Matrix4F& other) {
     Matrix4F copy = *this;
-    _DOT(this->data, copy.data, other.data, 0, 0);
-    _DOT(this->data, copy.data, other.data, 0, 1);
-    _DOT(this->data, copy.data, other.data, 0, 2);
-    _DOT(this->data, copy.data, other.data, 0, 3);
-    _DOT(this->data, copy.data, other.data, 1, 0);
-    _DOT(this->data, copy.data, other.data, 1, 1);
-    _DOT(this->data, copy.data, other.data, 1, 2);
-    _DOT(this->data, copy.data, other.data, 1, 3);
-    _DOT(this->data, copy.data, other.data, 2, 0);
-    _DOT(this->data, copy.data, other.data, 2, 1);
-    _DOT(this->data, copy.data, other.data, 2, 2);
-    _DOT(this->data, copy.data, other.data, 2, 3);
-    _DOT(this->data, copy.data, other.data, 3, 0);
-    _DOT(this->data, copy.data, other.data, 3, 1);
-    _DOT(this->data, copy.data, other.data, 3, 2);
-    _DOT(this->data, copy.data, other.data, 3, 3);
+    _DOT(this->values, copy.values, other.values, 0, 0);
+    _DOT(this->values, copy.values, other.values, 0, 1);
+    _DOT(this->values, copy.values, other.values, 0, 2);
+    _DOT(this->values, copy.values, other.values, 0, 3);
+    _DOT(this->values, copy.values, other.values, 1, 0);
+    _DOT(this->values, copy.values, other.values, 1, 1);
+    _DOT(this->values, copy.values, other.values, 1, 2);
+    _DOT(this->values, copy.values, other.values, 1, 3);
+    _DOT(this->values, copy.values, other.values, 2, 0);
+    _DOT(this->values, copy.values, other.values, 2, 1);
+    _DOT(this->values, copy.values, other.values, 2, 2);
+    _DOT(this->values, copy.values, other.values, 2, 3);
+    _DOT(this->values, copy.values, other.values, 3, 0);
+    _DOT(this->values, copy.values, other.values, 3, 1);
+    _DOT(this->values, copy.values, other.values, 3, 2);
+    _DOT(this->values, copy.values, other.values, 3, 3);
     return *this;
 }
 #undef _DOT
@@ -493,19 +491,19 @@ Matrix4F Matrix4F::operator * (float v) const {
 }
 
 Matrix4F& Matrix4F::operator *= (float v) {
-    data[0] *= v;
-    data[1] *= v;
-    data[2] *= v;
-    data[3] *= v;
+    values[0] *= v;
+    values[1] *= v;
+    values[2] *= v;
+    values[3] *= v;
     return *this;
 }
 
 Vector4F Matrix4F::operator * (const Vector4F& v) const {
     return Vector4F {
-        _DOT4(v.x, v.y, v.z, v.w, data[0][0], data[1][0], data[2][0], data[3][0]),
-        _DOT4(v.x, v.y, v.z, v.w, data[0][1], data[1][1], data[2][1], data[3][1]),
-        _DOT4(v.x, v.y, v.z, v.w, data[0][2], data[1][2], data[2][2], data[3][2]),
-        _DOT4(v.x, v.y, v.z, v.w, data[0][3], data[1][3], data[2][3], data[3][3])
+        _DOT4(v.x, v.y, v.z, v.w, values[0][0], values[1][0], values[2][0], values[3][0]),
+        _DOT4(v.x, v.y, v.z, v.w, values[0][1], values[1][1], values[2][1], values[3][1]),
+        _DOT4(v.x, v.y, v.z, v.w, values[0][2], values[1][2], values[2][2], values[3][2]),
+        _DOT4(v.x, v.y, v.z, v.w, values[0][3], values[1][3], values[2][3], values[3][3])
     };
 }
 
@@ -549,10 +547,10 @@ Matrix4F Matrix4F::View(const Vector3F& position, const Vector3F& target, const 
 
 void Matrix4F::print() {
     printf("[%f, %f, %f, %f]\n[%f, %f, %f, %f]\n[%f, %f, %f, %f]\n[%f, %f, %f, %f]\n",
-        data[0][0], data[0][1], data[0][2], data[0][3],
-        data[1][0], data[1][1], data[1][2], data[1][3],
-        data[2][0], data[2][1], data[2][2], data[2][3],
-        data[3][0], data[3][1], data[3][2], data[3][3]
+        values[0][0], values[0][1], values[0][2], values[0][3],
+        values[1][0], values[1][1], values[1][2], values[1][3],
+        values[2][0], values[2][1], values[2][2], values[2][3],
+        values[3][0], values[3][1], values[3][2], values[3][3]
     );
 }
 

@@ -8,7 +8,7 @@ Camera3D::Camera3D()
 
 Camera3D::Camera3D(float fov, float width, float height, float zNear, float zFar)
 {
-	Projection = Matrix4F::Project(fov, width, height, zNear, zFar);
+	Projection = Matrix4F::Project(fov * M_PI / 180.0f, width, height, zNear, zFar);
 	View = Matrix4F();
 }
 

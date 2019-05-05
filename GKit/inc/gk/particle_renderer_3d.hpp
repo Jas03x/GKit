@@ -10,9 +10,10 @@ class ParticleRenderer3D : public Shader
 private:
 	static ParticleRenderer3D* Instance;
 
-	uint m_Matrix;
 	uint m_SpriteTexture;
 	uint m_SpriteSize;
+	uint m_ViewMatrix;
+	uint m_ProjectionMatrix;
 
 private:
 	ParticleRenderer3D();
