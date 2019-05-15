@@ -38,7 +38,7 @@ bool check_program(GFX_HANDLE handle) {
 	return _check_status(handle, GFX_LINK_STATUS, "program link", context->QueryProgramParameter, context->GetProgramInfoLog);
 }
 
-GFX_HANDLE create_shader(GFX_HANDLE type, const char* source)
+GFX_HANDLE create_shader(uint32_t type, const char* source)
 {
 	RenderingContext* context = RenderingContext::GetInstance();
 
