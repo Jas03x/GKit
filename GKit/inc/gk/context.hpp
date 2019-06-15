@@ -39,15 +39,15 @@ enum EVENT_TYPE
 
 struct Event
 {
-	uint8_t Type;
+	uint8_t m_type;
 
 	union
 	{
 		struct
 		{
-			uint16_t Key;
-			uint8_t  Action;
-		} KeyArgs;
+			uint16_t key;
+			uint8_t  action;
+		} m_key_args;
 	};
 };
 

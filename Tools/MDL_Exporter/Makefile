@@ -1,7 +1,7 @@
 CC = g++
 FLAGS = -Wall -g -std=c++11
 
-INCLUDES = -IC:/Users/Jas/Documents/Libraries/Assimp/include/ -I../GKit/GKit/inc/
+INCLUDES = -I../../GKit/inc/
 LINKERS  = -lassimp
 
 SRC = mdl.cpp

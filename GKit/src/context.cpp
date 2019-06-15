@@ -93,16 +93,16 @@ bool ContextImpl::PollEvent(Event& e)
 		{
 			case SDL_QUIT:
 			{
-				e.Type = EVENT_TYPE::QUIT;
+				e.m_type = EVENT_TYPE::QUIT;
 
 				return true;
 			}
 			case SDL_KEYUP:
 			case SDL_KEYDOWN:
 			{
-				e.KeyArgs.Key = m_KeyMap[event.key.keysym.scancode];
-				e.Type = EVENT_TYPE::KEY_INPUT;
-				e.KeyArgs.Action = (event.type == SDL_KEYDOWN) ? INPUT::KEY_PRESSED : INPUT::KEY_RELEASED;
+				e.m_key_args.key = m_KeyMap[event.key.keysym.scancode];
+				e.m_type = EVENT_TYPE::KEY_INPUT;
+				e.m_key_args.action = (event.type == SDL_KEYDOWN) ? INPUT::KEY_PRESSED : INPUT::KEY_RELEASED;
 
 				return true;
 			}
