@@ -171,7 +171,7 @@ RenderingContext::~RenderingContext()
 
 bool RenderingContext::CreateInstance()
 {
-    GK_ASSERT(Instance == nullptr);
+    GK_ASSERT(Instance == nullptr, ("Null rendering context\n"));
 
     if(Instance == nullptr)
     {
@@ -184,7 +184,7 @@ bool RenderingContext::CreateInstance()
 
 bool RenderingContext::DeleteInstance()
 {
-	GK_ASSERT(Instance != nullptr);
+	GK_ASSERT(Instance != nullptr, ("Null rendering context\n"));
 
     if(Instance != nullptr)
     {
@@ -199,6 +199,6 @@ bool RenderingContext::DeleteInstance()
 
 RenderingContext* RenderingContext::GetInstance()
 {
-	GK_ASSERT(Instance != nullptr);
+	GK_ASSERT(Instance != nullptr, ("Null rendering context\n"));
     return Instance;
 }

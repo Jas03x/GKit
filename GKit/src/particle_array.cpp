@@ -39,11 +39,11 @@ ParticleArray::~ParticleArray()
     delete m_Texture;
     delete m_Particles;
 
-    if(context->IsVertexArray(m_VAO) == true) {
+    if(context->IsVertexArray(m_VAO) == GFX_TRUE) {
         context->DeleteVertexArrays(1, &m_VAO);
     }
     
-    if(context->IsAllocation(m_VBO) == true) {
+    if(context->IsAllocation(m_VBO) == GFX_TRUE) {
         context->DeleteAllocations(1, &m_VBO);
     }
 }
