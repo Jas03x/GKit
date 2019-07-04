@@ -11,11 +11,14 @@ INC_PATH += /I "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC
 INC_PATH += /I "C:/Users/Jas/Documents/Libraries/SDL/include"
 INC_PATH += /I ./inc/
 
+LIB_PATH += /LIBPATH:"C:/Program Files (x86)/Windows Kits/10/Lib/10.0.17763.0/um/x64"
 LIB_PATH += /LIBPATH:"C:/Users/Jas/Documents/Libraries/SDL/lib/x64"
 
-LIBS = SDL2.lib SDL2main.lib
+LIBS = SDL2.lib SDL2main.lib opengl32.lib
 
 CC_OPTIONS = /D_AMD64_ /D_HAS_EXCEPTIONS=0
+
+LINK_OPTIONS = /IGNORE:4006
 
 BIN = ./bin
 SRC = ./src
@@ -28,7 +31,7 @@ $(BIN)/%.o: $(SRC)/%.cpp
 	$(CC) $(CC_OPTIONS) $(INC_PATH) /Fo:$@ /c $^
 
 $(OUTPUT): $(OBJECTS)
-	$(LINK) $(LIB_PATH) $(LIBS) $^ /OUT:$(BIN)/$@
+	$(LINK) $(LINK_OPTIONS) $(LIB_PATH) $(LIBS) $^ /OUT:$(BIN)/$@
 
 .PHONY: clean
 clean:
