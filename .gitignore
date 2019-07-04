@@ -1,1 +1,2 @@
-*.o
+GKit/bin/*.o
+GKit/bin/GKIT.LIB
