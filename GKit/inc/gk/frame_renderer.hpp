@@ -6,7 +6,7 @@
 class FrameRenderer : public Shader
 {
 private:
-    static FrameRenderer* m_Instance;
+    static FrameRenderer* Instance;
 
 	GFX_HANDLE m_TextureID;
 	GFX_HANDLE m_Opacity;

@@ -60,7 +60,7 @@ void SpriteRenderer::Render(const Sprite& sprite)
 {
 	assert(Instance != nullptr);
 
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 	Matrix3F matrix = Camera2D::GetInstance()->GetMatrix() * sprite.Transform.ToMatrix();
 
 	context->LoadConstantMatrix3F(Instance->m_MatrixLocation, 1, GFX_FALSE, &matrix[0][0]);
@@ -76,7 +76,7 @@ void SpriteRenderer::Render(const Sprite& sprite, const std::vector<Transform2D>
 	Matrix3F matrix;
 	Matrix3F vp_matrix = Camera2D::GetInstance()->GetMatrix();
 	
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 	sprite.Bind(Instance->m_SpriteLocation, 0);
 
 	for (unsigned int i = 0; i < instances.size(); i++)

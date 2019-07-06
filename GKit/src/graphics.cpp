@@ -1,9 +1,7 @@
 #include <gk/graphics.hpp>
 
-#include <stdio.h>
 #include <assert.h>
-
-#include <gk/assert.hpp>
+#include <stdio.h>
 
 #if defined(_WIN32)
 	#include <WinDef.h>
@@ -43,10 +41,10 @@ bool RenderingContext::Initialize()
     #ifdef _WIN32
     #define GetFunctionAddress(name, status) __GetFunctionAddress(#name, module, status)
 
-    GK_ASSERT(wglGetCurrentContext() != 0, ("Error: OpenGL context not found!\n"));
+    assert(wglGetCurrentContext() != 0);
 
     HMODULE module = LoadLibraryA("opengl32.dll");
-    GK_ASSERT(module != 0, ("Error: Could not find opengl32.dll\n"));
+    assert(module != 0);
 
     #elif defined(__APPLE__)
         #define GetFunctionAddress(name, status) name
@@ -153,7 +151,7 @@ bool RenderingContext::Initialize()
 	
 	if (!status)
 	{
-		GK_PRINT("Error loading OpenGL functions\n");
+		printf("Error loading OpenGL functions\n");
 		return false;
 	}
 
@@ -171,7 +169,7 @@ RenderingContext::~RenderingContext()
 
 bool RenderingContext::CreateInstance()
 {
-    GK_ASSERT(Instance == nullptr, ("Null rendering context\n"));
+    assert(Instance == nullptr);
 
     if(Instance == nullptr)
     {
@@ -184,7 +182,7 @@ bool RenderingContext::CreateInstance()
 
 bool RenderingContext::DeleteInstance()
 {
-	GK_ASSERT(Instance != nullptr, ("Null rendering context\n"));
+	assert(Instance != nullptr);
 
     if(Instance != nullptr)
     {
@@ -197,8 +195,8 @@ bool RenderingContext::DeleteInstance()
 	return false;
 }
 
-RenderingContext* RenderingContext::GetInstance()
+const RenderingContext* RenderingContext::GetInstance()
 {
-	GK_ASSERT(Instance != nullptr, ("Null rendering context\n"));
+	assert(Instance != nullptr);
     return Instance;
 }

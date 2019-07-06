@@ -6,7 +6,7 @@
 class BlurShader : public Shader
 {
 private:
-    static BlurShader* m_Instance;
+    static BlurShader* Instance;
 
 	GFX_HANDLE m_TextureID;
 	GFX_HANDLE m_Length;

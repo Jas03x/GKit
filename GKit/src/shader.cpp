@@ -1,9 +1,9 @@
 #include <gk/shader.hpp>
 
-#include <string>
+#include <assert.h>
 #include <stdio.h>
 
-#include <gk/assert.hpp>
+#include <string>
 
 bool _check_status (
 	GFX_HANDLE handle,
@@ -29,18 +29,18 @@ bool _check_status (
 }
 
 bool check_shader(GFX_HANDLE handle) {
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 	return _check_status(handle, GFX_COMPILE_STATUS, "shader compilation", context->QueryShaderParameter, context->GetShaderInfoLog);
 }
 
 bool check_program(GFX_HANDLE handle) {
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 	return _check_status(handle, GFX_LINK_STATUS, "program link", context->QueryProgramParameter, context->GetProgramInfoLog);
 }
 
 GFX_HANDLE create_shader(uint32_t type, const char* source)
 {
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 
 	GFX_HANDLE id = context->CreateShader(type);
 	context->SetShaderSource(id, 1, &source, 0);
@@ -50,7 +50,8 @@ GFX_HANDLE create_shader(uint32_t type, const char* source)
 
 void destroy_shader(GFX_HANDLE handle)
 {
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
+
 	if (context->IsShader(handle) == GFX_TRUE)
 	{
 		context->DeleteShader(handle);
@@ -59,7 +60,8 @@ void destroy_shader(GFX_HANDLE handle)
 
 void destroy_program(GFX_HANDLE handle)
 {
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
+
 	if (context->IsProgram(handle) == GFX_TRUE)
 	{
 		context->DeleteProgram(handle);
@@ -83,7 +85,7 @@ Shader::~Shader()
 
 void Shader::Load(const char* vsrc, const char* fsrc, void(*pfn_bind)(GFX_HANDLE))
 {
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 
 	GFX_HANDLE vshdr = create_shader(GFX_VERTEX_SHADER, vsrc);
 	GFX_HANDLE fshdr = create_shader(GFX_FRAGMENT_SHADER, fsrc);
@@ -118,7 +120,7 @@ ERROR2:
 	destroy_shader(vshdr);
 	destroy_shader(fshdr);
 	
-	GK_ASSERT(false, ("Error loading shader\n"));
+	printf("Error loading shader\n");
 }
 
 void Shader::Bind() const

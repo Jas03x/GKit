@@ -13,7 +13,7 @@ ParticleArray::ParticleArray(const char* texture_sheet, const Vector2F& dimensio
 
     m_Particles = new Particle[particle_limit];
 
-    RenderingContext* context = RenderingContext::GetInstance();
+    const RenderingContext* context = RenderingContext::GetInstance();
 
     context->CreateVertexArrays(1, &m_VAO);
     context->BindVertexArray(m_VAO);
@@ -34,7 +34,7 @@ ParticleArray::ParticleArray(const char* texture_sheet, const Vector2F& dimensio
 
 ParticleArray::~ParticleArray()
 {
-    RenderingContext* context = RenderingContext::GetInstance();
+    const RenderingContext* context = RenderingContext::GetInstance();
 
     delete m_Texture;
     delete m_Particles;
@@ -66,7 +66,7 @@ unsigned int ParticleArray::GetParticleLimit() const {
 
 void ParticleArray::UpdateBuffer(unsigned int particle_count)
 {
-    RenderingContext* context = RenderingContext::GetInstance();
+    const RenderingContext* context = RenderingContext::GetInstance();
 
 	m_ParticleCount = particle_count;
 

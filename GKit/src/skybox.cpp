@@ -12,7 +12,7 @@ Skybox::Skybox(const char* textures[6])
 	TgaImage z_pos(textures[4]);
 	TgaImage z_neg(textures[5]);
 
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 
 	context->CreateTextures(1, &m_Texture);
 	context->BindTexture(GFX_TEXTURE_CUBE_MAP, m_Texture);
@@ -32,7 +32,7 @@ Skybox::Skybox(const char* textures[6])
 
 Skybox::~Skybox()
 {
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 	if (context->IsTexture(m_Texture) == GFX_TRUE)
 	{
 		context->DeleteTextures(1, &m_Texture);
@@ -41,7 +41,7 @@ Skybox::~Skybox()
 
 void Skybox::Bind(uint uniform, int target) const
 {
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 	context->ActivateTextureSlot(GFX_TEXTURE_SLOT0 + target);
 	context->BindTexture(GFX_TEXTURE_CUBE_MAP, m_Texture);
 	context->LoadConstant1I(uniform, target);

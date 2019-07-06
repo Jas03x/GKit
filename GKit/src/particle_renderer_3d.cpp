@@ -14,7 +14,7 @@ ParticleRenderer3D::ParticleRenderer3D()
 		File::Read(SHADER_BASE "particle.vert").c_str(), 
 		File::Read(SHADER_BASE "particle.frag").c_str(), 
 		[](GFX_HANDLE id) {
-			RenderingContext* context = RenderingContext::GetInstance();
+			const RenderingContext* context = RenderingContext::GetInstance();
 			context->SetAttributeLocation(id, ParticleArray::VertexAttributes::POSITION, "position");
 			context->SetAttributeLocation(id, ParticleArray::VertexAttributes::UV_COORD, "uv_coord");
 			context->SetAttributeLocation(id, ParticleArray::VertexAttributes::SIZE, 	 "size");
@@ -61,7 +61,7 @@ void ParticleRenderer3D::Render(const ParticleArray& particle_array)
 {
 	assert(Instance != nullptr);
 	
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 	
 	Camera3D* camera = Camera3D::GetInstance();
 	Matrix4F view_matrix = camera->GetViewMatrix();

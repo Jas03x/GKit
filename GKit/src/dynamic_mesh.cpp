@@ -1,8 +1,9 @@
 #include <gk/dynamic_mesh.hpp>
 
+#include <assert.h>
+
 #include <map>
 
-#include <gk/assert.hpp>
 #include <gk/tga_image.hpp>
 
 DynamicMesh::DynamicMesh() :
@@ -16,8 +17,8 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
     Mesh(),
     RootNode("Root")
 {
-	GK_ASSERT((data.Bones.size() <= BONE_LIMIT) && (data.Nodes.size() <= NODE_LIMIT), ("Error: Mode exceeds bone/node limit!\n"));
-	GK_ASSERT(data.Textures.size() != 0, ("Error: Model has zero textures\n"));
+	assert((data.Bones.size() <= BONE_LIMIT) && (data.Nodes.size() <= NODE_LIMIT));
+	assert(data.Textures.size() != 0);
 
 	std::map<std::string, unsigned int> node_map;
 
@@ -94,7 +95,7 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
 		index_iterator += mesh.indices.size();
 	}
 
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 
 	m_VAO = new VertexArray();
 	m_VAO->Bind();

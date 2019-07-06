@@ -1,5 +1,7 @@
 #include <gk/camera_3d.hpp>
 
+#include <assert.h>
+
 Camera3D* Camera3D::Instance = nullptr;
 
 Camera3D::Camera3D()
@@ -14,6 +16,8 @@ Camera3D::Camera3D(float fov, float width, float height, float zNear, float zFar
 
 void Camera3D::Bind()
 {
+	assert(Instance != nullptr);
+	
 	Instance = this;
 }
 

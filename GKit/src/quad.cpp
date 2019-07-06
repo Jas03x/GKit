@@ -31,7 +31,7 @@ Quad* Quad::Instance = nullptr;
 
 Quad::Quad()
 {
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 
 	context->CreateVertexArrays(1, &m_VAO);
 	context->BindVertexArray(m_VAO);
@@ -48,7 +48,7 @@ Quad::Quad()
 
 Quad::~Quad()
 {
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 
 	if (context->IsVertexArray(m_VAO) == GFX_TRUE)
 	{

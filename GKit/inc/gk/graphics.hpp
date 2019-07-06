@@ -128,7 +128,7 @@ enum GFX_DRAW_MODE
 	GFX_TRIANGLES = 0x0004
 };
 
-enum GFX_TEXTURE_PARAMETERS
+enum GFX_TEXTURE_PARAMETER
 {
 	GFX_TEXTURE_MAG_FILTER      = 0x2800,
 	GFX_TEXTURE_MIN_FILTER      = 0x2801,
@@ -204,6 +204,7 @@ typedef uint8_t  (*GFX_PFN_IsRenderbuffer)(uint32_t);
 typedef uint8_t  (*GFX_PFN_IsShader)(uint32_t);
 typedef uint8_t  (*GFX_PFN_IsTexture)(uint32_t);
 typedef uint8_t  (*GFX_PFN_IsVertexArray)(uint32_t);
+typedef void     (*GFX_PFN_LinkProgram)(uint32_t);
 typedef void     (*GFX_PFN_RenderbufferStorage)(uint32_t, uint32_t, int32_t, int32_t);
 typedef void     (*GFX_PFN_TexImage2D)(uint32_t, int32_t, int32_t, int32_t, int32_t, int32_t, uint32_t, uint32_t, const void*);
 typedef void     (*GFX_PFN_TexParameterI)(uint32_t, uint32_t, int32_t);
@@ -238,7 +239,6 @@ typedef void     (*GFX_PFN_VertexAttribFPointer)(uint32_t, int32_t, uint32_t, ui
 typedef void     (*GFX_PFN_VertexAttribIPointer)(uint32_t, int32_t, uint32_t, int32_t, const void*);
 typedef void     (*GFX_PFN_Viewport)(int32_t, int32_t, int32_t, int32_t);
 typedef void     (*GFX_PFN_ShaderSource)(uint32_t, int32_t, const char* const*, const int32_t*);
-typedef void     (*GFX_PFN_LinkProgram)(uint32_t);
 typedef void     (*GFX_PFN_UseProgram)(uint32_t);
 
 class RenderingContext
@@ -307,6 +307,7 @@ public:
     GFX_PFN_IsShader                  IsShader;
     GFX_PFN_IsTexture                 IsTexture;
     GFX_PFN_IsVertexArray             IsVertexArray;
+    GFX_PFN_LinkProgram               LinkProgram;
     GFX_PFN_RenderbufferStorage       RenderbufferStorage;
     GFX_PFN_TexImage2D                CreateTexture2D;
     GFX_PFN_TexParameterI             SetTextureParameter;
@@ -341,7 +342,6 @@ public:
     GFX_PFN_VertexAttribFPointer      SetVertexAttributeLayoutF;
     GFX_PFN_Viewport                  SetViewport;
     GFX_PFN_ShaderSource              SetShaderSource;
-    GFX_PFN_LinkProgram               LinkProgram;
     GFX_PFN_UseProgram                BindProgram;
 
 private:
@@ -352,7 +352,7 @@ public:
     static bool CreateInstance();
     static bool DeleteInstance();
 
-    static RenderingContext* GetInstance();
+    static const RenderingContext* GetInstance();
 };
 
 #endif // GK_GRAPHICS_H

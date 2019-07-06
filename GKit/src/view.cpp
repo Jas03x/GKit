@@ -1,8 +1,7 @@
 #include <gk/view.hpp>
 
+#include <assert.h>
 #include <stdio.h>
-
-#include <gk/assert.hpp>
 
 View* View::Instance = NULL;
 
@@ -37,7 +36,7 @@ void View::DeleteInstance()
 
 View* View::GetInstance()
 {
-	GK_ASSERT(Instance != nullptr, ("View singleton not initialized\n"));
+	assert(Instance != nullptr);
 
 	if (Instance)
 	{
@@ -47,6 +46,7 @@ View* View::GetInstance()
 	return nullptr;
 }
 
-const Matrix3F& View::GetMatrix() const {
+const Matrix3F& View::GetMatrix() const
+{
 	return m_Projection;
 }

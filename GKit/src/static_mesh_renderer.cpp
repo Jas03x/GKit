@@ -15,7 +15,7 @@ StaticMeshRenderer::StaticMeshRenderer()
 		File::Read(SHADER_BASE "static_mesh_renderer.frag").c_str(),
 		[](GFX_HANDLE id)
 		{
-			RenderingContext* context = RenderingContext::GetInstance();
+			const RenderingContext* context = RenderingContext::GetInstance();
 
 			context->SetAttributeLocation(id, StaticMesh::VertexAttributes::VERTEX, "vertex");
 			context->SetAttributeLocation(id, StaticMesh::VertexAttributes::NORMAL, "normal");
@@ -68,7 +68,7 @@ void StaticMeshRenderer::Render(const StaticMesh& mesh)
 {
 	assert(Instance != nullptr);
 	
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 	mesh.Bind();
 
 	Matrix4F v_matrix  = Camera3D::GetInstance()->GetViewMatrix();
@@ -105,7 +105,7 @@ void StaticMeshRenderer::Render(const StaticMesh& mesh, const Transform3D* trans
 {
 	assert(Instance != nullptr);
 
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 	mesh.Bind();
 	
 	Matrix4F vertex_matrices[StaticMesh::NODE_LIMIT];

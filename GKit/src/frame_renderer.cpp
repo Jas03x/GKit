@@ -5,7 +5,7 @@
 #include <gk/file.hpp>
 #include <gk/quad.hpp>
 
-FrameRenderer* FrameRenderer::m_Instance = nullptr;
+FrameRenderer* FrameRenderer::Instance = nullptr;
 
 FrameRenderer::FrameRenderer()
 {
@@ -28,41 +28,41 @@ FrameRenderer::~FrameRenderer()
 
 void FrameRenderer::CreateInstance()
 {
-	assert(m_Instance == nullptr);
-    if (m_Instance == nullptr)
+	assert(Instance == nullptr);
+    if (Instance == nullptr)
 	{
-		m_Instance = new FrameRenderer();
+		Instance = new FrameRenderer();
 	}
 }
 
 void FrameRenderer::DeleteInstance()
 {
-	assert(m_Instance != nullptr);
-    if (m_Instance)
+	assert(Instance != nullptr);
+    if (Instance)
 	{
-		delete m_Instance;
-		m_Instance = nullptr;
+		delete Instance;
+		Instance = nullptr;
 	}
 }
 
 void FrameRenderer::Bind()
 {
-    assert(m_Instance != nullptr);
+    assert(Instance != nullptr);
     
-	m_Instance->Shader::Bind();
+	Instance->Shader::Bind();
 	Quad::Bind();
 }
 
 void FrameRenderer::Render(GFX_HANDLE textureID, float opacity)
 {
-    assert(m_Instance != nullptr);
-	RenderingContext* context = RenderingContext::GetInstance();
+    assert(Instance != nullptr);
+	const RenderingContext* context = RenderingContext::GetInstance();
 
-	context->LoadConstant1F(m_Instance->m_Opacity, opacity);
+	context->LoadConstant1F(Instance->m_Opacity, opacity);
 	
 	context->ActivateTextureSlot(GFX_TEXTURE_SLOT0);
 	context->BindTexture(GFX_TEXTURE_2D, textureID);
-	context->LoadConstant1I(m_Instance->m_TextureID, 0);
+	context->LoadConstant1I(Instance->m_TextureID, 0);
 
 	context->DrawArray(GFX_TRIANGLES, 0, Quad::GetVertexCount());
 }

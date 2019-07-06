@@ -1,8 +1,8 @@
 #include <gk/tga_image.hpp>
 
+#include <assert.h>
 #include <string.h>
 
-#include <gk/assert.hpp>
 #include <gk/file.hpp>
 
 // TGA Loader
@@ -27,24 +27,24 @@ typedef struct TGA_Header
 	uint8_t height[2];
 	uint8_t bpp;
 	uint8_t image_desc;
-}TGA_Header;
+} TGA_Header;
 
 TgaImage::TgaImage(const char* path)
 {
 	File* file = File::Open(path, "rb");
-	GK_ASSERT(file != nullptr, ("Error: Could not open file [%s] for reading\n", path));
+	assert(file != nullptr);
 
 	TGA_Header header;
 	file->Read(&header, sizeof(TGA_Header), 1);
 	
-	GK_ASSERT(memcmp(CMP_TGA_HDR, &header, sizeof(CMP_TGA_HDR)) == 0, ("Invalid TGA file %s\n", path));
+	assert(memcmp(CMP_TGA_HDR, &header, sizeof(CMP_TGA_HDR)) == 0);
 
 	m_Width = header.width[1] * 256 + header.width[0];
 	m_Height = header.height[1] * 256 + header.height[0];
 	uint32_t bpp = header.bpp;
 	m_HasAlpha = (bpp == 32);
 
-	GK_ASSERT((m_Width > 0) && (m_Height > 0) && ((bpp == 24) || (bpp == 32)), ("Corrupt TGA file %s\n", path));
+	assert((m_Width > 0) && (m_Height > 0) && ((bpp == 24) || (bpp == 32)));
 
 	uint32_t pixel_size = bpp / 8;
 	uint32_t pixel_count = m_Width * m_Height;

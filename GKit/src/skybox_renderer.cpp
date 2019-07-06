@@ -59,7 +59,7 @@ void SkyboxRenderer::Render(const Skybox& skybox)
 	Quad::Bind();
 
 	assert(Instance != nullptr);
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 	
 	Matrix4F projection = Camera3D::GetInstance()->GetProjectionMatrix();
 	Matrix4F view = Camera3D::GetInstance()->GetViewMatrix();

@@ -1,8 +1,9 @@
 #include <gk/mesh_data.hpp>
 
+#include <assert.h>
+
 #include <map>
 
-#include <gk/assert.hpp>
 #include <gk/file.hpp>
 #include <gk/mdl_format.hpp>
 
@@ -17,7 +18,7 @@ unsigned int MeshData::ReadTextures(const byte* data)
 	unsigned int offset = 0;
 	
 	const MDL_Array* array = reinterpret_cast<const MDL_Array*>(data);
-	GK_ASSERT(array->type == TEXTURE_ARRAY, ("Unexpected MDL array type\n"));
+	assert(array->type == TEXTURE_ARRAY);
 	offset += sizeof(MDL_Array);
 
 	for(unsigned int i = 0; i < array->length; i++)
@@ -37,7 +38,7 @@ unsigned int MeshData::ReadMaterials(const byte* data)
 	unsigned int offset = 0;
 
 	const MDL_Array* array = reinterpret_cast<const MDL_Array*>(data);
-	GK_ASSERT(array->type == MATERIAL_ARRAY, ("Unexpected MDL array type\n"));
+	assert(array->type == MATERIAL_ARRAY);
 	offset += sizeof(MDL_Array);
 
 	for(unsigned int i = 0; i < array->length; i++)
@@ -67,7 +68,7 @@ unsigned int MeshData::ReadNodes(const byte* data)
 	unsigned int offset = 0;
 
 	const MDL_Array* array = reinterpret_cast<const MDL_Array*>(data);
-	GK_ASSERT(array->type == NODE_ARRAY, ("Unexpected MDL array type\n"));
+	assert(array->type == NODE_ARRAY);
 	offset += sizeof(MDL_Array);
 
 	for(unsigned int i = 0; i < array->length; i++)
@@ -99,7 +100,7 @@ unsigned int MeshData::ReadBones(const byte* data)
 	unsigned int offset = 0;
 
 	const MDL_Array* array = reinterpret_cast<const MDL_Array*>(data);
-	GK_ASSERT(array->type == BONE_ARRAY, ("Unexpected MDL array type\n"));
+	assert(array->type == BONE_ARRAY);
 	offset += sizeof(MDL_Array);
 
 	for(unsigned int i = 0; i < array->length; i++)
@@ -157,7 +158,7 @@ unsigned int MeshData::ReadMeshes(const byte* data)
 	unsigned int vertex_offset = 0; // each mesh has its own set of vertices, but the vertices are all stored in one big array. So we need to store an offset into the combined array
 
 	const MDL_Array* array = reinterpret_cast<const MDL_Array*>(data);
-	GK_ASSERT(array->type == MESH_ARRAY, ("Unexpected MDL array type\n"));
+	assert(array->type == MESH_ARRAY);
 	offset += sizeof(MDL_Array);
 
 	for(unsigned int i = 0; i < array->length; i++)
@@ -237,7 +238,7 @@ MeshData::MeshData(const char* path)
 	MDL_Header header;
 	
 	file->Read(&header, sizeof(MDL_Header), 1);
-	GK_ASSERT(header.signature == MDL_SIGNATURE, ("Error: File [%s] is not a valid MDL file\n", path));
+	assert(header.signature == MDL_SIGNATURE);
 
 	file->Seek(FILE_END);
 	unsigned int size = file->Tell();
@@ -259,7 +260,7 @@ MeshData::MeshData(const char* path)
 	offset += ReadBones(buffer.data() + offset);
 	offset += ReadMeshes(buffer.data() + offset);
 
-	GK_ASSERT(offset == size, ("MDL file not fully read: %u bytes of %u read\n", offset, size));
+	assert(offset == size);
 }
 
 MeshData::~MeshData()

@@ -1,6 +1,6 @@
 #include <gk/file.hpp>
 
-#include <gk/assert.hpp>
+#include <assert.h>
 
 File::File()
 {
@@ -12,7 +12,7 @@ File* File::Open(const char* path, const char* mode)
 	File* file = new File();
 	file->m_Handle = fopen(path, mode);
 
-	GK_ASSERT(file->m_Handle != nullptr, ("Error: File [%s] could not be opened for [%s]\n", path, mode));
+	assert(file->m_Handle != nullptr);
 	return file;
 }
 
@@ -31,18 +31,18 @@ FILE* File::GetHandle()
 
 void File::Seek(int origin, long int offset)
 {
-	GK_ASSERT(fseek(m_Handle, offset, origin) == 0, ("File seek failure\n"));
+	assert(fseek(m_Handle, offset, origin) == 0);
 }
 
 void File::Read(void* buffer, size_t size, size_t count)
 {
-	GK_ASSERT(fread(buffer, size, count, m_Handle) == count, ("Error reading file\n"));
+	assert(fread(buffer, size, count, m_Handle) == count);
 }
 
 long int File::Tell()
 {
 	long int ret = ftell(m_Handle);
-	GK_ASSERT(ret != -1L, ("File tell failure\n"));
+	assert(ret != -1L);
 
 	return ret;
 }

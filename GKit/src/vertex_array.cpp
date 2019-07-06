@@ -2,13 +2,13 @@
 
 VertexArray::VertexArray()
 {
-    RenderingContext* context = RenderingContext::GetInstance();
+    const RenderingContext* context = RenderingContext::GetInstance();
     context->CreateVertexArrays(1, &m_Handle);
 }
 
 VertexArray::~VertexArray()
 {
-    RenderingContext* context = RenderingContext::GetInstance();
+    const RenderingContext* context = RenderingContext::GetInstance();
     if(context->IsVertexArray(m_Handle) == true)
     {
         context->DeleteVertexArrays(1, &m_Handle);

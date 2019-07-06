@@ -1,9 +1,10 @@
 #include <gk/static_mesh.hpp>
 
-#include <map>
+#include <assert.h>
 #include <string.h>
 
-#include <gk/assert.hpp>
+#include <map>
+
 #include <gk/tga_image.hpp>
 
 StaticMesh::StaticMesh() :
@@ -16,8 +17,8 @@ StaticMesh::StaticMesh() :
 StaticMesh::StaticMesh(const MeshData& data, const std::string& texture_directory) :
 	RootNode("Root")
 {
-	GK_ASSERT(data.Nodes.size() <= NODE_LIMIT, ("Error: Model exceeds node limit!\n"));
-	GK_ASSERT(data.Textures.size() != 0, ("Error: Model has zero textures!\n"));
+	assert(data.Nodes.size() <= NODE_LIMIT);
+	assert(data.Textures.size() != 0);
 
 	std::map<std::string, unsigned int> node_map;
 
@@ -60,7 +61,7 @@ StaticMesh::StaticMesh(const MeshData& data, const std::string& texture_director
 		index_iterator += mesh.indices.size();
 	}
 
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 
 	m_VAO = new VertexArray();
 	m_VAO->Bind();

@@ -1,8 +1,7 @@
 #include <gk/camera_2d.hpp>
 
+#include <assert.h>
 #include <stdio.h>
-
-#include <gk/assert.hpp>
 
 Camera2D* Camera2D::Instance = NULL;
 
@@ -30,7 +29,7 @@ void Camera2D::Bind()
 
 Camera2D* Camera2D::GetInstance()
 {
-	GK_ASSERT(Instance != nullptr, ("View singleton not initialized\n"));
+	assert(Instance != nullptr);
 	
 	return Instance;
 }

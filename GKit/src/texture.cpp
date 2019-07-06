@@ -12,7 +12,7 @@ Texture::Texture(uint32_t format, unsigned int width, unsigned int height, uint3
 
 Texture::~Texture()
 {
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 	if (context->IsTexture(m_Handle) == GFX_TRUE)
 	{
 		context->DeleteTextures(1, &m_Handle);
@@ -21,7 +21,7 @@ Texture::~Texture()
 
 void Texture::Load(uint32_t format, unsigned int width, unsigned int height, uint32_t type, void* pixels, uint32_t filter_mode, uint32_t wrap_mode)
 {
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 
 	context->CreateTextures(1, &m_Handle);
 	context->BindTexture(GFX_TEXTURE_2D, m_Handle);
@@ -35,7 +35,7 @@ void Texture::Load(uint32_t format, unsigned int width, unsigned int height, uin
 
 void Texture::Bind(uint32_t uniform, int target) const
 {
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 
 	context->ActivateTextureSlot(GFX_TEXTURE_SLOT0 + target);
 	context->BindTexture(GFX_TEXTURE_2D, m_Handle);

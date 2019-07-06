@@ -15,7 +15,7 @@ DynamicMeshRenderer::DynamicMeshRenderer()
 		File::Read(SHADER_BASE "dynamic_mesh_renderer.frag").c_str(),
 		[](GFX_HANDLE id)
 		{
-			RenderingContext* context = RenderingContext::GetInstance();
+			const RenderingContext* context = RenderingContext::GetInstance();
 
 			context->SetAttributeLocation(id, DynamicMesh::VertexAttributes::VERTEX,      "vertex");
 			context->SetAttributeLocation(id, DynamicMesh::VertexAttributes::NORMAL,      "normal");
@@ -70,7 +70,7 @@ void DynamicMeshRenderer::Render(const DynamicMesh& mesh)
 {
 	assert(Instance != nullptr);
 	
-	RenderingContext* context = RenderingContext::GetInstance();
+	const RenderingContext* context = RenderingContext::GetInstance();
 	mesh.Bind();
 
 	Matrix4F v_matrix = Camera3D::GetInstance()->GetViewMatrix();
