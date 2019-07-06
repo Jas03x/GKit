@@ -7,7 +7,7 @@
 
 bool _check_status (
 	GFX_HANDLE handle,
-	uint pname,
+	unsigned int pname,
 	const char* operation,
 	void (*getObjIv)(uint32_t, uint32_t, int32_t*),
 	void (*getObjInfoLog)(uint32_t, int32_t, int32_t*, char*))

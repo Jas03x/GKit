@@ -1,11 +1,11 @@
-#ifndef CONFIG_HPP
-#define CONFIG_HPP
+#ifndef GK_CONFIG_HPP
+#define GK_CONFIG_HPP
 
-#define SHADER_BASE "C:/Users/Jas/Documents/Projects/GKit/GKit/shaders/"
+#define SHADER_BASE "C:/Users/Jas/Documents/GKit/GKit/shdr/"
 
 #define STATIC_MESH_NODE_LIMIT 32
 
 #define DYNAMIC_MESH_NODE_LIMIT 32
 #define DYNAMIC_MESH_BONE_LIMIT 32
 
-#endif // CONFIG_HPP
+#endif // GK_CONFIG_HPP

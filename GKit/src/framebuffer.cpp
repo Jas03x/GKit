@@ -5,7 +5,7 @@
 
 #include <memory>
 
-Framebuffer::Attachment::Attachment(uint width, uint height, uint format)
+Framebuffer::Attachment::Attachment(unsigned int width, unsigned int height, unsigned int format)
 {
     m_Type = BUFFER;
 
@@ -15,7 +15,7 @@ Framebuffer::Attachment::Attachment(uint width, uint height, uint format)
     context->RenderbufferStorage(GFX_RENDERBUFFER, format, width, height);
 }
 
-Framebuffer::Attachment::Attachment(uint width, uint height, uint component_format, uint component_type, uint filter, uint wrap_mode)
+Framebuffer::Attachment::Attachment(unsigned int width, unsigned int height, unsigned int component_format, unsigned int component_type, unsigned int filter, unsigned int wrap_mode)
 {
     m_Type = TEXTURE;
 
@@ -98,7 +98,7 @@ void Framebuffer::Attachment::Bind(GFX_HANDLE target, GFX_HANDLE attachment)
     }
 }
 
-Framebuffer::Framebuffer(uint width, unsigned height, Attachment* colorAttachment, Attachment* depthAttachment)
+Framebuffer::Framebuffer(unsigned int width, unsigned height, Attachment* colorAttachment, Attachment* depthAttachment)
 {
     m_Width  = width;
     m_Height = height;
@@ -135,12 +135,12 @@ void Framebuffer::Bind() const
     context->SetViewport(0, 0, m_Width, m_Height);
 }
 
-uint Framebuffer::GetWidth() const
+unsigned int Framebuffer::GetWidth() const
 {
     return m_Width;
 }
 
-uint Framebuffer::GetHeight() const
+unsigned int Framebuffer::GetHeight() const
 {
     return m_Height;
 }
@@ -151,7 +151,7 @@ uint Framebuffer::GetHeight() const
 
 static Framebuffer* DefaultFramebuffer;
 
-void Framebuffer::InitializeDefaultFramebuffer(uint width, uint height)
+void Framebuffer::InitializeDefaultFramebuffer(unsigned int width, unsigned int height)
 {
     // we use the standard allocator because we do not want to use any constructor -- we want to simply assign the fields ourselves
     std::allocator<Framebuffer> allocator;

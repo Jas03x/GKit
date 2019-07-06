@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-VertexBuffer::VertexBuffer(uint type)
+VertexBuffer::VertexBuffer(unsigned int type)
 {
     const RenderingContext* context = RenderingContext::GetInstance();
     context->CreateAllocations(1, &m_Handle);

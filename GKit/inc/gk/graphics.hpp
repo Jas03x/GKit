@@ -7,6 +7,11 @@
 
 typedef unsigned int GFX_HANDLE;
 
+enum
+{
+    GFX_NULL = 0
+};
+
 enum GFX_TEXTURE_SLOT
 {
     GFX_TEXTURE_SLOT0 = 0x84C0

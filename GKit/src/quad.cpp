@@ -43,7 +43,7 @@ Quad::Quad()
 	context->EnableVertexAttribute(VertexAttributes::VERTEX);
 	context->SetVertexAttributeLayoutF(VertexAttributes::VERTEX, 2, GFX_TYPE_FLOAT, false, 0, 0);
 
-	context->BindVertexArray(0);
+	context->BindVertexArray(GFX_NULL);
 }
 
 Quad::~Quad()
@@ -89,5 +89,5 @@ void Quad::Bind()
 unsigned int Quad::GetVertexCount()
 {
 	assert(Instance != nullptr);
-	return 6;
+	return sizeof(QUAD_DATA) * 3 / sizeof(float);
 }

@@ -10,10 +10,10 @@ private:
 	GFX_HANDLE m_Texture;
 
 public:
-	Skybox(const char* textures[6]);
+	Skybox(const char* textures[6]); // +x, -x, +y, -y, +z, -z
 	~Skybox();
 
-	void Bind(uint uniform, int target) const;
+	void Bind(unsigned int uniform, int target) const;
 };
 
 #endif // GK_SKYBOX_H

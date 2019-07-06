@@ -51,7 +51,10 @@ void SkyboxRenderer::Bind()
 {
 	assert(Instance != nullptr);
 
+	const RenderingContext* context = RenderingContext::GetInstance();
+
 	Instance->Shader::Bind();
+	context->SetDepthMask(GFX_FALSE);
 }
 
 void SkyboxRenderer::Render(const Skybox& skybox)

@@ -9,10 +9,10 @@ class VertexBuffer
 private:
 	GFX_HANDLE m_Handle;
 
-    uint m_Type;
+    unsigned int m_Type;
 
 public:
-    VertexBuffer(uint type);
+    VertexBuffer(unsigned int type);
     ~VertexBuffer();
 
 	GFX_HANDLE GetHandle();

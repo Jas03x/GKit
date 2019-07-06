@@ -39,7 +39,7 @@ Skybox::~Skybox()
 	}
 }
 
-void Skybox::Bind(uint uniform, int target) const
+void Skybox::Bind(unsigned int uniform, int target) const
 {
 	const RenderingContext* context = RenderingContext::GetInstance();
 	context->ActivateTextureSlot(GFX_TEXTURE_SLOT0 + target);

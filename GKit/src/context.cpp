@@ -51,18 +51,18 @@ ContextImpl::ContextImpl(const char* title, unsigned int width, unsigned int hei
 	SDL_ASSERT(m_Context != NULL, "SDL OpenGL context creation failure");
 
 	memset(m_KeyMap, 0, sizeof(m_KeyMap));
-	m_KeyMap[SDL_SCANCODE_UP]     = INPUT::KEY_UP;
-	m_KeyMap[SDL_SCANCODE_DOWN]   = INPUT::KEY_DOWN;
-	m_KeyMap[SDL_SCANCODE_LEFT]   = INPUT::KEY_LEFT;
-	m_KeyMap[SDL_SCANCODE_RIGHT]  = INPUT::KEY_RIGHT;
-	m_KeyMap[SDL_SCANCODE_W]	  = INPUT::KEY_W;
-	m_KeyMap[SDL_SCANCODE_A]	  = INPUT::KEY_A;
-	m_KeyMap[SDL_SCANCODE_S]	  = INPUT::KEY_S;
-	m_KeyMap[SDL_SCANCODE_D]	  = INPUT::KEY_D;
-	m_KeyMap[SDL_SCANCODE_Q]	  = INPUT::KEY_Q;
-	m_KeyMap[SDL_SCANCODE_E]	  = INPUT::KEY_E;
-	m_KeyMap[SDL_SCANCODE_RETURN] = INPUT::KEY_RETURN;
-	m_KeyMap[SDL_SCANCODE_ESCAPE] = INPUT::KEY_ESCAPE;
+	m_KeyMap[SDL_SCANCODE_UP]     = KEY_UP;
+	m_KeyMap[SDL_SCANCODE_DOWN]   = KEY_DOWN;
+	m_KeyMap[SDL_SCANCODE_LEFT]   = KEY_LEFT;
+	m_KeyMap[SDL_SCANCODE_RIGHT]  = KEY_RIGHT;
+	m_KeyMap[SDL_SCANCODE_W]	  = KEY_W;
+	m_KeyMap[SDL_SCANCODE_A]	  = KEY_A;
+	m_KeyMap[SDL_SCANCODE_S]	  = KEY_S;
+	m_KeyMap[SDL_SCANCODE_D]	  = KEY_D;
+	m_KeyMap[SDL_SCANCODE_Q]	  = KEY_Q;
+	m_KeyMap[SDL_SCANCODE_E]	  = KEY_E;
+	m_KeyMap[SDL_SCANCODE_RETURN] = KEY_RETURN;
+	m_KeyMap[SDL_SCANCODE_ESCAPE] = KEY_ESCAPE;
 }
 
 ContextImpl::~ContextImpl()
@@ -102,7 +102,7 @@ bool ContextImpl::PollEvent(Event& e)
 			{
 				e.key_args.key = m_KeyMap[event.key.keysym.scancode];
 				e.type = EVENT_KEY_INPUT;
-				e.key_args.action = (event.type == SDL_KEYDOWN) ? INPUT::KEY_PRESSED : INPUT::KEY_RELEASED;
+				e.key_args.action = (event.type == SDL_KEYDOWN) ? ACTION_KEY_PRESSED : ACTION_KEY_RELEASED;
 
 				return true;
 			}

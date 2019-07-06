@@ -16,13 +16,13 @@ Camera3D::Camera3D(float fov, float width, float height, float zNear, float zFar
 
 void Camera3D::Bind()
 {
-	assert(Instance != nullptr);
-	
 	Instance = this;
 }
 
 Camera3D* Camera3D::GetInstance()
 {
+	assert(Instance != nullptr);
+	
 	return Instance;
 }
 

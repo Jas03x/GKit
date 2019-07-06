@@ -3,32 +3,29 @@
 
 #include <stdint.h>
 
-namespace INPUT
+enum
 {
-	enum
-	{
-		KEY_UNKNOWN	= 0x0,
-		KEY_UP		= 0x1,
-		KEY_DOWN	= 0x2,
-		KEY_LEFT	= 0x3,
-		KEY_RIGHT	= 0x4,
-		KEY_W		= 0x5,
-		KEY_A		= 0x6,
-		KEY_S		= 0x7,
-		KEY_D		= 0x8,
-		KEY_Q		= 0x9,
-		KEY_E		= 0xA,
-		KEY_RETURN	= 0xB,
-		KEY_ESCAPE  = 0xC,
-		KEY_COUNT   = 0xD
-	};
+	KEY_UNKNOWN	= 0x0,
+	KEY_UP		= 0x1,
+	KEY_DOWN	= 0x2,
+	KEY_LEFT	= 0x3,
+	KEY_RIGHT	= 0x4,
+	KEY_W		= 0x5,
+	KEY_A		= 0x6,
+	KEY_S		= 0x7,
+	KEY_D		= 0x8,
+	KEY_Q		= 0x9,
+	KEY_E		= 0xA,
+	KEY_RETURN	= 0xB,
+	KEY_ESCAPE  = 0xC,
+	KEY_COUNT   = 0xD
+};
 
-	enum
-	{
-		KEY_PRESSED  = 0x1,
-		KEY_RELEASED = 0x2
-	};
-}
+enum
+{
+	ACTION_KEY_PRESSED  = 0x1,
+	ACTION_KEY_RELEASED = 0x2
+};
 
 enum EVENT_TYPE
 {

@@ -21,11 +21,11 @@ public:
         ATTACHMENT_TYPE m_Type;
 
     public:
-        Attachment(uint width, uint height, uint format); // creates a RENDER-BUFFER
-        Attachment(uint width, uint height, uint component_format, uint component_type, uint filter, uint wrap_mode); // creates a RENDER-TEXTURE
+        Attachment(unsigned int width, unsigned int height, unsigned int format); // creates a RENDER-BUFFER
+        Attachment(unsigned int width, unsigned int height, unsigned int component_format, unsigned int component_type, unsigned int filter, unsigned int wrap_mode); // creates a RENDER-TEXTURE
         ~Attachment();
 
-        void Bind(uint target, uint attachment);
+        void Bind(unsigned int target, unsigned int attachment);
 
 		GFX_HANDLE GetHandle();
         ATTACHMENT_TYPE GetType();
@@ -34,18 +34,18 @@ public:
 private:
 	GFX_HANDLE m_Handle;
 
-    uint m_Width;
-    uint m_Height;
+    unsigned int m_Width;
+    unsigned int m_Height;
 
 public:
-    Framebuffer(uint width, uint height, Attachment* colorAttachment, Attachment* depthAttachment);
+    Framebuffer(unsigned int width, unsigned int height, Attachment* colorAttachment, Attachment* depthAttachment);
     ~Framebuffer();
 
     void Bind() const;
-    uint GetWidth() const;
-    uint GetHeight() const;
+    unsigned int GetWidth() const;
+    unsigned int GetHeight() const;
 
-    static void InitializeDefaultFramebuffer(uint width, uint height);
+    static void InitializeDefaultFramebuffer(unsigned int width, unsigned int height);
     static void DestroyDefaultFramebuffer();
     static const Framebuffer* GetDefaultFramebuffer();
 };

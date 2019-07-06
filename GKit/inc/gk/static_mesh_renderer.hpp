@@ -11,12 +11,12 @@ class StaticMeshRenderer : public Shader
 private:
 	static StaticMeshRenderer* Instance;
 
-	uint m_ProjectionMatrix;
-	uint m_VertexMatricies;
-	uint m_NormalMatricies;
-	uint m_DiffuseTexture;
-	uint m_SunPosition;
-	uint m_SunColor;
+	unsigned int m_ProjectionMatrix;
+	unsigned int m_VertexMatricies;
+	unsigned int m_NormalMatricies;
+	unsigned int m_DiffuseTexture;
+	unsigned int m_SunPosition;
+	unsigned int m_SunColor;
 
 private:
 	StaticMeshRenderer();

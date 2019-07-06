@@ -9,7 +9,7 @@ VertexArray::VertexArray()
 VertexArray::~VertexArray()
 {
     const RenderingContext* context = RenderingContext::GetInstance();
-    if(context->IsVertexArray(m_Handle) == true)
+    if(context->IsVertexArray(m_Handle) == GFX_TRUE)
     {
         context->DeleteVertexArrays(1, &m_Handle);
     }
@@ -25,22 +25,22 @@ void VertexArray::Bind()
     RenderingContext::GetInstance()->BindVertexArray(m_Handle);
 }
 
-void VertexArray::EnableVertexAttribute(uint index)
+void VertexArray::EnableVertexAttribute(unsigned int index)
 {
     RenderingContext::GetInstance()->EnableVertexAttribute(index);
 }
 
-void VertexArray::DisableVertexAttribute(uint index)
+void VertexArray::DisableVertexAttribute(unsigned int index)
 {
     RenderingContext::GetInstance()->DisableVertexAttribute(index);
 }
 
-void VertexArray::SetVertexAttributeLayout(uint index, uint size, uint type, uint32_t stride, const void* offset)
+void VertexArray::SetVertexAttributeLayout(unsigned int index, unsigned int size, unsigned int type, uint32_t stride, const void* offset)
 {
     RenderingContext::GetInstance()->SetVertexAttributeLayoutI(index, size, type, stride, offset);
 }
 
-void VertexArray::SetVertexAttributeLayout(uint index, uint size, uint type, uint8_t normalized, uint32_t stride, const void* offset)
+void VertexArray::SetVertexAttributeLayout(unsigned int index, unsigned int size, unsigned int type, uint8_t normalized, uint32_t stride, const void* offset)
 {
     RenderingContext::GetInstance()->SetVertexAttributeLayoutF(index, size, type, normalized, stride, offset);
 }
