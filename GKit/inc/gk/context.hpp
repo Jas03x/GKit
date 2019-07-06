@@ -32,14 +32,14 @@ namespace INPUT
 
 enum EVENT_TYPE
 {
-	UNKNOWN   = 0x0,
-	QUIT      = 0x1,
-	KEY_INPUT = 0x2
+	EVENT_UNKNOWN   = 0x0,
+	EVENT_QUIT      = 0x1,
+	EVENT_KEY_INPUT = 0x2
 };
 
 struct Event
 {
-	uint8_t m_type;
+	uint8_t type;
 
 	union
 	{
@@ -47,7 +47,7 @@ struct Event
 		{
 			uint16_t key;
 			uint8_t  action;
-		} m_key_args;
+		} key_args;
 	};
 };
 
