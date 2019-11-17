@@ -1,2 +1,3 @@
 GKit/bin/*.o
 GKit/bin/GKIT.LIB
+*.DS_Store
