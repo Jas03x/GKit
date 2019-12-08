@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-enum
+enum KEY_CODE
 {
 	KEY_UNKNOWN	= 0x0,
 	KEY_UP		= 0x1,
@@ -21,31 +21,15 @@ enum
 	KEY_COUNT   = 0xD
 };
 
-enum
-{
-	ACTION_KEY_PRESSED  = 0x1,
-	ACTION_KEY_RELEASED = 0x2
-};
-
 enum EVENT_TYPE
 {
 	EVENT_UNKNOWN   = 0x0,
-	EVENT_QUIT      = 0x1,
-	EVENT_KEY_INPUT = 0x2
+	EVENT_QUIT      = 0x1
 };
 
 struct Event
 {
 	uint8_t type;
-
-	union
-	{
-		struct
-		{
-			uint16_t key;
-			uint8_t  action;
-		} key_args;
-	};
 };
 
 class Context
@@ -54,10 +38,11 @@ public:
 	static bool CreateInstance(const char* title, unsigned int width, unsigned int height);
 	static void DeleteInstance();
 
-	static uint32_t GetTime();
-
 	static void Update();
 	static bool PollEvent(Event& e);
+
+	static uint32_t GetTime();
+	static bool GetKeyState(KEY_CODE code);
 };
 
 #endif // GK_CONTEXT_H
