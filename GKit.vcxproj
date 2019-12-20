@@ -138,6 +138,105 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="Makefile" />
+    <None Include="shdr\dynamic_mesh_renderer.frag" />
+    <None Include="shdr\dynamic_mesh_renderer.vert" />
+    <None Include="shdr\frame_renderer.frag" />
+    <None Include="shdr\frame_renderer.vert" />
+    <None Include="shdr\gaussian_blur.frag" />
+    <None Include="shdr\gaussian_blur.vert" />
+    <None Include="shdr\particle.frag" />
+    <None Include="shdr\particle.vert" />
+    <None Include="shdr\skybox_renderer.frag" />
+    <None Include="shdr\skybox_renderer.vert" />
+    <None Include="shdr\sprite_renderer.frag" />
+    <None Include="shdr\sprite_renderer.vert" />
+    <None Include="shdr\static_mesh_renderer.frag" />
+    <None Include="shdr\static_mesh_renderer.vert" />
+    <None Include="tools\mdl_exporter.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\blur_shader.cpp" />
+    <ClCompile Include="src\bone.cpp" />
+    <ClCompile Include="src\camera_2d.cpp" />
+    <ClCompile Include="src\camera_3d.cpp" />
+    <ClCompile Include="src\clock.cpp" />
+    <ClCompile Include="src\context.cpp" />
+    <ClCompile Include="src\dynamic_mesh.cpp" />
+    <ClCompile Include="src\dynamic_mesh_renderer.cpp" />
+    <ClCompile Include="src\file.cpp" />
+    <ClCompile Include="src\framebuffer.cpp" />
+    <ClCompile Include="src\frame_renderer.cpp" />
+    <ClCompile Include="src\graphics.cpp" />
+    <ClCompile Include="src\matrix.cpp" />
+    <ClCompile Include="src\mesh.cpp" />
+    <ClCompile Include="src\mesh_data.cpp" />
+    <ClCompile Include="src\mesh_util.cpp" />
+    <ClCompile Include="src\node.cpp" />
+    <ClCompile Include="src\particle_array.cpp" />
+    <ClCompile Include="src\particle_renderer_3d.cpp" />
+    <ClCompile Include="src\quad.cpp" />
+    <ClCompile Include="src\random.cpp" />
+    <ClCompile Include="src\shader.cpp" />
+    <ClCompile Include="src\skybox.cpp" />
+    <ClCompile Include="src\skybox_renderer.cpp" />
+    <ClCompile Include="src\sprite.cpp" />
+    <ClCompile Include="src\sprite_renderer.cpp" />
+    <ClCompile Include="src\static_mesh.cpp" />
+    <ClCompile Include="src\static_mesh_renderer.cpp" />
+    <ClCompile Include="src\sun.cpp" />
+    <ClCompile Include="src\texture.cpp" />
+    <ClCompile Include="src\tga_image.cpp" />
+    <ClCompile Include="src\transform_2d.cpp" />
+    <ClCompile Include="src\transform_3d.cpp" />
+    <ClCompile Include="src\vertex_array.cpp" />
+    <ClCompile Include="src\vertex_buffer.cpp" />
+    <ClCompile Include="src\view.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\gk\blur_shader.hpp" />
+    <ClInclude Include="inc\gk\bone.hpp" />
+    <ClInclude Include="inc\gk\camera_2d.hpp" />
+    <ClInclude Include="inc\gk\camera_3d.hpp" />
+    <ClInclude Include="inc\gk\clock.hpp" />
+    <ClInclude Include="inc\gk\config.hpp" />
+    <ClInclude Include="inc\gk\context.hpp" />
+    <ClInclude Include="inc\gk\data_types.hpp" />
+    <ClInclude Include="inc\gk\dynamic_mesh.hpp" />
+    <ClInclude Include="inc\gk\dynamic_mesh_renderer.hpp" />
+    <ClInclude Include="inc\gk\file.hpp" />
+    <ClInclude Include="inc\gk\framebuffer.hpp" />
+    <ClInclude Include="inc\gk\frame_renderer.hpp" />
+    <ClInclude Include="inc\gk\graphics.hpp" />
+    <ClInclude Include="inc\gk\matrix.hpp" />
+    <ClInclude Include="inc\gk\mdl_format.hpp" />
+    <ClInclude Include="inc\gk\mesh.hpp" />
+    <ClInclude Include="inc\gk\mesh_data.hpp" />
+    <ClInclude Include="inc\gk\mesh_util.hpp" />
+    <ClInclude Include="inc\gk\node.hpp" />
+    <ClInclude Include="inc\gk\particle.hpp" />
+    <ClInclude Include="inc\gk\particle_array.hpp" />
+    <ClInclude Include="inc\gk\particle_renderer_3d.hpp" />
+    <ClInclude Include="inc\gk\quad.hpp" />
+    <ClInclude Include="inc\gk\random.hpp" />
+    <ClInclude Include="inc\gk\shader.hpp" />
+    <ClInclude Include="inc\gk\skybox.hpp" />
+    <ClInclude Include="inc\gk\skybox_renderer.hpp" />
+    <ClInclude Include="inc\gk\sprite.hpp" />
+    <ClInclude Include="inc\gk\sprite_renderer.hpp" />
+    <ClInclude Include="inc\gk\static_mesh.hpp" />
+    <ClInclude Include="inc\gk\static_mesh_renderer.hpp" />
+    <ClInclude Include="inc\gk\sun.hpp" />
+    <ClInclude Include="inc\gk\texture.hpp" />
+    <ClInclude Include="inc\gk\tga_image.hpp" />
+    <ClInclude Include="inc\gk\transform_2d.hpp" />
+    <ClInclude Include="inc\gk\transform_3d.hpp" />
+    <ClInclude Include="inc\gk\vertex_array.hpp" />
+    <ClInclude Include="inc\gk\vertex_buffer.hpp" />
+    <ClInclude Include="inc\gk\view.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Todo.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
