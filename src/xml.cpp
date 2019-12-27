@@ -419,7 +419,7 @@ public:
         XML::Node* root = nullptr;
 
         std::string file_data = File::Read(path);
-        char* data = file_data.data();
+        const char* data = file_data.data();
 
         static const char* HDR_STR = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
         static const unsigned int HDR_LEN = 38;

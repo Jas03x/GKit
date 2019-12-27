@@ -82,7 +82,7 @@ void StaticMeshRenderer::Render(const StaticMesh& mesh)
 		normal_matrices[i] = Matrix::Inverse(Matrix::Transpose(vertex_matrices[i]));
 	}
 
-	Vector3F sun_position = (v_matrix * Vector4F(Sun::Position, 1.0f)).xyz;
+	Vector3F sun_position = (v_matrix * Vector4F(Sun::Position, 1.0f)).xyz();
 
 	context->LoadConstantMatrix4F(Instance->m_VertexMatricies, mesh.Nodes.size(), GFX_FALSE, &vertex_matrices[0][0][0]);
     context->LoadConstantMatrix4F(Instance->m_NormalMatricies, mesh.Nodes.size(), GFX_FALSE, &normal_matrices[0][0][0]);
@@ -113,7 +113,7 @@ void StaticMeshRenderer::Render(const StaticMesh& mesh, const Transform3D* trans
 	Matrix4F v_matrix = Camera3D::GetInstance()->GetViewMatrix();
 	Matrix4F parentInverse = useParentTransform ? Matrix4F() : Matrix::Inverse(mesh.RootNode.GetLocalMatrix());
 
-	Vector3F sun_position = (v_matrix * Vector4F(Sun::Position, 1.0f)).xyz;
+	Vector3F sun_position = (v_matrix * Vector4F(Sun::Position, 1.0f)).xyz();
 
 	context->LoadConstantArray3F(Instance->m_SunPosition, 1, &sun_position[0]);
 	context->LoadConstantArray3F(Instance->m_SunColor, 1, &Sun::Color[0]);

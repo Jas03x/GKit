@@ -46,8 +46,6 @@ struct Vector3
     union {
         T values[3];
         struct { T x, y, z; };
-        
-        Vector2<T> xy;
     };
 
     Vector3();
@@ -55,6 +53,8 @@ struct Vector3
     Vector3(const Vector2<T>& v, T z);
     Vector3(const Vector3<T>& v);
     Vector3(T _x, T _y, T _z);
+
+    Vector2<T> xy() const;
 
     T&        operator [] (unsigned int i);
     const T&  operator [] (unsigned int i) const;
@@ -79,8 +79,6 @@ struct Vector4
     union {
         T values[4];
         struct { T x, y, z, w; };
-
-        Vector3<T> xyz;
     };
 
     Vector4();
@@ -88,6 +86,8 @@ struct Vector4
     Vector4(const Vector3<T>& v, T w);
     Vector4(const Vector4<T>& v);
     Vector4(T _x, T _y, T _z, T _w);
+
+    Vector3<T> xyz() const;
 
     T&        operator [] (unsigned int i);
     const T&  operator [] (unsigned int i) const;

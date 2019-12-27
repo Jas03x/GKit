@@ -35,27 +35,40 @@ void SDL_ERROR(const char* msg) {
 	printf("%s:\n%s\n", msg, SDL_GetError());
 }
 
-#define SDL_ASSERT(b, e) if(!(b)) { SDL_ERROR(e); throw -1; }
 
 bool Context::CreateInstance(const char* title, unsigned int width, unsigned int height)
 {
+    bool status = true;
+    #define SDL_ASSERT(b, e) if(!(b)) { SDL_ERROR(e); status = false; }
+
 	SDL_ASSERT(SDL_Init(SDL_INIT_EVERYTHING) >= 0, "SDL initialization failure");
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-	g_Window = SDL_CreateWindow(
-		title,
-		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-		width, height,
-		SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
-	);
-	SDL_ASSERT(g_Window != NULL, "SDL window creation failure");
+    if(status)
+    {
+        g_Window = SDL_CreateWindow(
+            title,
+            SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+            width, height,
+            SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
+        );
+        SDL_ASSERT(g_Window != NULL, "SDL window creation failure");
+    }
 
-	g_Context = SDL_GL_CreateContext(g_Window);
-	SDL_ASSERT(g_Context != NULL, "SDL OpenGL context creation failure");
+    if(status)
+    {
+	    g_Context = SDL_GL_CreateContext(g_Window);
+    	SDL_ASSERT(g_Context != NULL, "SDL OpenGL context creation failure");
+    }
 
-	g_Keyboard = SDL_GetKeyboardState(nullptr);
+    if(status)
+    {
+    	g_Keyboard = SDL_GetKeyboardState(nullptr);
+    }
+
+    return status;
 }
 
 void Context::DeleteInstance()

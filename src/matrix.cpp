@@ -43,6 +43,8 @@ template <typename T> Vector3<T>::Vector3(const Vector2<T>& v, T z) : Vector3(v.
 template <typename T> Vector3<T>::Vector3(const Vector3<T>& v) : Vector3(v.x, v.y, v.z) {}
 template <typename T> Vector3<T>::Vector3(T _x, T _y, T _z) { x = _x; y = _y; z = _z; }
 
+template <typename T> Vector2<T> Vector3<T>::xy() const { return Vector2<T>(x, y); }
+
 template <typename T> T&        Vector3<T>::operator [] (unsigned int i)       { return values[i]; }
 template <typename T> const T&  Vector3<T>::operator [] (unsigned int i) const { return values[i]; }
 
@@ -68,6 +70,8 @@ template <typename T> Vector4<T>::Vector4(T v) : Vector4(v, v, v, v) {}
 template <typename T> Vector4<T>::Vector4(const Vector3<T>& v, T w) : Vector4(v.x, v.y, v.z, w) {}
 template <typename T> Vector4<T>::Vector4(const Vector4& v) : Vector4(v.x, v.y, v.z, v.w) {}
 template <typename T> Vector4<T>::Vector4(T _x, T _y, T _z, T _w) { x = _x; y = _y; z = _z; w = _w;}
+
+template <typename T> Vector3<T> Vector4<T>::xyz() const { return Vector3<T>(x, y, z); }
 
 template <typename T> T&        Vector4<T>::operator [] (unsigned int i)       { return values[i]; }
 template <typename T> const T&  Vector4<T>::operator [] (unsigned int i) const { return values[i]; }
@@ -139,10 +143,13 @@ template <typename T> T Vector::Distance(const Vector4<T>& v0, const Vector4<T>&
 INSTANTIATE_VECTOR_TEMPLATE(char);
 INSTANTIATE_VECTOR_TEMPLATE(short);
 INSTANTIATE_VECTOR_TEMPLATE(int);
+INSTANTIATE_VECTOR_TEMPLATE(long);
 INSTANTIATE_VECTOR_TEMPLATE(unsigned char);
 INSTANTIATE_VECTOR_TEMPLATE(unsigned short);
 INSTANTIATE_VECTOR_TEMPLATE(unsigned int);
+INSTANTIATE_VECTOR_TEMPLATE(unsigned long);
 INSTANTIATE_VECTOR_TEMPLATE(float);
+INSTANTIATE_VECTOR_TEMPLATE(double);
 
 // -----------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------ Matrix 2 -------------------------------------------------------------------------------------------

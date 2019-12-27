@@ -1,0 +1,30 @@
+
+CC = g++
+LINK = ar
+
+INC_PATH += -I ./inc
+
+FRAMEWORKS += -framework OpenGL
+
+LIBS += -lSDL2
+
+BIN = ./bin
+SRC = ./src
+
+OUTPUT = GKit.lib
+
+CC_OPTIONS = -std=c++11 -Wall -Werror
+
+OBJECTS = $(patsubst $(SRC)/%.cpp, $(BIN)/%.o, $(wildcard $(SRC)/*.cpp))
+
+$(BIN)/%.o: $(SRC)/%.cpp
+	$(CC) $(CC_OPTIONS) $(INC_PATH) -c $^ -o $@
+
+$(BIN)/$(OUTPUT): $(OBJECTS)
+	$(LINK) rcs $@ $^
+
+.PHONY: clean
+clean:
+	rm -f $(BIN)/*.o
+	rm -f $(BIN)/$(OUTPUT)
+

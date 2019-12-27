@@ -9,7 +9,7 @@
 	#include <wingdi.h> // for wglGet* functions
 	#include <libloaderapi.h>
 #elif defined(__APPLE__)
-	#define GFX_SILENCE_DEPRECATION
+	#define GL_SILENCE_DEPRECATION
 	#include <OpenGL/gl3.h>
 #endif
 
