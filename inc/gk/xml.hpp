@@ -5,6 +5,7 @@
 
 #include <map>
 #include <string>
+#include <vector>
 
 class XML
 {
@@ -15,7 +16,7 @@ public:
         std::map<std::string, std::string> attributes;
 
         std::string text;
-        std::map<std::string, Node*> children;
+        std::map<std::string, std::vector<Node*>> children;
     };
 
 private:

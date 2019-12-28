@@ -380,7 +380,7 @@ private:
                                 
                                 if(child != nullptr)
                                 {
-                                    node->children[child->name] = child;
+                                    node->children[child->name].push_back(child);
                                 }
                                 else
                                 {
