@@ -1,6 +1,6 @@
 #include <gk/string_buffer.hpp>
 
-StringBuffer::StringBuffer() : std::vector<char>()
+StringBuffer::StringBuffer()
 {
     this->reserve(128);
 }
