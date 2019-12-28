@@ -17,6 +17,8 @@ public:
 
         std::string text;
         std::map<std::string, std::vector<Node*>> children;
+        
+        void print();
     };
 
 private:
