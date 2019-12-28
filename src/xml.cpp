@@ -5,28 +5,8 @@
 #include <vector>
 
 #include <gk/file.hpp>
-
-#define IS_SPACE(x) (((x) == ' ') || ((x) == '\t') || ((x) == '\n'))
-
-#define IS_ALPHA(x) ((((x) >= 'a') && ((x) <= 'z')) || (((x) >= 'A') && ((x) <= 'Z')))
-#define IS_NUM(x) (((x) >= '0') && ((x) <= '9'))
-#define IS_ALPHA_NUM(x) (IS_ALPHA(x) || IS_NUM(x) || ((x) == '_'))
-
-class StringBuffer : public std::vector<char>
-{
-public:
-    StringBuffer() : std::vector<char>()
-    {
-        this->reserve(128);
-    }
-
-    std::string to_string()
-    {
-        std::string str(this->data(), this->size());
-        this->clear();
-        return str;
-    }
-};
+#include <gk/string.hpp>
+#include <gk/string_buffer.hpp>
 
 class XML_Reader
 {
@@ -546,7 +526,7 @@ void print_node(const XML::Node* node, unsigned int level)
     indent(level);
     printf("<%s", node->name.c_str());
 
-    for(std::map<std::string, std::string>::const_iterator it = node->attributes.begin(); it != node->attributes.end(); it++)
+    for(XML::AttributeMap::const_iterator it = node->attributes.begin(); it != node->attributes.end(); it++)
     {
         printf(" %s=\"%s\"", it->first.c_str(), it->second.c_str());
     }
@@ -566,9 +546,9 @@ void print_node(const XML::Node* node, unsigned int level)
         }
         else
         {
-            for(std::map<std::string, std::vector<XML::Node*>>::const_iterator it = node->children.begin(); it != node->children.end(); it++)
+            for(XML::ChildMap::const_iterator it = node->children.begin(); it != node->children.end(); it++)
             {
-                const std::vector<XML::Node*>& children = it->second;
+                const XML::ChildList& children = it->second;
                 for(unsigned int i = 0; i < children.size(); i++)
                 {
                     print_node(children[i], level + 1);
@@ -584,5 +564,59 @@ void print_node(const XML::Node* node, unsigned int level)
 void XML::Node::print()
 {
     print_node(this, 0);
+}
+
+const std::string* XML::Node::find_attribute(const std::string& key) const
+{
+    const std::string* ret = nullptr;
+    XML::AttributeMap::const_iterator it = this->attributes.find(key);
+
+    if(it != this->attributes.end())
+    {
+        ret = &it->second;
+    }
+    else
+    {
+        printf("error: could not find key \"%s\"\n", key.c_str());
+    }
+
+    return ret;
+}
+
+const XML::Node* XML::Node::find_child(const std::string& key) const
+{
+    const XML::Node* ret = nullptr;
+
+    const XML::ChildList* list = this->find_children(key);
+    if(list != nullptr)
+    {
+        if(list->size() == 1)
+        {
+            ret = list->at(0);
+        }
+        else
+        {
+            printf("error: node \"%s\" has more than one child with key \"%s\"\n", this->name.c_str(), key.c_str());
+        }
+    }
+
+    return ret;
+}
+
+const XML::ChildList* XML::Node::find_children(const std::string& key) const
+{
+    const XML::ChildList* ret = nullptr;
+    XML::ChildMap::const_iterator it = this->children.find(key);
+
+    if(it != this->children.end())
+    {
+        ret = &it->second;
+    }
+    else
+    {
+        printf("error: could not find key \"%s\"\n", key.c_str());
+    }
+
+    return ret;
 }
 

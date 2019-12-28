@@ -10,15 +10,25 @@
 class XML
 {
 public:
+    struct Node;
+    typedef std::map<std::string, std::string> AttributeMap;
+    typedef std::vector<Node*> ChildList;
+    typedef std::map<std::string, ChildList> ChildMap;
+
     struct Node
     {
         std::string name;
-        std::map<std::string, std::string> attributes;
+        AttributeMap attributes;
 
         std::string text;
-        std::map<std::string, std::vector<Node*>> children;
-        
+        ChildMap children;
+
         void print();
+
+        const std::string* find_attribute(const std::string& key) const;
+        
+        const Node* find_child(const std::string& key) const;
+        const ChildList* find_children(const std::string& key) const;
     };
 
 private:
