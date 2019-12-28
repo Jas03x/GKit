@@ -4,16 +4,12 @@ LINK = ar
 
 INC_PATH += -I ./inc
 
-FRAMEWORKS += -framework OpenGL
-
-LIBS += -lSDL2
-
 BIN = ./bin
 SRC = ./src
 
 OUTPUT = GKit.lib
 
-CC_OPTIONS = -std=c++11 -Wall -Werror
+CC_OPTIONS = -std=c++11 -g -Wall -Werror
 
 OBJECTS = $(patsubst $(SRC)/%.cpp, $(BIN)/%.o, $(wildcard $(SRC)/*.cpp))
 

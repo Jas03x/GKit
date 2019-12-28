@@ -15,8 +15,9 @@
 class StringBuffer : public std::vector<char>
 {
 public:
-    StringBuffer() : std::vector<char>(128, 0)
+    StringBuffer() : std::vector<char>()
     {
+        this->reserve(128);
     }
 
     std::string to_string()
@@ -30,7 +31,7 @@ public:
 class XML_Reader
 {
 private:
-    const char* m_Text;
+    const std::string& m_Text;
 
     unsigned int m_Index;
     unsigned int m_CharPos;
@@ -39,10 +40,8 @@ private:
     StringBuffer m_Buffer;
 
 private:
-    XML_Reader(const char* data)
+    XML_Reader(const std::string& data) : m_Text(data)
     {
-        m_Text = data;
-
         m_Index = 0;
         m_CharPos = 0;
         m_LinePos = 0;
@@ -50,12 +49,19 @@ private:
 
     char peek(unsigned int offset)
     {
-        return m_Text[m_Index];
+        return m_Text[m_Index + offset];
     }
 
     char pop()
     {
-        return m_Text[m_Index++];
+        char c = m_Text[m_Index++];
+        if(c == '\n') {
+            m_LinePos++;
+            m_CharPos = 0;
+        } else {
+            m_CharPos++;
+        }
+        return c;
     }
 
     void error(const char* msg, ...)
@@ -75,7 +81,7 @@ private:
         while(status)
         {
             c = peek(0);
-            if(IS_ALPHA_NUM(c))
+            if(IS_ALPHA_NUM(c) || (c == ':'))
             {
                 pop();
                 m_Buffer.push_back(c);
@@ -146,13 +152,11 @@ private:
     {
         bool status = true;
 
-        char c = 0;
         while(status)
         {
-            c = peek(0);
-            if(c != '>')
+            if(peek(0) != '<')
             {
-                m_Buffer.push_back(c);
+                m_Buffer.push_back(pop());
             }
             else
             {
@@ -176,6 +180,50 @@ private:
         return status;
     }
 
+    enum LOOK_AHEAD
+    {
+        INVALID = 0,
+        EMPTY   = 1,
+        TEXT    = 2,
+        BODY    = 3
+    };
+
+    LOOK_AHEAD lookahead()
+    {
+        LOOK_AHEAD status = LOOK_AHEAD::INVALID;
+
+        char c = 0;
+        for(unsigned int i = m_Index; i < m_Text.size(); i++)
+        {
+            c = m_Text[i];
+            if(IS_SPACE(c))
+            {
+                continue;
+            }
+            else
+            {
+                if(c == '<')
+                {
+                    if(m_Text[i + 1] == '/')
+                    {
+                        status = LOOK_AHEAD::EMPTY;
+                    }
+                    else
+                    {
+                        status = LOOK_AHEAD::BODY;
+                    }
+                }
+                else
+                {
+                    status = LOOK_AHEAD::TEXT;
+                }
+                break;
+            }
+        }
+
+        return status;
+    }
+
     XML::Node* read_node()
     {
         bool status = true;
@@ -191,7 +239,12 @@ private:
         {
             c = peek(0);
 
-            if(IS_SPACE(c))
+            if(m_Index >= m_Text.size())
+            {
+                status = false;
+                printf("unexpected eof\n");
+            }
+            else if(IS_SPACE(c))
             {
                 pop();
                 continue;
@@ -229,12 +282,39 @@ private:
                         if(c == '/')
                         {
                             pop();
-                            state = 6;
+                            state = 11;
                         }
                         else if(c == '>')
                         {
                             pop();
-                            state = 7;
+
+                            switch(lookahead())
+                            {
+                                case LOOK_AHEAD::EMPTY:
+                                {
+                                    state = 8;
+                                    break;
+                                }
+
+                                case LOOK_AHEAD::TEXT:
+                                {
+                                    state = 8;
+                                    status = read_text(node->text);
+                                    break;
+                                }
+
+                                case LOOK_AHEAD::BODY:
+                                {
+                                    state = 7;
+                                    break;
+                                }
+
+                                default:
+                                {
+                                    error("invalid node body\n");
+                                    break;
+                                }
+                            }
                         }
                         else
                         {
@@ -286,34 +366,13 @@ private:
                         break;
                     }
 
-                    case 7: // expecting the body of the node
+                    case 7: // expecting node body
                     {
                         if(c == '<')
                         {
                             if(peek(1) == '/')
-                            {
-                                state = 9;
-                            }
-                            else
                             {
                                 state = 8;
-                            }
-                        }
-                        else
-                        {
-                            status = read_text(node->text);
-                            state = 9;
-                        }
-                        break;
-                    }
-
-                    case 8: // expecting node body
-                    {
-                        if(c == '<')
-                        {
-                            if(peek(1) == '/')
-                            {
-                                state = 9;
                             }
                             else
                             {
@@ -338,11 +397,11 @@ private:
                         break;
                     }
 
-                    case 9: // expecting '<' for end tag
+                    case 8: // expecting '<' for end tag
                     {
-                        if(c == '<')
+                        if(pop() == '<')
                         {
-                            state = 10;
+                            state = 9;
                         }
                         else
                         {
@@ -352,11 +411,11 @@ private:
                         break;
                     }
 
-                    case 10: // expecting '/' for end tag
+                    case 9: // expecting '/' for end tag
                     {
-                        if(c == '/')
+                        if(pop() == '/')
                         {
-                            state = 11;
+                            state = 10;
                         }
                         else
                         {
@@ -366,7 +425,7 @@ private:
                         break;
                     }
 
-                    case 11: // expecting name for end tag
+                    case 10: // expecting name for end tag
                     {
                         std::string name;
                         status = read_identifier(name);
@@ -375,7 +434,7 @@ private:
                         {
                             if(node->name == name)
                             {
-                                state = 12;
+                                state = 11;
                             }
                             else
                             {
@@ -387,7 +446,7 @@ private:
                         break;
                     }
 
-                    case 12:
+                    case 11:
                     {
                         if(pop() == '>')
                         {
@@ -398,6 +457,13 @@ private:
                             status = false;
                             error("expected '>'\n");
                         }
+                        break;
+                    }
+
+                    default:
+                    {
+                        status = false;
+                        printf("invalid state\n");
                         break;
                     }
                 }
