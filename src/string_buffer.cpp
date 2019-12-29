@@ -5,6 +5,15 @@ StringBuffer::StringBuffer()
     this->reserve(128);
 }
 
+int StringBuffer::to_int()
+{
+    this->push_back(0);
+    int i = atoi(this->data());
+
+    this->clear();
+    return i;
+}
+
 float StringBuffer::to_float()
 {
     this->push_back(0);

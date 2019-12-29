@@ -1,6 +1,7 @@
 #include <gk/collada_importer.hpp>
 
-#include <stdio.h>
+#include <cstdio>
+#include <cstring>
 
 #include <gk/string.hpp>
 #include <gk/string_buffer.hpp>
@@ -31,10 +32,19 @@ struct Source
     SourceArray array;
 };
 
+struct TriangleSet
+{
+    Source* vertex_source;
+    Source* normal_source;
+    Source* texcoord_source;
+    std::vector<int> indices;
+};
+
 struct Mesh
 {
     Source* vertex_array;
     std::map<std::string, Source*> sources;
+    std::vector<TriangleSet> triangle_sets;
 };
 
 struct Geometry
@@ -102,6 +112,36 @@ int parse_name_array(const std::string& text, std::vector<std::string*>& name_ar
     }
 
     return n;
+}
+
+int parse_int_array(const std::string& text, std::vector<int>& int_array)
+{
+    int n = 0;
+    StringBuffer buffer;
+    
+    char c = 0;
+    for(unsigned int i = 0 ;; i++)
+    {
+        c = text[i];
+
+        if(IS_NUM(c))
+        {
+            buffer.push_back(c);
+        }
+        else if(buffer.size() > 0)
+        {
+            n++;
+            int_array.push_back(buffer.to_int());
+        }
+
+        if(c == 0)
+        {
+            break;
+        }
+    }
+
+    return n;
+
 }
 
 bool read_source(const XML::Node* node, Source& src)
@@ -223,6 +263,65 @@ bool read_mesh(const XML::Node* node, Mesh& mesh)
     }
 
     // read the triangle array
+    if(status)
+    {
+        const XML::ChildList* triangle_sets = node->find_children("triangles");
+        for(unsigned int i = 0; status && (i < triangle_sets->size()); i++)
+        {
+            const XML::Node* set_node = triangle_sets->at(i);
+
+            mesh.triangle_sets.push_back(TriangleSet());
+            TriangleSet& set = mesh.triangle_sets.back();
+            
+            const XML::ChildList* inputs = set_node->find_children("input");
+            status = (inputs != nullptr);
+
+            for(unsigned int j = 0; status && (j < inputs->size()); j++)
+            {
+                status = false; // false unless object successfully read
+                const XML::Node* input = inputs->at(j);
+
+                const std::string* name = input->find_attribute("source");
+                if(name != nullptr)
+                {
+                    std::map<std::string, Source*>::const_iterator it = mesh.sources.find(name->substr(1));
+                    if(it != mesh.sources.end())
+                    {
+                        if(strcmp(name->c_str(), "VERTEX") == 0)
+                        {
+                            set.vertex_source = it->second;
+                        }
+                        else if(strcmp(name->c_str(), "NORMAL") == 0)
+                        {
+                            set.normal_source = it->second;
+                        }
+                        else if(strcmp(name->c_str(), "TEXCOORD") == 0)
+                        {
+                            set.texcoord_source = it->second;
+                        }
+
+                        status = true;
+                    }
+                    else
+                    {
+                        status = false;
+                        printf("error: could not find source \"%s\"\n", name->c_str());
+                    }
+                }
+
+                if(status)
+                {
+                    status = false; // false unless object successfully read
+
+                    const XML::Node* p = set_node->find_child("p");
+                    if(p != nullptr)
+                    {
+                        status = parse_int_array(p->text, set.indices);
+                    }
+                }
+            }
+        }
+    }
 
     return status;
 }

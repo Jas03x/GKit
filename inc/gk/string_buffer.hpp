@@ -9,6 +9,7 @@ class StringBuffer : public std::vector<char>
 public:
     StringBuffer();
 
+    int to_int();
     float to_float();
     std::string to_string();
 };
