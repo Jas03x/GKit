@@ -53,6 +53,15 @@ struct Geometry
     Mesh mesh;
 };
 
+struct Controller
+{
+    const std::string* id;
+    float bind_shape_matrix[16];
+
+    Mesh* mesh;
+    std::map<std::string, Source*> sources;
+};
+
 int parse_float_array(const std::string& text, std::vector<float>& float_array)
 {
     int n = 0;
@@ -63,7 +72,7 @@ int parse_float_array(const std::string& text, std::vector<float>& float_array)
     {
         c = text[i];
 
-        if(IS_NUM(c) || (c == '.'))
+        if(IS_NUM(c) || (c == '.') || (c == '-') || (c == 'e'))
         {
             buffer.push_back(c);
         }
@@ -167,7 +176,7 @@ bool read_source(const XML::Node* node, Source& src)
         }
         else
         {
-            it = node->children.find("name_array");
+            it = node->children.find("Name_array");
             if(it != node->children.end())
             {
                 array = it->second[0];
@@ -326,7 +335,7 @@ bool read_mesh(const XML::Node* node, Mesh& mesh)
     return status;
 }
 
-bool read_geometry_library(const XML::Node* node, std::vector<Geometry>& library)
+bool read_geometry_library(const XML::Node* node, std::map<std::string, Geometry*>& library)
 {
     printf("read geometry library\n");
     bool status = true;
@@ -335,20 +344,89 @@ bool read_geometry_library(const XML::Node* node, std::vector<Geometry>& library
     for(unsigned int i = 0; status && (i < geometry_list->size()); i++)
     {
         status = false; // false unless object successfully read
-        library.push_back(Geometry());
-
-        Geometry& src = library.back();
+        
+        Geometry* src = new Geometry();
         const XML::Node* geometry_node = geometry_list->at(i);
 
-        src.id = geometry_node->find_attribute("id");
-        if(src.id != nullptr)
+        src->id = geometry_node->find_attribute("id");
+        if(src->id != nullptr)
         {
             const XML::Node* mesh = geometry_node->find_child("mesh");
             if(mesh != nullptr)
             {
-                if(src.id != nullptr)
+                status = read_mesh(mesh, src->mesh);
+            }
+        }
+
+        if(status)
+        {
+            library[*(src->id)] = src;
+        }
+        else
+        {
+            delete src;
+        }
+    }
+
+    return status;
+}
+
+bool read_controller(const XML::Node* node, Controller& controller)
+{
+    bool status = true;
+
+    const std::string* id = node->find_attribute("id");
+    status = (id != nullptr);
+    if(status)
+    {
+        controller.id = id;
+    }
+
+    if(status)
+    {
+        status = false; // false unless object successfully read
+
+        const XML::Node* skin = node->find_child("skin");
+        if(skin != nullptr)
+        {
+            const XML::Node* bind_shape_matrix = skin->find_child("bind_shape_matrix");
+            if(bind_shape_matrix != nullptr)
+            {
+                std::vector<float> matrix;
+                if(parse_float_array(bind_shape_matrix->text, matrix) == 16)
                 {
-                    status = read_mesh(mesh, src.mesh);
+                    status = true;
+                    memcpy(controller.bind_shape_matrix, matrix.data(), sizeof(float) * 16);
+                }
+                else
+                {
+                    printf("incomplete bind shape matrix array\n");
+                }
+            }
+
+            if(status)
+            {
+                const XML::ChildList* sources = skin->find_children("source");
+                if(sources != nullptr)
+                {
+                    for(unsigned int i = 0; status && (i < sources->size()); i++)
+                    {
+                        Source* src = new Source();
+
+                        if(read_source(sources->at(i), *src))
+                        {
+                            controller.sources[*(src->id)] = src;
+                        }
+                        else
+                        {
+                            status = false;
+                            delete src;
+                        }
+                    }
+                }
+                else
+                {
+                    status = false;
                 }
             }
         }
@@ -357,17 +435,55 @@ bool read_geometry_library(const XML::Node* node, std::vector<Geometry>& library
     return status;
 }
 
+bool read_controller_library(const XML::Node* node, std::map<std::string, Controller*>& library)
+{
+    bool status = true;
+
+    const XML::ChildList* controllers = node->find_children("controller");
+    for(unsigned int i = 0; status && (i < controllers->size()); i++)
+    {
+        Controller* controller = new Controller();
+
+        if(read_controller(controllers->at(i), *controller))
+        {
+            library[*(controller->id)] = controller;
+        }
+        else
+        {
+            status = false;
+        }
+    }
+
+    return status;
+}
+
 ColladaImporter::ColladaImporter(const char* path)
 {
+    bool status = true;
     const XML* xml = XML::Read(path);
+
+    if(xml == nullptr)
+    {
+        status = false;
+        printf("error: could not load xml file\n");
+    }
     //xml->root->print();
 
     const XML::Node* collada = xml->root;
     
-    std::vector<Geometry> geometry_list;
+    std::map<std::string, Geometry*> geometry_map;
+    std::map<std::string, Controller*> controller_map;
 
     const XML::Node* geometry_library = collada->find_child("library_geometries");
+    const XML::Node* controller_library = collada->find_child("library_controllers");
 
-    read_geometry_library(geometry_library, geometry_list);
+    status = read_geometry_library(geometry_library, geometry_map);
+
+    if(status)
+    {
+        status = read_controller_library(controller_library, controller_map);
+    }
+
+    printf("%s\n", status ? "xml loaded successfully" : "xml failed to load");
 }
 
