@@ -575,10 +575,6 @@ const std::string* XML::Node::find_attribute(const std::string& key) const
     {
         ret = &it->second;
     }
-    else
-    {
-        printf("error: could not find key \"%s\"\n", key.c_str());
-    }
 
     return ret;
 }
@@ -594,10 +590,6 @@ const XML::Node* XML::Node::find_child(const std::string& key) const
         {
             ret = list->at(0);
         }
-        else
-        {
-            printf("error: node \"%s\" has more than one child with key \"%s\"\n", this->name.c_str(), key.c_str());
-        }
     }
 
     return ret;
@@ -611,10 +603,6 @@ const XML::ChildList* XML::Node::find_children(const std::string& key) const
     if(it != this->children.end())
     {
         ret = &it->second;
-    }
-    else
-    {
-        printf("error: could not find key \"%s\"\n", key.c_str());
     }
 
     return ret;
