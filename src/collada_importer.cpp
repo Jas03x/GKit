@@ -23,12 +23,17 @@ struct Param
         R = 6,
         G = 7,
         B = 8,
-        A = 9
+        A = 9,
+        JOINT = 10,
+        TRANSFORM = 11,
+        WEIGHT = 12
     };
 
     enum TYPE
     {
-        FLOAT = 1
+        NAME     = 1,
+        FLOAT    = 2,
+        FLOAT4X4 = 3
     };
 
     unsigned char name;
@@ -119,6 +124,13 @@ struct Mesh
     TriangleArray* triangle_arrays;
 };
 
+struct Skin
+{
+    Mesh* source;
+    float bind_shape_matrix[16];
+    std::map<std::string, Source*> sources;
+};
+
 struct Geometry
 {
     const std::string* id;
@@ -127,9 +139,18 @@ struct Geometry
     Mesh mesh;
 };
 
+struct Controller
+{
+    const std::string* id;
+    const std::string* name;
+
+    Skin skin;
+};
+
 struct Collada
 {
     std::map<std::string, Geometry*> geometry_library;
+    std::map<std::string, Controller*> controller_library;
 };
 
 class ColladaReader
@@ -244,7 +265,7 @@ private: // methods
         {
             c = text[i];
 
-            if(IS_NUM(c) || (c == '.') || (c == '-') || (c == 'e'))
+            if(IS_ALPHA_NUM(c) || (c == '_'))
             {
                 m_strbuf.push_back(c);
             }
@@ -375,11 +396,33 @@ private: // methods
                     default: { break; }
                 }
             }
+            else
+            {
+                switch(str[0])
+                {
+                    case 'J':
+                    {
+                        param.name = (strcmp(str, "JOINT") == 0) ? Param::NAME::JOINT : 0;
+                        break;
+                    }
+                    case 'T':
+                    {
+                        param.name = (strcmp(str, "TRANSFORM") == 0) ? Param::NAME::TRANSFORM : 0;
+                        break;
+                    }
+                    case 'W':
+                    {
+                        param.name = (strcmp(str, "WEIGHT") == 0) ? Param::NAME::WEIGHT : 0;
+                        break;
+                    }
+                    default: { break; }
+                }
+            }
 
             if(param.name == 0)
             {
                 m_status = false;
-                printf("invalid parameter name\n");
+                printf("invalid parameter name \"%s\"\n", str);
             }
         }
 
@@ -393,7 +436,14 @@ private: // methods
                 {
                     if(strcmp(str, "float") == 0) {
                         param.type = Param::TYPE::FLOAT;
+                    } else if(strcmp(str, "float4x4") == 0) {
+                        param.type = Param::TYPE::FLOAT4X4;
                     }
+                    break;
+                }
+                case 'n':
+                {
+                    param.type = (strcmp(str, "name") == 0) ? Param::TYPE::NAME : 0;
                     break;
                 }
                 default: { break; }
@@ -401,7 +451,7 @@ private: // methods
 
             if(param.type == 0) {
                 m_status = false;
-                printf("invalid parameter type\n");
+                printf("invalid parameter type \"%s\"\n", str);
             }
         }
     }
@@ -482,14 +532,18 @@ private: // methods
             }
             else
             {
-                array = node->find_child("name_array");
+                array = node->find_child("Name_array");
                 if(array != nullptr)
                 {
-                    elements_read = m_string_buffer.size();
+                    parse_name_array(array->text);
+                    if(m_status)
+                    {
+                        elements_read = m_string_buffer.size();
 
-                    source->array.type = SourceArray::NAME;
-                    source->array.name_array = new std::string[elements_read];
-                    std::copy(m_string_buffer.begin(), m_string_buffer.end(), source->array.name_array);
+                        source->array.type = SourceArray::NAME;
+                        source->array.name_array = new std::string[elements_read];
+                        std::copy(m_string_buffer.begin(), m_string_buffer.end(), source->array.name_array);
+                    }
                 }
                 else
                 {
@@ -659,6 +713,63 @@ private: // methods
         }
     }
 
+    void read_skin(const XML::Node* node, Skin& skin)
+    {
+        const std::string* skin_source = find_attribute(node, "source");
+        if(m_status)
+        {
+            std::string source = skin_source->substr(1);
+
+            std::map<std::string, Geometry*>::const_iterator it = m_data->geometry_library.find(source);
+            if(it != m_data->geometry_library.end())
+            {
+                skin.source = &it->second->mesh;
+            }
+            else
+            {
+                m_status = false;
+                printf("skin source \"%s\" not found\n", source.c_str());
+            }
+        }
+
+        if(m_status)
+        {
+            const XML::Node* bsm = find_child(node, "bind_shape_matrix");
+            if(m_status)
+            {
+                parse_float_array(bsm->text);
+                if(m_status)
+                {
+                    if(m_float_buffer.size() == 16)
+                    {
+                        memcpy(skin.bind_shape_matrix, m_float_buffer.data(), sizeof(float) * 16);
+                    }
+                    else
+                    {
+                        m_status = false;
+                        printf("invalid bind shape matrix in skin\n");
+                    }
+                }
+            }
+        }
+
+        if(m_status)
+        {
+            const XML::ChildList* sources = find_children(node, "source");
+            if(m_status)
+            {
+                for(unsigned int i = 0; m_status && (i < sources->size()); i++)
+                {
+                    Source* src = read_source(sources->at(i));
+                    if(m_status)
+                    {
+                        skin.sources[*(src->id)] = src;
+                    }
+                }
+            }
+        }
+    }
+
     void read_geometry(const XML::Node* node)
     {
         Geometry* geometry = new Geometry();
@@ -689,6 +800,36 @@ private: // methods
         }
     }
 
+    void read_controller(const XML::Node* node)
+    {
+        Controller* controller = new Controller();
+
+        controller->id = find_attribute(node, "id");
+        if(m_status)
+        {
+            controller->name = find_attribute(node, "name");
+        }
+
+        if(m_status)
+        {
+            const XML::Node* skin = find_child(node, "skin");
+            if(m_status)
+            {
+                read_skin(skin, controller->skin);
+            }
+        }
+
+        if(m_status)
+        {
+            m_data->controller_library[*(controller->id)] = controller;
+        }
+        else
+        {
+            delete controller;
+            m_status = false;
+        }
+    }
+
     void read_geometry_library(const XML::Node* node)
     {
         const XML::ChildList* geometries = find_children(node, "geometry");
@@ -701,12 +842,33 @@ private: // methods
         }
     }
 
+    void read_controller_library(const XML::Node* node)
+    {
+        const XML::ChildList* controllers = find_children(node, "controller");
+        if(m_status)
+        {
+            for(unsigned int i = 0; m_status && (i < controllers->size()); i++)
+            {
+                read_controller(controllers->at(i));
+            }
+        }
+    }
+
     bool process(const XML::Node* root)
     {
         const XML::Node* geometry_library = find_child(root, "library_geometries");
         if(m_status)
         {
             read_geometry_library(geometry_library);
+        }
+
+        if(m_status)
+        {
+            const XML::Node* controller_library = find_child(root, "library_controllers");
+            if(m_status)
+            {
+                read_controller_library(controller_library);
+            }
         }
         
         return m_status;
