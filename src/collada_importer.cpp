@@ -9,20 +9,6 @@
 #include <gk/string_buffer.hpp>
 #include <gk/xml.hpp>
 
-struct FloatArray 
-{
-    const std::string* id;
-    unsigned int count;
-    float* data;
-};
-
-struct NameArray
-{
-    const std::string* id;
-    unsigned int count;
-    const char** data;
-};
-
 struct Param
 {
     enum NAME
@@ -52,11 +38,28 @@ struct Technique
     Accessor accessor;
 };
 
+struct SourceArray
+{
+    const std::string* id;
+    unsigned int count;
+
+    union
+    {
+        FLOAT = 1,
+        NAME  = 2
+    } type;
+
+    union
+    {
+        float* float_array;
+        const char** name_array;
+    } array;
+};
+
 struct Source
 {
     const std::string* id;
-    void* array;
-
+    SourceArray array;
     Technique technique_common;
 };
 
@@ -68,14 +71,18 @@ struct Input
 
     enum
     {
-        POSITION = 1
+        POSITION = 1,
+        VERTEX = 2,
+        NORMAL = 3,
+        TEXCOORD = 4,
+        COLOR = 5
     } semantic;
 };
 
 struct VertexArray
 {
     const std::string* id;
-    Input* input;
+    Input input;
     Source* source;
 };
 
@@ -92,7 +99,7 @@ struct Mesh
 {
     std::map<std::string, Source*> sources;
 
-    VertexArray* vertices;
+    VertexArray vertices;
     Array<TriangleArray*> triangle_arrays;
 };
 
@@ -101,7 +108,7 @@ struct Geometry
     const std::string* id;
     const std::string* name;
 
-    Mesh* mesh;
+    Mesh mesh;
 };
 
 struct Collada
@@ -135,7 +142,7 @@ private: // helper functions:
 
     const XML::ChildList* find_children(const XML::Node* node, const std::string& name)
     {
-        const CML::ChildList* children = node->find_children(name);
+        const XML::ChildList* children = node->find_children(name);
         if(children == nullptr)
         {
             m_status = false;
@@ -162,9 +169,193 @@ private: // methods
         m_status = true;
     }
 
+    void read_input(const XML::Node* node, Input* input)
+    {
+        const std::string* semantic = nullptr;
+
+        semantic = find_attribute(node, "semantic");
+        if(m_status)
+        {
+            input->source = find_attribute(node, "source");
+        }
+
+        if(m_status)
+        {
+            unsigned int type = 0;
+
+            const char* c_str = semantic->c_str();
+            switch(c_str[0])
+            {
+                case 'C':
+                {
+                    type = (strncmp(c_str, "COLOR") == 0) ? Input::COLOR : 0;
+                    break;
+                }
+                case 'N':
+                {
+                    type = (strncmp(c_str, "NORMAL") == 0) ? Input::NORMAL : 0;
+                    break;
+                }
+                case 'P':
+                {
+                    type = (strncmp(c_str, "POSITION") == 0) ? Input::POSITION : 0;
+                    break;
+                }
+                case 'T':
+                {
+                    type = (strncmp(c_str, "TEXCOORD") == 0) ? Input::TEXCOORD : 0;
+                    break;
+                }
+                case 'V':
+                {
+                    type = (strncmp(c_str, "VERTEX") == 0) ? Input::VERTEX : 0;
+                    break;
+                }
+                default: { break; }
+            }
+
+            if(type != 0)
+            {
+                input->semantic = type;
+            }
+            else
+            {
+                m_status = false;
+                printf("invalid semantic: \"%s\"\n", semantic->c_str());
+            }
+        }
+
+        if(m_status)
+        {
+            const std::string* offset = node->find_child("offset");
+            if(offset != nullptr) {
+                input->offset = std::stoi(*offset);
+            }
+
+            const std::string* set = node->find_child("set");
+            if(set != nullptr) {
+                input->set = std::stoi(*set);
+            }
+        }
+    }
+
+    void read_vertex_array(const XML::Node* node, VertexArray* array)
+    {
+        array->id = find_attribute(node, "id");
+
+        if(m_status)
+        {
+            const XML::Node* input = find_child(node, "input");
+            if(m_status)
+            {
+                read_input(input, &array->input);
+            }
+        }
+    }
+
+    Source* read_source(const XML::Node* node)
+    {
+        Source* source = new Source();
+
+        source->id = find_attribute(node, "id");
+        if(m_status)
+        {
+            source->name = find_attribute(node, "name");
+        }
+
+        if(m_status)
+        {
+            const XML::Node* array = node->find_child("float_array");
+            if(array != nullptr)
+            {
+                parse_float_array(array, &source->array);
+            }
+            else
+            {
+                array = node->find_child("name_array");
+                if(array != nullptr)
+                {
+                    parse_name_array(array, &source->array);
+                }
+                else
+                {
+                    m_status = false;
+                    printf("invalid source array\n");
+                }
+            }
+        }
+
+        if(m_status)
+        {
+            const XML::Node* technique = find_node(node, "technique_common");
+            if(m_status)
+            {
+                parse_technique(technique, &source->technique_common);
+            }
+        }
+
+        if(!m_status)
+        {
+            delete source;
+            source = nullptr;
+        }
+
+        return source;
+    }
+
     Mesh* read_mesh(const XML::Node* node)
     {
-        return nullptr;
+        Mesh* mesh = new Mesh();
+
+        // read the sources
+        const XML::ChildList* sources = node->find_children("source");
+        if(m_status)
+        {
+            for(unsigned int i = 0; m_status && (i < sources->size()); i++)
+            {
+                Source* src = read_source(sources->at(i));
+                if(m_status)
+                {
+                    mesh->sources[*(src->id)] = src;
+                }
+            }
+        }
+
+        // read the vertex array
+        if(m_status)
+        {
+            const XML::Node* vertex_array = find_child(node, "vertices");
+            if(m_status)
+            {
+                read_vertex_array(vertex_array, &mesh->vertices);
+                if(m_status)
+                {
+                    std::map<std::string, Source*>::const_iterator it = mesh->sources.find(*(vertex_array->id));
+                    if(it != mesh->sources.end())
+                    {
+                        mesh->vertices->source = it->second;
+                    }
+                    else
+                    {
+                        m_status = false;
+                        printf("could not find vertex array source \"%s\"\n", vertex_array->id->c_str());
+                    }
+                }
+            }
+        }
+
+        // read the triangles
+        if(status)
+        {
+        }
+
+        if(!m_status)
+        {
+            delete mesh;
+            mesh = nullptr;
+        }
+
+        return mesh;
     }
 
     void read_geometry(const XML::Node* node)

@@ -25,7 +25,7 @@ public:
     unsigned int size()     { return m_size; }
     unsigned int capacity() { return N;      }
 
-    void push_back(T* obj)
+    void push_back(T& obj)
     {
         if(m_size < N) {
             m_array[m_size++] = obj;
