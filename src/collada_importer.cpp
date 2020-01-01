@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <cstring>
 
+#include <algorithm>
 #include <array>
 #include <vector>
 
@@ -16,13 +17,22 @@ struct Param
     {
         X = 1,
         Y = 2,
-        Z = 3
-    } name;
+        Z = 3,
+        S = 4,
+        T = 5,
+        R = 6,
+        G = 7,
+        B = 8,
+        A = 9
+    };
 
     enum TYPE
     {
         FLOAT = 1
-    } type;
+    };
+
+    unsigned char name;
+    unsigned char type;
 };
 
 struct Accessor
@@ -42,20 +52,21 @@ struct Technique
 
 struct SourceArray
 {
-    const std::string* id;
-    unsigned int count;
-
-    union
+    enum 
     {
         FLOAT = 1,
         NAME  = 2
-    } type;
+    };
+
+    const std::string* id;
+    unsigned int count;
+    unsigned int type;
 
     union
     {
         float* float_array;
-        const char** name_array;
-    } array;
+        std::string* name_array;
+    };
 };
 
 struct Source
@@ -67,10 +78,6 @@ struct Source
 
 struct Input
 {
-    const std::string* source;
-    unsigned int offset;
-    unsigned int set;
-
     enum
     {
         POSITION = 1,
@@ -78,7 +85,12 @@ struct Input
         NORMAL = 3,
         TEXCOORD = 4,
         COLOR = 5
-    } semantic;
+    };
+
+    const std::string* source;
+    unsigned int offset;
+    unsigned int set;
+    unsigned int semantic;
 };
 
 struct VertexArray
@@ -126,11 +138,11 @@ private: // data
     bool m_status;
     Collada* m_data;
 
-    StringBuffer m_string_buffer;
+    StringBuffer m_strbuf;
 
     std::vector<float> m_float_buffer;
     std::vector<unsigned short> m_ushort_buffer;
-    std::vector<char*> m_cstring_buffer;
+    std::vector<std::string> m_string_buffer;
 
 private: // helper functions:
     const XML::Node* find_child(const XML::Node* node, const std::string& name)
@@ -173,6 +185,81 @@ private: // methods
         m_status = true;
     }
 
+    void parse_float_array(const std::string& text)
+    {
+        m_float_buffer.clear();
+
+        char c = 0;
+        for(unsigned int i = 0 ;; i++)
+        {
+            c = text[i];
+
+            if(IS_NUM(c) || (c == '.') || (c == '-') || (c == 'e'))
+            {
+                m_strbuf.push_back(c);
+            }
+            else if(m_strbuf.size() > 0)
+            {
+                m_float_buffer.push_back(m_strbuf.to_float());
+            }
+
+            if(c == 0)
+            {
+                break;
+            }
+        }
+    }
+
+    void parse_ushort_array(const std::string& text)
+    {
+        m_ushort_buffer.clear();
+
+        char c = 0;
+        for(unsigned int i = 0 ;; i++)
+        {
+            c = text[i];
+
+            if(IS_NUM(c) || (c == '.') || (c == '-') || (c == 'e'))
+            {
+                m_strbuf.push_back(c);
+            }
+            else if(m_strbuf.size() > 0)
+            {
+                m_ushort_buffer.push_back(m_strbuf.to_float());
+            }
+
+            if(c == 0)
+            {
+                break;
+            }
+        }
+    }
+
+    void parse_name_array(const std::string& text)
+    {
+        m_ushort_buffer.clear();
+
+        char c = 0;
+        for(unsigned int i = 0 ;; i++)
+        {
+            c = text[i];
+
+            if(IS_NUM(c) || (c == '.') || (c == '-') || (c == 'e'))
+            {
+                m_strbuf.push_back(c);
+            }
+            else if(m_strbuf.size() > 0)
+            {
+                m_string_buffer.push_back(std::string(m_strbuf.data(), m_strbuf.size()));
+            }
+
+            if(c == 0)
+            {
+                break;
+            }
+        }
+    }
+
     void read_input(const XML::Node* node, Input* input)
     {
         const std::string* semantic = nullptr;
@@ -192,27 +279,27 @@ private: // methods
             {
                 case 'C':
                 {
-                    type = (strncmp(c_str, "COLOR") == 0) ? Input::COLOR : 0;
+                    type = (strcmp(c_str, "COLOR") == 0) ? Input::COLOR : 0;
                     break;
                 }
                 case 'N':
                 {
-                    type = (strncmp(c_str, "NORMAL") == 0) ? Input::NORMAL : 0;
+                    type = (strcmp(c_str, "NORMAL") == 0) ? Input::NORMAL : 0;
                     break;
                 }
                 case 'P':
                 {
-                    type = (strncmp(c_str, "POSITION") == 0) ? Input::POSITION : 0;
+                    type = (strcmp(c_str, "POSITION") == 0) ? Input::POSITION : 0;
                     break;
                 }
                 case 'T':
                 {
-                    type = (strncmp(c_str, "TEXCOORD") == 0) ? Input::TEXCOORD : 0;
+                    type = (strcmp(c_str, "TEXCOORD") == 0) ? Input::TEXCOORD : 0;
                     break;
                 }
                 case 'V':
                 {
-                    type = (strncmp(c_str, "VERTEX") == 0) ? Input::VERTEX : 0;
+                    type = (strcmp(c_str, "VERTEX") == 0) ? Input::VERTEX : 0;
                     break;
                 }
                 default: { break; }
@@ -231,12 +318,12 @@ private: // methods
 
         if(m_status)
         {
-            const std::string* offset = node->find_child("offset");
+            const std::string* offset = node->find_attribute("offset");
             if(offset != nullptr) {
                 input->offset = std::stoi(*offset);
             }
 
-            const std::string* set = node->find_child("set");
+            const std::string* set = node->find_attribute("set");
             if(set != nullptr) {
                 input->set = std::stoi(*set);
             }
@@ -257,6 +344,121 @@ private: // methods
         }
     }
 
+    void read_param(const XML::Node* node, Param& param)
+    {
+        const std::string* name = nullptr;
+        const std::string* type = nullptr;
+
+        name = find_attribute(node, "name");
+        if(m_status)
+        {
+            type = find_attribute(node, "type");
+        }
+
+        if(m_status)
+        {
+            const char* str = name->c_str();
+            
+            if(name->size() == 1)
+            {
+                switch(str[0])
+                {
+                    case 'X': { param.name = Param::NAME::X; break; }
+                    case 'Y': { param.name = Param::NAME::Y; break; }
+                    case 'Z': { param.name = Param::NAME::Z; break; }
+                    case 'S': { param.name = Param::NAME::S; break; }
+                    case 'T': { param.name = Param::NAME::T; break; }
+                    case 'R': { param.name = Param::NAME::R; break; }
+                    case 'G': { param.name = Param::NAME::G; break; }
+                    case 'B': { param.name = Param::NAME::B; break; }
+                    case 'A': { param.name = Param::NAME::A; break; }
+                    default: { break; }
+                }
+            }
+
+            if(param.name == 0)
+            {
+                m_status = false;
+                printf("invalid parameter name\n");
+            }
+        }
+
+        if(m_status)
+        {
+            const char* str = type->c_str();
+
+            switch(str[0])
+            {
+                case 'f':
+                {
+                    if(strcmp(str, "float") == 0) {
+                        param.type = Param::TYPE::FLOAT;
+                    }
+                    break;
+                }
+                default: { break; }
+            }
+
+            if(param.type == 0) {
+                m_status = false;
+                printf("invalid parameter type\n");
+            }
+        }
+    }
+
+    void read_accessor(const XML::Node* node, Accessor& accessor)
+    {
+        accessor.source = find_attribute(node, "source");
+        if(m_status)
+        {
+            const std::string* count = nullptr;
+            const std::string* stride = nullptr;
+
+            count = find_attribute(node, "count");
+            if(m_status)
+            {
+                stride = find_attribute(node, "stride");
+            }
+
+            if(m_status)
+            {
+                accessor.count = std::stoi(*count);
+                accessor.stride = std::stoi(*stride);
+            }
+        }
+
+        if(m_status)
+        {
+            const XML::ChildList* params = find_children(node, "param");
+            if(m_status)
+            {
+                unsigned int num_params = params->size();
+
+                if(num_params <= accessor.params.size())
+                {
+                    for(unsigned int i = 0; m_status && (i < num_params); i++)
+                    {
+                        read_param(params->at(i), accessor.params[i]);
+                    }
+                }
+                else
+                {
+                    m_status = false;
+                    printf("too many parameters in accessor\n");
+                }
+            }
+        }
+    }
+
+    void read_technique(const XML::Node* node, Technique& technique)
+    {
+        const XML::Node* accessor = find_child(node, "accessor");
+        if(m_status)
+        {
+            read_accessor(accessor, technique.accessor);
+        }
+    }
+
     Source* read_source(const XML::Node* node)
     {
         Source* source = new Source();
@@ -264,22 +466,30 @@ private: // methods
         source->id = find_attribute(node, "id");
         if(m_status)
         {
-            source->name = find_attribute(node, "name");
-        }
-
-        if(m_status)
-        {
+            unsigned int elements_read = 0;
             const XML::Node* array = node->find_child("float_array");
             if(array != nullptr)
             {
-                parse_float_array(array, &source->array);
+                parse_float_array(array->text);
+                if(m_status)
+                {
+                    elements_read = m_float_buffer.size();
+
+                    source->array.type = SourceArray::FLOAT;
+                    source->array.float_array = new float[elements_read];
+                    memcpy(source->array.float_array, m_float_buffer.data(), sizeof(float) * elements_read);
+                }
             }
             else
             {
                 array = node->find_child("name_array");
                 if(array != nullptr)
                 {
-                    parse_name_array(array, &source->array);
+                    elements_read = m_string_buffer.size();
+
+                    source->array.type = SourceArray::NAME;
+                    source->array.name_array = new std::string[elements_read];
+                    std::copy(m_string_buffer.begin(), m_string_buffer.end(), source->array.name_array);
                 }
                 else
                 {
@@ -287,14 +497,36 @@ private: // methods
                     printf("invalid source array\n");
                 }
             }
+
+            if(m_status)
+            {
+                source->array.id = find_attribute(node, "id");
+                if(m_status)
+                {
+                    const std::string* count = find_attribute(array, "count");
+                    if(m_status)
+                    {
+                        source->array.count = std::stoi(*count);
+                    }
+                }
+            }
+
+            if(m_status)
+            {
+                if(elements_read != source->array.count)
+                {
+                    m_status = false;
+                    printf("source array length does not match count\n");
+                }
+            }
         }
 
         if(m_status)
         {
-            const XML::Node* technique = find_node(node, "technique_common");
+            const XML::Node* technique = find_child(node, "technique_common");
             if(m_status)
             {
-                parse_technique(technique, &source->technique_common);
+                read_technique(technique, source->technique_common);
             }
         }
 
@@ -307,10 +539,68 @@ private: // methods
         return source;
     }
 
-    Mesh* read_mesh(const XML::Node* node)
+    void read_triangle_array(const XML::Node* node, TriangleArray* array)
     {
-        Mesh* mesh = new Mesh();
+        array->material = find_attribute(node, "material");
+        if(m_status)
+        {
+            const std::string* count = find_attribute(node, "count");
+            if(m_status)
+            {
+                array->count = std::stoi(*count);
+            }
+        }
 
+        if(m_status)
+        {
+            const XML::ChildList* inputs = find_children(node, "input");
+            if(m_status)
+            {
+                unsigned int num_inputs = inputs->size();
+
+                if(num_inputs <= array->inputs.size())
+                {
+                    array->num_inputs = num_inputs;
+                    for(unsigned int i = 0; m_status && (i < num_inputs); i++)
+                    {
+                        read_input(inputs->at(i), &array->inputs[i]);
+                    }
+                }
+                else
+                {
+                    m_status = false;
+                    printf("too many inputs in triangle array\n");
+                }
+            }
+        }
+
+        if(m_status)
+        {
+            const XML::Node* indices = find_child(node, "p");
+            if(m_status)
+            {
+                parse_ushort_array(indices->text);
+                if(m_status)
+                {
+                    unsigned int num_vertices = m_ushort_buffer.size() / array->num_inputs;
+                    unsigned int num_triangles = num_vertices / 3;
+                    if(num_triangles == array->count)
+                    {
+                        array->indices = new unsigned short[array->count];
+                        memcpy(array->indices, m_ushort_buffer.data(), sizeof(unsigned short) * array->count);
+                    }
+                    else
+                    {
+                        m_status = false;
+                        printf("triangle index array length does not match count\n");
+                    }
+                }
+            }
+        }
+    }
+
+    void read_mesh(const XML::Node* node, Mesh& mesh)
+    {
         // read the sources
         const XML::ChildList* sources = node->find_children("source");
         if(m_status)
@@ -320,7 +610,7 @@ private: // methods
                 Source* src = read_source(sources->at(i));
                 if(m_status)
                 {
-                    mesh->sources[*(src->id)] = src;
+                    mesh.sources[*(src->id)] = src;
                 }
             }
         }
@@ -331,47 +621,52 @@ private: // methods
             const XML::Node* vertex_array = find_child(node, "vertices");
             if(m_status)
             {
-                read_vertex_array(vertex_array, &mesh->vertices);
+                read_vertex_array(vertex_array, &mesh.vertices);
                 if(m_status)
                 {
-                    std::map<std::string, Source*>::const_iterator it = mesh->sources.find(*(vertex_array->id));
-                    if(it != mesh->sources.end())
+                    std::string array_source = mesh.vertices.input.source->substr(1);
+                    std::map<std::string, Source*>::const_iterator it = mesh.sources.find(array_source);
+                    if(it != mesh.sources.end())
                     {
-                        mesh->vertices->source = it->second;
+                        mesh.vertices.source = it->second;
+                        mesh.sources[*mesh.vertices.id] = it->second;
                     }
                     else
                     {
                         m_status = false;
-                        printf("could not find vertex array source \"%s\"\n", vertex_array->id->c_str());
+                        printf("could not find vertex array source \"%s\"\n", array_source.c_str());
                     }
                 }
             }
         }
 
         // read the triangles
-        if(status)
+        if(m_status)
         {
-        }
+            const XML::ChildList* triangle_arrays = find_children(node, "triangles");
+            if(m_status)
+            {
+                unsigned int num_arrays = triangle_arrays->size();
 
-        if(!m_status)
-        {
-            delete mesh;
-            mesh = nullptr;
-        }
+                mesh.num_triangle_arrays = num_arrays;
+                mesh.triangle_arrays = new TriangleArray[num_arrays];
 
-        return mesh;
+                for(unsigned int i = 0; m_status && (i < num_arrays); i++)
+                {
+                    read_triangle_array(triangle_arrays->at(i), &mesh.triangle_arrays[i]);
+                }
+            }
+        }
     }
 
     void read_geometry(const XML::Node* node)
     {
-        Mesh* mesh = nullptr;
-        const std::string* id = nullptr;
-        const std::string* name = nullptr;
+        Geometry* geometry = new Geometry();
 
-        id = find_attribute(node, "id");
+        geometry->id = find_attribute(node, "id");
         if(m_status)
         {
-            name = find_attribute(node, "name");
+            geometry->name = find_attribute(node, "name");
         }
 
         if(m_status)
@@ -379,18 +674,18 @@ private: // methods
             const XML::Node* mesh_node = find_child(node, "mesh");
             if(m_status)
             {
-                mesh = read_mesh(mesh_node);
+                read_mesh(mesh_node, geometry->mesh);
             }
         }
 
         if(m_status)
         {
-            Geometry* geometry = new Geometry();
-            geometry->id = id;
-            geometry->name = name;
-            geometry->mesh = mesh;
-
-            m_data->geometry_library[*id] = geometry;
+            m_data->geometry_library[*(geometry->id)] = geometry;
+        }
+        else
+        {
+            delete geometry;
+            m_status = false;
         }
     }
 
@@ -408,7 +703,7 @@ private: // methods
 
     bool process(const XML::Node* root)
     {
-        const XML::Node* geometry_library = find_child(root, "geometry_library");
+        const XML::Node* geometry_library = find_child(root, "library_geometries");
         if(m_status)
         {
             read_geometry_library(geometry_library);
