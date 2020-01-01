@@ -3,8 +3,9 @@
 #include <cstdio>
 #include <cstring>
 
-#include <gk/array.hpp>
-#include <gk/const_vector.hpp>
+#include <array>
+#include <vector>
+
 #include <gk/string.hpp>
 #include <gk/string_buffer.hpp>
 #include <gk/xml.hpp>
@@ -30,7 +31,8 @@ struct Accessor
     unsigned int count;
     unsigned int stride;
     
-    ConstVector<Param, 4> params;
+    unsigned int num_params;
+    std::array<Param, 4> params;
 };
 
 struct Technique
@@ -92,15 +94,17 @@ struct TriangleArray
     unsigned int count;
     unsigned short* indices;
     
-    ConstVector<Input, 4> inputs;
+    unsigned int num_inputs;
+    std::array<Input, 4> inputs;
 };
 
 struct Mesh
 {
     std::map<std::string, Source*> sources;
-
     VertexArray vertices;
-    Array<TriangleArray*> triangle_arrays;
+
+    unsigned int num_triangle_arrays;
+    TriangleArray* triangle_arrays;
 };
 
 struct Geometry
