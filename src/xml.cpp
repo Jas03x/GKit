@@ -496,6 +496,18 @@ XML::~XML()
     delete this->root;
 }
 
+XML::Node::~Node()
+{
+    for(ChildMap::iterator it = this->children.begin(); it != this->children.end(); it++)
+    {
+        ChildList& list = it->second;
+        for(unsigned int i = 0; i < list.size(); i++)
+        {
+            delete list[i];
+        }
+    }
+}
+
 const XML* XML::Read(const char* path)
 {
     XML* xml = nullptr;

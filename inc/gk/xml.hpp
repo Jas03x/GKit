@@ -29,16 +29,18 @@ public:
         
         const Node* find_child(const std::string& key) const;
         const ChildList* find_children(const std::string& key) const;
+
+        ~Node();
     };
 
 private:
     XML(Node* node);
-    ~XML();
 
 public:
     Node* root;
 
     static const XML* Read(const char* path);
+    ~XML();
 };
 
 #endif // GK_XML_HPP

@@ -1433,5 +1433,7 @@ ColladaImporter::ColladaImporter(const char* path)
     status = ColladaReader::Read(xml->root) != nullptr;
 
     printf("%s\n", status ? "xml loaded successfully" : "xml failed to load");
+
+    delete xml;
 }
 
