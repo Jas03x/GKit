@@ -89,7 +89,10 @@ struct Input
         VERTEX = 2,
         NORMAL = 3,
         TEXCOORD = 4,
-        COLOR = 5
+        COLOR = 5,
+        JOINT = 6,
+        INV_BIND_MATRIX = 7,
+        WEIGHT = 8
     };
 
     const std::string* source;
@@ -124,11 +127,33 @@ struct Mesh
     TriangleArray* triangle_arrays;
 };
 
+struct Joints
+{
+    std::array<Input, 2> inputs;
+
+    Source* joints;
+    Source* bind_poses;
+};
+
+struct VertexWeights
+{
+    std::vector<unsigned short> v_count_array;
+    std::vector<unsigned short> v_index_array;
+    unsigned int count;
+
+    std::array<Input, 2> inputs;
+    Source* joints;
+    Source* weights;
+};
+
 struct Skin
 {
     Mesh* source;
     float bind_shape_matrix[16];
     std::map<std::string, Source*> sources;
+
+    Joints joints;
+    VertexWeights vertex_weights;
 };
 
 struct Geometry
@@ -281,14 +306,14 @@ private: // methods
         }
     }
 
-    void read_input(const XML::Node* node, Input* input)
+    void read_input(const XML::Node* node, Input& input)
     {
         const std::string* semantic = nullptr;
 
         semantic = find_attribute(node, "semantic");
         if(m_status)
         {
-            input->source = find_attribute(node, "source");
+            input.source = find_attribute(node, "source");
         }
 
         if(m_status)
@@ -301,6 +326,16 @@ private: // methods
                 case 'C':
                 {
                     type = (strcmp(c_str, "COLOR") == 0) ? Input::COLOR : 0;
+                    break;
+                }
+                case 'I':
+                {
+                    type = (strcmp(c_str, "INV_BIND_MATRIX") == 0) ? Input::INV_BIND_MATRIX : 0;
+                    break;
+                }
+                case 'J':
+                {
+                    type = (strcmp(c_str, "JOINT") == 0) ? Input::JOINT : 0;
                     break;
                 }
                 case 'N':
@@ -323,12 +358,17 @@ private: // methods
                     type = (strcmp(c_str, "VERTEX") == 0) ? Input::VERTEX : 0;
                     break;
                 }
+                case 'W':
+                {
+                    type = (strcmp(c_str, "WEIGHT") == 0) ? Input::WEIGHT : 0;
+                    break;
+                }
                 default: { break; }
             }
 
             if(type != 0)
             {
-                input->semantic = type;
+                input.semantic = type;
             }
             else
             {
@@ -341,12 +381,12 @@ private: // methods
         {
             const std::string* offset = node->find_attribute("offset");
             if(offset != nullptr) {
-                input->offset = std::stoi(*offset);
+                input.offset = std::stoi(*offset);
             }
 
             const std::string* set = node->find_attribute("set");
             if(set != nullptr) {
-                input->set = std::stoi(*set);
+                input.set = std::stoi(*set);
             }
         }
     }
@@ -360,7 +400,7 @@ private: // methods
             const XML::Node* input = find_child(node, "input");
             if(m_status)
             {
-                read_input(input, &array->input);
+                read_input(input, array->input);
             }
         }
     }
@@ -617,7 +657,7 @@ private: // methods
                     array->num_inputs = num_inputs;
                     for(unsigned int i = 0; m_status && (i < num_inputs); i++)
                     {
-                        read_input(inputs->at(i), &array->inputs[i]);
+                        read_input(inputs->at(i), array->inputs[i]);
                     }
                 }
                 else
@@ -713,8 +753,92 @@ private: // methods
         }
     }
 
+    void read_joints(const XML::Node* node, Joints& joints)
+    {
+        const XML::ChildList* inputs = find_children(node, "input");
+        if(m_status)
+        {
+            if(inputs->size() == joints.inputs.size())
+            {
+                for(unsigned int i = 0; m_status && (i < inputs->size()); i++)
+                {
+                    read_input(inputs->at(i), joints.inputs[i]);
+                }
+            }
+            else
+            {
+                m_status = false;
+                printf("invalid inputs in joints\n");
+            }
+        }
+    }
+
+    void read_vertex_weights(const XML::Node* node, VertexWeights& weights)
+    {
+        const std::string* count = find_attribute(node, "count");
+        if(m_status)
+        {
+            weights.count = std::stoi(*count);
+        }
+
+        if(m_status)
+        {
+            const XML::ChildList* inputs = find_children(node, "input");
+            if(m_status)
+            {
+                if(inputs->size() == weights.inputs.size())
+                {
+                    for(unsigned int i = 0; m_status && (i < inputs->size()); i++)
+                    {
+                        read_input(inputs->at(i), weights.inputs[i]);
+                    }
+                }
+                else
+                {
+                    m_status = false;
+                    printf("invalid number of inputs in vertex weight set\n");
+                }
+            }
+        }
+
+        if(m_status)
+        {
+            const XML::Node* vcount = find_child(node, "vcount");
+            if(m_status)
+            {
+                parse_ushort_array(vcount->text);
+                if(m_status)
+                {
+                    if(m_ushort_buffer.size() == weights.count)
+                    {
+                        weights.v_count_array = m_ushort_buffer;
+                    }
+                    else
+                    {
+                        m_status = false;
+                        printf("weight count array does not match vertex count\n");
+                    }
+                }
+            }
+        }
+
+        if(m_status)
+        {
+            const XML::Node* v = find_child(node, "v");
+            if(m_status)
+            {
+                parse_ushort_array(v->text);
+                if(m_status)
+                {
+                    weights.v_index_array = m_ushort_buffer;
+                }
+            }
+        }
+    }
+
     void read_skin(const XML::Node* node, Skin& skin)
     {
+        // read the source
         const std::string* skin_source = find_attribute(node, "source");
         if(m_status)
         {
@@ -732,6 +856,7 @@ private: // methods
             }
         }
 
+        // read the bind shape matrix
         if(m_status)
         {
             const XML::Node* bsm = find_child(node, "bind_shape_matrix");
@@ -753,6 +878,7 @@ private: // methods
             }
         }
 
+        // read the sources
         if(m_status)
         {
             const XML::ChildList* sources = find_children(node, "source");
@@ -764,6 +890,90 @@ private: // methods
                     if(m_status)
                     {
                         skin.sources[*(src->id)] = src;
+                    }
+                }
+            }
+        }
+
+        // read the joints
+        if(m_status)
+        {
+            const XML::Node* joints = find_child(node, "joints");
+            if(m_status)
+            {
+                read_joints(joints, skin.joints);
+            }
+
+            if(m_status)
+            {
+                for(unsigned int i = 0; m_status && (i < skin.joints.inputs.size()); i++)
+                {
+                    Input& input = skin.joints.inputs[i];
+                    std::string input_source = input.source->substr(1);
+
+                    const std::map<std::string, Source*>::const_iterator it = skin.sources.find(input_source);
+                    if(it != skin.sources.end())
+                    {
+                        switch(input.semantic)
+                        {
+                            case Input::JOINT:
+                            {
+                                skin.joints.joints = it->second;
+                                break;
+                            }
+                            case Input::INV_BIND_MATRIX:
+                            {
+                                skin.joints.bind_poses = it->second;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_status = false;
+                        printf("could not find joint source \"%s\"\n", input_source.c_str());
+                    }
+                }
+            }
+        }
+        
+        // read the vertex weights
+        if(m_status)
+        {
+            const XML::Node* vertex_weights = find_child(node, "vertex_weights");
+            if(m_status)
+            {
+                read_vertex_weights(vertex_weights, skin.vertex_weights);
+            }
+
+            if(m_status)
+            {
+                for(unsigned int i = 0; m_status && (i < skin.vertex_weights.inputs.size()); i++)
+                {
+                    Input& input = skin.vertex_weights.inputs[i];
+                    std::string input_source = input.source->substr(1);
+
+                    const std::map<std::string, Source*>::const_iterator it = skin.sources.find(input_source);
+                    if(it != skin.sources.end())
+                    {
+                        switch(input.semantic)
+                        {
+                            case Input::JOINT:
+                            {
+                                skin.vertex_weights.joints = it->second;
+                                break;
+                            }
+                            case Input::WEIGHT:
+                            {
+                                skin.vertex_weights.weights = it->second;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_status = false;
+                        printf("could not find vertex weight source \"%s\"\n", input_source.c_str());
                     }
                 }
             }
