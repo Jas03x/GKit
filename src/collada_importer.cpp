@@ -172,10 +172,57 @@ struct Controller
     Skin skin;
 };
 
+struct Extra
+{
+    struct
+    {
+        const std::string* profile;
+        const std::string* layer;
+
+        float roll;
+        float tip_x;
+        float tip_y;
+        float tip_z;
+    } technique;
+};
+
+struct Node
+{
+    enum
+    {
+        NODE  = 1,
+        JOINT = 2
+    };
+
+    const std::string* id;
+    const std::string* sid;
+    const std::string* name;
+    unsigned int type;
+
+    float scale[3];
+    float rotation_x[4];
+    float rotation_y[4];
+    float rotation_z[4];
+    float translation[3];
+
+    Node* parent;
+
+    Extra extra;
+};
+
+struct VisualScene
+{
+    const std::string* id;
+    const std::string* name;
+
+    std::map<std::string, Node*> nodes;
+};
+
 struct Collada
 {
     std::map<std::string, Geometry*> geometry_library;
     std::map<std::string, Controller*> controller_library;
+    std::map<std::string, VisualScene*> scene_library;
 };
 
 class ColladaReader
@@ -1006,7 +1053,6 @@ private: // methods
         else
         {
             delete geometry;
-            m_status = false;
         }
     }
 
@@ -1036,7 +1082,261 @@ private: // methods
         else
         {
             delete controller;
-            m_status = false;
+        }
+    }
+
+    void read_extra_data(const XML::Node* node, Extra& extra)
+    {
+        const XML::Node* tech = find_child(node, "technique");
+        if(m_status)
+        {
+            extra.technique.profile = find_attribute(tech, "profile");
+        }
+
+        if(m_status)
+        {
+            const XML::Node* layer = find_child(tech, "layer");
+            if(m_status)
+            {
+                extra.technique.layer = &layer->text;
+            }
+        }
+
+        if(m_status)
+        {
+            const XML::Node* roll = tech->find_child("roll");
+            if(roll != nullptr)
+            {
+                extra.technique.roll = std::stof(roll->text);
+            }
+        }
+
+        if(m_status)
+        {
+            const XML::Node* tip_x = find_child(tech, "tip_x");
+            if(m_status)
+            {
+                extra.technique.tip_x = std::stoi(tip_x->text);
+            }
+        }
+        
+        if(m_status)
+        {
+            const XML::Node* tip_y = find_child(tech, "tip_y");
+            if(m_status)
+            {
+                extra.technique.tip_y = std::stoi(tip_y->text);
+            }
+        }
+        
+        if(m_status)
+        {
+            const XML::Node* tip_z = find_child(tech, "tip_z");
+            if(m_status)
+            {
+                extra.technique.tip_z = std::stoi(tip_z->text);
+            }
+        }
+    }
+
+    void read_node(const XML::Node* node, Node* parent, VisualScene* scene)
+    {
+        Node* data = new Node();
+
+        data->id = find_attribute(node, "id");
+        if(m_status)
+        {
+            data->name = find_attribute(node, "name");
+        }
+
+        if(m_status)
+        {
+            const std::string* type = find_attribute(node, "type");
+            if(m_status)
+            {
+                const char* str = type->c_str();
+                switch(str[0])
+                {
+                    case 'N': { data->type = (strcmp(str, "NODE") == 0) ? Node::NODE : 0; break; }
+                    case 'J': { data->type = (strcmp(str, "JOINT") == 0) ? Node::JOINT : 0; break; }
+                }
+
+                if(data->type == 0)
+                {
+                    m_status = false;
+                    printf("invalid node type\n");
+                }
+            }
+        }
+
+        if(m_status)
+        {
+            data->sid = node->find_attribute("sid");
+        }
+
+        if(m_status)
+        {
+            const XML::Node* scale = find_child(node, "scale");
+            if(m_status)
+            {
+                parse_float_array(scale->text);
+                if(m_status)
+                {
+                    if(m_float_buffer.size() == 3)
+                    {
+                        memcpy(data->scale, m_float_buffer.data(), sizeof(float) * 3);
+                    }
+                    else
+                    {
+                        m_status = false;
+                        printf("invalid scale parameters\n");
+                    }
+                }
+            }
+        }
+
+        if(m_status)
+        {
+            const XML::ChildList* rotations = find_children(node, "rotate");
+            if(m_status)
+            {
+                if(rotations->size() == 3)
+                {
+                    for(unsigned int i = 0; m_status && (i < rotations->size()); i++)
+                    {
+                        const XML::Node* rotation = rotations->at(i);
+                        
+                        const std::string* sid = find_attribute(rotation, "sid");
+                        if(m_status)
+                        {
+                            parse_float_array(rotation->text);
+                            if(m_status)
+                            {
+                                if(m_float_buffer.size() == 4)
+                                {
+                                    float* r_data = nullptr;
+
+                                    const char* sid_str = sid->c_str();
+                                    if(strncmp(sid_str, "rotation", 8) == 0)
+                                    {
+                                        switch(sid_str[8])
+                                        {
+                                            case 'X': { r_data = data->rotation_x; break; }
+                                            case 'Y': { r_data = data->rotation_y; break; }
+                                            case 'Z': { r_data = data->rotation_z; break; }
+                                            default: { break; }
+                                        }
+                                    }
+
+                                    if(r_data != nullptr)
+                                    {
+                                        memcpy(r_data, m_float_buffer.data(), sizeof(float) * 4);
+                                    }
+                                    else
+                                    {
+                                        m_status = false;
+                                        printf("unknown rotation \"%s\"\n", sid_str);
+                                    }
+                                }
+                                else
+                                {
+                                    m_status = false;
+                                    printf("invalid rotation parameters\n");
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    m_status = false;
+                    printf("expected three rotation axis\n");
+                }
+            }
+        }
+        
+        if(m_status)
+        {
+            const XML::Node* translation = find_child(node, "translate");
+            if(m_status)
+            {
+                parse_float_array(translation->text);
+                if(m_status)
+                {
+                    if(m_float_buffer.size() == 3)
+                    {
+                        memcpy(data->translation, m_float_buffer.data(), sizeof(float) * 3);
+                    }
+                    else
+                    {
+                        m_status = false;
+                        printf("invalid translation parameters\n");
+                    }
+                }
+            }
+        }
+
+        if(m_status)
+        {
+            const XML::Node* extra_data = node->find_child("extra");
+            if(extra_data != nullptr)
+            {
+                read_extra_data(extra_data, data->extra);
+            }
+        }
+
+        if(m_status)
+        {
+            data->parent = parent;
+            scene->nodes[*(data->id)] = data;
+        }
+        else
+        {
+            delete data;
+        }
+
+        if(m_status)
+        {
+            const XML::ChildList* children = node->find_children("node");
+            if(children != nullptr)
+            {
+                for(unsigned int i = 0; m_status && (i < children->size()); i++)
+                {
+                    read_node(children->at(i), data, scene);
+                }
+            }
+        }
+    }
+
+    void read_visual_scene(const XML::Node* node)
+    {
+        VisualScene* scene = new VisualScene();
+
+        scene->id = find_attribute(node, "id");
+        if(m_status)
+        {
+            scene->name = find_attribute(node, "name");
+        }
+
+        if(m_status)
+        {
+            const XML::ChildList* nodes = node->find_children("node");
+            if(nodes != nullptr)
+            {
+                for(unsigned int i = 0; m_status && (i < nodes->size()); i++)
+                {
+                    read_node(nodes->at(i), nullptr, scene);
+                }
+            }
+        }
+
+        if(m_status)
+        {
+            m_data->scene_library[*(scene->id)] = scene;
+        }
+        else
+        {
+            delete scene;
         }
     }
 
@@ -1064,6 +1364,15 @@ private: // methods
         }
     }
 
+    void read_visual_scene_library(const XML::Node* node)
+    {
+        const XML::Node* visual_scene = find_child(node, "visual_scene");
+        if(m_status)
+        {
+            read_visual_scene(visual_scene);
+        }
+    }
+
     bool process(const XML::Node* root)
     {
         const XML::Node* geometry_library = find_child(root, "library_geometries");
@@ -1078,6 +1387,15 @@ private: // methods
             if(m_status)
             {
                 read_controller_library(controller_library);
+            }
+        }
+
+        if(m_status)
+        {
+            const XML::Node* visual_scene_library = find_child(root, "library_visual_scenes");
+            if(m_status)
+            {
+                read_visual_scene_library(visual_scene_library);
             }
         }
         
