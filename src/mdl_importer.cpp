@@ -1,4 +1,4 @@
-#include <gk/mesh_data.hpp>
+#include <gk/mdl_importer.hpp>
 
 #include <assert.h>
 
@@ -13,7 +13,7 @@
 	#define DEBUG_PRINT(frmt, ...)
 #endif
 
-unsigned int MeshData::ReadTextures(const byte* data)
+unsigned int MDL_Importer::ReadTextures(const byte* data)
 {
 	unsigned int offset = 0;
 	
@@ -33,7 +33,7 @@ unsigned int MeshData::ReadTextures(const byte* data)
 	return offset;
 }
 
-unsigned int MeshData::ReadMaterials(const byte* data)
+unsigned int MDL_Importer::ReadMaterials(const byte* data)
 {
 	unsigned int offset = 0;
 
@@ -46,9 +46,9 @@ unsigned int MeshData::ReadMaterials(const byte* data)
 		const MDL_Material* material = reinterpret_cast<const MDL_Material*>(data + offset);
 		offset += sizeof(MDL_Material);
 
-		Materials.push_back(MeshData::Material());
+		Materials.push_back(MDL_Importer::Material());
 
-		MeshData::Material& mat = Materials.back();
+		MDL_Importer::Material& mat = Materials.back();
 		memcpy(mat.diffuse.values,  material->color.values,    sizeof(Vector3F));
 		memcpy(mat.specular.values, material->specular.values, sizeof(Vector3F));
 		mat.texture_index = material->texture_index;
@@ -63,7 +63,7 @@ unsigned int MeshData::ReadMaterials(const byte* data)
 	return offset;
 }
 
-unsigned int MeshData::ReadNodes(const byte* data)
+unsigned int MDL_Importer::ReadNodes(const byte* data)
 {
 	unsigned int offset = 0;
 
@@ -76,9 +76,9 @@ unsigned int MeshData::ReadNodes(const byte* data)
 		const MDL_Node* node = reinterpret_cast<const MDL_Node*>(data + offset);
 		offset += sizeof(MDL_Node);
 
-		Nodes.push_back(MeshData::Node());
+		Nodes.push_back(MDL_Importer::Node());
 
-		MeshData::Node& n = Nodes.back();
+		MDL_Importer::Node& n = Nodes.back();
 		n.name   = std::string(node->name.string);
 		n.parent = std::string(node->parent.string);
 		memcpy(n.offset_matrix.values, node->offset_matrix.values, sizeof(float) * 16);
@@ -95,7 +95,7 @@ unsigned int MeshData::ReadNodes(const byte* data)
 	return offset;
 }
 
-unsigned int MeshData::ReadBones(const byte* data)
+unsigned int MDL_Importer::ReadBones(const byte* data)
 {
 	unsigned int offset = 0;
 
@@ -108,9 +108,9 @@ unsigned int MeshData::ReadBones(const byte* data)
 		const MDL_Bone* bone = reinterpret_cast<const MDL_Bone*>(data + offset);
 		offset += sizeof(MDL_Bone);
 
-		Bones.push_back(MeshData::Bone());
+		Bones.push_back(MDL_Importer::Bone());
 
-		MeshData::Bone& b = Bones.back();
+		MDL_Importer::Bone& b = Bones.back();
 		b.name = std::string(bone->name.string);
 		memcpy(b.offset_matrix.values, bone->offset_matrix.values, sizeof(Matrix4F));
 
@@ -131,9 +131,9 @@ unsigned int MeshData::ReadBones(const byte* data)
 				const MDL_Frame* frame = reinterpret_cast<const MDL_Frame*>(data + offset);
 				offset += sizeof(MDL_Frame);
 
-				b.animation.frames.push_back(MeshData::Frame());
+				b.animation.frames.push_back(MDL_Importer::Frame());
 
-				MeshData::Frame& f = b.animation.frames.back();
+				MDL_Importer::Frame& f = b.animation.frames.back();
 				f.time = frame->time;
 				memcpy(f.position.values, frame->position.values, sizeof(Vector3F));
 				memcpy(f.rotation.values, frame->rotation.values, sizeof(Vector4F));
@@ -152,7 +152,7 @@ unsigned int MeshData::ReadBones(const byte* data)
 	return offset;
 }
 
-unsigned int MeshData::ReadMeshes(const byte* data)
+unsigned int MDL_Importer::ReadMeshes(const byte* data)
 {
 	unsigned int offset = 0;
 	unsigned int vertex_offset = 0; // each mesh has its own set of vertices, but the vertices are all stored in one big array. So we need to store an offset into the combined array
@@ -166,9 +166,9 @@ unsigned int MeshData::ReadMeshes(const byte* data)
 		const MDL_Mesh* mesh = reinterpret_cast<const MDL_Mesh*>(data + offset);
 		offset += sizeof(MDL_Mesh);
 
-		Meshes.push_back(MeshData::Mesh());
+		Meshes.push_back(MDL_Importer::Mesh());
 
-		MeshData::Mesh& m = Meshes.back();
+		MDL_Importer::Mesh& m = Meshes.back();
 		m.name = std::string(mesh->name.string);
 		m.vertices.reserve(mesh->vertex_array_length);
 		m.indices.reserve(mesh->triangle_array_length * 3);
@@ -183,9 +183,9 @@ unsigned int MeshData::ReadMeshes(const byte* data)
 			const MDL_Vertex* vertex = reinterpret_cast<const MDL_Vertex*>(data + offset);
 			offset += sizeof(MDL_Vertex);
 
-			m.vertices.push_back(MeshData::Vertex());
+			m.vertices.push_back(MDL_Importer::Vertex());
 			
-			MeshData::Vertex& v = m.vertices.back();
+			MDL_Importer::Vertex& v = m.vertices.back();
 			memcpy(v.position.values, vertex->position.values, sizeof(Vector3F));
 			memcpy(v.normal.values,   vertex->normal.values,   sizeof(Vector3F));
 			memcpy(v.uv.values,       vertex->uv.values,       sizeof(Vector2F));
@@ -231,7 +231,7 @@ unsigned int MeshData::ReadMeshes(const byte* data)
 	return offset;
 }
 
-MeshData::MeshData(const char* path)
+MDL_Importer::MDL_Importer(const char* path)
 {
 	File* file = File::Open(path, "rb");
 
@@ -263,7 +263,7 @@ MeshData::MeshData(const char* path)
 	assert(offset == size);
 }
 
-MeshData::~MeshData()
+MDL_Importer::~MDL_Importer()
 {
 
 }
