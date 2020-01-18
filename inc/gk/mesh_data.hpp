@@ -17,7 +17,19 @@ struct MeshData
         Vector3F translation;
     };
 
+    struct Vertex
+    {
+        Vector3F position;
+        Vector3F normal;
+        Vector2F uv;
+        unsigned char node;
+        unsigned char bone_indices[4];
+        float bone_weights[4];
+        unsigned int bone_count;
+    };
+
     std::vector<Node> nodes;
+    std::vector<Vertex> vertices;
 };
 
 #endif // MESH_DATA_HPP
