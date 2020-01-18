@@ -17,6 +17,8 @@ namespace Collada
 
     private:
         bool m_status;
+
+        const XML* m_file;
         
         StringBuffer m_strbuf;
 
@@ -57,6 +59,7 @@ namespace Collada
         void read_geometry_library(const XML::Node* node);
         void read_controller_library(const XML::Node* node);
         void read_visual_scene_library(const XML::Node* node);
+        
         void process(const XML::Node* root);
 
     public:
@@ -64,6 +67,10 @@ namespace Collada
         ~Parser();
 
         bool parse(const char* path);
+
+        const GeometryLibrary& GetGeometryLibrary();
+        const ControllerLibrary& GetControllerLibrary();
+        const SceneLibrary& GetSceneLibrary();
     };
 }
 

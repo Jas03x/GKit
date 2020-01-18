@@ -103,6 +103,8 @@ namespace Collada
         const std::string* id;
         Input input;
         Source* source;
+
+        ~VertexArray();
     };
 
     struct TriangleArray
@@ -113,6 +115,8 @@ namespace Collada
         
         unsigned int num_inputs;
         std::array<Input, 4> inputs;
+
+        ~TriangleArray();
     };
 
     struct Mesh
@@ -122,6 +126,8 @@ namespace Collada
 
         unsigned int num_triangle_arrays;
         TriangleArray* triangle_arrays;
+
+        ~Mesh();
     };
 
     struct Joints
@@ -130,6 +136,8 @@ namespace Collada
 
         Source* joints;
         Source* bind_poses;
+
+        ~Joints();
     };
 
     struct VertexWeights
@@ -141,6 +149,8 @@ namespace Collada
         std::array<Input, 2> inputs;
         Source* joints;
         Source* weights;
+
+        ~VertexWeights();
     };
 
     struct Skin
@@ -151,6 +161,8 @@ namespace Collada
 
         Joints joints;
         VertexWeights vertex_weights;
+
+        ~Skin();
     };
 
     struct Geometry

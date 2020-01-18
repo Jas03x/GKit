@@ -1182,17 +1182,19 @@ Collada::Parser::~Parser()
     {
         delete it->second;
     }
+
+    delete m_file;
 }
 
 bool Collada::Parser::parse(const char* path)
 {
     m_status = true;
-    const XML* xml = XML::Read(path);
+    m_file = XML::Read(path);
 
-    if(xml != nullptr)
+    if(m_file != nullptr)
     {
-        //xml->root->print();
-        process(xml->root);
+        //m_file->root->print();
+        process(m_file->root);
         printf("%s\n", m_status ? "xml loaded successfully" : "xml failed to load");
     }
     else
@@ -1201,7 +1203,20 @@ bool Collada::Parser::parse(const char* path)
         printf("error: could not load xml file\n");
     }
 
-    delete xml;
     return m_status;
 }
 
+const Collada::Parser::GeometryLibrary& Collada::Parser::GetGeometryLibrary()
+{
+    return m_geometry_library;
+}
+
+const Collada::Parser::ControllerLibrary& Collada::Parser::GetControllerLibrary()
+{
+    return m_controller_library;
+}
+
+const Collada::Parser::SceneLibrary& Collada::Parser::GetSceneLibrary()
+{
+    return m_scene_library;
+}
