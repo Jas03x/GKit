@@ -651,6 +651,7 @@ void Collada::Parser::read_skin(const XML::Node* node, Skin& skin)
     const std::string* skin_source = find_attribute(node, "source");
     if(m_status)
     {
+        /*
         std::string source = skin_source->substr(1);
 
         std::map<std::string, Geometry*>::const_iterator it = m_geometry_library.find(source);
@@ -663,6 +664,8 @@ void Collada::Parser::read_skin(const XML::Node* node, Skin& skin)
             m_status = false;
             printf("skin source \"%s\" not found\n", source.c_str());
         }
+        */
+       skin.source = skin_source;
     }
 
     // read the bind shape matrix
@@ -727,7 +730,7 @@ void Collada::Parser::read_skin(const XML::Node* node, Skin& skin)
                     {
                         case Input::JOINT:
                         {
-                            skin.joints.joints = it->second;
+                            skin.joints.names = it->second;
                             break;
                         }
                         case Input::INV_BIND_MATRIX:

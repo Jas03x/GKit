@@ -28,6 +28,15 @@ struct MeshData
         unsigned int bone_count;
     };
 
+    struct Bone
+    {
+        std::string name;
+        Matrix4F offset_matrix;
+    };
+
+    Matrix4F bind_pose_matrix;
+
+    std::vector<Bone> bones;
     std::vector<Node> nodes;
     std::vector<Vertex> vertices;
 };

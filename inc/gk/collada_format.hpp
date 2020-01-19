@@ -134,7 +134,7 @@ namespace Collada
     {
         std::array<Input, 2> inputs;
 
-        Source* joints;
+        Source* names;
         Source* bind_poses;
 
         ~Joints();
@@ -155,7 +155,8 @@ namespace Collada
 
     struct Skin
     {
-        Mesh* source;
+        // Mesh* source;
+        const std::string* source;
         float bind_shape_matrix[16];
         std::map<std::string, Source*> sources;
 
