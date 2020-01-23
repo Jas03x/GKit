@@ -36,7 +36,7 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
 	for (unsigned int i = 0; i < data.nodes.size(); i++)
 	{
 		const MeshData::Node& node = data.nodes[i];
-
+		
 		if (node.parent.size() == 0) {
 			Nodes[i].SetParent(&RootNode);
 		} else {

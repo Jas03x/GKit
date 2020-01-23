@@ -1,10 +1,5 @@
 #include <gk/collada_format.hpp>
 
-Collada::VertexArray::~VertexArray()
-{
-    delete this->source;
-}
-
 Collada::TriangleArray::~TriangleArray()
 {
     delete this->indices;
@@ -12,24 +7,12 @@ Collada::TriangleArray::~TriangleArray()
 
 Collada::Mesh::~Mesh()
 {
-    for(std::map<std::string, Source*>::const_iterator it = this->sources.begin(); it != this->sources.end(); it++)
+    for(unsigned int i = 0; i < this->source_array.size(); i++)
     {
-        delete it->second;
+        delete this->source_array[i];
     }
 
-    delete this->triangle_arrays;
-}
-
-Collada::Joints::~Joints()
-{
-    delete this->names;
-    delete this->bind_poses;
-}
-
-Collada::VertexWeights::~VertexWeights()
-{
-    delete this->joints;
-    delete this->weights;
+    delete[] this->triangle_arrays;
 }
 
 Collada::Skin::~Skin()

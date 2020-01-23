@@ -78,7 +78,6 @@ void DynamicMeshRenderer::Render(const DynamicMesh& mesh)
 	Matrix4F normal_matrices[DynamicMesh::BONE_LIMIT];
 
 	const Node& root = mesh.Nodes[0];
-	printf("Root = %s\n", root.GetName().c_str());
 	
     Matrix4F inverse = Matrix::Inverse(root.GetLocalMatrix());
 	//Matrix4F inverse = Matrix4F(1.0f);

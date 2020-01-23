@@ -103,8 +103,6 @@ namespace Collada
         const std::string* id;
         Input input;
         Source* source;
-
-        ~VertexArray();
     };
 
     struct TriangleArray
@@ -121,8 +119,10 @@ namespace Collada
 
     struct Mesh
     {
-        std::map<std::string, Source*> sources;
-        VertexArray vertices;
+        std::vector<Source*> source_array; // all the sources of the mesh
+        
+        VertexArray vertices; // the vertex source
+        std::map<std::string, Source*> sources; // name to source mapping
 
         unsigned int num_triangle_arrays;
         TriangleArray* triangle_arrays;
@@ -136,8 +136,6 @@ namespace Collada
 
         Source* names;
         Source* bind_poses;
-
-        ~Joints();
     };
 
     struct VertexWeights
@@ -149,8 +147,6 @@ namespace Collada
         std::array<Input, 2> inputs;
         Source* joints;
         Source* weights;
-
-        ~VertexWeights();
     };
 
     struct Skin

@@ -18,6 +18,7 @@ bool Collada::Importer::Import(const char* path, MeshData& mesh_data)
     Importer importer;
 
     bool status = parser.parse(path);
+
     if(status)
     {
         status = importer.process_scene_library(parser.GetSceneLibrary(), mesh_data);
@@ -193,7 +194,8 @@ bool Collada::Importer::process_geometry(const Geometry* obj)
     {
         const Input& input = triangle_array.inputs[i];
 
-        const std::map<std::string, Source*>::const_iterator it = mesh.sources.find(*input.source);
+        std::string source_name = input.source->substr(1);
+        const std::map<std::string, Source*>::const_iterator it = mesh.sources.find(source_name);
         if(it != mesh.sources.end())
         {
             switch(input.semantic)
@@ -213,7 +215,7 @@ bool Collada::Importer::process_geometry(const Geometry* obj)
         else
         {
             status = false;
-            printf("error: source \"%s\" not found\n", input.source->c_str());
+            printf("error: source \"%s\" not found\n", source_name.c_str());
         }
     }
 

@@ -9,10 +9,20 @@ File::File()
 
 File* File::Open(const char* path, const char* mode)
 {
-	File* file = new File();
-	file->m_Handle = fopen(path, mode);
+	File* file = nullptr;
+	FILE* handle = fopen(path, mode);
 
-	assert(file->m_Handle != nullptr);
+	if(handle != nullptr)
+	{
+		file = new File();
+		file->m_Handle = handle;
+	}
+	else
+	{
+		printf("could not open file \"%s\" for mode \"%s\"\n", path, mode);
+	}
+	
+
 	return file;
 }
 

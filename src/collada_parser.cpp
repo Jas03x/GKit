@@ -92,7 +92,7 @@ void Collada::Parser::parse_ushort_array(const std::string& text)
 
 void Collada::Parser::parse_name_array(const std::string& text)
 {
-    m_ushort_buffer.clear();
+    m_string_buffer.clear();
 
     char c = 0;
     for(unsigned int i = 0 ;; i++)
@@ -106,6 +106,7 @@ void Collada::Parser::parse_name_array(const std::string& text)
         else if(m_strbuf.size() > 0)
         {
             m_string_buffer.push_back(std::string(m_strbuf.data(), m_strbuf.size()));
+            m_strbuf.clear();
         }
 
         if(c == 0)
@@ -514,6 +515,7 @@ void Collada::Parser::read_mesh(const XML::Node* node, Mesh& mesh)
             if(m_status)
             {
                 mesh.sources[*(src->id)] = src;
+                mesh.source_array.push_back(src);
             }
         }
     }
