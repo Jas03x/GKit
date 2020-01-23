@@ -151,7 +151,7 @@ bool Collada::Importer::process_image_library(const Parser::ImageLibrary& librar
     }
 
     const Image* image = library.begin()->second;
-    mesh_data.diffuse_texture = *image;
+    mesh_data.diffuse_texture = *image->init_from.file_name;
 
     return status;
 }
@@ -175,7 +175,8 @@ bool Collada::Importer::process_node(const Collada::Node* node, MeshData& mesh_d
 bool Collada::Importer::process_geometry(const Geometry* obj)
 {
     bool status = true;
-    IMesh& data = m_mesh_map.insert(std::pair<std::string, IMesh>(*obj->id, IMesh())).second;
+
+    IMesh& data = m_mesh_map.insert(std::pair<std::string, IMesh>(*obj->id, IMesh())).first->second;
 
     const Mesh& mesh = obj->mesh;
     const TriangleArray& triangle_array = *mesh.triangle_arrays;
@@ -250,7 +251,7 @@ bool Collada::Importer::process_geometry(const Geometry* obj)
     return status;
 }
 
-bool Collada::Importer::process_mesh_data(const MeshData& mesh_data)
+bool Collada::Importer::process_mesh_data(MeshData& mesh_data)
 {
     bool status = true;
 
@@ -277,7 +278,7 @@ bool Collada::Importer::process_mesh_data(const MeshData& mesh_data)
 
             MeshData::Vertex vertex = {
                 v.position, mesh.normal_array[i], mesh.uv_array[i],
-                mesh.node_index,
+                static_cast<unsigned char>(mesh.node_index),
                 { v.bone_indices[0], v.bone_indices[1], v.bone_indices[2], v.bone_indices[3] },
                 { v.bone_weights[0], v.bone_weights[1], v.bone_weights[2], v.bone_weights[3] },
                 v.bone_count
@@ -286,7 +287,7 @@ bool Collada::Importer::process_mesh_data(const MeshData& mesh_data)
             VertexMap::const_iterator it = vertex_map.find(vertex);
             if(it == vertex_map.end())
             {
-                it = vertex_map.insert(std::pair<MeshData::Vertex, unsigned int>(vertex, mesh_data.vertices.size()));
+                it = vertex_map.insert(std::pair<MeshData::Vertex, unsigned int>(vertex, mesh_data.vertices.size())).first;
                 mesh_data.vertices.push_back(vertex);
             }
             

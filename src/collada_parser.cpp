@@ -1112,7 +1112,7 @@ void Collada::Parser::read_image(const XML::Node* node)
     image->id = find_attribute(node, "id");
     if(m_status)
     {
-        image->name = find_attribute("name");
+        image->name = find_attribute(node, "name");
     }
 
     if(m_status)

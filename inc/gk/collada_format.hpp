@@ -237,6 +237,8 @@ namespace Collada
         const std::string* name;
 
         std::map<std::string, Node*> nodes;
+
+        ~VisualScene();
     };
 }
 

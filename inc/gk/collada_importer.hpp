@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include <gk/collada_parser.hpp>
 #include <gk/matrix.hpp>
 #include <gk/mesh_data.hpp>
 
@@ -45,7 +46,7 @@ namespace Collada
 
         bool process_node(const Node* node, MeshData& mesh_data);
         bool process_geometry(const Geometry* obj);
-        bool process_mesh_data(const MeshData& mesh_data);
+        bool process_mesh_data(MeshData& mesh_data);
 
     public:
         static bool Import(const char* path, MeshData& mesh_data);
