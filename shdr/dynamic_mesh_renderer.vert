@@ -24,6 +24,8 @@ void main()
     vertex_matrix     += vertex_matrices[bone_indices[1]] * bone_weights[1];
     vertex_matrix     += vertex_matrices[bone_indices[2]] * bone_weights[2];
     vertex_matrix     += vertex_matrices[bone_indices[3]] * bone_weights[3];
+	vertex_matrix += (1 - bone_weights[0] - bone_weights[1]- bone_weights[2]- bone_weights[3]) * mat4(1.0f);
+	// vertex_matrix = mat4(1.0f);
 
 	mat4 normal_matrix = normal_matrices[bone_indices[0]] * bone_weights[0];
     normal_matrix     += normal_matrices[bone_indices[1]] * bone_weights[1];

@@ -21,7 +21,6 @@ File* File::Open(const char* path, const char* mode)
 	{
 		printf("could not open file \"%s\" for mode \"%s\"\n", path, mode);
 	}
-	
 
 	return file;
 }

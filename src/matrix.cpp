@@ -246,7 +246,7 @@ Vector2F Matrix2F::operator * (const Vector2F& v) const {
     );
 }
 
-void Matrix2F::print() {
+void Matrix2F::print() const {
     printf("[%f, %f]\n[%f, %f]\n",
         values[0][0], values[1][0],
 		values[0][1], values[1][1]
@@ -377,7 +377,7 @@ Matrix3F Matrix3F::Rotate(float v)
     };
 }
 
-void Matrix3F::print() {
+void Matrix3F::print() const {
     printf("[%f, %f, %f]\n[%f, %f, %f]\n[%f, %f, %f]\n",
         values[0][0], values[0][1], values[0][2],
         values[1][0], values[1][1], values[1][2],
@@ -558,7 +558,7 @@ Matrix4F Matrix4F::View(const Vector3F& position, const Vector3F& target, const 
     };
 }
 
-void Matrix4F::print() {
+void Matrix4F::print() const {
     printf("[%f, %f, %f, %f]\n[%f, %f, %f, %f]\n[%f, %f, %f, %f]\n[%f, %f, %f, %f]\n",
         values[0][0], values[0][1], values[0][2], values[0][3],
         values[1][0], values[1][1], values[1][2], values[1][3],

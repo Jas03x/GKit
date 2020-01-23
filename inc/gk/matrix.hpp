@@ -173,7 +173,7 @@ struct Matrix2F
 
     Vector2F operator * (const Vector2F& v) const;
 
-    void print();
+    void print() const;
 };
 
 struct Matrix3F
@@ -214,7 +214,7 @@ struct Matrix3F
     static Matrix3F Rotate(float v);
     static Matrix3F Translate(const Vector2F& v);
 
-    void print();
+    void print() const;
 };
 
 struct Matrix4F
@@ -257,7 +257,7 @@ struct Matrix4F
     static Matrix4F Project(float fov, float width, float height, float near, float far);
     static Matrix4F View(const Vector3F& position, const Vector3F& target, const Vector3F& up);
 
-    void print();
+    void print() const;
 };
 
 namespace Matrix

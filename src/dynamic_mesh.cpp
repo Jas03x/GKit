@@ -68,9 +68,9 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
 
 		/*
 		printf("Vertex: (%f, %f, %f), (%hhu, %hhu, %hhu, %hhu), (%f, %f, %f, %f)\n",
-			vertex_iterator->position[0], vertex_iterator->position[1], vertex_iterator->position[2],
-			vertex_iterator->bone_indices[0], vertex_iterator->bone_indices[1], vertex_iterator->bone_indices[2], vertex_iterator->bone_indices[3], 
-			vertex_iterator->bone_weights[0], vertex_iterator->bone_weights[1], vertex_iterator->bone_weights[2], vertex_iterator->bone_weights[3]
+			v.position.x, v.position.y, v.position.z,
+			v.bone_indices[0], v.bone_indices[1], v.bone_indices[2], v.bone_indices[3],
+			v.bone_weights[0], v.bone_weights[1], v.bone_weights[2], v.bone_weights[3]
 		);
 		*/
 		
