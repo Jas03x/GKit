@@ -34,6 +34,8 @@ struct MeshData
         Matrix4F offset_matrix;
     };
 
+    std::string diffuse_texture;
+
     Matrix4F bind_pose_matrix;
 
     std::vector<Bone> bones;

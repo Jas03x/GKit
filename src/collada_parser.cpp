@@ -1105,6 +1105,35 @@ void Collada::Parser::read_visual_scene(const XML::Node* node)
     }
 }
 
+void Collada::Parser::read_image(const XML::Node* node)
+{
+    Image* image = new Image();
+
+    image->id = find_attribute(node, "id");
+    if(m_status)
+    {
+        image->name = find_attribute("name");
+    }
+
+    if(m_status)
+    {
+        const XML::Node* init_data = find_child(node, "init_from");
+        if(m_status)
+        {
+            image->init_from.file_name = &init_data->text;
+        }
+    }
+
+    if(m_status)
+    {
+        m_image_library[*(image->id)] = image;
+    }
+    else
+    {
+        delete image;
+    }
+}
+
 void Collada::Parser::read_geometry_library(const XML::Node* node)
 {
     const XML::ChildList* geometries = find_children(node, "geometry");
@@ -1138,6 +1167,18 @@ void Collada::Parser::read_visual_scene_library(const XML::Node* node)
     }
 }
 
+void Collada::Parser::read_image_library(const XML::Node* node)
+{
+    const XML::ChildList* images = find_children(node, "image");
+    if(m_status)
+    {
+        for(unsigned int i = 0; m_status && (i < images->size()); i++)
+        {
+            read_image(images->at(i));
+        }
+    }
+}
+
 void Collada::Parser::process(const XML::Node* root)
 {
     const XML::Node* geometry_library = find_child(root, "library_geometries");
@@ -1163,6 +1204,15 @@ void Collada::Parser::process(const XML::Node* root)
             read_visual_scene_library(visual_scene_library);
         }
     }
+
+    if(m_status)
+    {
+        const XML::Node* image_library = find_child(root, "library_images");
+        if(m_status)
+        {
+            read_image_library(image_library);
+        }
+    }
 }
 
 Collada::Parser::Parser()
@@ -1182,6 +1232,11 @@ Collada::Parser::~Parser()
     }
 
     for(SceneLibrary::const_iterator it = m_scene_library.begin(); it != m_scene_library.end(); it++)
+    {
+        delete it->second;
+    }
+
+    for(ImageLibrary::const_iterator it = m_image_library.begin(); it != m_image_library.end(); it++)
     {
         delete it->second;
     }
@@ -1222,4 +1277,9 @@ const Collada::Parser::ControllerLibrary& Collada::Parser::GetControllerLibrary(
 const Collada::Parser::SceneLibrary& Collada::Parser::GetSceneLibrary()
 {
     return m_scene_library;
+}
+
+const Collada::Parser::ImageLibrary& Collada::Parser::GetImageLibrary()
+{
+    return m_image_library;
 }

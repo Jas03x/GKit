@@ -35,6 +35,11 @@ bool Collada::Importer::Import(const char* path, MeshData& mesh_data)
 
     if(status)
     {
+        status = importer.process_image_library(parser.GetImageLibrary(), mesh_data);
+    }
+
+    if(status)
+    {
         status = importer.process_mesh_data(mesh_data);
     }
 
@@ -131,6 +136,22 @@ bool Collada::Importer::process_scene_library(const Collada::Parser::SceneLibrar
     {
         status = process_node(it->second, mesh_data);
     }
+
+    return status;
+}
+
+bool Collada::Importer::process_image_library(const Parser::ImageLibrary& library, MeshData& mesh_data)
+{
+    bool status = true;
+
+    if(library.size() != 1)
+    {
+        status = false;
+        printf("error importing collada object: unsupported number of images\n");
+    }
+
+    const Image* image = library.begin()->second;
+    mesh_data.diffuse_texture = *image;
 
     return status;
 }

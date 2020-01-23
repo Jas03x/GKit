@@ -220,6 +220,17 @@ namespace Collada
         Extra extra;
     };
 
+    struct Image
+    {
+        const std::string* id;
+        const std::string* name;
+
+        struct
+        {
+            const std::string* file_name;
+        } init_from;
+    };
+
     struct VisualScene
     {
         const std::string* id;
