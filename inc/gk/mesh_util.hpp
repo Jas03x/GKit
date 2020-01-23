@@ -4,6 +4,7 @@
 #include <gk/matrix.hpp>
 #include <gk/mesh_data.hpp>
 
+/*
 namespace MeshUtil
 {
 	float GetRadius(const MeshData& data);
@@ -12,5 +13,6 @@ namespace MeshUtil
 	Vector3F  GetBoundingBox(const MeshData& data);
 	Vector3F  GetBoundingBox(const MeshData::Mesh& data);
 }
+*/
 
 #endif // GK_MESH_UTIL_H

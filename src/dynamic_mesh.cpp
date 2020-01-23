@@ -17,82 +17,65 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
     Mesh(),
     RootNode("Root")
 {
-	assert((data.Bones.size() <= BONE_LIMIT) && (data.Nodes.size() <= NODE_LIMIT));
-	assert(data.Textures.size() != 0);
+	assert((data.bones.size() <= BONE_LIMIT) && (data.nodes.size() <= NODE_LIMIT));
 
 	std::map<std::string, unsigned int> node_map;
 
 	// initial nodes
 	Nodes.reserve(NODE_LIMIT);
-	for (unsigned int i = 0; i < data.Nodes.size(); i++)
+	for (unsigned int i = 0; i < data.nodes.size(); i++)
 	{
-		const MeshData::Node& node_data = data.Nodes[i];
-		
-		Nodes.push_back(Node(node_data.name, node_data.offset_matrix));
+		const MeshData::Node& node_data = data.nodes[i];
+		Matrix4F offset_matrix = Matrix4F::Translate(node_data.translation) * Quaternion(node_data.rotation).matrix() * Matrix4F::Scale(node_data.scale);
+
+		Nodes.push_back(Node(node_data.name, offset_matrix));
 		node_map[node_data.name] = i;
 	}
 
 	// process parent hierchy
-	for (unsigned int i = 0; i < data.Nodes.size(); i++)
+	for (unsigned int i = 0; i < data.nodes.size(); i++)
 	{
-		const MeshData::Node& node = data.Nodes[i];
+		const MeshData::Node& node = data.nodes[i];
 
-		if (node.parent == "None") {
+		if (node.parent.size() == 0) {
 			Nodes[i].SetParent(&RootNode);
-			//Nodes[i].SetParent(nullptr);
 		} else {
 			Nodes[i].SetParent(&Nodes[node_map.at(node.parent)]);
 		}
 	}
 
 	Bones.reserve(BONE_LIMIT);
-	for(unsigned int i = 0; i < data.Bones.size(); i++)
+	for(unsigned int i = 0; i < data.bones.size(); i++)
 	{
-		const MeshData::Bone& bone = data.Bones[i];
+		const MeshData::Bone& bone = data.bones[i];
 		Bones.push_back(Bone(bone.name, &Nodes[node_map.at(bone.name)], bone.offset_matrix));
 	}
 
-	DynamicMesh::Vertex* vertex_buffer = new DynamicMesh::Vertex[data.VertexCount];
-	DynamicMesh::Vertex* vertex_iterator = vertex_buffer;
-	for (unsigned int m = 0; m < data.Meshes.size(); m++)
+	DynamicMesh::Vertex* vertex_buffer = new DynamicMesh::Vertex[data.vertices.size()];
+	for (unsigned int i = 0; i < data.vertices.size(); i++)
 	{
-		const MeshData::Mesh& mesh = data.Meshes[m];
-		const MeshData::Vertex* vertices = mesh.vertices.data();
-		unsigned char node = static_cast<unsigned char>(node_map.at(mesh.name));
+		const MeshData::Vertex& v = data.vertices[i];
 
-		for (unsigned int i = 0; i < mesh.vertices.size(); i++)
+		vertex_buffer[i] = DynamicMesh::Vertex
 		{
-			*vertex_iterator = DynamicMesh::Vertex
-			{
-				{ vertices[i].position.x, vertices[i].position.y, vertices[i].position.z },
-				{ vertices[i].normal.x,   vertices[i].normal.y,   vertices[i].normal.z },
-				{ vertices[i].uv.x,       vertices[i].uv.y },
-				node, // or you can use MeshData::Vertex.node
-				{ vertices[i].bones[0].index,  vertices[i].bones[1].index,  vertices[i].bones[2].index,  vertices[i].bones[3].index  },
-				{ vertices[i].bones[0].weight, vertices[i].bones[1].weight, vertices[i].bones[2].weight, vertices[i].bones[3].weight }
-			};
+			{ v.position.x, v.position.y, v.position.z },
+			{ v.normal.x,   v.normal.y,   v.normal.z },
+			{ v.uv.x,       v.uv.y },
+			v.node,
+			{ v.bone_indices[0], v.bone_indices[1], v.bone_indices[2], v.bone_indices[3] },
+			{ v.bone_weights[0], v.bone_weights[1], v.bone_weights[2], v.bone_weights[3] }
+		};
 
-			/*
-			printf("Vertex: (%f, %f, %f), (%hhu, %hhu, %hhu, %hhu), (%f, %f, %f, %f)\n",
-				vertex_iterator->position[0], vertex_iterator->position[1], vertex_iterator->position[2],
-				vertex_iterator->bone_indices[0], vertex_iterator->bone_indices[1], vertex_iterator->bone_indices[2], vertex_iterator->bone_indices[3], 
-				vertex_iterator->bone_weights[0], vertex_iterator->bone_weights[1], vertex_iterator->bone_weights[2], vertex_iterator->bone_weights[3]
-			);
-			*/
-			
-			//float sum = vertices[i].bones[0].weight + vertices[i].bones[1].weight + vertices[i].bones[2].weight + vertices[i].bones[3].weight;
-			//GK_ASSERT((sum >= 0.99f) && (sum <= 1.01f), ("Error: Vertex weights do not add to one: %f + %f + %f + %f = %f\n", vertices[i].bones[0].weight, vertices[i].bones[1].weight, vertices[i].bones[2].weight, vertices[i].bones[3].weight, sum));
-			vertex_iterator ++;
-		}
-	}
-
-	unsigned short* index_buffer = new unsigned short[data.IndexCount];
-	unsigned short* index_iterator = index_buffer;
-	for(unsigned int m = 0; m < data.Meshes.size(); m++)
-	{
-		const MeshData::Mesh& mesh = data.Meshes[m];
-		memcpy(index_iterator, &mesh.indices[0], sizeof(unsigned short) * mesh.indices.size());
-		index_iterator += mesh.indices.size();
+		/*
+		printf("Vertex: (%f, %f, %f), (%hhu, %hhu, %hhu, %hhu), (%f, %f, %f, %f)\n",
+			vertex_iterator->position[0], vertex_iterator->position[1], vertex_iterator->position[2],
+			vertex_iterator->bone_indices[0], vertex_iterator->bone_indices[1], vertex_iterator->bone_indices[2], vertex_iterator->bone_indices[3], 
+			vertex_iterator->bone_weights[0], vertex_iterator->bone_weights[1], vertex_iterator->bone_weights[2], vertex_iterator->bone_weights[3]
+		);
+		*/
+		
+		//float sum = vertices[i].bones[0].weight + vertices[i].bones[1].weight + vertices[i].bones[2].weight + vertices[i].bones[3].weight;
+		//GK_ASSERT((sum >= 0.99f) && (sum <= 1.01f), ("Error: Vertex weights do not add to one: %f + %f + %f + %f = %f\n", vertices[i].bones[0].weight, vertices[i].bones[1].weight, vertices[i].bones[2].weight, vertices[i].bones[3].weight, sum));
 	}
 
 	const RenderingContext* context = RenderingContext::GetInstance();
@@ -101,7 +84,7 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
 	m_VAO->Bind();
 
 	m_VBO = new VertexBuffer(GFX_ARRAY_BUFFER);
-	m_VBO->Allocate(sizeof(DynamicMesh::Vertex) * data.VertexCount, vertex_buffer, GFX_STATIC_DRAW);
+	m_VBO->Allocate(sizeof(DynamicMesh::Vertex) * data.vertices.size(), vertex_buffer, GFX_STATIC_DRAW);
 
 	m_VAO->EnableVertexAttribute(VertexAttributes::VERTEX);
 	m_VAO->EnableVertexAttribute(VertexAttributes::NORMAL);
@@ -117,14 +100,13 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
 	context->SetVertexAttributeLayoutF(VertexAttributes::BONE_WEIGHT, 4, GFX_TYPE_FLOAT, GFX_FALSE,  sizeof(DynamicMesh::Vertex), (void*) offsetof(DynamicMesh::Vertex, bone_weights));
 	
 	m_IBO = new VertexBuffer(GFX_ELEMENT_BUFFER);
-	m_IBO->Allocate(sizeof(unsigned short) * data.IndexCount, index_buffer, GFX_STATIC_DRAW);
+	m_IBO->Allocate(sizeof(unsigned short) * data.indices.size(), data.indices.data(), GFX_STATIC_DRAW);
 
-	m_ElementCount = data.IndexCount;
+	m_ElementCount = data.indices.size();
 
-	delete[] index_buffer;
 	delete[] vertex_buffer;
 
-	TgaImage image((texture_directory + data.Textures[0]).c_str());
+	TgaImage image((texture_directory + data.diffuse_texture).c_str());
 	m_DiffuseTexture = new Texture(image.HasAlpha() ? GFX_RGBA : GFX_RGB, image.GetWidth(), image.GetHeight(), GFX_TYPE_UNSIGNED_BYTE, image.GetPixels(), GFX_LINEAR, GFX_CLAMP_TO_EDGE);
 }
 

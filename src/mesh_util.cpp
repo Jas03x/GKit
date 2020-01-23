@@ -2,6 +2,8 @@
 
 #include <math.h>
 
+/*
+
 #define MIN(v0, v1) ((v0) < (v1) ? (v0) : (v1))
 #define MAX(v0, v1) ((v0) > (v1) ? (v0) : (v1))
 
@@ -73,3 +75,5 @@ Vector3F MeshUtil::GetBoundingBox(const MeshData::Mesh& mesh)
 
 	return Vector3F(abs(max.x - min.x), abs(max.y - min.y), abs(max.z - min.z)) * 0.5f;
 }
+
+*/

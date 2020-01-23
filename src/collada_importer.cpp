@@ -162,7 +162,7 @@ bool Collada::Importer::process_node(const Collada::Node* node, MeshData& mesh_d
 
     MeshData::Node& n = *mesh_data.nodes.insert(mesh_data.nodes.end(), MeshData::Node());
     n.name = *node->name;
-    n.parent = node->parent == nullptr ? nullptr : *node->parent->name;
+    n.parent = node->parent == nullptr ? "" : *node->parent->name;
     n.scale = Vector3F(node->scale[0], node->scale[1], node->scale[2]);
     n.rotation = Vector3F(node->rotation_x[3], node->rotation_y[3], node->rotation_z[3]);
     n.translation = Vector3F(node->translation[0], node->translation[1], node->translation[2]);

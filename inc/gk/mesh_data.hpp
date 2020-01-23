@@ -1,6 +1,7 @@
 #ifndef MESH_DATA_HPP
 #define MESH_DATA_HPP
 
+#include <string>
 #include <vector>
 
 #include <gk/matrix.hpp>
