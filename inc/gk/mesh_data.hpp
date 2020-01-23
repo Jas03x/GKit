@@ -39,6 +39,8 @@ struct MeshData
     std::vector<Bone> bones;
     std::vector<Node> nodes;
     std::vector<Vertex> vertices;
+
+    std::vector<unsigned short> indices;
 };
 
 #endif // MESH_DATA_HPP

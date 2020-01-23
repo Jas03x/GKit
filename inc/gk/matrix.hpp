@@ -36,6 +36,8 @@ struct Vector2
     Vector2<T>  operator *  (T v) const;
     Vector2<T>& operator *= (T v);
 
+    bool        operator < (const Vector2<T>& v) const;
+
     bool        operator == (const Vector2<T>& v) const;
     bool        operator != (const Vector2<T>& v) const;
 };
@@ -69,6 +71,8 @@ struct Vector3
     Vector3<T>  operator *  (T v) const;
     Vector3<T>& operator *= (T v);
 
+    bool        operator < (const Vector3<T>& v) const;
+
     bool        operator == (const Vector3<T>& v) const;
     bool        operator != (const Vector3<T>& v) const;
 };
@@ -101,6 +105,8 @@ struct Vector4
 
     Vector4<T>  operator *  (T v) const;
     Vector4<T>& operator *= (T v);
+
+    bool        operator < (const Vector4<T>& v) const;
 
     bool        operator == (const Vector4<T>& v) const;
     bool        operator != (const Vector4<T>& v) const;

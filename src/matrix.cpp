@@ -30,6 +30,8 @@ template <typename T> Vector2<T>& Vector2<T>::operator -= (const Vector2<T>& v) 
 template <typename T> Vector2<T>  Vector2<T>::operator *  (T v) const { return Vector2<T>(x * v, y * v); }
 template <typename T> Vector2<T>& Vector2<T>::operator *= (T v)       { x *= v; y *= v; return *this; }
 
+template <typename T> bool Vector2<T>::operator < (const Vector2<T>& v) const { return (x < v.x) || ((x == v.x) && (y < v.y)); }
+
 template <typename T> bool Vector2<T>::operator == (const Vector2<T>& v) const { return (x == v.x) && (y == v.y); }
 template <typename T> bool Vector2<T>::operator != (const Vector2<T>& v) const { return !(*this == v); }
 
@@ -58,6 +60,8 @@ template <typename T> Vector3<T>& Vector3<T>::operator -= (const Vector3<T>& v) 
 template <typename T> Vector3<T>  Vector3<T>::operator *  (T v) const { return Vector3<T>(x * v, y * v, z * v); }
 template <typename T> Vector3<T>& Vector3<T>::operator *= (T v)       { x *= v; y *= v; z *= v; return *this; }
 
+template <typename T> bool Vector3<T>::operator < (const Vector3<T>& v) const { return (x < v.x) || ((x == v.x) && (y < v.y)) || ((x == v.x) && (y == v.y) && (z < v.z)); }
+
 template <typename T> bool Vector3<T>::operator == (const Vector3<T>& v) const { return (x == v.x) && (y == v.y) && (z == v.z); }
 template <typename T> bool Vector3<T>::operator != (const Vector3<T>& v) const { return !(*this == v); }
 
@@ -85,6 +89,8 @@ template <typename T> Vector4<T>& Vector4<T>::operator -= (const Vector4& v)    
 
 template <typename T> Vector4<T>  Vector4<T>::operator *  (T v) const { return Vector4(x * v, y * v, z * v, w * v); }
 template <typename T> Vector4<T>& Vector4<T>::operator *= (T v)       { x *= v; y *= v; z *= v; w *= v; return *this; }
+
+template <typename T> bool Vector4<T>::operator < (const Vector4<T>& v) const { return (x < v.x) || ((x == v.x) && (y < v.y)) || ((x == v.x) && (y == v.y) && (z < v.z)) || ((x == v.x) && (y == v.y) && (z == v.z) && (w < v.w)); }
 
 template <typename T> bool Vector4<T>::operator == (const Vector4<T>& v) const { return (x == v.x) && (y == v.y) && (z == v.z) && (w == v.w); }
 template <typename T> bool Vector4<T>::operator != (const Vector4<T>& v) const { return !(*this == v); }

@@ -237,9 +237,40 @@ bool Collada::Importer::process_mesh_data(const MeshData& mesh_data)
     // process all vertices into a "vertex array"
     // then index all the meshes into the vertex_array
 
+    typedef std::function<bool(const MeshData::Vertex&, const MeshData::Vertex&)> VertexComparator;
+    typedef std::map<MeshData::Vertex, unsigned int, VertexComparator> VertexMap;
+
+    VertexComparator cmp = [](const MeshData::Vertex& v0, const MeshData::Vertex& v1)
+    {
+        return (memcmp(&v0, &v1, sizeof(MeshData::Vertex)) < 0);
+    };
+
+    VertexMap vertex_map(cmp);
+
     for(std::map<std::string, IMesh>::const_iterator it = m_mesh_map.begin(); it != m_mesh_map.end(); it++)
     {
-        IMesh& mesh = it->second;
+        const IMesh& mesh = it->second;
+        for(unsigned int i = 0; i < mesh.indices.size(); i += 3)
+        {
+            const IVertex& v = mesh.vertex_array[i];
+
+            MeshData::Vertex vertex = {
+                v.position, mesh.normal_array[i], mesh.uv_array[i],
+                mesh.node_index,
+                { v.bone_indices[0], v.bone_indices[1], v.bone_indices[2], v.bone_indices[3] },
+                { v.bone_weights[0], v.bone_weights[1], v.bone_weights[2], v.bone_weights[3] },
+                v.bone_count
+            };
+            
+            VertexMap::const_iterator it = vertex_map.find(vertex);
+            if(it == vertex_map.end())
+            {
+                it = vertex_map.insert(std::pair<MeshData::Vertex, unsigned int>(vertex, mesh_data.vertices.size()));
+                mesh_data.vertices.push_back(vertex);
+            }
+            
+            mesh_data.indices.push_back(it->second);
+        }
     }
 
     return status;
