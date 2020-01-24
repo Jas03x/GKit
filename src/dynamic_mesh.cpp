@@ -66,6 +66,12 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
 			{ v.bone_weights[0], v.bone_weights[1], v.bone_weights[2], v.bone_weights[3] }
 		};
 
+		float weight_sum = v.bone_weights[0] + v.bone_weights[1] + v.bone_weights[2] + v.bone_weights[3];
+		if((weight_sum < 0.99f) || (weight_sum > 1.01f))
+		{
+			printf("WARNING: vertex %u has invalid bone weight sum %f\n", i, weight_sum);
+		}
+
 		/*
 		printf("Vertex: (%f, %f, %f), (%hhu, %hhu, %hhu, %hhu), (%f, %f, %f, %f)\n",
 			v.position.x, v.position.y, v.position.z,

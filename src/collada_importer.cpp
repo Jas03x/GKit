@@ -73,7 +73,7 @@ bool Collada::Importer::process_controller_library(const Collada::Parser::Contro
     const Skin& skin = controller->skin;
     IMesh& source = m_mesh_map.at(controller->skin.source->substr(1));
 
-    mesh_data.bind_pose_matrix = Matrix4F(skin.bind_shape_matrix);
+    mesh_data.bind_pose_matrix = Matrix::Transpose(Matrix4F(skin.bind_shape_matrix));
 
     const SourceArray& bone_names = skin.joints.names->array;
     const SourceArray& bone_offset_matrices = skin.joints.bind_poses->array;
@@ -82,7 +82,7 @@ bool Collada::Importer::process_controller_library(const Collada::Parser::Contro
         MeshData::Bone& bone = *mesh_data.bones.insert(mesh_data.bones.end(), MeshData::Bone());
 
         bone.name = bone_names.name_array[i];
-        bone.offset_matrix = Matrix::Transpose(Matrix4F(&bone_offset_matrices.float_array[i * 16]));
+        bone.offset_matrix = mesh_data.bind_pose_matrix * Matrix::Transpose(Matrix4F(&bone_offset_matrices.float_array[i * 16]));
     }
 
     unsigned int joint_offset = 0;
@@ -164,9 +164,21 @@ bool Collada::Importer::process_node(const Collada::Node* node, MeshData& mesh_d
     MeshData::Node& n = *mesh_data.nodes.insert(mesh_data.nodes.end(), MeshData::Node());
     n.name = *node->name;
     n.parent = node->parent == nullptr ? "" : *node->parent->name;
+
     n.scale = Vector3F(node->scale[0], node->scale[1], node->scale[2]);
-    n.rotation = Vector3F(node->rotation_x[3], node->rotation_y[3], node->rotation_z[3]);
+    n.rotation = Vector3F(node->rotation_x[3] * M_PI / 180.0f, -node->rotation_z[3] * M_PI / 180.0f, node->rotation_y[3] * M_PI / 180.0f);
+    n.translation = Vector3F(node->translation[0], -node->translation[2], node->translation[1]);
+
+    /*
+    n.scale = Vector3F(node->scale[0], node->scale[1], node->scale[2]);
+    n.rotation = Vector3F(node->rotation_x[3] * M_PI / 180.0f, node->rotation_y[3] * M_PI / 180.0f, node->rotation_z[3] * M_PI / 180.0f);
     n.translation = Vector3F(node->translation[0], node->translation[1], node->translation[2]);
+    */
+
+    if(node->extra.technique.roll != 0)
+    {
+        printf("warning: bone node \"%s\" has a non-zero roll value of %f\n", node->name->c_str(), node->extra.technique.roll);
+    }
 
     m_node_map[n.name] = m_node_map.size();
 
@@ -180,7 +192,6 @@ bool Collada::Importer::process_geometry(const Geometry* obj)
     IMesh& data = m_mesh_map.insert(std::pair<std::string, IMesh>(*obj->id, IMesh())).first->second;
 
     const Mesh& mesh = obj->mesh;
-    const TriangleArray& triangle_array = *mesh.triangle_arrays;
 
     const SourceArray* vertex_source = nullptr;
     const SourceArray* normal_source = nullptr;
@@ -190,6 +201,7 @@ bool Collada::Importer::process_geometry(const Geometry* obj)
     unsigned int normal_offset = 0;
     unsigned int uv_offset = 0;
 
+    const TriangleArray& triangle_array = *mesh.triangle_arrays;
     for(unsigned int i = 0; status && (i < triangle_array.num_inputs); i++)
     {
         const Input& input = triangle_array.inputs[i];
@@ -219,35 +231,33 @@ bool Collada::Importer::process_geometry(const Geometry* obj)
         }
     }
 
-    for(unsigned int i = 0; i < vertex_source->count; i++)
+    for(unsigned int i = 0; i < vertex_source->count; i += 3)
     {
         const float* array = vertex_source->float_array;
-        unsigned int offset = i * 3;
-        
+
         IVertex& vertex = *data.vertex_array.insert(data.vertex_array.end(), IVertex());
-        vertex.position = Vector3F(array[offset + 0], array[offset + 1], array[offset + 2]);
+        vertex.position = Vector3F(array[i + 0], array[i + 1], array[i + 2]);
     }
 
-    for(unsigned int i = 0; i < normal_source->count; i++)
+    for(unsigned int i = 0; i < normal_source->count; i += 3)
     {
         const float* array = normal_source->float_array;
-        unsigned int offset = i * 3;
-        data.normal_array.push_back(Vector3F(array[offset + 0], array[offset + 1], array[offset + 2]));
+        data.normal_array.push_back(Vector3F(array[i + 0], array[i + 1], array[i + 2]));
     }
 
-    for(unsigned int i = 0; i < uv_source->count; i++)
+    for(unsigned int i = 0; i < uv_source->count; i += 2)
     {
         const float* array = uv_source->float_array;
-        unsigned int offset = i * 2;
-        data.uv_array.push_back(Vector2F(array[offset + 0], array[offset + 1]));
+        data.uv_array.push_back(Vector2F(array[i + 0], array[i + 1]));
     }
 
     data.node_index = m_node_map[*obj->name];
-    for(unsigned int i = 0; i < triangle_array.count; i += triangle_array.num_inputs)
+    unsigned int num_vertices = triangle_array.count * triangle_array.num_inputs * 3;
+    for(unsigned int i = 0; i < num_vertices; i += triangle_array.num_inputs)
     {
-        data.indices.push_back(i + vertex_offset);
-        data.indices.push_back(i + normal_offset);
-        data.indices.push_back(i + uv_offset);
+        data.indices.push_back(triangle_array.indices[i + vertex_offset]);
+        data.indices.push_back(triangle_array.indices[i + normal_offset]);
+        data.indices.push_back(triangle_array.indices[i + uv_offset]);
     }
 
     return status;
@@ -276,10 +286,12 @@ bool Collada::Importer::process_mesh_data(MeshData& mesh_data)
         const IMesh& mesh = it->second;
         for(unsigned int i = 0; i < mesh.indices.size(); i += 3)
         {
-            const IVertex& v = mesh.vertex_array[i];
+            const IVertex&   v = mesh.vertex_array[mesh.indices[i + 0]];
+            const Vector3F&  n = mesh.normal_array[mesh.indices[i + 1]];
+            const Vector2F& uv = mesh.uv_array[mesh.indices[i + 2]];
 
             MeshData::Vertex vertex = {
-                v.position, mesh.normal_array[i], mesh.uv_array[i],
+                v.position, n, uv,
                 static_cast<unsigned char>(mesh.node_index),
                 { v.bone_indices[0], v.bone_indices[1], v.bone_indices[2], v.bone_indices[3] },
                 { v.bone_weights[0], v.bone_weights[1], v.bone_weights[2], v.bone_weights[3] },

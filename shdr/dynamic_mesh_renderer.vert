@@ -24,16 +24,14 @@ void main()
     vertex_matrix     += vertex_matrices[bone_indices[1]] * bone_weights[1];
     vertex_matrix     += vertex_matrices[bone_indices[2]] * bone_weights[2];
     vertex_matrix     += vertex_matrices[bone_indices[3]] * bone_weights[3];
-	vertex_matrix += (1 - bone_weights[0] - bone_weights[1]- bone_weights[2]- bone_weights[3]) * mat4(1.0f);
-	// vertex_matrix = mat4(1.0f);
 
 	mat4 normal_matrix = normal_matrices[bone_indices[0]] * bone_weights[0];
     normal_matrix     += normal_matrices[bone_indices[1]] * bone_weights[1];
     normal_matrix     += normal_matrices[bone_indices[2]] * bone_weights[2];
     normal_matrix     += normal_matrices[bone_indices[3]] * bone_weights[3];
 	
-	//vec3 vertex_position = vec3(vertex_matrix * vec4(vertex.x, vertex.y, vertex.z, 1.0f));
-	vec3 vertex_position = vec3(vertex_matrix * vec4(vertex.x, -vertex.z, vertex.y, 1.0f));
+	vec3 vertex_position = vec3(vertex_matrix * vec4(vertex.x, vertex.y, vertex.z, 1.0f));
+	//vec3 vertex_position = vec3(vertex_matrix * vec4(vertex.x, -vertex.z, vertex.y, 1.0f));
 	gl_Position = projection_matrix * vec4(vertex_position, 1.0);
 
 	_uv = uv;

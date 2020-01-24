@@ -105,8 +105,7 @@ void Collada::Parser::parse_name_array(const std::string& text)
         }
         else if(m_strbuf.size() > 0)
         {
-            m_string_buffer.push_back(std::string(m_strbuf.data(), m_strbuf.size()));
-            m_strbuf.clear();
+            m_string_buffer.push_back(m_strbuf.to_string());
         }
 
         if(c == 0)
@@ -486,12 +485,13 @@ void Collada::Parser::read_triangle_array(const XML::Node* node, TriangleArray* 
             parse_ushort_array(indices->text);
             if(m_status)
             {
-                unsigned int num_vertices = m_ushort_buffer.size() / array->num_inputs;
+                unsigned int num_elements = m_ushort_buffer.size();
+                unsigned int num_vertices = num_elements / array->num_inputs;
                 unsigned int num_triangles = num_vertices / 3;
                 if(num_triangles == array->count)
                 {
-                    array->indices = new unsigned short[array->count];
-                    memcpy(array->indices, m_ushort_buffer.data(), sizeof(unsigned short) * array->count);
+                    array->indices = new unsigned short[num_elements];
+                    memcpy(array->indices, m_ushort_buffer.data(), sizeof(unsigned short) * num_elements);
                 }
                 else
                 {

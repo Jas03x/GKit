@@ -77,18 +77,10 @@ void DynamicMeshRenderer::Render(const DynamicMesh& mesh)
 	Matrix4F vertex_matrices[DynamicMesh::BONE_LIMIT];
 	Matrix4F normal_matrices[DynamicMesh::BONE_LIMIT];
 
-	const Node& root = mesh.Nodes[0];
-	
-    Matrix4F inverse = Matrix::Inverse(root.GetLocalMatrix());
-	//Matrix4F inverse = Matrix4F(1.0f);
-
 	for (unsigned int i = 0; i < mesh.Bones.size(); i++)
 	{
         const Bone& bone = mesh.Bones[i];
-		//vertex_matrices[i] = Matrix4F(1.0f);
-		vertex_matrices[i] = inverse * bone.GetNode()->GetGlobalMatrix() * bone.GetOffsetMatrix();
-		//vertex_matrices[i] = bone.GetNode()->GetGlobalMatrix();
-		//vertex_matrices[i] = inverse * bone.GetOffsetMatrix();
+		vertex_matrices[i] = bone.GetNode()->GetGlobalMatrix() * bone.GetOffsetMatrix();
 		normal_matrices[i] = Matrix::Inverse(Matrix::Transpose(vertex_matrices[i]));
 	}
 
