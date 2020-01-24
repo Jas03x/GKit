@@ -82,7 +82,7 @@ bool Collada::Importer::process_controller_library(const Collada::Parser::Contro
         MeshData::Bone& bone = *mesh_data.bones.insert(mesh_data.bones.end(), MeshData::Bone());
 
         bone.name = bone_names.name_array[i];
-        bone.offset_matrix = mesh_data.bind_pose_matrix * Matrix::Transpose(Matrix4F(&bone_offset_matrices.float_array[i * 16]));
+        bone.offset_matrix = Matrix::Transpose(Matrix4F(&bone_offset_matrices.float_array[i * 16])) * mesh_data.bind_pose_matrix;
     }
 
     unsigned int joint_offset = 0;
