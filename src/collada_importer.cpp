@@ -83,6 +83,7 @@ bool Collada::Importer::process_controller_library(const Collada::Parser::Contro
 
         bone.name = bone_names.name_array[i];
         bone.offset_matrix = Matrix::Transpose(Matrix4F(&bone_offset_matrices.float_array[i * 16])) * mesh_data.bind_pose_matrix;
+        //bone.offset_matrix = mesh_data.bind_pose_matrix * Matrix::Transpose(Matrix4F(&bone_offset_matrices.float_array[i * 16]));
     }
 
     unsigned int joint_offset = 0;
@@ -165,15 +166,21 @@ bool Collada::Importer::process_node(const Collada::Node* node, MeshData& mesh_d
     n.name = *node->name;
     n.parent = node->parent == nullptr ? "" : *node->parent->name;
 
-    n.scale = Vector3F(node->scale[0], node->scale[1], node->scale[2]);
-    n.rotation = Vector3F(node->rotation_x[3] * M_PI / 180.0f, -node->rotation_z[3] * M_PI / 180.0f, node->rotation_y[3] * M_PI / 180.0f);
-    n.translation = Vector3F(node->translation[0], -node->translation[2], node->translation[1]);
-
     /*
+    n.scale = Vector3F(node->scale[0], node->scale[1], node->scale[2]);
+    n.rotation = Vector3F(node->rotation_x[3] * M_PI / 180.0f, node->rotation_z[3] * M_PI / 180.0f, -node->rotation_y[3] * M_PI / 180.0f);
+    n.translation = Vector3F(node->translation[0], node->translation[2], -node->translation[1]);
+    */
+
     n.scale = Vector3F(node->scale[0], node->scale[1], node->scale[2]);
     n.rotation = Vector3F(node->rotation_x[3] * M_PI / 180.0f, node->rotation_y[3] * M_PI / 180.0f, node->rotation_z[3] * M_PI / 180.0f);
     n.translation = Vector3F(node->translation[0], node->translation[1], node->translation[2]);
-    */
+
+    printf("Node: %s\n", n.name.c_str());
+    printf("Translation: (%f, %f, %f)\n", node->translation[0], node->translation[1], node->translation[2]);
+    printf("Rotation: (%f, %f, %f)\n", node->rotation_x[3], node->rotation_y[3], node->rotation_z[3]);
+    printf("Scale: (%f, %f, %f)\n", node->scale[0], node->scale[1], node->scale[2]);
+    printf("\n");
 
     if(node->extra.technique.roll != 0)
     {
@@ -201,10 +208,11 @@ bool Collada::Importer::process_geometry(const Geometry* obj)
     unsigned int normal_offset = 0;
     unsigned int uv_offset = 0;
 
-    const TriangleArray& triangle_array = *mesh.triangle_arrays;
-    for(unsigned int i = 0; status && (i < triangle_array.num_inputs); i++)
+    // TODO: this part assumes all the triangle arrays use the same sources - if thsi changes we will need to update this
+    const TriangleArray& triangle_array_0 = *mesh.triangle_arrays;
+    for(unsigned int i = 0; status && (i < triangle_array_0.num_inputs); i++)
     {
-        const Input& input = triangle_array.inputs[i];
+        const Input& input = triangle_array_0.inputs[i];
 
         std::string source_name = input.source->substr(1);
         const std::map<std::string, Source*>::const_iterator it = mesh.sources.find(source_name);
@@ -252,12 +260,18 @@ bool Collada::Importer::process_geometry(const Geometry* obj)
     }
 
     data.node_index = m_node_map[*obj->name];
-    unsigned int num_vertices = triangle_array.count * triangle_array.num_inputs * 3;
-    for(unsigned int i = 0; i < num_vertices; i += triangle_array.num_inputs)
+
+    for(unsigned int i = 0 ; i < mesh.num_triangle_arrays; i++)
     {
-        data.indices.push_back(triangle_array.indices[i + vertex_offset]);
-        data.indices.push_back(triangle_array.indices[i + normal_offset]);
-        data.indices.push_back(triangle_array.indices[i + uv_offset]);
+        const TriangleArray& triangle_array = mesh.triangle_arrays[i];
+
+        unsigned int num_vertices = triangle_array.count * triangle_array.num_inputs * 3;
+        for(unsigned int j = 0; j < num_vertices; j += triangle_array.num_inputs)
+        {
+            data.indices.push_back(triangle_array.indices[j + vertex_offset]);
+            data.indices.push_back(triangle_array.indices[j + normal_offset]);
+            data.indices.push_back(triangle_array.indices[j + uv_offset]);
+        }
     }
 
     return status;

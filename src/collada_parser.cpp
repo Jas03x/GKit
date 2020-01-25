@@ -880,8 +880,8 @@ void Collada::Parser::read_extra_data(const XML::Node* node, Extra& extra)
 
     if(m_status)
     {
-        const XML::Node* tip_x = find_child(tech, "tip_x");
-        if(m_status)
+        const XML::Node* tip_x = tech->find_child("tip_x");
+        if(tip_x != nullptr)
         {
             extra.technique.tip_x = std::stoi(tip_x->text);
         }
@@ -889,8 +889,8 @@ void Collada::Parser::read_extra_data(const XML::Node* node, Extra& extra)
     
     if(m_status)
     {
-        const XML::Node* tip_y = find_child(tech, "tip_y");
-        if(m_status)
+        const XML::Node* tip_y = tech->find_child("tip_y");
+        if(tip_y != nullptr)
         {
             extra.technique.tip_y = std::stoi(tip_y->text);
         }
@@ -898,8 +898,8 @@ void Collada::Parser::read_extra_data(const XML::Node* node, Extra& extra)
     
     if(m_status)
     {
-        const XML::Node* tip_z = find_child(tech, "tip_z");
-        if(m_status)
+        const XML::Node* tip_z = tech->find_child("tip_z");
+        if(tip_z != nullptr)
         {
             extra.technique.tip_z = std::stoi(tip_z->text);
         }
