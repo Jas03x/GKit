@@ -26,9 +26,7 @@ StaticMesh::StaticMesh(const MeshData& data, const std::string& texture_director
 	for (unsigned int i = 0; i < data.nodes.size(); i++)
 	{
 		const MeshData::Node& node = data.nodes[i];
-		Matrix4F offset_matrix = Matrix4F::Translate(node.translation) * Quaternion(node.rotation).matrix() * Matrix4F::Scale(node.scale);
-
-		Nodes.push_back(Node(node.name, offset_matrix));
+		Nodes.push_back(Node(node.name, node.offset_matrix));
 		node_map[node.name] = i;
 	}
 

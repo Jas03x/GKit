@@ -7,8 +7,8 @@ Bone::Bone()
 
 Bone::Bone(const std::string& name, const Node* node, const Matrix4F& matrix)
 {
-    m_Name   = name;
-    m_Node   = node;
+    m_Name = name;
+    m_Node = node;
     m_OffsetMatrix = matrix;
 }
 

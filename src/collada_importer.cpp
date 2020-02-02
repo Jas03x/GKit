@@ -73,7 +73,7 @@ bool Collada::Importer::process_controller_library(const Collada::Parser::Contro
     const Skin& skin = controller->skin;
     IMesh& source = m_mesh_map.at(controller->skin.source->substr(1));
 
-    mesh_data.bind_pose_matrix = Matrix::Transpose(Matrix4F(skin.bind_shape_matrix));
+    Matrix4F bind_pose_matrix = Matrix::Transpose(Matrix4F(skin.bind_shape_matrix));
 
     const SourceArray& bone_names = skin.joints.names->array;
     const SourceArray& bone_offset_matrices = skin.joints.bind_poses->array;
@@ -82,8 +82,8 @@ bool Collada::Importer::process_controller_library(const Collada::Parser::Contro
         MeshData::Bone& bone = *mesh_data.bones.insert(mesh_data.bones.end(), MeshData::Bone());
 
         bone.name = bone_names.name_array[i];
-        bone.offset_matrix = Matrix::Transpose(Matrix4F(&bone_offset_matrices.float_array[i * 16])) * mesh_data.bind_pose_matrix;
-        //bone.offset_matrix = mesh_data.bind_pose_matrix * Matrix::Transpose(Matrix4F(&bone_offset_matrices.float_array[i * 16]));
+        bone.offset_matrix = Matrix::Transpose(Matrix4F(&bone_offset_matrices.float_array[i * 16])) * bind_pose_matrix;
+        //bone.offset_matrix = bind_pose_matrix * Matrix::Transpose(Matrix4F(&bone_offset_matrices.float_array[i * 16]));
     }
 
     unsigned int joint_offset = 0;
@@ -107,16 +107,24 @@ bool Collada::Importer::process_controller_library(const Collada::Parser::Contro
     const float* v_weights = vertex_weights.weights->array.float_array;
     const unsigned short* v_indices = vertex_weights.v_index_array.data();
 
-    for(unsigned int i = 0; i < vertex_weights.count; i++)
+    for(unsigned int i = 0; status && (i < vertex_weights.count); i++)
     {
         unsigned int count = vertex_weights.v_count_array[i];
-        source.vertex_array[i].bone_count = count;
-        
-        for(unsigned int j = 0; j < count; j++)
+
+        if(count <= 4)
         {
-            source.vertex_array[i].bone_indices[j] = *v_indices;
-            source.vertex_array[i].bone_weights[j] = v_weights[*(v_indices + 1)];
-            v_indices += 2;
+            source.vertex_array[i].bone_count = count;
+            
+            for(unsigned int j = 0; j < count; j++)
+            {
+                source.vertex_array[i].bone_indices[j] = *v_indices;
+                source.vertex_array[i].bone_weights[j] = v_weights[*(v_indices + 1)];
+                v_indices += 2;
+            }
+        }
+        else
+        {
+            printf("error: more than 4 bones in vertex\n");
         }
     }
 
@@ -166,21 +174,25 @@ bool Collada::Importer::process_node(const Collada::Node* node, MeshData& mesh_d
     n.name = *node->name;
     n.parent = node->parent == nullptr ? "" : *node->parent->name;
 
-    /*
-    n.scale = Vector3F(node->scale[0], node->scale[1], node->scale[2]);
-    n.rotation = Vector3F(node->rotation_x[3] * M_PI / 180.0f, node->rotation_z[3] * M_PI / 180.0f, -node->rotation_y[3] * M_PI / 180.0f);
-    n.translation = Vector3F(node->translation[0], node->translation[2], -node->translation[1]);
-    */
+    Vector3F scale = Vector3F(node->scale[0], node->scale[1], node->scale[2]);
+    //Vector3F rotation = Vector3F(node->rotation_x[3] * M_PI / 180.0f, node->rotation_y[3] * M_PI / 180.0f, -node->rotation_z[3] * M_PI / 180.0f);
+    Vector3F rotation = Vector3F(node->rotation_x[3] * M_PI / 180.0f, node->rotation_y[3] * M_PI / 180.0f, node->rotation_z[3] * M_PI / 180.0f);
+    Vector3F translation = Vector3F(node->translation[0], node->translation[1], node->translation[2]);
 
+    // we are working with right handed matrices here - so the order is: scale -> rotate -> translate
+    n.offset_matrix = Matrix4F::Scale(scale) * Quaternion(rotation).matrix() * Matrix4F::Translate(translation);
+
+    /*
     n.scale = Vector3F(node->scale[0], node->scale[1], node->scale[2]);
     n.rotation = Vector3F(node->rotation_x[3] * M_PI / 180.0f, node->rotation_y[3] * M_PI / 180.0f, node->rotation_z[3] * M_PI / 180.0f);
     n.translation = Vector3F(node->translation[0], node->translation[1], node->translation[2]);
+    */
 
     printf("Node: %s\n", n.name.c_str());
     printf("Translation: (%f, %f, %f)\n", node->translation[0], node->translation[1], node->translation[2]);
     printf("Rotation: (%f, %f, %f)\n", node->rotation_x[3], node->rotation_y[3], node->rotation_z[3]);
     printf("Scale: (%f, %f, %f)\n", node->scale[0], node->scale[1], node->scale[2]);
-    printf("\n");
+    printf("\n\n");
 
     if(node->extra.technique.roll != 0)
     {

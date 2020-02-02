@@ -80,7 +80,13 @@ void DynamicMeshRenderer::Render(const DynamicMesh& mesh)
 	for (unsigned int i = 0; i < mesh.Bones.size(); i++)
 	{
         const Bone& bone = mesh.Bones[i];
+		//vertex_matrices[i] = Matrix::Transpose(bone.GetNode()->GetGlobalMatrix()) * Matrix::Transpose(bone.GetOffsetMatrix());
+		//vertex_matrices[i] = Matrix::Transpose(bone.GetOffsetMatrix()) * Matrix::Transpose(bone.GetNode()->GetGlobalMatrix());
+		//vertex_matrices[i] = Matrix::Transpose(bone.GetNode()->GetGlobalMatrix() * bone.GetOffsetMatrix());
 		vertex_matrices[i] = bone.GetNode()->GetGlobalMatrix() * bone.GetOffsetMatrix();
+		printf("%s:\n", bone.GetName().c_str());
+		vertex_matrices[i].print();
+		printf("\n");
 		normal_matrices[i] = Matrix::Inverse(Matrix::Transpose(vertex_matrices[i]));
 	}
 

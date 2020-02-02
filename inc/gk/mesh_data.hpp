@@ -13,9 +13,7 @@ struct MeshData
         std::string name;
         std::string parent;
 
-        Vector3F scale;
-        Vector3F rotation;
-        Vector3F translation;
+        Matrix4F offset_matrix;
     };
 
     struct Vertex
@@ -36,8 +34,6 @@ struct MeshData
     };
 
     std::string diffuse_texture;
-
-    Matrix4F bind_pose_matrix;
 
     std::vector<Bone> bones;
     std::vector<Node> nodes;

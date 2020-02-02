@@ -668,81 +668,49 @@ Matrix4F Matrix::Transpose(const Matrix4F& m)
 // ------------------------------ Quaternion -----------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------
 
-/*
-
-Quaternion basics: https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation
-
-- Background: https://en.wikipedia.org/wiki/Complex_number#Matrix_representation_of_complex_numbers
-	- The basic idea behind quaternions is that complex numbers can be represented as rotation matrices
-
-- A quaternion has 4 elements (x, y, z, w) and is written as xi + yj + zk + w where i, j, and k are imaginary components
-- x, y, and z represent the axis of rotation and w is the rotation
-- The hamiltonian product is used to multiply and combine quaternions
-
-- Turning quaternions into matrices: https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Using_quaternion_as_rotations (and subsection "quaternion derived rotation matrix")
-
-*/
+// Quaternion implemention based on glm (see https://glm.g-truc.net/)
 
 Quaternion::Quaternion() : Vector4F(0, 0, 0, 1) {}
-Quaternion::Quaternion(const Vector3F& v) : Quaternion(v.x, v.y, v.z) {}
 Quaternion::Quaternion(const Vector4F& v) : Quaternion(v.x, v.y, v.z, v.w) {}
+Quaternion::Quaternion(float _x, float _y, float _z) : Quaternion(Vector3F(_x, _y, _z)) {}
+
 Quaternion::Quaternion(float _x, float _y, float _z, float _w)
 {
     x = _x;
     y = _y;
     z = _z;
     w = _w;
-    normalize();
 }
 
-// https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles#Source_Code
-Quaternion::Quaternion(float pitch, float yaw, float roll)
+Quaternion::Quaternion(const Vector3F& v)
 {
-    const float hp = pitch * 0.5f;
-    const float hy = -yaw * 0.5f;
-    const float hr = roll * 0.5f;
-    const float cy = cosf(hy);
-    const float sy = sinf(hy);
-    const float cr = cosf(hr);
-    const float sr = sinf(hr);
-    const float cp = cosf(hp);
-    const float sp = sinf(hp);
-    w = cy * cr * cp + sy * sr * sp;
-    x = cy * cr * sp + sy * sr * cp;
-    y = sy * cr * cp - cy * sr * sp;
-    z = cy * sr * cp - sy * cr * sp;
-    
-    normalize();
+    const Vector3F h = v * 0.5f; // half vector
+    const Vector3F c(cosf(h.x), cosf(h.y), cosf(h.z));
+    const Vector3F s(sinf(h.x), sinf(h.y), sinf(h.z));
+
+    w = c.x * c.y * c.z + s.x * s.y * s.z;
+    x = s.x * c.y * c.z - c.x * s.y * s.z;
+    y = c.x * s.y * c.z + s.x * c.y * s.z;
+    z = c.x * c.y * s.z - s.x * s.y * c.z;
 }
 
-// https://en.wikipedia.org/wiki/Quaternion#Hamilton_product
-Quaternion Quaternion::operator * (const Quaternion& other) const
+Quaternion Quaternion::operator * (const Quaternion& q) const
 {
-    const Quaternion& a = *this;
-    const Quaternion& b = other;
-    
-    Quaternion q;
-    q.w = a.w*b.w - a.x*b.x - a.y*b.y - a.z*b.z;
-    q.x = a.w*b.x + a.x*b.w + a.y*b.z - a.z*b.y;
-    q.y = a.w*b.y - a.x*b.z + a.y*b.w + a.z*b.x;
-    q.z = a.w*b.z + a.x*b.y - a.y*b.x + a.z*b.w;
-    
-    q.normalize();
-    return q;
+    Quaternion r;
+    r.w = this->w * q.w - this->x * q.x - this->y * q.y - this->z * q.z;
+    r.x = this->w * q.x + this->x * q.w + this->y * q.z - this->z * q.y;
+    r.y = this->w * q.y + this->y * q.w + this->z * q.x - this->x * q.z;
+    r.z = this->w * q.z + this->z * q.w + this->x * q.y - this->y * q.x;
+    return r;
 }
 
-// https://en.wikipedia.org/wiki/Quaternion#Hamilton_product
-Quaternion Quaternion::operator *= (const Quaternion& other)
+Quaternion Quaternion::operator *= (const Quaternion& q)
 {
-    const Quaternion a(*this);
-    const Quaternion& b = other;
-    
-    w = a.w*b.w - a.x*b.x - a.y*b.y - a.z*b.z;
-    x = a.w*b.x + a.x*b.w + a.y*b.z - a.z*b.y;
-    y = a.w*b.y - a.x*b.z + a.y*b.w + a.z*b.x;
-    z = a.w*b.z + a.x*b.y - a.y*b.x + a.z*b.w;
-    
-    normalize();
+    const Quaternion p = *this;   
+    this->w = p.w * q.w - p.x * q.x - p.y * q.y - p.z * q.z;
+    this->x = p.w * q.x + p.x * q.w + p.y * q.z - p.z * q.y;
+    this->y = p.w * q.y + p.y * q.w + p.z * q.x - p.x * q.z;
+    this->z = p.w * q.z + p.z * q.w + p.x * q.y - p.y * q.x;
     return *this;
 }
 
@@ -752,8 +720,6 @@ Quaternion& Quaternion::operator = (const Vector4F& other)
     this->y = other.y;
     this->z = other.z;
     this->w = other.w;
-    
-    normalize();
     return *this;
 }
 
@@ -763,8 +729,6 @@ Quaternion& Quaternion::operator = (const Quaternion& other)
     this->y = other.y;
     this->z = other.z;
     this->w = other.w;
-
-    normalize();
     return *this;
 }
 
@@ -785,27 +749,32 @@ void Quaternion::normalize()
     }
 }
 
-// https://en.wikipedia.org/wiki/Rotation_matrix#Quaternion
 Matrix4F Quaternion::matrix() const
 {
-	// since our quaternion is normalized, n = 1 => s = 2 / n = 2 / 1 = 2
-	
-    const float xx = 2 * x * x;
-    const float xy = 2 * x * y;
-    const float xz = 2 * x * z;
-    const float xw = 2 * x * w;
-    const float yy = 2 * y * y;
-    const float yz = 2 * y * z;
-    const float yw = 2 * y * w;
-    const float zz = 2 * z * z;
-    const float zw = 2 * z * w;
-    
-    Matrix4F mat;
-    mat[0] = Vector4F(1 - (yy + zz), xy - zw, xz + yw, 0);
-    mat[1] = Vector4F(xy + zw, 1 - (xx + zz), yz - xw, 0);
-    mat[2] = Vector4F(xz - yw, yz + xw, 1 - (xx + yy), 0);
-    mat[3] = Vector4F(0, 0, 0, 1);
-    return mat;
+    Matrix4F result(1.0f);
+    float qxx = x * x;
+    float qyy = y * y;
+    float qzz = z * z;
+    float qxz = x * z;
+    float qxy = x * y;
+    float qyz = y * z;
+    float qwx = w * x;
+    float qwy = w * y;
+    float qwz = w * z;
+
+    result[0][0] = 1.0f - 2.0f * (qyy +  qzz);
+    result[0][1] = 2.0f * (qxy + qwz);
+    result[0][2] = 2.0f * (qxz - qwy);
+
+    result[1][0] = 2.0f * (qxy - qwz);
+    result[1][1] = 1.0f - 2.0f * (qxx +  qzz);
+    result[1][2] = 2.0f * (qyz + qwx);
+
+    result[2][0] = 2.0f * (qxz + qwy);
+    result[2][1] = 2.0f * (qyz - qwx);
+    result[2][2] = 1.0f - 2.0f * (qxx +  qyy);
+
+    return result;
 }
 
 const Vector4F ORIGIN     = Vector4F(0, 0, 0, 1);

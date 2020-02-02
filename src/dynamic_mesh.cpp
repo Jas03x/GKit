@@ -25,11 +25,9 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
 	Nodes.reserve(NODE_LIMIT);
 	for (unsigned int i = 0; i < data.nodes.size(); i++)
 	{
-		const MeshData::Node& node_data = data.nodes[i];
-		Matrix4F offset_matrix = Matrix4F::Translate(node_data.translation) * Quaternion(node_data.rotation).matrix() * Matrix4F::Scale(node_data.scale);
-
-		Nodes.push_back(Node(node_data.name, offset_matrix));
-		node_map[node_data.name] = i;
+		const MeshData::Node& node = data.nodes[i];
+		Nodes.push_back(Node(node.name, node.offset_matrix));
+		node_map[node.name] = i;
 	}
 
 	// process parent hierchy
