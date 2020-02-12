@@ -30,7 +30,7 @@ struct MeshData
     struct Bone
     {
         std::string name;
-        Matrix4F offset_matrix;
+        Matrix4F bind_pose_matrix;
     };
 
     std::string diffuse_texture;

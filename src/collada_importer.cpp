@@ -1,5 +1,8 @@
 #include <gk/collada_importer.hpp>
 
+#include <math.h>
+
+#include <functional>
 #include <utility>
 
 #include <gk/collada_parser.hpp>
@@ -73,16 +76,16 @@ bool Collada::Importer::process_controller_library(const Collada::Parser::Contro
     const Skin& skin = controller->skin;
     IMesh& source = m_mesh_map.at(controller->skin.source->substr(1));
 
-    Matrix4F bind_pose_matrix = Matrix::Transpose(Matrix4F(skin.bind_shape_matrix));
+    Matrix4F bind_shape_matrix = Matrix::Transpose(Matrix4F(skin.bind_shape_matrix));
 
     const SourceArray& bone_names = skin.joints.names->array;
-    const SourceArray& bone_offset_matrices = skin.joints.bind_poses->array;
+    const SourceArray& bone_pose_matrices = skin.joints.bind_poses->array;
     for(unsigned int i = 0; i < bone_names.count; i++)
     {
         MeshData::Bone& bone = *mesh_data.bones.insert(mesh_data.bones.end(), MeshData::Bone());
 
         bone.name = bone_names.name_array[i];
-        bone.offset_matrix = Matrix::Transpose(Matrix4F(&bone_offset_matrices.float_array[i * 16])) * bind_pose_matrix;
+        bone.bind_pose_matrix = Matrix::Transpose(Matrix4F(&bone_pose_matrices.float_array[i * 16])) * bind_shape_matrix;
         //bone.offset_matrix = bind_pose_matrix * Matrix::Transpose(Matrix4F(&bone_offset_matrices.float_array[i * 16]));
     }
 
@@ -327,7 +330,7 @@ bool Collada::Importer::process_mesh_data(MeshData& mesh_data)
             VertexMap::const_iterator it = vertex_map.find(vertex);
             if(it == vertex_map.end())
             {
-                it = vertex_map.insert(std::pair<MeshData::Vertex, unsigned int>(vertex, mesh_data.vertices.size())).first;
+                it = vertex_map.insert(std::pair<MeshData::Vertex, unsigned int>(vertex, static_cast<unsigned int>(mesh_data.vertices.size()))).first;
                 mesh_data.vertices.push_back(vertex);
             }
             

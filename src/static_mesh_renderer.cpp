@@ -11,8 +11,8 @@ StaticMeshRenderer* StaticMeshRenderer::Instance = nullptr;
 StaticMeshRenderer::StaticMeshRenderer()
 {
 	Shader::Load(
-		File::Read(SHADER_BASE "static_mesh_renderer.vert").c_str(),
-		File::Read(SHADER_BASE "static_mesh_renderer.frag").c_str(),
+		std::get<1>(File::Read(SHADER_BASE "static_mesh_renderer.vert")).c_str(),
+		std::get<1>(File::Read(SHADER_BASE "static_mesh_renderer.frag")).c_str(),
 		[](GFX_HANDLE id)
 		{
 			const RenderingContext* context = RenderingContext::GetInstance();

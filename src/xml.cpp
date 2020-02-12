@@ -1,7 +1,8 @@
 #include <gk/xml.hpp>
 
-
+#include <stdarg.h>
 #include <string.h>
+
 #include <vector>
 
 #include <gk/file.hpp>
@@ -11,7 +12,7 @@
 class XML_Reader
 {
 private:
-    const std::string& m_Text;
+    const char* m_Data;
 
     unsigned int m_Index;
     unsigned int m_CharPos;
@@ -20,7 +21,7 @@ private:
     StringBuffer m_Buffer;
 
 private:
-    XML_Reader(const std::string& data) : m_Text(data)
+    XML_Reader(const char* data) : m_Data(data)
     {
         m_Index = 0;
         m_CharPos = 0;
@@ -29,12 +30,12 @@ private:
 
     char peek(unsigned int offset)
     {
-        return m_Text[m_Index + offset];
+        return m_Data[m_Index + offset];
     }
 
     char pop()
     {
-        char c = m_Text[m_Index++];
+        char c = m_Data[m_Index++];
         if(c == '\n') {
             m_LinePos++;
             m_CharPos = 0;
@@ -173,9 +174,9 @@ private:
         LOOK_AHEAD status = LOOK_AHEAD::INVALID;
 
         char c = 0;
-        for(unsigned int i = m_Index; i < m_Text.size(); i++)
+        for(unsigned int i = m_Index; m_Data[i] != 0; i++)
         {
-            c = m_Text[i];
+            c = m_Data[i];
             if(IS_SPACE(c))
             {
                 continue;
@@ -184,7 +185,7 @@ private:
             {
                 if(c == '<')
                 {
-                    if(m_Text[i + 1] == '/')
+                    if(m_Data[i + 1] == '/')
                     {
                         status = LOOK_AHEAD::EMPTY;
                     }
@@ -219,10 +220,14 @@ private:
         {
             c = peek(0);
 
-            if(m_Index >= m_Text.size())
+            if (c == 0)
             {
-                status = false;
-                printf("unexpected eof\n");
+                if (state != 0)
+                {
+                    status = false;
+                    printf("unexpected eof\n");
+                }
+                break;
             }
             else if(IS_SPACE(c))
             {
@@ -464,22 +469,25 @@ public:
     {
         XML::Node* root = nullptr;
 
-        std::string file_data = File::Read(path);
-        const char* data = file_data.data();
-
-        static const char* HDR_STR = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-        static const unsigned int HDR_LEN = 38;
-
-        if(strncmp(data, HDR_STR, HDR_LEN) == 0)
+        std::pair<bool, std::string> file_data = File::Read(path);
+        if (std::get<0>(file_data))
         {
-            data += HDR_LEN;
+            const char* data = std::get<1>(file_data).data();
 
-            XML_Reader reader(data);
-            root = reader.read_node();
-        }
-        else
-        {
-            printf("unsupported or invalid xml file\n");
+            static const char* HDR_STR = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+            static const unsigned int HDR_LEN = 38;
+
+            if (strncmp(data, HDR_STR, HDR_LEN) == 0)
+            {
+                data += HDR_LEN;
+
+                XML_Reader reader(data);
+                root = reader.read_node();
+            }
+            else
+            {
+                printf("unsupported or invalid xml file\n");
+            }
         }
         
         return root;

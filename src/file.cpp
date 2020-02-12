@@ -48,6 +48,11 @@ void File::Read(void* buffer, size_t size, size_t count)
 	assert(fread(buffer, size, count, m_Handle) == count);
 }
 
+int File::GetChar()
+{
+	return fgetc(m_Handle);
+}
+
 long int File::Tell()
 {
 	long int ret = ftell(m_Handle);
@@ -56,17 +61,43 @@ long int File::Tell()
 	return ret;
 }
 
-std::string File::Read(const char* name)
+std::pair<bool, std::string> File::Read(const char* path)
 {
-	File* file = File::Open(name, "rb");
-	
-	file->Seek(FILE_END);	
-	long int size = file->Tell();
-	file->Seek(FILE_SET);
+	std::pair<bool, std::string> ret;
 
-	std::string data(size, 0);
-	file->Read(&data[0], 1, size);
+	printf("reading: %s\n", path);
+
+	File* file = File::Open(path, "rb");
+	if (file == nullptr)
+	{
+		printf("error: could not open file [%s] for reading\n", path);
+	}
+	else
+	{
+		file->Seek(FILE_END);
+		long int size = file->Tell();
+		file->Seek(FILE_SET);
+
+		ret.second.resize(size + 1, 0);
+		
+		char* str = &ret.second[0];
+		for (unsigned int i = 0; i < size; i++)
+		{
+			int c = file->GetChar();
+			if (c == EOF)
+			{
+				break;
+			}
+			else if (c != '\r')
+			{
+				*str = c;
+				str++;
+			}
+		}
+
+		ret.first = true;
+		delete file;
+	}
 	
-	delete file;
-	return data;
+	return ret;
 }

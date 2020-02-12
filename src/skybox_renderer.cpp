@@ -12,8 +12,8 @@ SkyboxRenderer* SkyboxRenderer::Instance = nullptr;
 SkyboxRenderer::SkyboxRenderer()
 {
 	Shader::Load(
-		File::Read(SHADER_BASE "skybox_renderer.vert").c_str(),
-		File::Read(SHADER_BASE "skybox_renderer.frag").c_str(),
+		std::get<1>(File::Read(SHADER_BASE "skybox_renderer.vert")).c_str(),
+		std::get<1>(File::Read(SHADER_BASE "skybox_renderer.frag")).c_str(),
 		[](GFX_HANDLE id) {
 			RenderingContext::GetInstance()->SetAttributeLocation(id, Quad::VertexAttributes::VERTEX, "vertex");
 		}

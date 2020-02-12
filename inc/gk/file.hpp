@@ -9,6 +9,7 @@
 #include <stdlib.h>
 
 #include <string>
+#include <utility>
 
 class File
 {
@@ -26,7 +27,9 @@ public:
 	void Read(void* buffer, size_t size, size_t count);
 	long int Tell();
 
-	static std::string Read(const char* path);
+	int GetChar();
+
+	static std::pair<bool, std::string> Read(const char* path);
 };
 
 #endif // GK_FILE_H

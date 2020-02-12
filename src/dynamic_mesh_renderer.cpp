@@ -11,8 +11,8 @@ DynamicMeshRenderer* DynamicMeshRenderer::Instance = nullptr;
 DynamicMeshRenderer::DynamicMeshRenderer()
 {
 	Shader::Load(
-		File::Read(SHADER_BASE "dynamic_mesh_renderer.vert").c_str(),
-		File::Read(SHADER_BASE "dynamic_mesh_renderer.frag").c_str(),
+		std::get<1>(File::Read(SHADER_BASE "dynamic_mesh_renderer.vert")).c_str(),
+		std::get<1>(File::Read(SHADER_BASE "dynamic_mesh_renderer.frag")).c_str(),
 		[](GFX_HANDLE id)
 		{
 			const RenderingContext* context = RenderingContext::GetInstance();
@@ -83,7 +83,7 @@ void DynamicMeshRenderer::Render(const DynamicMesh& mesh)
 		//vertex_matrices[i] = Matrix::Transpose(bone.GetNode()->GetGlobalMatrix()) * Matrix::Transpose(bone.GetOffsetMatrix());
 		//vertex_matrices[i] = Matrix::Transpose(bone.GetOffsetMatrix()) * Matrix::Transpose(bone.GetNode()->GetGlobalMatrix());
 		//vertex_matrices[i] = Matrix::Transpose(bone.GetNode()->GetGlobalMatrix() * bone.GetOffsetMatrix());
-		vertex_matrices[i] = bone.GetNode()->GetGlobalMatrix() * bone.GetOffsetMatrix();
+		vertex_matrices[i] = bone.GetNode()->GetGlobalMatrix() * bone.GetBindPoseMatrix();
 		printf("%s:\n", bone.GetName().c_str());
 		vertex_matrices[i].print();
 		printf("\n");

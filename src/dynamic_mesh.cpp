@@ -46,7 +46,7 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
 	for(unsigned int i = 0; i < data.bones.size(); i++)
 	{
 		const MeshData::Bone& bone = data.bones[i];
-		Bones.push_back(Bone(bone.name, &Nodes[node_map.at(bone.name)], bone.offset_matrix));
+		Bones.push_back(Bone(bone.name, &Nodes[node_map.at(bone.name)], bone.bind_pose_matrix));
 	}
 
 	DynamicMesh::Vertex* vertex_buffer = new DynamicMesh::Vertex[data.vertices.size()];

@@ -12,7 +12,7 @@ private:
 	const Node* m_Node;
 
     std::string m_Name;
-    Matrix4F    m_OffsetMatrix;
+    Matrix4F    m_BindPoseMatrix;
 
 public:
     Bone();
@@ -20,7 +20,7 @@ public:
 
     const std::string& GetName() const;
     const Node*        GetNode() const;
-    const Matrix4F&    GetOffsetMatrix() const;
+    const Matrix4F&    GetBindPoseMatrix() const;
 };
 
 #endif // GK_BONE_HPP

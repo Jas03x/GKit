@@ -11,8 +11,8 @@ ParticleRenderer3D* ParticleRenderer3D::Instance = nullptr;
 ParticleRenderer3D::ParticleRenderer3D()
 {
     Shader::Load(
-		File::Read(SHADER_BASE "particle.vert").c_str(), 
-		File::Read(SHADER_BASE "particle.frag").c_str(), 
+		std::get<1>(File::Read(SHADER_BASE "particle.vert")).c_str(),
+		std::get<1>(File::Read(SHADER_BASE "particle.frag")).c_str(),
 		[](GFX_HANDLE id) {
 			const RenderingContext* context = RenderingContext::GetInstance();
 			context->SetAttributeLocation(id, ParticleArray::VertexAttributes::POSITION, "position");

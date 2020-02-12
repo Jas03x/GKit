@@ -63,9 +63,165 @@
     <None Include="shdr\static_mesh_renderer.vert">
       <Filter>shdr</Filter>
     </None>
-    <None Include="Makefile" />
+    <None Include="makefile.win" />
+    <None Include="makefile.osx" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Todo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\gk\string.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\string_buffer.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\sun.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\texture.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\tga_image.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\transform_2d.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\transform_3d.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\vertex_array.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\vertex_buffer.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\view.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\xml.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\blur_shader.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\bone.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\camera_2d.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\camera_3d.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\clock.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\collada_format.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\collada_importer.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\collada_parser.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\config.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\context.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\data_types.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\dynamic_mesh.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\dynamic_mesh_renderer.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\file.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\frame_renderer.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\framebuffer.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\graphics.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\matrix.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\mdl_format.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\mdl_importer.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\mesh.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\mesh_data.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\mesh_util.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\node.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\particle.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\particle_array.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\particle_renderer_3d.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\quad.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\random.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\shader.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\skybox.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\skybox_renderer.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\sprite.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\sprite_renderer.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\static_mesh.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\static_mesh_renderer.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\collada_parser.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\context.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dynamic_mesh.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\dynamic_mesh_renderer.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -84,10 +240,10 @@
     <ClCompile Include="src\matrix.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\mesh.cpp">
+    <ClCompile Include="src\mdl_importer.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\mesh_data.cpp">
+    <ClCompile Include="src\mesh.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\mesh_util.cpp">
@@ -129,6 +285,9 @@
     <ClCompile Include="src\static_mesh_renderer.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\string_buffer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\sun.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -153,6 +312,9 @@
     <ClCompile Include="src\view.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\xml.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\blur_shader.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -168,136 +330,11 @@
     <ClCompile Include="src\clock.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\context.cpp">
+    <ClCompile Include="src\collada_format.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\dynamic_mesh.cpp">
+    <ClCompile Include="src\collada_importer.cpp">
       <Filter>src</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="inc\gk\particle_array.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\particle_renderer_3d.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\quad.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\random.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\shader.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\skybox.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\skybox_renderer.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\sprite.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\sprite_renderer.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\static_mesh.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\static_mesh_renderer.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\sun.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\texture.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\tga_image.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\transform_2d.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\transform_3d.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\vertex_array.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\vertex_buffer.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\view.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\blur_shader.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\bone.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\camera_2d.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\camera_3d.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\clock.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\config.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\context.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\data_types.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\dynamic_mesh.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\dynamic_mesh_renderer.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\file.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\frame_renderer.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\framebuffer.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\graphics.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\matrix.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\mdl_format.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\mesh.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\mesh_data.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\mesh_util.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\node.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\particle.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Todo.txt" />
   </ItemGroup>
 </Project>
