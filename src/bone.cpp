@@ -2,19 +2,13 @@
 
 Bone::Bone()
 {
-    m_Node = nullptr;
 }
 
-Bone::Bone(const std::string& name, const Node* node, const Matrix4F& matrix)
+Bone::Bone(const std::string& name, unsigned int node_index, const Matrix4F& bind_pose)
 {
     m_Name = name;
-    m_Node = node;
-    m_BindPoseMatrix = matrix;
-}
-
-const Node* Bone::GetNode() const
-{
-    return m_Node;
+    m_BindPoseMatrix = bind_pose;
+    m_NodeIndex = node_index;
 }
 
 const std::string& Bone::GetName() const
@@ -25,4 +19,9 @@ const std::string& Bone::GetName() const
 const Matrix4F& Bone::GetBindPoseMatrix() const
 {
     return m_BindPoseMatrix;
+}
+
+unsigned int Bone::GetNodeID() const
+{
+    return m_NodeIndex;
 }

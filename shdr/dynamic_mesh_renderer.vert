@@ -30,8 +30,8 @@ void main()
     normal_matrix     += normal_matrices[bone_indices[2]] * bone_weights[2];
     normal_matrix     += normal_matrices[bone_indices[3]] * bone_weights[3];
 	
-	//vec3 vertex_position = vec3(vertex_matrix * vec4(vertex.x, vertex.y, vertex.z, 1.0f));
-	vec3 vertex_position = vec3(vertex_matrix * vec4(vertex.x, -vertex.z, vertex.y, 1.0f));
+	vec3 vertex_position = vec3(vertex_matrix * vec4(vertex.x, vertex.y, vertex.z, 1.0f));
+	//vec3 vertex_position = vec3(vertex_matrix * vec4(vertex.x, -vertex.z, vertex.y, 1.0f));
 	gl_Position = projection_matrix * vec4(vertex_position, 1.0);
 
 	_uv = uv;

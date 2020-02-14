@@ -1,30 +1,28 @@
 #include <gk/node.hpp>
 
-Node::Node()
-{
-	m_Name   = "";
-	m_Parent = nullptr;
-
-	m_OffsetMatrix  = Matrix4F(1.0f);
-	this->Transform = Transform3D();
-}
-
-Node::Node(const std::string& name) : Node(name, Matrix4F(1.0f))
+Node::Node() : Node("", Matrix4F(1.0f))
 {
 }
 
 Node::Node(const std::string& name, const Matrix4F& offset)
 {
-	m_Name   = name;
-	m_Parent = nullptr;
+	m_Name = name;
+	m_OffsetMatrix = offset;
 
-	m_OffsetMatrix  = offset;
+	m_BoneIndex = -1;
+
+	m_NumChildren = 0;
+	m_Children = nullptr;
+
 	this->Transform = Transform3D();
 }
 
-void Node::SetParent(Node* node)
+Node::~Node()
 {
-	m_Parent = node;
+	if (m_Children != nullptr)
+	{
+		delete[] m_Children;
+	}
 }
 
 const std::string& Node::GetName() const
@@ -32,32 +30,40 @@ const std::string& Node::GetName() const
 	return m_Name;
 }
 
-const Node* Node::GetParent() const
+void Node::SetChildren(unsigned int count, unsigned int* children)
 {
-	return m_Parent;
+	m_NumChildren = count;
+	m_Children = new unsigned int[count];
+
+	for (unsigned int i = 0; i < count; i++)
+	{
+		m_Children[i] = children[i];
+	}
 }
 
-Matrix4F Node::GetLocalMatrix() const
+unsigned int Node::GetNumChildren() const
+{
+	return m_NumChildren;
+}
+
+const unsigned int* Node::GetChildren() const
+{
+	return m_Children;
+}
+
+void Node::SetBoneID(int id)
+{
+	m_BoneIndex = id;
+}
+
+const int Node::GetBoneID() const
+{
+	return m_BoneIndex;
+}
+
+Matrix4F Node::GetLocalTransform() const
 {
 	return this->Transform.ToMatrix();
-}
-
-Matrix4F Node::GetGlobalMatrix() const
-{
-	Matrix4F ret = Matrix4F(1.0f);
-	const Node* node = this;
-
-	while (node != nullptr)
-	{
-		//printf("%s *", node->m_Name.c_str());
-		//printf("Parent is %s\n", m_Parent == nullptr ? "None" : m_Parent->m_Name.c_str());
-		ret = node->GetOffsetMatrix() * node->GetLocalMatrix() * ret;
-		//ret *= node->GetLocalMatrix();
-		node = node->m_Parent;
-	}
-	//printf("\n");
-
-	return ret;
 }
 
 const Matrix4F& Node::GetOffsetMatrix() const

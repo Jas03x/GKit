@@ -3,6 +3,7 @@
 
 #include <string>
 
+#include <gk/bone.hpp>
 #include <gk/transform_3d.hpp>
 
 class Node
@@ -10,24 +11,29 @@ class Node
 private:
 	std::string m_Name;
 	Matrix4F    m_OffsetMatrix;
-	
-	Node* m_Parent;
+
+	int m_BoneIndex;
+
+	unsigned int m_NumChildren;
+	unsigned int* m_Children;
 
 public:
 	Transform3D Transform;
 
 	Node();
-	Node(const std::string& name);
 	Node(const std::string& name, const Matrix4F& offset);
-
-	void SetParent(Node* node);
+	~Node();
 
 	const std::string& GetName() const;
-	const Node* GetParent() const;
 
-	Matrix4F GetLocalMatrix() const;
-	Matrix4F GetGlobalMatrix() const;
-	
+	unsigned int GetNumChildren() const;
+	const unsigned int* GetChildren() const;
+	void SetChildren(unsigned int count, unsigned int* children);
+
+	void SetBoneID(int id);
+	const int GetBoneID() const;
+
+	Matrix4F GetLocalTransform() const;
 	const Matrix4F& GetOffsetMatrix() const;
 };
 

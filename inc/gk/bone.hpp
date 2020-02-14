@@ -3,24 +3,24 @@
 
 #include <string>
 
-#include <gk/node.hpp>
 #include <gk/matrix.hpp>
 
 class Bone
 {
 private:
-	const Node* m_Node;
-
     std::string m_Name;
     Matrix4F    m_BindPoseMatrix;
 
+    unsigned int m_NodeIndex;
+
 public:
     Bone();
-    Bone(const std::string& name, const Node* node, const Matrix4F& matrix);
+    Bone(const std::string& name, unsigned int node_index, const Matrix4F& bind_pose);
+
+    unsigned int GetNodeID() const;
 
     const std::string& GetName() const;
-    const Node*        GetNode() const;
-    const Matrix4F&    GetBindPoseMatrix() const;
+    const Matrix4F& GetBindPoseMatrix() const;
 };
 
 #endif // GK_BONE_HPP

@@ -3,23 +3,25 @@
 #include <assert.h>
 
 #include <map>
+#include <utility>
 
 #include <gk/tga_image.hpp>
 
 DynamicMesh::DynamicMesh() :
-    Mesh(),
-    RootNode("Root")
+	Mesh(),
+	RootNode("Root", Matrix4F(1.0f))
 {
-    m_DiffuseTexture = nullptr;
+	m_DiffuseTexture = nullptr;
 }
 
 DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_directory) :
-    Mesh(),
-    RootNode("Root")
+	Mesh(),
+	RootNode("Root", Matrix4F(1.0f))
 {
 	assert((data.bones.size() <= BONE_LIMIT) && (data.nodes.size() <= NODE_LIMIT));
 
-	std::map<std::string, unsigned int> node_map;
+	std::map<std::string, std::pair<unsigned int, Node*>> node_map;
+	std::map<std::string, std::vector<unsigned int>> node_hierarchy;
 
 	// initial nodes
 	Nodes.reserve(NODE_LIMIT);
@@ -27,26 +29,34 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
 	{
 		const MeshData::Node& node = data.nodes[i];
 		Nodes.push_back(Node(node.name, node.offset_matrix));
-		node_map[node.name] = i;
+
+		if (node.parent.size() > 0)
+		{
+			node_hierarchy[node.parent].push_back(i);
+		}
+		node_map[node.name] = std::make_pair(i, &Nodes.back());
 	}
 
 	// process parent hierchy
 	for (unsigned int i = 0; i < data.nodes.size(); i++)
 	{
-		const MeshData::Node& node = data.nodes[i];
-		
-		if (node.parent.size() == 0) {
-			Nodes[i].SetParent(&RootNode);
-		} else {
-			Nodes[i].SetParent(&Nodes[node_map.at(node.parent)]);
+		Node& node = Nodes[i];
+		std::vector<unsigned int> children = node_hierarchy[node.GetName()];
+
+		if (children.size() > 0)
+		{
+			node.SetChildren(children.size(), children.data());
 		}
 	}
 
 	Bones.reserve(BONE_LIMIT);
-	for(unsigned int i = 0; i < data.bones.size(); i++)
+	for (unsigned int i = 0; i < data.bones.size(); i++)
 	{
 		const MeshData::Bone& bone = data.bones[i];
-		Bones.push_back(Bone(bone.name, &Nodes[node_map.at(bone.name)], bone.bind_pose_matrix));
+		std::pair<unsigned int, Node*> node_info = node_map.at(bone.name);
+
+		Bones.push_back(Bone(bone.name, node_info.first, bone.bind_pose_matrix));
+		node_info.second->SetBoneID(i);
 	}
 
 	DynamicMesh::Vertex* vertex_buffer = new DynamicMesh::Vertex[data.vertices.size()];
@@ -65,7 +75,7 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
 		};
 
 		float weight_sum = v.bone_weights[0] + v.bone_weights[1] + v.bone_weights[2] + v.bone_weights[3];
-		if((weight_sum < 0.99f) || (weight_sum > 1.01f))
+		if ((weight_sum < 0.99f) || (weight_sum > 1.01f))
 		{
 			printf("WARNING: vertex %u has invalid bone weight sum %f\n", i, weight_sum);
 		}
@@ -77,7 +87,7 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
 			v.bone_weights[0], v.bone_weights[1], v.bone_weights[2], v.bone_weights[3]
 		);
 		*/
-		
+
 		//float sum = vertices[i].bones[0].weight + vertices[i].bones[1].weight + vertices[i].bones[2].weight + vertices[i].bones[3].weight;
 		//GK_ASSERT((sum >= 0.99f) && (sum <= 1.01f), ("Error: Vertex weights do not add to one: %f + %f + %f + %f = %f\n", vertices[i].bones[0].weight, vertices[i].bones[1].weight, vertices[i].bones[2].weight, vertices[i].bones[3].weight, sum));
 	}
@@ -96,13 +106,13 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
 	m_VAO->EnableVertexAttribute(VertexAttributes::NODE);
 	m_VAO->EnableVertexAttribute(VertexAttributes::BONE_INDEX);
 	m_VAO->EnableVertexAttribute(VertexAttributes::BONE_WEIGHT);
-	context->SetVertexAttributeLayoutF(VertexAttributes::VERTEX, 	  3, GFX_TYPE_FLOAT, GFX_FALSE,  sizeof(DynamicMesh::Vertex), (void*) offsetof(DynamicMesh::Vertex, position));
-	context->SetVertexAttributeLayoutF(VertexAttributes::NORMAL, 	  3, GFX_TYPE_FLOAT, GFX_FALSE,  sizeof(DynamicMesh::Vertex), (void*) offsetof(DynamicMesh::Vertex, normal));
-	context->SetVertexAttributeLayoutF(VertexAttributes::UV,	  	  2, GFX_TYPE_FLOAT, GFX_FALSE,  sizeof(DynamicMesh::Vertex), (void*) offsetof(DynamicMesh::Vertex, uv));
-	context->SetVertexAttributeLayoutI(VertexAttributes::NODE,	      1, GFX_TYPE_UNSIGNED_BYTE,	 sizeof(DynamicMesh::Vertex), (void*) offsetof(DynamicMesh::Vertex, node));
-	context->SetVertexAttributeLayoutI(VertexAttributes::BONE_INDEX,  4, GFX_TYPE_UNSIGNED_BYTE,	 sizeof(DynamicMesh::Vertex), (void*) offsetof(DynamicMesh::Vertex, bone_indices));
-	context->SetVertexAttributeLayoutF(VertexAttributes::BONE_WEIGHT, 4, GFX_TYPE_FLOAT, GFX_FALSE,  sizeof(DynamicMesh::Vertex), (void*) offsetof(DynamicMesh::Vertex, bone_weights));
-	
+	context->SetVertexAttributeLayoutF(VertexAttributes::VERTEX, 3, GFX_TYPE_FLOAT, GFX_FALSE, sizeof(DynamicMesh::Vertex), (void*)offsetof(DynamicMesh::Vertex, position));
+	context->SetVertexAttributeLayoutF(VertexAttributes::NORMAL, 3, GFX_TYPE_FLOAT, GFX_FALSE, sizeof(DynamicMesh::Vertex), (void*)offsetof(DynamicMesh::Vertex, normal));
+	context->SetVertexAttributeLayoutF(VertexAttributes::UV, 2, GFX_TYPE_FLOAT, GFX_FALSE, sizeof(DynamicMesh::Vertex), (void*)offsetof(DynamicMesh::Vertex, uv));
+	context->SetVertexAttributeLayoutI(VertexAttributes::NODE, 1, GFX_TYPE_UNSIGNED_BYTE, sizeof(DynamicMesh::Vertex), (void*)offsetof(DynamicMesh::Vertex, node));
+	context->SetVertexAttributeLayoutI(VertexAttributes::BONE_INDEX, 4, GFX_TYPE_UNSIGNED_BYTE, sizeof(DynamicMesh::Vertex), (void*)offsetof(DynamicMesh::Vertex, bone_indices));
+	context->SetVertexAttributeLayoutF(VertexAttributes::BONE_WEIGHT, 4, GFX_TYPE_FLOAT, GFX_FALSE, sizeof(DynamicMesh::Vertex), (void*)offsetof(DynamicMesh::Vertex, bone_weights));
+
 	m_IBO = new VertexBuffer(GFX_ELEMENT_BUFFER);
 	m_IBO->Allocate(sizeof(unsigned short) * data.indices.size(), data.indices.data(), GFX_STATIC_DRAW);
 
@@ -120,8 +130,8 @@ DynamicMesh::~DynamicMesh()
 
 void DynamicMesh::Destroy()
 {
-    if(m_DiffuseTexture != nullptr) {
-		delete m_DiffuseTexture; 
+	if (m_DiffuseTexture != nullptr) {
+		delete m_DiffuseTexture;
 		m_DiffuseTexture = nullptr;
 	}
 
