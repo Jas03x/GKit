@@ -70,14 +70,16 @@ void CalculateSkinningMatrices(const Node* nodes, const Bone* bones, unsigned in
 {
 	const Node& node = nodes[index];
 
-	Matrix4F transform = parent_transform * node.GetOffsetMatrix() * node.GetLocalTransform();
+	Matrix4F global_transform = node.GetOffsetMatrix() * node.GetLocalTransform() * parent_transform;
 
-	skinning_matrices[index] = transform;
+	skinning_matrices[index] = global_transform;
 
 	for (unsigned int i = 0; i < node.GetNumChildren(); i++)
 	{
-		printf("%s -> %s\n", node.GetName().c_str(), nodes[node.GetChildren()[i]].GetName().c_str());
-		CalculateSkinningMatrices(nodes, bones, node.GetChildren()[i], skinning_matrices, transform);
+		//printf("%s -> %s\n", node.GetName().c_str(), nodes[node.GetChildren()[i]].GetName().c_str());
+		//printf("\nNode %s global transform:\n", node.GetName().c_str());
+		//global_transform.print();
+		CalculateSkinningMatrices(nodes, bones, node.GetChildren()[i], skinning_matrices, global_transform);
 	}
 }
 
@@ -109,7 +111,7 @@ void DynamicMeshRenderer::Render(const DynamicMesh& mesh)
 		vertex_matrices[i] = skinning_matrices[mesh.Bones[i].GetNodeID()] * mesh.Bones[i].GetBindPoseMatrix();
 		normal_matrices[i] = Matrix::Inverse(Matrix::Transpose(vertex_matrices[i]));
 
-		printf("%s:\n", mesh.Bones[i].GetName().c_str());
+		printf("Bone %s skinning matrix:\n", mesh.Bones[i].GetName().c_str());
 		vertex_matrices[i].print();
 		printf("\n");
 	}
