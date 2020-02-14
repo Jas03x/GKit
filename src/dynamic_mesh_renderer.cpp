@@ -70,13 +70,13 @@ void CalculateSkinningMatrices(const Node* nodes, const Bone* bones, unsigned in
 {
 	const Node& node = nodes[index];
 
-	Matrix4F global_transform = node.GetOffsetMatrix() * node.GetLocalTransform() * parent_transform;
+	Matrix4F global_transform = parent_transform * node.GetOffsetMatrix() * node.GetLocalTransform();
 
 	skinning_matrices[index] = global_transform;
 
 	for (unsigned int i = 0; i < node.GetNumChildren(); i++)
 	{
-		//printf("%s -> %s\n", node.GetName().c_str(), nodes[node.GetChildren()[i]].GetName().c_str());
+		printf("%s -> %s\n", node.GetName().c_str(), nodes[node.GetChildren()[i]].GetName().c_str());
 		//printf("\nNode %s global transform:\n", node.GetName().c_str());
 		//global_transform.print();
 		CalculateSkinningMatrices(nodes, bones, node.GetChildren()[i], skinning_matrices, global_transform);
