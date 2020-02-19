@@ -11,8 +11,8 @@ DynamicMeshRenderer* DynamicMeshRenderer::Instance = nullptr;
 DynamicMeshRenderer::DynamicMeshRenderer()
 {
 	Shader::Load(
-		std::get<1>(File::Read(SHADER_BASE "dynamic_mesh_renderer.vert")).c_str(),
-		std::get<1>(File::Read(SHADER_BASE "dynamic_mesh_renderer.frag")).c_str(),
+		ShaderSource::FromFile(SHADER_BASE "dynamic_mesh_renderer.vert"),
+		ShaderSource::FromFile(SHADER_BASE "dynamic_mesh_renderer.frag"),
 		[](GFX_HANDLE id)
 		{
 			const RenderingContext* context = RenderingContext::GetInstance();

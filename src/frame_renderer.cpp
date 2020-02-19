@@ -2,6 +2,7 @@
 
 #include <assert.h>
 
+#include <gk/config.hpp>
 #include <gk/file.hpp>
 #include <gk/quad.hpp>
 
@@ -10,8 +11,8 @@ FrameRenderer* FrameRenderer::Instance = nullptr;
 FrameRenderer::FrameRenderer()
 {
     Shader::Load(
-		std::get<1>(File::Read(SHADER_BASE "frame_renderer.vert")).c_str(),
-		std::get<1>(File::Read(SHADER_BASE "frame_renderer.frag")).c_str(),
+		ShaderSource::FromFile(SHADER_BASE "frame_renderer.vert"),
+		ShaderSource::FromFile(SHADER_BASE "frame_renderer.frag"),
 		[](GFX_HANDLE id) {
 			RenderingContext::GetInstance()->SetAttributeLocation(id, Quad::VertexAttributes::VERTEX, "vertex");
 		}

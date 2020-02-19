@@ -2,6 +2,7 @@
 
 #include <assert.h>
 
+#include <gk/config.hpp>
 #include <gk/file.hpp>
 #include <gk/matrix.hpp>
 #include <gk/quad.hpp>
@@ -12,8 +13,8 @@ SkyboxRenderer* SkyboxRenderer::Instance = nullptr;
 SkyboxRenderer::SkyboxRenderer()
 {
 	Shader::Load(
-		std::get<1>(File::Read(SHADER_BASE "skybox_renderer.vert")).c_str(),
-		std::get<1>(File::Read(SHADER_BASE "skybox_renderer.frag")).c_str(),
+		ShaderSource::FromFile(SHADER_BASE "skybox_renderer.vert"),
+		ShaderSource::FromFile(SHADER_BASE "skybox_renderer.frag"),
 		[](GFX_HANDLE id) {
 			RenderingContext::GetInstance()->SetAttributeLocation(id, Quad::VertexAttributes::VERTEX, "vertex");
 		}

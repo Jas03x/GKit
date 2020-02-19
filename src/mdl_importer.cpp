@@ -233,22 +233,22 @@ unsigned int MDL_Importer::ReadMeshes(const byte* data)
 
 MDL_Importer::MDL_Importer(const char* path)
 {
-	File* file = File::Open(path, "rb");
+	File file(path, "rb");
 
 	MDL_Header header;
 	
-	file->Read(&header, sizeof(MDL_Header), 1);
+	file.Read(&header, sizeof(MDL_Header), 1);
 	assert(header.signature == MDL_SIGNATURE);
 
-	file->Seek(FILE_END);
-	unsigned int size = file->Tell();
-	file->Seek(FILE_SET);
+	file.Seek(FILE_END);
+	unsigned int size = file.Tell();
+	file.Seek(FILE_SET);
 
 	std::vector<byte> buffer;
 	buffer.reserve(size);
 
-	file->Read(buffer.data(), 1, size);
-	delete file;
+	file.Read(buffer.data(), 1, size);
+	file.Close();
 
 	IndexCount  = 0;
 	VertexCount = 0;

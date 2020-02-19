@@ -469,10 +469,10 @@ public:
     {
         XML::Node* root = nullptr;
 
-        std::pair<bool, std::string> file_data = File::Read(path);
-        if (std::get<0>(file_data))
+        std::string contents;
+        if (File::Read(path, contents))
         {
-            const char* data = std::get<1>(file_data).data();
+            const char* data = contents.c_str();
 
             static const char* HDR_STR = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
             static const unsigned int HDR_LEN = 38;

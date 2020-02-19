@@ -2,6 +2,7 @@
 
 #include <assert.h>
 
+#include <gk/config.hpp>
 #include <gk/file.hpp>
 #include <gk/view.hpp>
 #include <gk/camera_3d.hpp>
@@ -11,8 +12,8 @@ ParticleRenderer3D* ParticleRenderer3D::Instance = nullptr;
 ParticleRenderer3D::ParticleRenderer3D()
 {
     Shader::Load(
-		std::get<1>(File::Read(SHADER_BASE "particle.vert")).c_str(),
-		std::get<1>(File::Read(SHADER_BASE "particle.frag")).c_str(),
+		ShaderSource::FromFile(SHADER_BASE "particle.vert"),
+		ShaderSource::FromFile(SHADER_BASE "particle.frag"),
 		[](GFX_HANDLE id) {
 			const RenderingContext* context = RenderingContext::GetInstance();
 			context->SetAttributeLocation(id, ParticleArray::VertexAttributes::POSITION, "position");

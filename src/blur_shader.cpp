@@ -2,6 +2,7 @@
 
 #include <assert.h>
 
+#include <gk/config.hpp>
 #include <gk/file.hpp>
 #include <gk/quad.hpp>
 #include <gk/matrix.hpp>
@@ -11,8 +12,8 @@ BlurShader* BlurShader::Instance = nullptr;
 BlurShader::BlurShader()
 {
     Shader::Load(
-		std::get<1>(File::Read(SHADER_BASE "gaussian_blur.vert")).c_str(),
-		std::get<1>(File::Read(SHADER_BASE "gaussian_blur.frag")).c_str(),
+		ShaderSource::FromFile(SHADER_BASE "gaussian_blur.vert"),
+		ShaderSource::FromFile(SHADER_BASE "gaussian_blur.frag"),
 		[](GFX_HANDLE id) {
 			RenderingContext::GetInstance()->SetAttributeLocation(id, Quad::VertexAttributes::VERTEX, "vertex");
 		}

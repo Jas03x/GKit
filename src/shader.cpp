@@ -73,22 +73,22 @@ Shader::Shader()
 	m_Handle = 0;
 }
 
-Shader::Shader(const char* vsrc, const char* fsrc, void(*pfn_bind)(GFX_HANDLE))
-{
-	Load(vsrc, fsrc, pfn_bind);
-}
-
 Shader::~Shader()
 {
 	destroy_program(m_Handle);
 }
 
-void Shader::Load(const char* vsrc, const char* fsrc, void(*pfn_bind)(GFX_HANDLE))
+bool Shader::Load(const ShaderSource& vsrc, const ShaderSource& fsrc, void(*pfn_bind)(GFX_HANDLE))
 {
+	if (!vsrc.IsValid() || !fsrc.IsValid())
+	{
+		return false;
+	}
+
 	const RenderingContext* context = RenderingContext::GetInstance();
 
-	GFX_HANDLE vshdr = create_shader(GFX_VERTEX_SHADER, vsrc);
-	GFX_HANDLE fshdr = create_shader(GFX_FRAGMENT_SHADER, fsrc);
+	GFX_HANDLE vshdr = create_shader(GFX_VERTEX_SHADER, vsrc.GetData());
+	GFX_HANDLE fshdr = create_shader(GFX_FRAGMENT_SHADER, fsrc.GetData());
 
 	if (!check_shader(vshdr) || !check_shader(fshdr))
 	{
@@ -111,7 +111,7 @@ void Shader::Load(const char* vsrc, const char* fsrc, void(*pfn_bind)(GFX_HANDLE
 	destroy_shader(vshdr);
 	destroy_shader(fshdr);
 
-	return;
+	return true;
 
 ERROR1:
 	destroy_program(m_Handle);
@@ -121,6 +121,7 @@ ERROR2:
 	destroy_shader(fshdr);
 	
 	printf("Error loading shader\n");
+	return false;
 }
 
 void Shader::Bind() const

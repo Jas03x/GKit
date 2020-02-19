@@ -16,10 +16,12 @@ class File
 private:
 	FILE* m_Handle;
 
-	File();
 public:
-	static File* Open(const char* path, const char* mode);
+	File(const char* path, const char* mode);
 	~File();
+
+	bool IsOpen();
+	void Close();
 
 	FILE* GetHandle();
 
@@ -29,7 +31,9 @@ public:
 
 	int GetChar();
 
-	static std::pair<bool, std::string> Read(const char* path);
+public:
+	static FILE* Open(const char* path, const char* mode);
+	static bool Read(const char* path, std::string& contents);
 };
 
 #endif // GK_FILE_H

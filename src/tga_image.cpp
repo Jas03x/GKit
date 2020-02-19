@@ -31,11 +31,10 @@ typedef struct TGA_Header
 
 TgaImage::TgaImage(const char* path)
 {
-	File* file = File::Open(path, "rb");
-	assert(file != nullptr);
+	File file(path, "rb");
 
 	TGA_Header header;
-	file->Read(&header, sizeof(TGA_Header), 1);
+	file.Read(&header, sizeof(TGA_Header), 1);
 	
 	assert(memcmp(CMP_TGA_HDR, &header, sizeof(CMP_TGA_HDR)) == 0);
 
@@ -55,13 +54,13 @@ TgaImage::TgaImage(const char* path)
 	for (uint32_t p = 0; p < pixel_count; )
 	{
 		uint8_t chunk_header = 0;
-		file->Read(&chunk_header, sizeof(uint8_t), 1);
+		file.Read(&chunk_header, sizeof(uint8_t), 1);
 
 		if (chunk_header < 128)
 		{
 			for (uint32_t i = 0; i <= chunk_header; i++)
 			{
-				file->Read(pixel, pixel_size, 1);
+				file.Read(pixel, pixel_size, 1);
 				m_Pixels[p * pixel_size + 0] = pixel[2];
 				m_Pixels[p * pixel_size + 1] = pixel[1];
 				m_Pixels[p * pixel_size + 2] = pixel[0];
@@ -75,7 +74,7 @@ TgaImage::TgaImage(const char* path)
 		else
 		{
 			chunk_header -= 128;
-			file->Read(pixel, pixel_size, 1);
+			file.Read(pixel, pixel_size, 1);
 			for (uint32_t i = 0; i <= chunk_header; i++)
 			{
 				m_Pixels[p * pixel_size + 0] = pixel[2];
@@ -90,7 +89,6 @@ TgaImage::TgaImage(const char* path)
 		}
 	}
 
-	delete file;
 	delete[] pixel;
 }
 

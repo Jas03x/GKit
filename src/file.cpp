@@ -2,35 +2,40 @@
 
 #include <assert.h>
 
-File::File()
+File::File(const char* path, const char* mode)
 {
-	m_Handle = NULL;
-}
-
-File* File::Open(const char* path, const char* mode)
-{
-	File* file = nullptr;
-	FILE* handle = fopen(path, mode);
-
-	if(handle != nullptr)
-	{
-		file = new File();
-		file->m_Handle = handle;
-	}
-	else
-	{
-		printf("could not open file \"%s\" for mode \"%s\"\n", path, mode);
-	}
-
-	return file;
+	m_Handle = File::Open(path, mode);
 }
 
 File::~File()
 {
+	this->Close();
+}
+
+FILE* File::Open(const char* path, const char* mode)
+{
+	FILE* handle = fopen(path, mode);
+
+	if(handle == nullptr)
+	{
+		printf("could not open file \"%s\" for mode \"%s\"\n", path, mode);
+	}
+
+	return handle;
+}
+
+void File::Close()
+{
 	if (m_Handle != nullptr)
 	{
 		fclose(m_Handle);
+		m_Handle = nullptr;
 	}
+}
+
+bool File::IsOpen()
+{
+	return m_Handle != nullptr;
 }
 
 FILE* File::GetHandle()
@@ -61,43 +66,37 @@ long int File::Tell()
 	return ret;
 }
 
-std::pair<bool, std::string> File::Read(const char* path)
+bool File::Read(const char* path, std::string& contents)
 {
-	std::pair<bool, std::string> ret;
+	bool status = true;
 
-	printf("reading: %s\n", path);
-
-	File* file = File::Open(path, "rb");
-	if (file == nullptr)
+	File file(path, "rb");
+	if (file.IsOpen())
 	{
-		printf("error: could not open file [%s] for reading\n", path);
-	}
-	else
-	{
-		file->Seek(FILE_END);
-		long int size = file->Tell();
-		file->Seek(FILE_SET);
+		file.Seek(FILE_END);
+		long int size = file.Tell() + 1;
+		file.Seek(FILE_SET);
 
-		ret.second.resize(size + 1, 0);
+		contents.resize(size, 0);
 		
-		char* str = &ret.second[0];
+		unsigned int len = 0;
+		char* str = &contents[0];
+
 		for (unsigned int i = 0; i < size; i++)
 		{
-			int c = file->GetChar();
+			int c = file.GetChar();
 			if (c == EOF)
 			{
 				break;
 			}
 			else if (c != '\r')
 			{
-				*str = c;
-				str++;
+				str[len++] = c;
 			}
 		}
 
-		ret.first = true;
-		delete file;
+		contents.resize(len);
 	}
 	
-	return ret;
+	return status;
 }

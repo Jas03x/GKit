@@ -211,6 +211,12 @@
     <ClInclude Include="inc\gk\static_mesh_renderer.hpp">
       <Filter>inc\gk</Filter>
     </ClInclude>
+    <ClInclude Include="inc\gk\fbx_format.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\fbx_importer.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\collada_parser.cpp">
@@ -334,6 +340,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\collada_importer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="inc\gk\fbx_importer.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

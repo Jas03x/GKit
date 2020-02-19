@@ -1,5 +1,6 @@
 #include <gk/static_mesh_renderer.hpp>
 
+#include <gk/config.hpp>
 #include <gk/sun.hpp>
 #include <gk/file.hpp>
 #include <gk/camera_3d.hpp>
@@ -11,8 +12,8 @@ StaticMeshRenderer* StaticMeshRenderer::Instance = nullptr;
 StaticMeshRenderer::StaticMeshRenderer()
 {
 	Shader::Load(
-		std::get<1>(File::Read(SHADER_BASE "static_mesh_renderer.vert")).c_str(),
-		std::get<1>(File::Read(SHADER_BASE "static_mesh_renderer.frag")).c_str(),
+		ShaderSource::FromFile(SHADER_BASE "static_mesh_renderer.vert"),
+		ShaderSource::FromFile(SHADER_BASE "static_mesh_renderer.frag"),
 		[](GFX_HANDLE id)
 		{
 			const RenderingContext* context = RenderingContext::GetInstance();

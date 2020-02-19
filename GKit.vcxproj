@@ -74,12 +74,16 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <NMakeIncludeSearchPath>$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <IncludePath>C:\Users\Jas\Projects\GKit\inc;C:\Dev\Libraries\SDL2\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <NMakeIncludeSearchPath>$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <IncludePath>C:\Users\Jas\Projects\GKit\inc;C:\Dev\Libraries\SDL2\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -176,6 +180,8 @@
     <ClInclude Include="inc\gk\data_types.hpp" />
     <ClInclude Include="inc\gk\dynamic_mesh.hpp" />
     <ClInclude Include="inc\gk\dynamic_mesh_renderer.hpp" />
+    <ClInclude Include="inc\gk\fbx_format.hpp" />
+    <ClInclude Include="inc\gk\fbx_importer.hpp" />
     <ClInclude Include="inc\gk\file.hpp" />
     <ClInclude Include="inc\gk\framebuffer.hpp" />
     <ClInclude Include="inc\gk\frame_renderer.hpp" />
@@ -212,6 +218,7 @@
     <ClInclude Include="inc\gk\xml.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="inc\gk\fbx_importer.cpp" />
     <ClCompile Include="src\blur_shader.cpp" />
     <ClCompile Include="src\bone.cpp" />
     <ClCompile Include="src\camera_2d.cpp" />
