@@ -217,6 +217,9 @@
     <ClInclude Include="inc\gk\fbx_importer.hpp">
       <Filter>inc\gk</Filter>
     </ClInclude>
+    <ClInclude Include="inc\gk\shader_source.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\collada_parser.cpp">
@@ -342,7 +345,10 @@
     <ClCompile Include="src\collada_importer.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="inc\gk\fbx_importer.cpp">
+    <ClCompile Include="src\shader_source.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fbx_importer.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

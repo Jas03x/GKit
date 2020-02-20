@@ -23,10 +23,11 @@ public:
 	bool IsOpen();
 	void Close();
 
+	long int Size();
 	FILE* GetHandle();
 
-	void Seek(int origin, long int offset = 0L);
-	void Read(void* buffer, size_t size, size_t count);
+	bool Seek(int origin, long int offset = 0L);
+	bool Read(void* buffer, size_t size, size_t count);
 	long int Tell();
 
 	int GetChar();

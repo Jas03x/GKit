@@ -43,14 +43,23 @@ FILE* File::GetHandle()
 	return m_Handle;
 }
 
-void File::Seek(int origin, long int offset)
+long int File::Size()
 {
-	assert(fseek(m_Handle, offset, origin) == 0);
+	long int cur = Tell();
+	Seek(SEEK_END, 0L);
+	long int size = Tell();
+	Seek(SEEK_SET, cur);
+	return size;
 }
 
-void File::Read(void* buffer, size_t size, size_t count)
+bool File::Seek(int origin, long int offset)
 {
-	assert(fread(buffer, size, count, m_Handle) == count);
+	return (fseek(m_Handle, offset, origin) == 0);
+}
+
+bool File::Read(void* buffer, size_t size, size_t count)
+{
+	return (fread(buffer, size, count, m_Handle) == count);
 }
 
 int File::GetChar()

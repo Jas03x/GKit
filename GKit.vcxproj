@@ -199,6 +199,7 @@
     <ClInclude Include="inc\gk\quad.hpp" />
     <ClInclude Include="inc\gk\random.hpp" />
     <ClInclude Include="inc\gk\shader.hpp" />
+    <ClInclude Include="inc\gk\shader_source.hpp" />
     <ClInclude Include="inc\gk\skybox.hpp" />
     <ClInclude Include="inc\gk\skybox_renderer.hpp" />
     <ClInclude Include="inc\gk\sprite.hpp" />
@@ -218,7 +219,6 @@
     <ClInclude Include="inc\gk\xml.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="inc\gk\fbx_importer.cpp" />
     <ClCompile Include="src\blur_shader.cpp" />
     <ClCompile Include="src\bone.cpp" />
     <ClCompile Include="src\camera_2d.cpp" />
@@ -230,6 +230,7 @@
     <ClCompile Include="src\context.cpp" />
     <ClCompile Include="src\dynamic_mesh.cpp" />
     <ClCompile Include="src\dynamic_mesh_renderer.cpp" />
+    <ClCompile Include="src\fbx_importer.cpp" />
     <ClCompile Include="src\file.cpp" />
     <ClCompile Include="src\framebuffer.cpp" />
     <ClCompile Include="src\frame_renderer.cpp" />
@@ -244,6 +245,7 @@
     <ClCompile Include="src\quad.cpp" />
     <ClCompile Include="src\random.cpp" />
     <ClCompile Include="src\shader.cpp" />
+    <ClCompile Include="src\shader_source.cpp" />
     <ClCompile Include="src\skybox.cpp" />
     <ClCompile Include="src\skybox_renderer.cpp" />
     <ClCompile Include="src\sprite.cpp" />
