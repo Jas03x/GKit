@@ -211,12 +211,6 @@
     <ClInclude Include="inc\gk\static_mesh_renderer.hpp">
       <Filter>inc\gk</Filter>
     </ClInclude>
-    <ClInclude Include="inc\gk\fbx_format.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\fbx_importer.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
     <ClInclude Include="inc\gk\shader_source.hpp">
       <Filter>inc\gk</Filter>
     </ClInclude>
@@ -346,9 +340,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\shader_source.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\fbx_importer.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
