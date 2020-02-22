@@ -177,13 +177,24 @@ bool Collada::Importer::process_node(const Collada::Node* node, MeshData& mesh_d
     n.name = *node->name;
     n.parent = node->parent == nullptr ? "" : *node->parent->name;
 
-    Vector3F scale = Vector3F(node->scale[0], node->scale[1], node->scale[2]);
-    //Vector3F rotation = Vector3F(node->rotation_x[3] * M_PI / 180.0f, node->rotation_y[3] * M_PI / 180.0f, -node->rotation_z[3] * M_PI / 180.0f);
-    Vector3F rotation = Vector3F(node->rotation_x[3] * M_PI / 180.0f, node->rotation_y[3] * M_PI / 180.0f, node->rotation_z[3] * M_PI / 180.0f);
-    Vector3F translation = Vector3F(node->translation[0], node->translation[1], node->translation[2]);
+    if (node->transform_type == Collada::Node::TRANSFORM_MATRIX)
+    {
+        n.offset_matrix = Matrix::Transpose(Matrix4F(node->transform.matrix));
 
-    // we are working with right handed matrices here - so the order is: scale -> rotate -> translate
-    n.offset_matrix = Matrix4F::Scale(scale) * Quaternion(rotation).matrix() * Matrix4F::Translate(translation);
+        printf("transform matrix:\n");
+        n.offset_matrix.print();
+        printf("\n");
+    }
+    else
+    {
+        Vector3F scale = Vector3F(node->transform.scale[0], node->transform.scale[1], node->transform.scale[2]);
+        //Vector3F rotation = Vector3F(node->rotation_x[3] * M_PI / 180.0f, node->rotation_y[3] * M_PI / 180.0f, -node->rotation_z[3] * M_PI / 180.0f);
+        Vector3F rotation = Vector3F(node->transform.rotation_x[3] * M_PI / 180.0f, node->transform.rotation_y[3] * M_PI / 180.0f, node->transform.rotation_z[3] * M_PI / 180.0f);
+        Vector3F translation = Vector3F(node->transform.translation[0], node->transform.translation[1], node->transform.translation[2]);
+
+        // we are working with right handed matrices here - so the order is: scale -> rotate -> translate
+        n.offset_matrix = Matrix4F::Scale(scale) * Quaternion(rotation).matrix() * Matrix4F::Translate(translation);
+    }
 
     /*
     n.scale = Vector3F(node->scale[0], node->scale[1], node->scale[2]);
@@ -192,9 +203,9 @@ bool Collada::Importer::process_node(const Collada::Node* node, MeshData& mesh_d
     */
 
     printf("Node: %s\n", n.name.c_str());
-    printf("Translation: (%f, %f, %f)\n", node->translation[0], node->translation[1], node->translation[2]);
-    printf("Rotation: (%f, %f, %f)\n", node->rotation_x[3], node->rotation_y[3], node->rotation_z[3]);
-    printf("Scale: (%f, %f, %f)\n", node->scale[0], node->scale[1], node->scale[2]);
+    printf("Translation: (%f, %f, %f)\n", node->transform.translation[0], node->transform.translation[1], node->transform.translation[2]);
+    printf("Rotation: (%f, %f, %f)\n", node->transform.rotation_x[3], node->transform.rotation_y[3], node->transform.rotation_z[3]);
+    printf("Scale: (%f, %f, %f)\n", node->transform.scale[0], node->transform.scale[1], node->transform.scale[2]);
     printf("\n\n");
 
     if (node->extra.technique.roll != 0)

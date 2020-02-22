@@ -205,11 +205,25 @@ namespace Collada
         const std::string* name;
         unsigned int type;
 
-        float scale[3];
-        float rotation_x[4];
-        float rotation_y[4];
-        float rotation_z[4];
-        float translation[3];
+        union
+        {
+            struct
+            {
+                float scale[3];
+                float rotation_x[4];
+                float rotation_y[4];
+                float rotation_z[4];
+                float translation[3];
+            };
+
+            float matrix[16];
+        } transform;
+
+        enum
+        {
+            TRANSFORM_MATRIX     = 0x1,
+            TRANSFORM_DECOMPOSED = 0x2
+        } transform_type;
 
         Node* parent;
 

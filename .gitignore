@@ -1,5 +1,5 @@
 bin/*.o
 bin/GKit.lib
 *.DS_Store
-.vs/*
+.vs/**
 *.swp

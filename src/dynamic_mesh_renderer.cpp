@@ -76,9 +76,6 @@ void CalculateSkinningMatrices(const Node* nodes, const Bone* bones, unsigned in
 
 	for (unsigned int i = 0; i < node.GetNumChildren(); i++)
 	{
-		printf("%s -> %s\n", node.GetName().c_str(), nodes[node.GetChildren()[i]].GetName().c_str());
-		//printf("\nNode %s global transform:\n", node.GetName().c_str());
-		//global_transform.print();
 		CalculateSkinningMatrices(nodes, bones, node.GetChildren()[i], skinning_matrices, global_transform);
 	}
 }
@@ -110,10 +107,6 @@ void DynamicMeshRenderer::Render(const DynamicMesh& mesh)
 	{
 		vertex_matrices[i] = skinning_matrices[mesh.Bones[i].GetNodeID()] * mesh.Bones[i].GetBindPoseMatrix();
 		normal_matrices[i] = Matrix::Inverse(Matrix::Transpose(vertex_matrices[i]));
-
-		printf("Bone %s skinning matrix:\n", mesh.Bones[i].GetName().c_str());
-		vertex_matrices[i].print();
-		printf("\n");
 	}
 
 	context->LoadConstantMatrix4F(Instance->m_VertexMatricies, mesh.Bones.size(), GFX_FALSE, &vertex_matrices[0][0][0]);

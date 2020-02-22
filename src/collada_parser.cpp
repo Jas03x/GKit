@@ -941,103 +941,119 @@ void Collada::Parser::read_node(const XML::Node* node, Node* parent, VisualScene
         data->sid = node->find_attribute("sid");
     }
 
-    if(m_status)
+    if (m_status)
     {
-        const XML::Node* scale = find_child(node, "scale");
-        if(m_status)
+        const XML::Node* matrix = node->find_child("matrix");
+        if (matrix != nullptr)
         {
-            parse_float_array(scale->text);
-            if(m_status)
+            data->transform_type = Collada::Node::TRANSFORM_MATRIX;
+
+            parse_float_array(matrix->text);
+            if (m_status)
             {
-                if(m_float_buffer.size() == 3)
-                {
-                    memcpy(data->scale, m_float_buffer.data(), sizeof(float) * 3);
-                }
-                else
-                {
-                    m_status = false;
-                    printf("invalid scale parameters\n");
-                }
+                memcpy(data->transform.matrix, m_float_buffer.data(), sizeof(float) * 16);
             }
         }
-    }
-
-    if(m_status)
-    {
-        const XML::ChildList* rotations = find_children(node, "rotate");
-        if(m_status)
+        else
         {
-            if(rotations->size() == 3)
+            data->transform_type = Collada::Node::TRANSFORM_DECOMPOSED;
+
+            const XML::Node* scale = find_child(node, "scale");
+            if (m_status)
             {
-                for(unsigned int i = 0; m_status && (i < rotations->size()); i++)
+                parse_float_array(scale->text);
+                if (m_status)
                 {
-                    const XML::Node* rotation = rotations->at(i);
-                    
-                    const std::string* sid = find_attribute(rotation, "sid");
-                    if(m_status)
+                    if (m_float_buffer.size() == 3)
                     {
-                        parse_float_array(rotation->text);
-                        if(m_status)
-                        {
-                            if(m_float_buffer.size() == 4)
-                            {
-                                float* r_data = nullptr;
-
-                                const char* sid_str = sid->c_str();
-                                if(strncmp(sid_str, "rotation", 8) == 0)
-                                {
-                                    switch(sid_str[8])
-                                    {
-                                        case 'X': { r_data = data->rotation_x; break; }
-                                        case 'Y': { r_data = data->rotation_y; break; }
-                                        case 'Z': { r_data = data->rotation_z; break; }
-                                        default: { break; }
-                                    }
-                                }
-
-                                if(r_data != nullptr)
-                                {
-                                    memcpy(r_data, m_float_buffer.data(), sizeof(float) * 4);
-                                }
-                                else
-                                {
-                                    m_status = false;
-                                    printf("unknown rotation \"%s\"\n", sid_str);
-                                }
-                            }
-                            else
-                            {
-                                m_status = false;
-                                printf("invalid rotation parameters\n");
-                            }
-                        }
+                        memcpy(data->transform.scale, m_float_buffer.data(), sizeof(float) * 3);
+                    }
+                    else
+                    {
+                        m_status = false;
+                        printf("invalid scale parameters\n");
                     }
                 }
             }
-            else
+
+            if (m_status)
             {
-                m_status = false;
-                printf("expected three rotation axis\n");
-            }
-        }
-    }
-    
-    if(m_status)
-    {
-        const XML::Node* translation = find_child(node, "translate");
-        if(m_status)
-        {
-            parse_float_array(translation->text);
-            if(m_status)
-            {
-                if(m_float_buffer.size() == 3)
+                const XML::ChildList* rotations = find_children(node, "rotate");
+                if (m_status)
                 {
-                    memcpy(data->translation, m_float_buffer.data(), sizeof(float) * 3);
+                    if (rotations->size() == 3)
+                    {
+                        for (unsigned int i = 0; m_status && (i < rotations->size()); i++)
+                        {
+                            const XML::Node* rotation = rotations->at(i);
+
+                            const std::string* sid = find_attribute(rotation, "sid");
+                            if (m_status)
+                            {
+                                parse_float_array(rotation->text);
+                                if (m_status)
+                                {
+                                    if (m_float_buffer.size() == 4)
+                                    {
+                                        float* r_data = nullptr;
+
+                                        const char* sid_str = sid->c_str();
+                                        if (strncmp(sid_str, "rotation", 8) == 0)
+                                        {
+                                            switch (sid_str[8])
+                                            {
+                                            case 'X': { r_data = data->transform.rotation_x; break; }
+                                            case 'Y': { r_data = data->transform.rotation_y; break; }
+                                            case 'Z': { r_data = data->transform.rotation_z; break; }
+                                            default: { break; }
+                                            }
+                                        }
+
+                                        if (r_data != nullptr)
+                                        {
+                                            memcpy(r_data, m_float_buffer.data(), sizeof(float) * 4);
+                                        }
+                                        else
+                                        {
+                                            m_status = false;
+                                            printf("unknown rotation \"%s\"\n", sid_str);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        m_status = false;
+                                        printf("invalid rotation parameters\n");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_status = false;
+                        printf("expected three rotation axis\n");
+                    }
                 }
-                else
+            }
+
+            if (m_status)
+            {
+                const XML::Node* translation = find_child(node, "translate");
+                if (m_status)
                 {
-                    m_status = false;
-                    printf("invalid translation parameters\n");
+                    parse_float_array(translation->text);
+                    if (m_status)
+                    {
+                        if (m_float_buffer.size() == 3)
+                        {
+                            memcpy(data->transform.translation, m_float_buffer.data(), sizeof(float) * 3);
+                        }
+                        else
+                        {
+                            m_status = false;
+                            printf("invalid translation parameters\n");
+                        }
+                    }
                 }
             }
         }
