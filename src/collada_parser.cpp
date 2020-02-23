@@ -1271,7 +1271,6 @@ bool Collada::Parser::parse(const char* path)
     {
         //m_file->root->print();
         process(m_file->root);
-        printf("%s\n", m_status ? "xml loaded successfully" : "xml failed to load");
     }
     else
     {

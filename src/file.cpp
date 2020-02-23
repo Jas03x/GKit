@@ -104,6 +104,7 @@ bool File::Read(const char* path, std::string& contents)
 			}
 		}
 
+		contents[len++] = 0; // null-terminate
 		contents.resize(len);
 	}
 	
