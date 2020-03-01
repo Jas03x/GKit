@@ -69,7 +69,7 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
 			{ v.position.x, v.position.y, v.position.z },
 			{ v.normal.x,   v.normal.y,   v.normal.z },
 			{ v.uv.x,       v.uv.y },
-			v.node,
+			v.node_index,
 			{ v.bone_indices[0], v.bone_indices[1], v.bone_indices[2], v.bone_indices[3] },
 			{ v.bone_weights[0], v.bone_weights[1], v.bone_weights[2], v.bone_weights[3] }
 		};
@@ -114,9 +114,20 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
 	context->SetVertexAttributeLayoutF(VertexAttributes::BONE_WEIGHT, 4, GFX_TYPE_FLOAT, GFX_FALSE, sizeof(DynamicMesh::Vertex), (void*)offsetof(DynamicMesh::Vertex, bone_weights));
 
 	m_IBO = new VertexBuffer(GFX_ELEMENT_BUFFER);
-	m_IBO->Allocate(sizeof(unsigned short) * data.indices.size(), data.indices.data(), GFX_STATIC_DRAW);
+	m_IBO->Allocate(sizeof(unsigned short) * data.index_count, nullptr, GFX_STATIC_DRAW);
 
-	m_ElementCount = data.indices.size();
+	size_t offset = 0;
+	for (unsigned int i = 0; i < data.meshes.size(); i++)
+	{
+		const MeshData::Mesh& mesh = data.meshes[i];
+
+		size_t size = mesh.indices.size() * sizeof(unsigned short);
+		m_IBO->Update(offset, size, mesh.indices.data());
+
+		offset += size;
+	}
+
+	m_ElementCount = data.index_count;
 
 	delete[] vertex_buffer;
 

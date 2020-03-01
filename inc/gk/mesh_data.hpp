@@ -21,7 +21,7 @@ struct MeshData
         Vector3F position;
         Vector3F normal;
         Vector2F uv;
-        unsigned char node;
+        unsigned char node_index;
         unsigned char bone_indices[4];
         float bone_weights[4];
         unsigned int bone_count;
@@ -33,13 +33,20 @@ struct MeshData
         Matrix4F bind_pose_matrix;
     };
 
+    struct Mesh
+    {
+        std::string name;
+        std::vector<unsigned short> indices;
+    };
+
     std::string diffuse_texture;
 
     std::vector<Bone> bones;
     std::vector<Node> nodes;
     std::vector<Vertex> vertices;
 
-    std::vector<unsigned short> indices;
+    unsigned int index_count;
+    std::vector<Mesh> meshes;
 };
 
 #endif // MESH_DATA_HPP

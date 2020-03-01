@@ -86,7 +86,7 @@ int File::ReadChar()
 template <typename T>
 bool File::Read(T* value, unsigned int count)
 {
-	this->Read(value, sizeof(T), count);
+	return this->Read(value, sizeof(T), count);
 }
 
 // instantiate templates for supported data types

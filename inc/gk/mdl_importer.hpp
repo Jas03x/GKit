@@ -23,12 +23,18 @@ namespace MDL
 
 		bool import(File* file, MeshData* data);
 		
+		bool read_object_header(uint8_t expected_type);
+		bool read_object_terminator(uint8_t expected_type);
+
 		bool read_bone();
 		bool read_node();
+		bool read_mesh();
+		bool read_vertex();
 		bool read_string(std::string& str);
-		bool read_array_header(uint16_t& type, uint16_t& length);
+		bool read_array_header(uint8_t expected_type, uint16_t& length);
 
 		bool read_node_block();
+		bool read_mesh_block();
 		bool read_material_block();
 
 	public:

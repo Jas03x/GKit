@@ -14,6 +14,8 @@
 * |    MDL Block    |   Material data   |
 * |-----------------|-------------------|
 * |    MDL Block    |   Mesh data       |
+* |-----------------|-------------------|
+* |    UInt32       |   End of File     |
 * |_________________|___________________|
 *
 * ______________________________________
@@ -35,8 +37,6 @@
 * |    Type         |   Description     |
 * |-----------------|-------------------|
 * |    UInt8        |   Array Signature |
-* |-----------------|-------------------|
-* |    UInt8        |   Type            |
 * |-----------------|-------------------|
 * |    UInt16       |   Length          |
 * |-----------------|-------------------|
@@ -118,15 +118,17 @@
 * |-----------------|-------------------|
 * |    UInt8        |  Vertex Signature |
 * |-----------------|-------------------|
-* |    MDL Vector3F |  Position         |
+* |    float[3]     |  Position         |
 * |-----------------|-------------------|
-* |    MDL Vector3F |  Normal           |
+* |    float[3]     |  Normal           |
 * |-----------------|-------------------|
-* |    MDL Vector2F |  UV               |
+* |    float[2]     |  UV               |
 * |-----------------|-------------------|
-* |    MDL Vector4U |  Bone indices     |
+* |    UInt8        |  Node index       |
 * |-----------------|-------------------|
-* |    MDL Vector4F |  Bone weights     |
+* |    Uint8[4]     |  Bone indices     |
+* |-----------------|-------------------|
+* |    float[8]     |  Bone weights     |
 * |-----------------|-------------------|
 * |    UInt8        |  Bone count       |
 * |_________________|___________________|
@@ -150,7 +152,7 @@ namespace MDL
     enum
     {
         SIGNATURE   = 0x4D444C00, // 'MDL'
-        END_OF_FILE = 0x464F4500  // 'EOF'
+        END_OF_FILE = 0x454F4600  // 'EOF'
     };
 
     enum FLAG
@@ -161,46 +163,42 @@ namespace MDL
         TERMINATOR = 0x80
     };
 
-    enum ID
+    enum
     {
-        STRING   = 0x1,
-        NODE     = 0x2,
-        BONE     = 0x3,
-        VERTEX   = 0x4,
-        MATERIAL = 0x5,
-        MESH     = 0x6,
-        INDEX    = 0x7
+        ID_STRING   = 0x1,
+        ID_NODE     = 0x2,
+        ID_BONE     = 0x3,
+        ID_VERTEX   = 0x4,
+        ID_MATERIAL = 0x5,
+        ID_MESH     = 0x6,
+        ID_INDEX    = 0x7
     };
 
     enum
     {
-        NODE_BLOCK     = FLAG::BLOCK | ID::NODE,
-        MATERIAL_BLOCK = FLAG::BLOCK | ID::MATERIAL,
-        MESH_BLOCK     = FLAG::BLOCK | ID::MESH,
-        NODE_ARRAY     = FLAG::ARRAY | ID::NODE,
-        BONE_ARRAY     = FLAG::ARRAY | ID::BONE,
-        VERTEX_ARRAY   = FLAG::ARRAY | ID::VERTEX,
-        INDEX_ARRAY    = FLAG::ARRAY | ID::INDEX,
-        STRING         = FLAG::CLASS | ID::STRING,
-        NODE           = FLAG::CLASS | ID::NODE,
-        BONE           = FLAG::CLASS | ID::BONE,
-        VERTEX         = FLAG::CLASS | ID::VERTEX,
-        MESH           = FLAG::CLASS | ID::MESH
+        NODE_BLOCK     = FLAG::BLOCK | ID_NODE,
+        MATERIAL_BLOCK = FLAG::BLOCK | ID_MATERIAL,
+        MESH_BLOCK     = FLAG::BLOCK | ID_MESH,
+        NODE_ARRAY     = FLAG::ARRAY | ID_NODE,
+        BONE_ARRAY     = FLAG::ARRAY | ID_BONE,
+        VERTEX_ARRAY   = FLAG::ARRAY | ID_VERTEX,
+        INDEX_ARRAY    = FLAG::ARRAY | ID_INDEX,
+        MESH_ARRAY     = FLAG::ARRAY | ID_MESH,
+        STRING         = FLAG::CLASS | ID_STRING,
+        NODE           = FLAG::CLASS | ID_NODE,
+        BONE           = FLAG::CLASS | ID_BONE,
+        VERTEX         = FLAG::CLASS | ID_VERTEX,
+        MESH           = FLAG::CLASS | ID_MESH
     };
-
-    struct Vector2F { float          values[2]; };
-    struct Vector3F { float          values[3]; };
-    struct Vector4U { unsigned short values[4]; };
-    struct Vector4F { float          values[4]; };
-    struct Matrix4F { float          values[4][4]; };
 
     struct Vertex
     {
-        Vector3F position;
-        Vector3F normal;
-        Vector2F uv;
-        Vector4U bone_indices;
-        Vector4U bone_weights;
+        float    position[3];
+        float    normal[3];
+        float    uv[2];
+        uint8_t  node_index;
+        uint8_t  bone_indices[4];
+        float    bone_weights[4];
         uint8_t  bone_count;
     };
 }

@@ -297,7 +297,7 @@ bool Collada::Importer::process_geometry(const Geometry* obj)
     return status;
 }
 
-bool Collada::Importer::process_mesh_data(MeshData& mesh_data)
+bool Collada::Importer::process_mesh_data(MeshData& data)
 {
     bool status = true;
 
@@ -311,9 +311,16 @@ bool Collada::Importer::process_mesh_data(MeshData& mesh_data)
 
     VertexMap vertex_map(cmp);
 
+    data.index_count = 0;
+
     for (std::map<std::string, IMesh>::const_iterator it = m_mesh_map.begin(); it != m_mesh_map.end(); it++)
     {
         const IMesh& mesh = it->second;
+        
+        data.meshes.push_back(MeshData::Mesh());
+        MeshData::Mesh& mesh_data = data.meshes.back();
+        mesh_data.name = it->first;
+
         for (unsigned int i = 0; i < mesh.indices.size(); i += 3)
         {
             const IVertex& v = mesh.vertex_array[mesh.indices[i + 0]];
@@ -331,12 +338,14 @@ bool Collada::Importer::process_mesh_data(MeshData& mesh_data)
             VertexMap::const_iterator it = vertex_map.find(vertex);
             if (it == vertex_map.end())
             {
-                it = vertex_map.insert(std::pair<MeshData::Vertex, unsigned int>(vertex, (unsigned int) mesh_data.vertices.size())).first;
-                mesh_data.vertices.push_back(vertex);
+                it = vertex_map.insert(std::pair<MeshData::Vertex, unsigned int>(vertex, (unsigned int) data.vertices.size())).first;
+                data.vertices.push_back(vertex);
             }
 
             mesh_data.indices.push_back(it->second);
         }
+
+        data.index_count += mesh.indices.size();
     }
 
     return status;

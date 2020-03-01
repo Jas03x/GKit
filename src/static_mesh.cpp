@@ -58,7 +58,7 @@ StaticMesh::StaticMesh(const MeshData& data, const std::string& texture_director
 			{ v.position.x, v.position.y, v.position.z },
 			{ v.normal.x, v.normal.y, v.normal.z },
 			{ v.uv.x, v.uv.y },
-			v.node
+			v.node_index
 		};
 		vertex_iterator++;
 	}
@@ -81,9 +81,20 @@ StaticMesh::StaticMesh(const MeshData& data, const std::string& texture_director
 	context->SetVertexAttributeLayoutI(VertexAttributes::NODE, 1, GFX_TYPE_UNSIGNED_BYTE, sizeof(StaticMesh::Vertex), (void*)offsetof(StaticMesh::Vertex, node));
 
 	m_IBO = new VertexBuffer(GFX_ELEMENT_BUFFER);
-	m_IBO->Allocate(sizeof(unsigned short) * data.indices.size(), data.indices.data(), GFX_STATIC_DRAW);
+	m_IBO->Allocate(sizeof(unsigned short) * data.index_count, nullptr, GFX_STATIC_DRAW);
 
-	m_ElementCount = data.indices.size();
+	size_t offset = 0;
+	for (unsigned int i = 0; i < data.meshes.size(); i++)
+	{
+		const MeshData::Mesh& mesh = data.meshes[i];
+
+		size_t size = mesh.indices.size() * sizeof(unsigned short);
+		m_IBO->Update(offset, size, mesh.indices.data());
+
+		offset += size;
+	}
+
+	m_ElementCount = data.index_count;
 
 	delete[] vertex_buffer;
 
