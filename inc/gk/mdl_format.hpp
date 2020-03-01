@@ -1,105 +1,208 @@
 #ifndef GK_MDL_FORMAT_HPP
 #define GK_MDL_FORMAT_HPP
 
-enum { MDL_SIGNATURE = 0x4D444C00 }; // 'MDL'
-enum { MDL_MAX_STR_LEN = 32 };
+/*
+* _______________________________________
+* |           MDL File Format           |
+* |-------------------------------------|
+* |    Type         |   Description     |
+* |-----------------|-------------------|
+* |    UInt32       |   Signature       |
+* |-----------------|-------------------|
+* |    MDL Block    |   Node data       |
+* |-----------------|-------------------|
+* |    MDL Block    |   Material data   |
+* |-----------------|-------------------|
+* |    MDL Block    |   Mesh data       |
+* |_________________|___________________|
+*
+* ______________________________________
+* |         MDL String Format           |
+* |-------------------------------------|
+* |    Type         |  Description      |
+* |-----------------|-------------------|
+* |    UInt8        |  String Signature |
+* |-----------------|-------------------|
+* |    UInt8        |  Length           |
+* |-----------------|-------------------|
+* |    char[]       |  Data             |
+* |_________________|___________________|
+* * Note: The string is null terminated, and the size includes the terminator.
+* 
+* _______________________________________
+* |           MDL Array Format          |
+* |-------------------------------------|
+* |    Type         |   Description     |
+* |-----------------|-------------------|
+* |    UInt8        |   Array Signature |
+* |-----------------|-------------------|
+* |    UInt8        |   Type            |
+* |-----------------|-------------------|
+* |    UInt16       |   Length          |
+* |-----------------|-------------------|
+* |               Data                  |
+* |-----------------|-------------------|
+* |    UInt8        |   End Of Array    |
+* |_________________|___________________|
+*
+* _______________________________________
+* |     MDL Node Data Block Format      |
+* |-------------------------------------|
+* |    Type         |   Description     |
+* |-----------------|-------------------|
+* |    UInt8        |   Block Signature |
+* |-----------------|-------------------|
+* |    MDL Array    |   Nodes           |
+* |-----------------|-------------------|
+* |    MDL Array    |   Bones           |
+* |-----------------|-------------------|
+* |    UInt8        |   End Of Block    |
+* |_________________|___________________|
+*
+* _______________________________________
+* |   MDL Material Data Block Format    |
+* |-------------------------------------|
+* |    Type         |   Description     |
+* |-----------------|-------------------|
+* |    UInt8        |   Block Signature |
+* |-----------------|-------------------|
+* |    MDL String   |   Texture         |
+* |-----------------|-------------------|
+* |    UInt8        |   End Of Block    |
+* |_________________|___________________|
+*
+* _______________________________________
+* |     MDL Mesh Data Block Format      |
+* |-------------------------------------|
+* |    Type         |   Description     |
+* |-----------------|-------------------|
+* |    UInt8        |   Block Signature |
+* |-----------------|-------------------|
+* |    MDL Array    |   Vertices        |
+* |-----------------|-------------------|
+* |    MDL Array    |   Mesh Data       |
+* |-----------------|-------------------|
+* |    UInt8        |   End Of Block    |
+* |_________________|___________________|
+*
+* _______________________________________
+* |           MDL Node Format           |
+* |-------------------------------------|
+* |    Type         |   Description     |
+* |-----------------|-------------------|
+* |    UInt8        |   Node Signature  |
+* |-----------------|-------------------|
+* |    MDL String   |   Name            |
+* |-----------------|-------------------|
+* |    MDL String   |   Parent          |
+* |-----------------|-------------------|
+* |    MDL Matrix4F |   Transform       |
+* |_________________|___________________|
+*
+* _______________________________________
+* |           MDL Bone Format           |
+* |-------------------------------------|
+* |    Type         |   Description     |
+* |-----------------|-------------------|
+* |    UInt8        |   Bone Signature  |
+* |-----------------|-------------------|
+* |    MDL String   |   Name            |
+* |-----------------|-------------------|
+* |    MDL Matrix4F |   Offset matrix   |
+* |_________________|___________________|
+*
+* _______________________________________
+* |           MDL Vertex Format         |
+* |-------------------------------------|
+* |    Type         |  Description      |
+* |-----------------|-------------------|
+* |    UInt8        |  Vertex Signature |
+* |-----------------|-------------------|
+* |    MDL Vector3F |  Position         |
+* |-----------------|-------------------|
+* |    MDL Vector3F |  Normal           |
+* |-----------------|-------------------|
+* |    MDL Vector2F |  UV               |
+* |-----------------|-------------------|
+* |    MDL Vector4U |  Bone indices     |
+* |-----------------|-------------------|
+* |    MDL Vector4F |  Bone weights     |
+* |-----------------|-------------------|
+* |    UInt8        |  Bone count       |
+* |_________________|___________________|
+*
+* _______________________________________
+* |           MDL Mesh Format           |
+* |-------------------------------------|
+* |    Type         |   Description     |
+* |-----------------|-------------------|
+* |    UInt8        |   Mesh Signature  |
+* |-----------------|-------------------|
+* |    MDL String   |   Name            |
+* |-----------------|-------------------|
+* |    MDL Array    |   Indices         |
+* |_________________|___________________|
+*
+*/
 
-enum
+namespace MDL
 {
-    UNKNOWN_ARRAY  = 0,
-    TEXTURE_ARRAY  = 1,
-    MATERIAL_ARRAY = 2,
-    NODE_ARRAY     = 3,
-    BONE_ARRAY     = 4,
-    MESH_ARRAY     = 5
-};
+    enum
+    {
+        SIGNATURE   = 0x4D444C00, // 'MDL'
+        END_OF_FILE = 0x464F4500  // 'EOF'
+    };
 
-struct MDL_Header
-{
-    unsigned int signature;
-};
+    enum FLAG
+    {
+        CLASS = 0x20,
+        ARRAY = 0x40,
+        BLOCK = 0x60,
+        TERMINATOR = 0x80
+    };
 
-struct MDL_Vector2F { float          values[2];    };
-struct MDL_Vector3F { float          values[3];    };
-struct MDL_Vector4U { unsigned short values[4];    };
-struct MDL_Vector4F { float          values[4];    };
-struct MDL_Matrix4F { float          values[4][4]; };
+    enum ID
+    {
+        STRING   = 0x1,
+        NODE     = 0x2,
+        BONE     = 0x3,
+        VERTEX   = 0x4,
+        MATERIAL = 0x5,
+        MESH     = 0x6,
+        INDEX    = 0x7
+    };
 
-struct MDL_String
-{
-    char string[MDL_MAX_STR_LEN];
-};
+    enum
+    {
+        NODE_BLOCK     = FLAG::BLOCK | ID::NODE,
+        MATERIAL_BLOCK = FLAG::BLOCK | ID::MATERIAL,
+        MESH_BLOCK     = FLAG::BLOCK | ID::MESH,
+        NODE_ARRAY     = FLAG::ARRAY | ID::NODE,
+        BONE_ARRAY     = FLAG::ARRAY | ID::BONE,
+        VERTEX_ARRAY   = FLAG::ARRAY | ID::VERTEX,
+        INDEX_ARRAY    = FLAG::ARRAY | ID::INDEX,
+        STRING         = FLAG::CLASS | ID::STRING,
+        NODE           = FLAG::CLASS | ID::NODE,
+        BONE           = FLAG::CLASS | ID::BONE,
+        VERTEX         = FLAG::CLASS | ID::VERTEX,
+        MESH           = FLAG::CLASS | ID::MESH
+    };
 
-struct MDL_Texture
-{
-    MDL_String path;
-};
+    struct Vector2F { float          values[2]; };
+    struct Vector3F { float          values[3]; };
+    struct Vector4U { unsigned short values[4]; };
+    struct Vector4F { float          values[4]; };
+    struct Matrix4F { float          values[4][4]; };
 
-struct MDL_Array
-{
-    unsigned char type;
-    unsigned int  length;
-};
-
-struct MDL_Material
-{
-    MDL_Vector3F color;
-    MDL_Vector3F specular;
-    unsigned char texture_index;
-};
-
-struct MDL_Node
-{
-    MDL_String   name;
-    MDL_String   parent;
-
-	MDL_Matrix4F offset_matrix;
-};
-
-struct MDL_Frame
-{
-    float time;
-
-    MDL_Vector3F position;
-    MDL_Vector4F rotation;
-    MDL_Vector3F scale;
-};
-
-struct MDL_Animation
-{
-    unsigned int num_frames;
-    // frames ...
-};
-
-struct MDL_Bone
-{
-    MDL_String    name;
-    MDL_Matrix4F  offset_matrix;
-    MDL_Animation animation;
-};
-
-struct MDL_Vertex
-{
-    MDL_Vector3F position;
-    MDL_Vector3F normal;
-    MDL_Vector2F uv;
-    unsigned char node_index;
-    MDL_Vector4U bone_indices;
-    MDL_Vector4F bone_weights;
-    unsigned char material;
-    unsigned char bone_count;
-};
-
-struct MDL_Triangle { unsigned short indices[3]; };
-
-struct MDL_Mesh
-{
-    MDL_String   name;
-    unsigned int vertex_array_length;
-    unsigned int triangle_array_length;
-    
-    // vertices  ...
-    // triangles ...
-};
+    struct Vertex
+    {
+        Vector3F position;
+        Vector3F normal;
+        Vector2F uv;
+        Vector4U bone_indices;
+        Vector4U bone_weights;
+        uint8_t  bone_count;
+    };
+}
 
 #endif // GK_MDL_FORMAT_HPP

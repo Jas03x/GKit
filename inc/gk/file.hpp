@@ -17,23 +17,34 @@ private:
 	FILE* m_Handle;
 
 public:
-	File(const char* path, const char* mode);
+	enum
+	{
+		READ_BINARY = 0,
+		READ_TEXT   = 1
+	};
+
+public:
+	File(const char* path, unsigned int mode);
 	~File();
 
 	bool IsOpen();
 	void Close();
 
-	long int Size();
 	FILE* GetHandle();
 
-	bool Seek(int origin, long int offset = 0L);
-	bool Read(void* buffer, size_t size, size_t count);
 	long int Tell();
+	long int Size();
 
-	int GetChar();
+	bool Seek(int origin, long int offset = 0L);
+	
+	int ReadChar();
+
+	template <typename T>
+	bool Read(T* value, unsigned int count);
+	bool Read(void* buffer, size_t size, size_t count);
 
 public:
-	static FILE* Open(const char* path, const char* mode);
+	static FILE* Open(const char* path, unsigned int mode);
 	static bool Read(const char* path, std::string& contents);
 };
 

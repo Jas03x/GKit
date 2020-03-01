@@ -31,7 +31,7 @@ typedef struct TGA_Header
 
 TgaImage::TgaImage(const char* path)
 {
-	File file(path, "rb");
+	File file(path, File::READ_BINARY);
 
 	TGA_Header header;
 	file.Read(&header, sizeof(TGA_Header), 1);

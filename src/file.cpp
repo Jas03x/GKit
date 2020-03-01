@@ -2,7 +2,7 @@
 
 #include <assert.h>
 
-File::File(const char* path, const char* mode)
+File::File(const char* path, unsigned int mode)
 {
 	m_Handle = File::Open(path, mode);
 }
@@ -12,13 +12,21 @@ File::~File()
 	this->Close();
 }
 
-FILE* File::Open(const char* path, const char* mode)
+FILE* File::Open(const char* path, unsigned int mode)
 {
-	FILE* handle = fopen(path, mode);
+	static const char* MODE_TABLE[] =
+	{
+		"rb", // READ_BINARY (default)
+		"r"   // READ_TEXT
+	};
+	static const unsigned int MODE_COUNT = sizeof(MODE_TABLE) / sizeof(const char*);
 
+	const char* file_mode = (mode < MODE_COUNT) ? MODE_TABLE[mode] : MODE_TABLE[0];
+
+	FILE* handle = fopen(path, file_mode);
 	if(handle == nullptr)
 	{
-		printf("could not open file \"%s\" for mode \"%s\"\n", path, mode);
+		printf("could not open file \"%s\" for mode \"%s\"\n", path, file_mode);
 	}
 
 	return handle;
@@ -52,34 +60,60 @@ long int File::Size()
 	return size;
 }
 
+long int File::Tell()
+{
+	long int ret = ftell(m_Handle);
+	if (ret == -1L) {
+		printf("ftell failure\n");
+	}
+	return ret;
+}
+
 bool File::Seek(int origin, long int offset)
 {
-	return (fseek(m_Handle, offset, origin) == 0);
+	bool result = (fseek(m_Handle, offset, origin) == 0);
+	if (!result) {
+		printf("fseek failure\n");
+	}
+	return result;
 }
 
-bool File::Read(void* buffer, size_t size, size_t count)
-{
-	return (fread(buffer, size, count, m_Handle) == count);
-}
-
-int File::GetChar()
+int File::ReadChar()
 {
 	return fgetc(m_Handle);
 }
 
-long int File::Tell()
+template <typename T>
+bool File::Read(T* value, unsigned int count)
 {
-	long int ret = ftell(m_Handle);
-	assert(ret != -1L);
+	this->Read(value, sizeof(T), count);
+}
 
-	return ret;
+// instantiate templates for supported data types
+template bool File::Read(int8_t*   value, unsigned int count);
+template bool File::Read(uint8_t*  value, unsigned int count);
+template bool File::Read(int16_t*  value, unsigned int count);
+template bool File::Read(uint16_t* value, unsigned int count);
+template bool File::Read(int32_t*  value, unsigned int count);
+template bool File::Read(uint32_t* value, unsigned int count);
+template bool File::Read(int64_t*  value, unsigned int count);
+template bool File::Read(uint64_t* value, unsigned int count);
+template bool File::Read(float*    value, unsigned int count);
+
+bool File::Read(void* buffer, size_t size, size_t count)
+{
+	bool result = (fread(buffer, size, count, m_Handle) == count);
+	if (!result) {
+		printf("fread failure\n");
+	}
+	return result;
 }
 
 bool File::Read(const char* path, std::string& contents)
 {
 	bool status = true;
 
-	File file(path, "rb");
+	File file(path, File::READ_BINARY);
 	if (file.IsOpen())
 	{
 		file.Seek(FILE_END);
@@ -93,7 +127,7 @@ bool File::Read(const char* path, std::string& contents)
 
 		for (unsigned int i = 0; i < size; i++)
 		{
-			int c = file.GetChar();
+			int c = file.ReadChar();
 			if (c == EOF)
 			{
 				break;
