@@ -278,6 +278,7 @@ struct Quaternion : public Vector4F
     Quaternion(const Vector4F& v);
     Quaternion(float _x, float _y, float _z, float _w);
     Quaternion(float _x, float _y, float _z);
+    Quaternion(const Matrix3F& matrix);
 
     Quaternion operator * (const Quaternion& q) const;
     Quaternion operator *= (const Quaternion& q);

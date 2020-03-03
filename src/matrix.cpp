@@ -694,6 +694,43 @@ Quaternion::Quaternion(const Vector3F& v)
     z = c.x * c.y * s.z - s.x * s.y * c.z;
 }
 
+// https://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/
+Quaternion::Quaternion(const Matrix3F& matrix)
+{
+    if (matrix[0][0] + matrix[1][1] + matrix[2][2] > 0.0f)
+    {
+        float f = sqrt(1.0f + matrix[0][0] + matrix[1][1] + matrix[2][2]) * 2.0f;
+        this->w = f * 0.25f;
+        this->x = (matrix[1][2] - matrix[2][1]) / f;
+        this->y = (matrix[2][0] - matrix[0][2]) / f;
+        this->z = (matrix[0][1] - matrix[1][0]) / f;
+    }
+    else if ((matrix[0][0] > matrix[1][1]) && (matrix[0][0] > matrix[2][2]))
+    {
+        float f = sqrt(1.0f + matrix[0][0] - matrix[1][1] - matrix[2][2]) * 2.0f;
+        this->w = (matrix[1][2] - matrix[2][1]) / f;
+        this->x = f * 0.25f;
+        this->y = (matrix[1][0] + matrix[0][1]) / f;
+        this->z = (matrix[2][0] + matrix[0][2]) / f;
+    }
+    else if (matrix[1][1] > matrix[2][2])
+    {
+        float f = sqrt(1.0f - matrix[0][0] + matrix[1][1] - matrix[2][2]) * 2.0f;
+        this->w = (matrix[2][0] - matrix[0][2]) / f;
+        this->x = (matrix[1][0] + matrix[0][1]) / f;
+        this->y = f * 0.25f;
+        this->z = (matrix[2][1] + matrix[1][2]) / f;
+    }
+    else
+    {
+        float f = sqrt(1.0f - matrix[0][0] - matrix[1][1] + matrix[2][2]) * 2.0f;
+        this->w = (matrix[0][1] - matrix[1][0]) / f;
+        this->x = (matrix[2][0] + matrix[0][2]) / f;
+        this->y = (matrix[2][1] + matrix[1][2]) / f;
+        this->z = f * 0.25f;
+    }
+}
+
 Quaternion Quaternion::operator * (const Quaternion& q) const
 {
     Quaternion r;

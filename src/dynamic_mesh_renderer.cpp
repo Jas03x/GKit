@@ -101,11 +101,11 @@ void DynamicMeshRenderer::Render(const DynamicMesh& mesh)
 		Vector4F(0, 0, 0, 1)
 	);
 
-	CalculateSkinningMatrices(mesh.Nodes.data(), mesh.Bones.data(), 0, skinning_matrices, scene_matrix * mesh.RootNode.GetLocalTransform());
+	CalculateSkinningMatrices(mesh.Nodes.data(), mesh.Bones.data(), 0, skinning_matrices, mesh.RootNode.GetLocalTransform());
 
 	for (unsigned int i = 0; i < mesh.Bones.size(); i++)
 	{
-		vertex_matrices[i] = skinning_matrices[mesh.Bones[i].GetNodeID()] * mesh.Bones[i].GetBindPoseMatrix();
+		vertex_matrices[i] = scene_matrix * skinning_matrices[mesh.Bones[i].GetNodeID()] * mesh.Bones[i].GetBindPoseMatrix();
 		normal_matrices[i] = Matrix::Inverse(Matrix::Transpose(vertex_matrices[i]));
 	}
 
