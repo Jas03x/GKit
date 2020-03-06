@@ -77,9 +77,9 @@ bool Collada::Importer::process_controller_library(const Collada::Parser::Contro
     IMesh& source = m_mesh_map.at(controller->skin.source->substr(1));
 
     Matrix4F bind_shape_matrix = Matrix::Transpose(Matrix4F(skin.bind_shape_matrix));
-    printf("bind shape matrix:\n");
-    bind_shape_matrix.print();
-    printf("\n");
+    //printf("bind shape matrix:\n");
+    //bind_shape_matrix.print();
+    //printf("\n");
     
     const SourceArray& bone_names = skin.joints.names->array;
     const SourceArray& bone_offset_matrices = skin.joints.bind_poses->array;
@@ -87,13 +87,12 @@ bool Collada::Importer::process_controller_library(const Collada::Parser::Contro
     {
         MeshData::Bone& bone = *mesh_data.bones.insert(mesh_data.bones.end(), MeshData::Bone());
 
-        printf("Bone %s:\n", bone_names.name_array[i].c_str());
-        Matrix::Transpose(Matrix4F(&bone_offset_matrices.float_array[i * 16])).print();
-        printf("\n");
+        //printf("Bone %s:\n", bone_names.name_array[i].c_str());
+        //Matrix::Transpose(Matrix4F(&bone_offset_matrices.float_array[i * 16])).print();
+        //printf("\n");
 
         bone.name = bone_names.name_array[i];
         bone.bind_pose_matrix = Matrix::Transpose(Matrix4F(&bone_offset_matrices.float_array[i * 16])) * bind_shape_matrix;
-        //bone.offset_matrix = bind_pose_matrix * Matrix::Transpose(Matrix4F(&bone_offset_matrices.float_array[i * 16]));
     }
 
     unsigned int joint_offset = 0;
@@ -198,9 +197,9 @@ bool Collada::Importer::process_node(const Collada::Node* node, MeshData& mesh_d
         n.offset_matrix = Matrix4F::Scale(scale) * Quaternion(rotation).matrix() * Matrix4F::Translate(translation);
     }
 
-    printf("Node %s:\n", n.name.c_str());
-    n.offset_matrix.print();
-    printf("\n");
+    //printf("Node %s:\n", n.name.c_str());
+    //n.offset_matrix.print();
+    //printf("\n");
 
     if (node->extra.technique.roll != 0)
     {

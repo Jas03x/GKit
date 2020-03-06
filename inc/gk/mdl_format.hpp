@@ -134,13 +134,13 @@
 * |-----------------|-------------------|
 * |    float[2]     |  UV               |
 * |-----------------|-------------------|
-* |    UInt8        |  Node index       |
+* |    UInt32       |  Node index       |
 * |-----------------|-------------------|
 * |    Uint8[4]     |  Bone indices     |
 * |-----------------|-------------------|
 * |    float[4]     |  Bone weights     |
 * |-----------------|-------------------|
-* |    UInt8        |  Bone count       |
+* |    UInt32       |  Bone count       |
 * |_________________|___________________|
 *
 * _______________________________________
@@ -208,10 +208,10 @@ namespace MDL
         float    position[3];
         float    normal[3];
         float    uv[2];
-        uint8_t  node_index;
+        uint32_t node_index;
         uint8_t  bone_indices[4];
         float    bone_weights[4];
-        uint8_t  bone_count;
+        uint32_t bone_count;
     };
 }
 

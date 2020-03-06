@@ -32,6 +32,7 @@ namespace MDL
 		bool read_vertex();
 		bool read_string(std::string& str);
 		bool read_array_header(uint8_t expected_type, uint16_t& length);
+		bool read_matrix(Matrix4F& matrix);
 
 		bool read_node_block();
 		bool read_mesh_block();

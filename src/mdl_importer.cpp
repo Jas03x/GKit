@@ -135,11 +135,6 @@ bool MDL::Importer::read_mesh()
 		}
 	}
 
-	if (status)
-	{
-		status = read_object_terminator(MDL::MESH);
-	}
-
 	return status;
 }
 
@@ -165,10 +160,6 @@ bool MDL::Importer::read_vertex()
 			}
 			vertex.bone_count = v.bone_count;
 		}
-	}
-
-	if (status) {
-		status = read_object_terminator(MDL::VERTEX);
 	}
 
 	return status;
@@ -250,9 +241,19 @@ bool MDL::Importer::read_bone()
 
 	if ((status = read_string(bone.name)))
 	{
-		status = m_File->Read(&bone.bind_pose_matrix[0][0], 16);
+		status = read_matrix(bone.bind_pose_matrix);
 	}
 
+	return status;
+}
+
+bool MDL::Importer::read_matrix(Matrix4F& matrix)
+{
+	bool status = read_object_header(MDL::MATRIX);
+	if (status)
+	{
+		status = m_File->Read(&matrix[0][0], 16);
+	}
 	return status;
 }
 
@@ -270,7 +271,7 @@ bool MDL::Importer::read_node()
 
 	if (status)
 	{
-		status = m_File->Read(&node.offset_matrix[0][0], 16);
+		status = read_matrix(node.offset_matrix);
 	}
 
 	return status;
@@ -280,18 +281,20 @@ bool MDL::Importer::read_string(std::string& str)
 {
 	bool status = read_object_header(MDL::STRING);
 
-	uint16_t length = 0;
+	uint8_t length = 0;
 	m_File->Read(&length, 1);
 	if (length == 0)
 	{
-		status = false;
-		printf("error: invalid length\n");
+		str.clear();
+		m_File->Seek(FILE_CUR, 1);
 	}
-
-	if (status)
+	else
 	{
-		str.resize(length, 0);
-		status = m_File->Read(&str[0], length);
+		if (status)
+		{
+			str.resize(length, 0);
+			status = m_File->Read(&str[0], length);
+		}
 	}
 
 	return status;
