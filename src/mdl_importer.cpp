@@ -126,7 +126,7 @@ bool MDL::Importer::read_mesh()
 			{
 				m_Data->index_count += index_count;
 
-				mesh.indices.reserve(index_count);
+				mesh.indices.resize(index_count);
 				status = m_File->Read(mesh.indices.data(), sizeof(uint16_t), index_count);
 			}
 
