@@ -151,15 +151,23 @@ void DynamicMesh::Destroy()
 
 Node* DynamicMesh::GetNode(const std::string& name)
 {
+	Node* node = nullptr;
+
 	for (unsigned int i = 0; i < Nodes.size(); i++)
 	{
 		if (Nodes[i].GetName() == name)
 		{
-			return &Nodes[i];
+			node = &Nodes[i];
+			break;
 		}
 	}
 
-	return nullptr;
+	if (node == nullptr)
+	{
+		printf("WARNING: Could not find node %s\n", name.c_str());
+	}
+
+	return node;
 }
 
 const Texture* DynamicMesh::GetDiffuseTexture() const

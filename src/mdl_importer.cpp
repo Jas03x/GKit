@@ -85,6 +85,8 @@ bool MDL::Importer::read_mesh_block()
 
 	if (status)
 	{
+		m_Data->index_count = 0;
+
 		uint16_t mesh_count = 0;
 		if ((status = read_array_header(MDL::MESH_ARRAY, mesh_count)))
 		{
@@ -283,17 +285,18 @@ bool MDL::Importer::read_string(std::string& str)
 
 	uint8_t length = 0;
 	m_File->Read(&length, 1);
-	if (length == 0)
+	if (status)
 	{
-		str.clear();
-		m_File->Seek(FILE_CUR, 1);
-	}
-	else
-	{
-		if (status)
+		if (length == 0)
 		{
-			str.resize(length, 0);
-			status = m_File->Read(&str[0], length);
+			str.clear();
+			m_File->Seek(FILE_CUR, 1);
+		}
+		else
+		{
+			str.resize(length - 1, 0);
+			status = m_File->Read(&str[0], length - 1); // -1 to skip the null-terminator
+			m_File->Seek(FILE_CUR, 1); // skip the null terminator
 		}
 	}
 
