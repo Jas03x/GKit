@@ -9,11 +9,11 @@
 * |-----------------|-------------------|
 * |    UInt32       |   Signature       |
 * |-----------------|-------------------|
-* |    MDL Block    |   Node data       |
+* |    MDL_Block    |   Node data       |
 * |-----------------|-------------------|
-* |    MDL Block    |   Material data   |
+* |    MDL_Block    |   Material data   |
 * |-----------------|-------------------|
-* |    MDL Block    |   Mesh data       |
+* |    MDL_Block    |   Mesh data       |
 * |-----------------|-------------------|
 * |    UInt32       |   End of File     |
 * |_________________|___________________|
@@ -46,15 +46,25 @@
 * |_________________|___________________|
 *
 * _______________________________________
+* |           MDL Matrix4F              |
+* |-------------------------------------|
+* |    Type         |   Description     |
+* |-----------------|-------------------|
+* |    UInt8        |   Signature       |
+* |-----------------|-------------------|
+* |    float[16]    |   Data            |
+* |_________________|___________________|
+*
+* _______________________________________
 * |     MDL Node Data Block Format      |
 * |-------------------------------------|
 * |    Type         |   Description     |
 * |-----------------|-------------------|
 * |    UInt8        |   Block Signature |
 * |-----------------|-------------------|
-* |    MDL Array    |   Nodes           |
+* |    MDL_Array    |   Nodes           |
 * |-----------------|-------------------|
-* |    MDL Array    |   Bones           |
+* |    MDL_Array    |   Bones           |
 * |-----------------|-------------------|
 * |    UInt8        |   End Of Block    |
 * |_________________|___________________|
@@ -66,7 +76,7 @@
 * |-----------------|-------------------|
 * |    UInt8        |   Block Signature |
 * |-----------------|-------------------|
-* |    MDL String   |   Texture         |
+* |    MDL_String   |   Texture         |
 * |-----------------|-------------------|
 * |    UInt8        |   End Of Block    |
 * |_________________|___________________|
@@ -78,9 +88,9 @@
 * |-----------------|-------------------|
 * |    UInt8        |   Block Signature |
 * |-----------------|-------------------|
-* |    MDL Array    |   Vertices        |
+* |    MDL_Array    |   Vertices        |
 * |-----------------|-------------------|
-* |    MDL Array    |   Mesh Data       |
+* |    MDL_Array    |   Mesh Data       |
 * |-----------------|-------------------|
 * |    UInt8        |   End Of Block    |
 * |_________________|___________________|
@@ -92,11 +102,11 @@
 * |-----------------|-------------------|
 * |    UInt8        |   Node Signature  |
 * |-----------------|-------------------|
-* |    MDL String   |   Name            |
+* |    MDL_String   |   Name            |
 * |-----------------|-------------------|
-* |    MDL String   |   Parent          |
+* |    MDL_String   |   Parent          |
 * |-----------------|-------------------|
-* |    MDL Matrix4F |   Transform       |
+* |    MDL_Matrix4F |   Transform       |
 * |_________________|___________________|
 *
 * _______________________________________
@@ -106,9 +116,9 @@
 * |-----------------|-------------------|
 * |    UInt8        |   Bone Signature  |
 * |-----------------|-------------------|
-* |    MDL String   |   Name            |
+* |    MDL_String   |   Name            |
 * |-----------------|-------------------|
-* |    float[16]    |   Offset matrix   |
+* |    MDL_Matrix4F |   Offset matrix   |
 * |_________________|___________________|
 *
 * _______________________________________
@@ -128,7 +138,7 @@
 * |-----------------|-------------------|
 * |    Uint8[4]     |  Bone indices     |
 * |-----------------|-------------------|
-* |    float[8]     |  Bone weights     |
+* |    float[4]     |  Bone weights     |
 * |-----------------|-------------------|
 * |    UInt8        |  Bone count       |
 * |_________________|___________________|
@@ -140,9 +150,9 @@
 * |-----------------|-------------------|
 * |    UInt8        |   Mesh Signature  |
 * |-----------------|-------------------|
-* |    MDL String   |   Name            |
+* |    MDL_String   |   Name            |
 * |-----------------|-------------------|
-* |    MDL Array    |   Indices         |
+* |    MDL_Array    |   Indices         |
 * |_________________|___________________|
 *
 */
@@ -151,8 +161,8 @@ namespace MDL
 {
     enum
     {
-        SIGNATURE   = 0x4D444C00, // 'MDL'
-        END_OF_FILE = 0x454F4600  // 'EOF'
+        SIGNATURE   = 0x004C444D, // 'MDL'
+        END_OF_FILE = 0x00464F45  // 'EOF'
     };
 
     enum FLAG
@@ -171,7 +181,8 @@ namespace MDL
         ID_VERTEX   = 0x4,
         ID_MATERIAL = 0x5,
         ID_MESH     = 0x6,
-        ID_INDEX    = 0x7
+        ID_INDEX    = 0x7,
+        ID_MATRIX   = 0x8
     };
 
     enum
@@ -188,7 +199,8 @@ namespace MDL
         NODE           = FLAG::CLASS | ID_NODE,
         BONE           = FLAG::CLASS | ID_BONE,
         VERTEX         = FLAG::CLASS | ID_VERTEX,
-        MESH           = FLAG::CLASS | ID_MESH
+        MESH           = FLAG::CLASS | ID_MESH,
+        MATRIX         = FLAG::CLASS | ID_MATRIX
     };
 
     struct Vertex
