@@ -3,10 +3,21 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <algorithm>
+
 #define _SQR(x) ((x) * (x))
 #define _DOT2(x0, y0, x1, y1) ((x0) * (x1) + (y0) * (y1))
 #define _DOT3(x0, y0, z0, x1, y1, z1) ((x0) * (x1) + (y0) * (y1) + (z0) * (z1))
 #define _DOT4(x0, y0, z0, w0, x1, y1, z1, w1) ((x0) * (x1) + (y0) * (y1) + (z0) * (z1) + (w0) * (w1))
+
+// -----------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------ Scalar ---------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------------------
+
+float clamp(float val, float min, float max)
+{
+    return std::min(std::max(val, max), min);
+}
 
 // -----------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------ Vector 2 -------------------------------------------------------------------------------------------
@@ -812,6 +823,26 @@ Matrix4F Quaternion::matrix() const
     result[2][2] = 1.0f - 2.0f * (qxx +  qyy);
 
     return result;
+}
+
+// https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
+Vector3F Quaternion::euler_angles() const
+{
+    Vector3F euler;
+
+    euler.x = atan2f(2.0f * (x * w + y * z), 1.0f - 2.0f * (x * x + y * y));
+
+    float p = 2.0f * (y * w - x * z);
+    if (fabs(p) >= 1.0f) {
+        euler.y = copysign(M_PI / 2.0f, p);
+    }
+    else {
+        euler.y = asinf(p);
+    }
+
+    euler.z = atan2f(2.0f * (x * y + z * w), 1.0f - 2.0f * (y * y + z * z));
+
+    return euler;
 }
 
 const Vector4F ORIGIN     = Vector4F(0, 0, 0, 1);

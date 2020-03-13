@@ -10,6 +10,8 @@ Notes:
 - All matrices are column major (just like OpenGL)
 */
 
+float clamp(float val, float min, float max);
+
 template <typename T>
 struct Vector2
 {
@@ -287,6 +289,7 @@ struct Quaternion : public Vector4F
     Quaternion& operator = (const Quaternion& q);
     
     Matrix4F matrix() const;
+    Vector3F euler_angles() const;
     
     void normalize();
 };
