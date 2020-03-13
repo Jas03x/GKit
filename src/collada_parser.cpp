@@ -1197,12 +1197,39 @@ void Collada::Parser::read_image_library(const XML::Node* node)
     }
 }
 
+void Collada::Parser::read_asset_info(const XML::Node* node)
+{
+    const XML::Node* up_axis = find_child(node, "up_axis");
+    if (m_status)
+    {
+        const char* axis = up_axis->text.c_str();
+        if (strcmp(axis, "Z_UP") == 0)
+        {
+            m_info.orientation = Collada::AssetInfo::Orientation::AXIS_UP;
+        }
+        else
+        {
+            m_status = false;
+            printf("unknown orientation\n");
+        }
+    }
+}
+
 void Collada::Parser::process(const XML::Node* root)
 {
-    const XML::Node* geometry_library = find_child(root, "library_geometries");
-    if(m_status)
+    const XML::Node* asset = find_child(root, "asset");
+    if (m_status)
     {
-        read_geometry_library(geometry_library);
+        read_asset_info(asset);
+    }
+
+    if (m_status)
+    {
+        const XML::Node* geometry_library = find_child(root, "library_geometries");
+        if (m_status)
+        {
+            read_geometry_library(geometry_library);
+        }
     }
 
     if(m_status)
@@ -1279,6 +1306,11 @@ bool Collada::Parser::parse(const char* path)
     }
 
     return m_status;
+}
+
+const Collada::AssetInfo& Collada::Parser::GetAssetInfo()
+{
+    return m_info;
 }
 
 const Collada::Parser::GeometryLibrary& Collada::Parser::GetGeometryLibrary()

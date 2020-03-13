@@ -5,6 +5,7 @@
 #include <vector>
 
 #include <gk/matrix.hpp>
+#include <gk/mesh_orientation.hpp>
 
 struct MeshData
 {
@@ -44,6 +45,8 @@ struct MeshData
     std::vector<Bone> bones;
     std::vector<Node> nodes;
     std::vector<Vertex> vertices;
+
+    Orientation orientation;
 
     unsigned int index_count;
     std::vector<Mesh> meshes;

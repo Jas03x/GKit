@@ -3,6 +3,7 @@
 #include <gk/sun.hpp>
 #include <gk/file.hpp>
 #include <gk/camera_3d.hpp>
+#include <gk/mesh_orientation.hpp>
 
 #include <assert.h>
 
@@ -94,12 +95,7 @@ void DynamicMeshRenderer::Render(const DynamicMesh& mesh)
 	Matrix4F vertex_matrices[DynamicMesh::BONE_LIMIT];
 	Matrix4F normal_matrices[DynamicMesh::BONE_LIMIT];
 
-	Matrix4F scene_matrix = Matrix4F(
-		Vector4F(1, 0, 0, 0),
-		Vector4F(0, 0, -1, 0),
-		Vector4F(0, 1, 0, 0),
-		Vector4F(0, 0, 0, 1)
-	);
+	const Matrix4F& scene_matrix = GetOrientationMatrix(mesh.GetOrientation());
 
 	CalculateSkinningMatrices(mesh.Nodes.data(), mesh.Bones.data(), 0, skinning_matrices, mesh.RootNode.GetLocalTransform());
 

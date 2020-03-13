@@ -59,6 +59,8 @@ DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_direct
 		node_info.second->SetBoneID(i);
 	}
 
+	m_Orientation = data.orientation;
+
 	DynamicMesh::Vertex* vertex_buffer = new DynamicMesh::Vertex[data.vertices.size()];
 	for (unsigned int i = 0; i < data.vertices.size(); i++)
 	{
@@ -173,4 +175,9 @@ Node* DynamicMesh::GetNode(const std::string& name)
 const Texture* DynamicMesh::GetDiffuseTexture() const
 {
 	return m_DiffuseTexture;
+}
+
+unsigned int DynamicMesh::GetOrientation() const
+{
+	return m_Orientation;
 }

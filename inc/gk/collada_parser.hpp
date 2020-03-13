@@ -27,6 +27,8 @@ namespace Collada
         std::vector<unsigned short> m_ushort_buffer;
         std::vector<std::string> m_string_buffer;
 
+        AssetInfo m_info;
+
         GeometryLibrary m_geometry_library;
         ControllerLibrary m_controller_library;
         SceneLibrary m_scene_library;
@@ -43,6 +45,7 @@ namespace Collada
 
         Source* read_source(const XML::Node* node);
 
+        void read_asset_info(const XML::Node* node);
         void read_input(const XML::Node* node, Input& input);
         void read_vertex_array(const XML::Node* node, VertexArray* array);
         void read_param(const XML::Node* node, Param& param);
@@ -73,6 +76,7 @@ namespace Collada
 
         bool parse(const char* path);
 
+        const AssetInfo& GetAssetInfo();
         const GeometryLibrary& GetGeometryLibrary();
         const ControllerLibrary& GetControllerLibrary();
         const SceneLibrary& GetSceneLibrary();

@@ -8,6 +8,14 @@
 
 namespace Collada
 {
+    struct AssetInfo
+    {
+        enum Orientation
+        {
+            AXIS_UP = 1
+        } orientation;
+    };
+
     struct Param
     {
         enum NAME

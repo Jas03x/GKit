@@ -43,6 +43,8 @@ public:
 protected:
     Texture* m_DiffuseTexture;
 
+    unsigned int m_Orientation;
+
 public:
     Node RootNode;
     std::vector<Bone> Bones;
@@ -57,6 +59,8 @@ public:
     
     Node*          GetNode(const std::string& name);
     const Texture* GetDiffuseTexture() const;
+
+    unsigned int GetOrientation() const;
 };
 
 #endif // GK_DYNAMIC_MESH_H

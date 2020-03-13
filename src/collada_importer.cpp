@@ -24,6 +24,11 @@ bool Collada::Importer::Import(const char* path, MeshData& mesh_data)
 
     if (status)
     {
+        status = importer.process_asset_info(parser.GetAssetInfo(), mesh_data);
+    }
+
+    if (status)
+    {
         status = importer.process_scene_library(parser.GetSceneLibrary(), mesh_data);
     }
 
@@ -45,6 +50,29 @@ bool Collada::Importer::Import(const char* path, MeshData& mesh_data)
     if (status)
     {
         status = importer.process_mesh_data(mesh_data);
+    }
+
+    return status;
+}
+
+bool Collada::Importer::process_asset_info(const Collada::AssetInfo& info, MeshData& mesh_data)
+{
+    bool status = true;
+
+    switch (info.orientation)
+    {
+        case Z_UP:
+        {
+            mesh_data.orientation = Orientation::Z_UP;
+            break;
+        }
+
+        default:
+        {
+            status = false;
+            printf("unknown orientation\n");
+            break;
+        }
     }
 
     return status;

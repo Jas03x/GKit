@@ -39,6 +39,7 @@ namespace Collada
         Importer();
         ~Importer();
 
+        bool process_asset_info(const Collada::AssetInfo& info, MeshData& mesh_data);
         bool process_geometry_library(const Parser::GeometryLibrary& library);
         bool process_controller_library(const Parser::ControllerLibrary& library, MeshData& mesh_data);
         bool process_scene_library(const Parser::SceneLibrary& library, MeshData& mesh_data);
