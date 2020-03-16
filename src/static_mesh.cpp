@@ -7,15 +7,17 @@
 
 #include <gk/tga_image.hpp>
 
-StaticMesh::StaticMesh() :
-	Mesh(),
-	RootNode("Root", -1, Matrix4F(1.0f))
+StaticMesh::StaticMesh() : RootNode("Root", -1, Matrix4F(1.0f))
 {
 	m_DiffuseTexture = nullptr;
 }
 
-StaticMesh::StaticMesh(const MeshData& data, const std::string& texture_directory) :
-	RootNode("Root", -1, Matrix4F(1.0f))
+StaticMesh::StaticMesh(const MeshData& data, const std::string& texture_directory) : RootNode("Root", -1, Matrix4F(1.0f))
+{
+	this->Load(data, texture_directory);
+}
+
+void StaticMesh::Load(const MeshData& data, const std::string& texture_directory)
 {
 	assert(data.nodes.size() <= NODE_LIMIT);
 

@@ -41,6 +41,9 @@ public:
 	std::vector<Node> Nodes;
 	Node RootNode;
 
+protected:
+	void Load(const MeshData& data, const std::string& texture_directory);
+
 public:
     StaticMesh();
 	StaticMesh(const MeshData& data, const std::string& texture_directory);

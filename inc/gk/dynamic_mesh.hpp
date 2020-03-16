@@ -48,6 +48,9 @@ public:
     std::vector<Bone> Bones;
     std::vector<Node> Nodes;
 
+protected:
+    void Load(const MeshData& data, const std::string& texture_directory);
+
 public:
     DynamicMesh();
     DynamicMesh(const MeshData& data, const std::string& texture_directory);
