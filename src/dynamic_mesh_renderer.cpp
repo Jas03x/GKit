@@ -80,14 +80,15 @@ void DynamicMeshRenderer::Render(const DynamicMesh& mesh)
 	Matrix4F vertex_matrices[DynamicMesh::BONE_LIMIT];
 	Matrix4F normal_matrices[DynamicMesh::BONE_LIMIT];
 
-	Matrix4F root_transform = mesh.RootNode.GetLocalTransform();
+	// the root node's offset is applied before the transform
+	Matrix4F root_transform = mesh.RootNode.GetLocalTransform() * mesh.RootNode.GetOffsetMatrix();
 	for (unsigned int i = 0; i < mesh.Nodes.size(); i++)
 	{
 		const Node& node = mesh.Nodes[i];
 		int parent = node.GetParentIndex();
 	
 		const Matrix4F& parent_transform = (parent == -1) ? root_transform : global_transforms[parent];
-		global_transforms[i] = parent_transform * node.GetLocalTransform();
+		global_transforms[i] = parent_transform * node.GetOffsetMatrix() * node.GetLocalTransform();
 	}
 
 	for (unsigned int i = 0; i < mesh.Bones.size(); i++)
