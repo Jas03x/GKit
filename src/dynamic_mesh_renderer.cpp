@@ -3,7 +3,6 @@
 #include <gk/sun.hpp>
 #include <gk/file.hpp>
 #include <gk/camera_3d.hpp>
-#include <gk/mesh_orientation.hpp>
 
 #include <assert.h>
 
@@ -67,20 +66,6 @@ void DynamicMeshRenderer::Bind()
 	Instance->Shader::Bind();
 }
 
-void CalculateSkinningMatrices(const Node* nodes, const Bone* bones, unsigned int index, Matrix4F* skinning_matrices, const Matrix4F& parent_transform)
-{
-	const Node& node = nodes[index];
-
-	Matrix4F global_transform = parent_transform * node.GetOffsetMatrix() * node.GetLocalTransform();
-
-	skinning_matrices[index] = global_transform;
-
-	for (unsigned int i = 0; i < node.GetNumChildren(); i++)
-	{
-		CalculateSkinningMatrices(nodes, bones, node.GetChildren()[i], skinning_matrices, global_transform);
-	}
-}
-
 void DynamicMeshRenderer::Render(const DynamicMesh& mesh)
 {
 	assert(Instance != nullptr);
@@ -90,18 +75,24 @@ void DynamicMeshRenderer::Render(const DynamicMesh& mesh)
 
 	Matrix4F v_matrix = Camera3D::GetInstance()->GetViewMatrix();
 
-	Matrix4F skinning_matrices[DynamicMesh::BONE_LIMIT];
+	Matrix4F global_transforms[DynamicMesh::BONE_LIMIT];
 
 	Matrix4F vertex_matrices[DynamicMesh::BONE_LIMIT];
 	Matrix4F normal_matrices[DynamicMesh::BONE_LIMIT];
 
-	const Matrix4F& scene_matrix = GetOrientationMatrix(mesh.GetOrientation());
-
-	CalculateSkinningMatrices(mesh.Nodes.data(), mesh.Bones.data(), 0, skinning_matrices, mesh.RootNode.GetLocalTransform());
+	Matrix4F root_transform = mesh.RootNode.GetOffsetMatrix() * mesh.RootNode.GetLocalTransform();
+	for (unsigned int i = 0; i < mesh.Nodes.size(); i++)
+	{
+		const Node& node = mesh.Nodes[i];
+		int parent = node.GetParentIndex();
+	
+		const Matrix4F& parent_transform = (parent == -1) ? root_transform : global_transforms[parent];
+		global_transforms[i] = parent_transform * node.GetOffsetMatrix() * node.GetLocalTransform();
+	}
 
 	for (unsigned int i = 0; i < mesh.Bones.size(); i++)
 	{
-		vertex_matrices[i] = scene_matrix * skinning_matrices[mesh.Bones[i].GetNodeID()] * mesh.Bones[i].GetBindPoseMatrix();
+		vertex_matrices[i] = global_transforms[mesh.Bones[i].GetNodeID()] * mesh.Bones[i].GetBindPoseMatrix();
 		normal_matrices[i] = Matrix::Inverse(Matrix::Transpose(vertex_matrices[i]));
 	}
 

@@ -9,41 +9,32 @@
 
 StaticMesh::StaticMesh() :
 	Mesh(),
-	RootNode("Root", Matrix4F(1.0f))
+	RootNode("Root", -1, Matrix4F(1.0f))
 {
 	m_DiffuseTexture = nullptr;
 }
 
 StaticMesh::StaticMesh(const MeshData& data, const std::string& texture_directory) :
-	RootNode("Root", Matrix4F(1.0f))
+	RootNode("Root", -1, Matrix4F(1.0f))
 {
 	assert(data.nodes.size() <= NODE_LIMIT);
 
-	std::map<std::string, std::vector<unsigned int>> node_hierarchy;
+	std::map<std::string, unsigned int> node_map;
 
 	// initial nodes
 	Nodes.reserve(NODE_LIMIT);
 	for (unsigned int i = 0; i < data.nodes.size(); i++)
 	{
 		const MeshData::Node& node = data.nodes[i];
-		Nodes.push_back(Node(node.name, node.offset_matrix));
+		int parent_index = (node.parent.size() > 0) ? node_map.at(node.parent) : -1;
 
-		if (node.parent.size() > 0)
-		{
-			node_hierarchy[node.parent].push_back(i);
-		}
+		Nodes.push_back(Node(node.name, parent_index, node.offset_matrix));
+		node_map[node.name] = i;
 	}
 
-	// process parent hierchy
-	for (unsigned int i = 0; i < data.nodes.size(); i++)
+	if (data.orientation == MeshData::Orientation::Z_UP)
 	{
-		Node& node = Nodes[i];
-		std::vector<unsigned int> children = node_hierarchy[node.GetName()];
-
-		if (children.size() > 0)
-		{
-			node.SetChildren(children.size(), children.data());
-		}
+		this->RootNode.SetOffsetMatrix(Quaternion(-M_PI / 2.0f, 0.0f, 0.0f).matrix());
 	}
 
 	StaticMesh::Vertex* vertex_buffer = new Vertex[data.vertices.size()];

@@ -5,7 +5,6 @@
 #include <vector>
 
 #include <gk/matrix.hpp>
-#include <gk/mesh_orientation.hpp>
 
 struct MeshData
 {
@@ -38,6 +37,13 @@ struct MeshData
     {
         std::string name;
         std::vector<unsigned short> indices;
+    };
+
+    enum Orientation
+    {
+        Y_UP = 0,
+        Z_UP = 1,
+        UNKNOWN = 2
     };
 
     std::string diffuse_texture;

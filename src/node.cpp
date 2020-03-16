@@ -1,28 +1,20 @@
 #include <gk/node.hpp>
 
-Node::Node() : Node("", Matrix4F(1.0f))
+Node::Node() : Node("", -1, Matrix4F(1.0f))
 {
 }
 
-Node::Node(const std::string& name, const Matrix4F& offset)
+Node::Node(const std::string& name, int parent_index, const Matrix4F& offset)
 {
 	m_Name = name;
 	m_OffsetMatrix = offset;
-
-	m_BoneIndex = -1;
-
-	m_NumChildren = 0;
-	m_Children = nullptr;
+	m_ParentIndex = parent_index;
 
 	this->Transform = Transform3D();
 }
 
 Node::~Node()
 {
-	if (m_Children != nullptr)
-	{
-		delete[] m_Children;
-	}
 }
 
 const std::string& Node::GetName() const
@@ -30,35 +22,9 @@ const std::string& Node::GetName() const
 	return m_Name;
 }
 
-void Node::SetChildren(unsigned int count, unsigned int* children)
+int Node::GetParentIndex() const
 {
-	m_NumChildren = count;
-	m_Children = new unsigned int[count];
-
-	for (unsigned int i = 0; i < count; i++)
-	{
-		m_Children[i] = children[i];
-	}
-}
-
-unsigned int Node::GetNumChildren() const
-{
-	return m_NumChildren;
-}
-
-const unsigned int* Node::GetChildren() const
-{
-	return m_Children;
-}
-
-void Node::SetBoneID(int id)
-{
-	m_BoneIndex = id;
-}
-
-const int Node::GetBoneID() const
-{
-	return m_BoneIndex;
+	return m_ParentIndex;
 }
 
 Matrix4F Node::GetLocalTransform() const
@@ -69,4 +35,9 @@ Matrix4F Node::GetLocalTransform() const
 const Matrix4F& Node::GetOffsetMatrix() const
 {
 	return this->m_OffsetMatrix;
+}
+
+void Node::SetOffsetMatrix(const Matrix4F& matrix)
+{
+	m_OffsetMatrix = matrix;
 }

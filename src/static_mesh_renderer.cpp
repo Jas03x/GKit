@@ -76,10 +76,20 @@ void StaticMeshRenderer::Render(const StaticMesh& mesh)
 
 	Matrix4F vertex_matrices[StaticMesh::NODE_LIMIT];
 	Matrix4F normal_matrices[StaticMesh::NODE_LIMIT];
+	
+	Matrix4F root_transform = mesh.RootNode.GetOffsetMatrix() * mesh.RootNode.GetLocalTransform();
+	for (unsigned int i = 0; i < mesh.Nodes.size(); i++)
+	{
+		const Node& node = mesh.Nodes[i];
+		int parent = node.GetParentIndex();
+
+		const Matrix4F& parent_transform = (parent == -1) ? root_transform : vertex_matrices[parent];
+		vertex_matrices[i] = parent_transform * node.GetOffsetMatrix() * node.GetLocalTransform();
+	}
 
 	for (unsigned int i = 0; i < mesh.Nodes.size(); i++)
 	{
-		// TODO: UPDATE FOR NEW NODE SYSTEM: vertex_matrices[i] = v_matrix * mesh.Nodes[i].GetGlobalMatrix();
+		vertex_matrices[i] = v_matrix * vertex_matrices[i];
 		normal_matrices[i] = Matrix::Inverse(Matrix::Transpose(vertex_matrices[i]));
 	}
 

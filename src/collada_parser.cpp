@@ -1234,8 +1234,8 @@ void Collada::Parser::process(const XML::Node* root)
 
     if(m_status)
     {
-        const XML::Node* controller_library = find_child(root, "library_controllers");
-        if(m_status)
+        const XML::Node* controller_library = root->find_child("library_controllers");
+        if(controller_library != nullptr)
         {
             read_controller_library(controller_library);
         }

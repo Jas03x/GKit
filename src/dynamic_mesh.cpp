@@ -9,57 +9,41 @@
 
 DynamicMesh::DynamicMesh() :
 	Mesh(),
-	RootNode("Root", Matrix4F(1.0f))
+	RootNode("Root", -1, Matrix4F(1.0f))
 {
 	m_DiffuseTexture = nullptr;
 }
 
 DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_directory) :
 	Mesh(),
-	RootNode("Root", Matrix4F(1.0f))
+	RootNode("Root", -1, Matrix4F(1.0f))
 {
 	assert((data.bones.size() <= BONE_LIMIT) && (data.nodes.size() <= NODE_LIMIT));
 
-	std::map<std::string, std::pair<unsigned int, Node*>> node_map;
-	std::map<std::string, std::vector<unsigned int>> node_hierarchy;
+	std::map<std::string, unsigned int> node_map;
 
 	// initial nodes
 	Nodes.reserve(NODE_LIMIT);
 	for (unsigned int i = 0; i < data.nodes.size(); i++)
 	{
 		const MeshData::Node& node = data.nodes[i];
-		Nodes.push_back(Node(node.name, node.offset_matrix));
-
-		if (node.parent.size() > 0)
-		{
-			node_hierarchy[node.parent].push_back(i);
-		}
-		node_map[node.name] = std::make_pair(i, &Nodes.back());
-	}
-
-	// process parent hierchy
-	for (unsigned int i = 0; i < data.nodes.size(); i++)
-	{
-		Node& node = Nodes[i];
-		std::vector<unsigned int> children = node_hierarchy[node.GetName()];
-
-		if (children.size() > 0)
-		{
-			node.SetChildren(children.size(), children.data());
-		}
+		int parent_index = (node.parent.size() > 0) ? node_map.at(node.parent) : -1;
+		
+		Nodes.push_back(Node(node.name, parent_index, node.offset_matrix));
+		node_map[node.name] = i;
 	}
 
 	Bones.reserve(BONE_LIMIT);
 	for (unsigned int i = 0; i < data.bones.size(); i++)
 	{
 		const MeshData::Bone& bone = data.bones[i];
-		std::pair<unsigned int, Node*> node_info = node_map.at(bone.name);
-
-		Bones.push_back(Bone(bone.name, node_info.first, bone.bind_pose_matrix));
-		node_info.second->SetBoneID(i);
+		Bones.push_back(Bone(bone.name, node_map.at(bone.name), bone.bind_pose_matrix));
 	}
 
-	m_Orientation = data.orientation;
+	if (data.orientation == MeshData::Orientation::Z_UP)
+	{
+		this->RootNode.SetOffsetMatrix(Quaternion(-M_PI / 2.0f, 0.0f, 0.0f).matrix());
+	}
 
 	DynamicMesh::Vertex* vertex_buffer = new DynamicMesh::Vertex[data.vertices.size()];
 	for (unsigned int i = 0; i < data.vertices.size(); i++)
@@ -175,9 +159,4 @@ Node* DynamicMesh::GetNode(const std::string& name)
 const Texture* DynamicMesh::GetDiffuseTexture() const
 {
 	return m_DiffuseTexture;
-}
-
-unsigned int DynamicMesh::GetOrientation() const
-{
-	return m_Orientation;
 }

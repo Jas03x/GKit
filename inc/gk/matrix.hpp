@@ -1,7 +1,9 @@
 #ifndef GK_MATRIX_H
 #define GK_MATRIX_H
 
-#define _USE_MATH_DEFINES // for M_PI
+#ifndef _USE_MATH_DEFINES
+    #define _USE_MATH_DEFINES // for M_PI
+#endif
 #include <cmath>
 
 /*

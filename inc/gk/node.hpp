@@ -12,29 +12,22 @@ private:
 	std::string m_Name;
 	Matrix4F    m_OffsetMatrix;
 
-	int m_BoneIndex;
-
-	unsigned int m_NumChildren;
-	unsigned int* m_Children;
+	int m_ParentIndex;
 
 public:
 	Transform3D Transform;
 
 	Node();
-	Node(const std::string& name, const Matrix4F& offset);
+	Node(const std::string& name, int parent_index, const Matrix4F& offset);
 	~Node();
 
+	int GetParentIndex() const;
 	const std::string& GetName() const;
 
-	unsigned int GetNumChildren() const;
-	const unsigned int* GetChildren() const;
-	void SetChildren(unsigned int count, unsigned int* children);
-
-	void SetBoneID(int id);
-	const int GetBoneID() const;
-
 	Matrix4F GetLocalTransform() const;
+
 	const Matrix4F& GetOffsetMatrix() const;
+	void SetOffsetMatrix(const Matrix4F& matrix);
 };
 
 #endif // GK_NODE_H

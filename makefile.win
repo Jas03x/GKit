@@ -21,7 +21,7 @@ SRC = ./src
 
 OUTPUT = GKit.lib
 
-CC_OPTIONS = -D_AMD64_ -D_HAS_EXCEPTIONS=0
+CC_OPTIONS = -std:c++17 -D_AMD64_ -D_USE_MATH_DEFINES  -D_HAS_EXCEPTIONS=0
 LINK_OPTIONS = -IGNORE:4006
 
 OBJECTS = $(patsubst $(SRC)/%.cpp, $(BIN)/%.o, $(wildcard $(SRC)/*.cpp))

@@ -4,6 +4,7 @@
 
 #include <functional>
 #include <utility>
+#include <filesystem>
 
 #include <gk/collada_parser.hpp>
 
@@ -61,9 +62,9 @@ bool Collada::Importer::process_asset_info(const Collada::AssetInfo& info, MeshD
 
     switch (info.orientation)
     {
-        case Z_UP:
+        case AssetInfo::Orientation::AXIS_UP:
         {
-            mesh_data.orientation = Orientation::Z_UP;
+            mesh_data.orientation = MeshData::Orientation::Z_UP;
             break;
         }
 
@@ -94,74 +95,77 @@ bool Collada::Importer::process_controller_library(const Collada::Parser::Contro
 {
     bool status = true;
 
-    if (library.size() != 1)
+    unsigned int num_controllers = library.size();
+    if (num_controllers > 1)
     {
         status = false;
         printf("error importing collada object: unsupported number of controllers\n");
     }
-
-    const Controller* controller = library.begin()->second;
-    const Skin& skin = controller->skin;
-    IMesh& source = m_mesh_map.at(controller->skin.source->substr(1));
-
-    Matrix4F bind_shape_matrix = Matrix::Transpose(Matrix4F(skin.bind_shape_matrix));
-    //printf("bind shape matrix:\n");
-    //bind_shape_matrix.print();
-    //printf("\n");
-    
-    const SourceArray& bone_names = skin.joints.names->array;
-    const SourceArray& bone_offset_matrices = skin.joints.bind_poses->array;
-    for (unsigned int i = 0; i < bone_names.count; i++)
+    else if (num_controllers == 1)
     {
-        MeshData::Bone& bone = *mesh_data.bones.insert(mesh_data.bones.end(), MeshData::Bone());
+        const Controller* controller = library.begin()->second;
+        const Skin& skin = controller->skin;
+        IMesh& source = m_mesh_map.at(controller->skin.source->substr(1));
 
-        //printf("Bone %s:\n", bone_names.name_array[i].c_str());
-        //Matrix::Transpose(Matrix4F(&bone_offset_matrices.float_array[i * 16])).print();
+        Matrix4F bind_shape_matrix = Matrix::Transpose(Matrix4F(skin.bind_shape_matrix));
+        //printf("bind shape matrix:\n");
+        //bind_shape_matrix.print();
         //printf("\n");
 
-        bone.name = bone_names.name_array[i];
-        bone.bind_pose_matrix = Matrix::Transpose(Matrix4F(&bone_offset_matrices.float_array[i * 16])) * bind_shape_matrix;
-    }
+        const SourceArray& bone_names = skin.joints.names->array;
+        const SourceArray& bone_offset_matrices = skin.joints.bind_poses->array;
+        for (unsigned int i = 0; i < bone_names.count; i++)
+        {
+            MeshData::Bone& bone = *mesh_data.bones.insert(mesh_data.bones.end(), MeshData::Bone());
 
-    unsigned int joint_offset = 0;
-    unsigned int weight_offset = 0;
-    for (unsigned int i = 0; status && (i < skin.vertex_weights.inputs.size()); i++)
-    {
-        const Input& input = skin.vertex_weights.inputs[i];
-        switch (input.semantic)
-        {
-        case Input::JOINT: { joint_offset = input.offset; break; }
-        case Input::WEIGHT: { weight_offset = input.offset; break; }
-        default:
-        {
-            status = false;
-            printf("unknown mesh input semantic\n");
+            //printf("Bone %s:\n", bone_names.name_array[i].c_str());
+            //Matrix::Transpose(Matrix4F(&bone_offset_matrices.float_array[i * 16])).print();
+            //printf("\n");
+
+            bone.name = bone_names.name_array[i];
+            bone.bind_pose_matrix = Matrix::Transpose(Matrix4F(&bone_offset_matrices.float_array[i * 16])) * bind_shape_matrix;
         }
-        }
-    }
 
-    const VertexWeights& vertex_weights = skin.vertex_weights;
-    const float* v_weights = vertex_weights.weights->array.float_array;
-    const unsigned short* v_indices = vertex_weights.v_index_array.data();
-
-    for (unsigned int i = 0; status && (i < vertex_weights.count); i++)
-    {
-        unsigned int count = vertex_weights.v_count_array[i];
-
-        if (count <= 4)
+        unsigned int joint_offset = 0;
+        unsigned int weight_offset = 0;
+        for (unsigned int i = 0; status && (i < skin.vertex_weights.inputs.size()); i++)
         {
-            source.vertex_array[i].bone_count = count;
-
-            for (unsigned int j = 0; j < count; j++)
+            const Input& input = skin.vertex_weights.inputs[i];
+            switch (input.semantic)
             {
-                source.vertex_array[i].bone_indices[j] = v_indices[0];
-                source.vertex_array[i].bone_weights[j] = v_weights[v_indices[1]];
-                v_indices += 2;
+            case Input::JOINT: { joint_offset = input.offset; break; }
+            case Input::WEIGHT: { weight_offset = input.offset; break; }
+            default:
+            {
+                status = false;
+                printf("unknown mesh input semantic\n");
+            }
             }
         }
-        else
+
+        const VertexWeights& vertex_weights = skin.vertex_weights;
+        const float* v_weights = vertex_weights.weights->array.float_array;
+        const unsigned short* v_indices = vertex_weights.v_index_array.data();
+
+        for (unsigned int i = 0; status && (i < vertex_weights.count); i++)
         {
-            printf("error: more than 4 bones in vertex\n");
+            unsigned int count = vertex_weights.v_count_array[i];
+
+            if (count <= 4)
+            {
+                source.vertex_array[i].bone_count = count;
+
+                for (unsigned int j = 0; j < count; j++)
+                {
+                    source.vertex_array[i].bone_indices[j] = v_indices[0];
+                    source.vertex_array[i].bone_weights[j] = v_weights[v_indices[1]];
+                    v_indices += 2;
+                }
+            }
+            else
+            {
+                printf("error: more than 4 bones in vertex\n");
+            }
         }
     }
 
@@ -198,7 +202,7 @@ bool Collada::Importer::process_image_library(const Parser::ImageLibrary& librar
     }
 
     const Image* image = library.begin()->second;
-    mesh_data.diffuse_texture = *image->init_from.file_name;
+    mesh_data.diffuse_texture = std::filesystem::path(*image->init_from.file_name).filename().string();
 
     return status;
 }
