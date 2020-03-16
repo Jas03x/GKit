@@ -16,7 +16,7 @@
 
 float clamp(float val, float min, float max)
 {
-    return std::min(std::max(val, max), min);
+    return std::max(std::min(val, max), min);
 }
 
 // -----------------------------------------------------------------------------------------------------------------------------------
