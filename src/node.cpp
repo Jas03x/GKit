@@ -29,7 +29,7 @@ int Node::GetParentIndex() const
 
 Matrix4F Node::GetLocalTransform() const
 {
-	return this->Transform.ToMatrix();
+	return this->Transform.ToMatrix() * m_OffsetMatrix;
 }
 
 const Matrix4F& Node::GetOffsetMatrix() const
