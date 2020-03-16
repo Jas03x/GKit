@@ -18,7 +18,8 @@ enum KEY_CODE
 	KEY_E		= 0xA,
 	KEY_RETURN	= 0xB,
 	KEY_ESCAPE  = 0xC,
-	KEY_COUNT   = 0xD
+	KEY_SPACE   = 0xD,
+	KEY_COUNT   = 0xE
 };
 
 enum EVENT_TYPE
