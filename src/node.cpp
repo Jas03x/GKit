@@ -1,14 +1,14 @@
 #include <gk/node.hpp>
 
-Node::Node() : Node("", -1, Matrix4F(1.0f))
+Node::Node() : Node("", Matrix4F(1.0f))
 {
 }
 
-Node::Node(const std::string& name, int parent_index, const Matrix4F& offset)
+Node::Node(const std::string& name, const Matrix4F& offset)
 {
 	m_Name = name;
 	m_OffsetMatrix = offset;
-	m_ParentIndex = parent_index;
+	m_ParentIndex = -1;
 
 	this->Transform = Transform3D();
 }
@@ -25,6 +25,11 @@ const std::string& Node::GetName() const
 int Node::GetParentIndex() const
 {
 	return m_ParentIndex;
+}
+
+void Node::SetParentIndex(int index)
+{
+	m_ParentIndex = index;
 }
 
 Matrix4F Node::GetLocalTransform() const

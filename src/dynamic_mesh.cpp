@@ -7,12 +7,12 @@
 
 #include <gk/tga_image.hpp>
 
-DynamicMesh::DynamicMesh() : RootNode("Root", -1, Matrix4F(1.0f))
+DynamicMesh::DynamicMesh() : RootNode("Root", Matrix4F(1.0f))
 {
 	m_DiffuseTexture = nullptr;
 }
 
-DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_directory) : RootNode("Root", -1, Matrix4F(1.0f))
+DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_directory) : RootNode("Root", Matrix4F(1.0f))
 {
 	this->Load(data, texture_directory);
 }
@@ -23,15 +23,23 @@ void DynamicMesh::Load(const MeshData& data, const std::string& texture_director
 
 	std::map<std::string, unsigned int> node_map;
 
-	// initial nodes
+	// initialize nodes
 	Nodes.reserve(NODE_LIMIT);
 	for (unsigned int i = 0; i < data.nodes.size(); i++)
 	{
 		const MeshData::Node& node = data.nodes[i];
-		int parent_index = (node.parent.size() > 0) ? node_map.at(node.parent) : -1;
-		
-		Nodes.push_back(Node(node.name, parent_index, node.offset_matrix));
+		Nodes.push_back(Node(node.name, node.offset_matrix));
 		node_map[node.name] = i;
+	}
+
+	// set node parents
+	for (unsigned int i = 0; i < data.nodes.size(); i++)
+	{
+		const MeshData::Node& node_data = data.nodes[i];
+		if(node_data.parent.size() > 0)
+		{
+			Nodes[i].SetParentIndex(node_map.at(node_data.parent));
+		}
 	}
 
 	Bones.reserve(BONE_LIMIT);

@@ -91,7 +91,6 @@ bool File::Read(T* value, unsigned int count)
 
 // instantiate templates for supported data types
 template bool File::Read(char* value, unsigned int count);
-template bool File::Read(unsigned char* value, unsigned int count);
 
 template bool File::Read(int8_t*   value, unsigned int count);
 template bool File::Read(uint8_t*  value, unsigned int count);

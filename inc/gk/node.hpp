@@ -18,8 +18,10 @@ public:
 	Transform3D Transform;
 
 	Node();
-	Node(const std::string& name, int parent_index, const Matrix4F& offset);
+	Node(const std::string& name, const Matrix4F& offset);
 	~Node();
+
+	void SetParentIndex(int index);
 
 	int GetParentIndex() const;
 	const std::string& GetName() const;
