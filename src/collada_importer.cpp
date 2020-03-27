@@ -4,9 +4,9 @@
 
 #include <functional>
 #include <utility>
-#include <filesystem>
 
 #include <gk/collada_parser.hpp>
+#include <gk/filesystem.hpp>
 
 Collada::Importer::Importer()
 {
@@ -195,14 +195,18 @@ bool Collada::Importer::process_image_library(const Parser::ImageLibrary& librar
 {
     bool status = true;
 
-    if (library.size() != 1)
+    for (Parser::ImageLibrary::const_iterator it = library.begin(); it != library.end(); it++)
     {
-        status = false;
-        printf("error importing collada object: unsupported number of images\n");
+        const std::string& id = it->first;
+        std::string texture = Filesystem::Path(*it->second->init_from.file_name).filename;
+        if (id == "Colour") {
+            mesh_data.colour_texture = texture;
+        } else if (id == "Normal") {
+            mesh_data.normal_texture = texture;
+        } else if (id == "Height") {
+            mesh_data.height_texture = texture;
+        }
     }
-
-    const Image* image = library.begin()->second;
-    mesh_data.diffuse_texture = std::filesystem::path(*image->init_from.file_name).filename().string();
 
     return status;
 }
@@ -294,8 +298,9 @@ bool Collada::Importer::process_geometry(const Geometry* obj)
     {
         const float* array = vertex_source->float_array;
 
-        IVertex& vertex = *data.vertex_array.insert(data.vertex_array.end(), IVertex());
+        IVertex vertex = { 0 };
         vertex.position = Vector3F(array[i + 0], array[i + 1], array[i + 2]);
+        data.vertex_array.push_back(vertex);
     }
 
     for (unsigned int i = 0; i < normal_source->count; i += 3)
@@ -328,6 +333,53 @@ bool Collada::Importer::process_geometry(const Geometry* obj)
     return status;
 }
 
+bool CompareVertex(const MeshData::Vertex& v0, const MeshData::Vertex& v1)
+{
+    bool ret = false;
+    #define CMP(a, b) if((a) < (b)) { ret = true; } else if((a) == (b))
+    CMP(v0.position, v1.position)
+    {
+        CMP(v0.normal, v1.normal)
+        {
+            CMP(v0.uv, v1.uv)
+            {
+                CMP(v0.node_index, v1.node_index)
+                {
+                    CMP(v0.bone_count, v1.bone_count)
+                    {
+                        Vector4F v0_indices(v0.bone_indices[0], v0.bone_indices[1], v0.bone_indices[2], v0.bone_indices[3]);
+                        Vector4F v1_indices(v1.bone_indices[0], v1.bone_indices[1], v1.bone_indices[2], v1.bone_indices[3]);
+                        CMP(v0_indices, v1_indices)
+                        {
+                            for (unsigned int i = 0; i < 4; i++)
+                            {
+                                float a = v0.bone_weights[i];
+                                float b = v1.bone_weights[i];
+                                if (a < b)
+                                {
+                                    ret = true;
+                                    break;
+                                }
+                                else if (b < a)
+                                {
+                                    ret = false;
+                                    break;
+                                }
+                                else
+                                {
+                                    continue;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    #undef CMP
+    return ret;
+}
+
 bool Collada::Importer::process_mesh_data(MeshData& data)
 {
     bool status = true;
@@ -335,12 +387,7 @@ bool Collada::Importer::process_mesh_data(MeshData& data)
     typedef std::function<bool(const MeshData::Vertex&, const MeshData::Vertex&)> VertexComparator;
     typedef std::map<MeshData::Vertex, unsigned int, VertexComparator> VertexMap;
 
-    VertexComparator cmp = [](const MeshData::Vertex& v0, const MeshData::Vertex& v1)
-    {
-        return (memcmp(&v0, &v1, sizeof(MeshData::Vertex)) < 0);
-    };
-
-    VertexMap vertex_map(cmp);
+    VertexMap vertex_map(CompareVertex);
 
     data.index_count = 0;
 
@@ -358,25 +405,35 @@ bool Collada::Importer::process_mesh_data(MeshData& data)
             const Vector3F& n = mesh.normal_array[mesh.indices[i + 1]];
             const Vector2F& uv = mesh.uv_array[mesh.indices[i + 2]];
 
-            MeshData::Vertex vertex = {
-                v.position, n, uv,
-                static_cast<unsigned char>(mesh.node_index),
-                { v.bone_indices[0], v.bone_indices[1], v.bone_indices[2], v.bone_indices[3] },
-                { v.bone_weights[0], v.bone_weights[1], v.bone_weights[2], v.bone_weights[3] },
-                v.bone_count
-            };
+            MeshData::Vertex vertex = { 0 };
+            vertex.position = v.position;
+            vertex.normal = n;
+            vertex.uv = uv;
+            vertex.node_index = static_cast<unsigned char>(mesh.node_index);
+            vertex.bone_count = v.bone_count;
+            for (unsigned int i = 0; i < 4; i++) {
+                vertex.bone_indices[i] = v.bone_indices[i];
+                vertex.bone_weights[i] = v.bone_weights[i];
+            }
+
+            unsigned int vertex_index = 0;
 
             VertexMap::const_iterator it = vertex_map.find(vertex);
             if (it == vertex_map.end())
             {
-                it = vertex_map.insert(std::pair<MeshData::Vertex, unsigned int>(vertex, (unsigned int) data.vertices.size())).first;
+                vertex_index = (unsigned int) data.vertices.size();
+                vertex_map[vertex] = vertex_index;
                 data.vertices.push_back(vertex);
             }
+            else
+            {
+                vertex_index = it->second;
+            }
 
-            mesh_data.indices.push_back(it->second);
+            mesh_data.indices.push_back(vertex_index);
         }
 
-        data.index_count += mesh.indices.size();
+        data.index_count += mesh.indices.size() / 3;
     }
 
     return status;

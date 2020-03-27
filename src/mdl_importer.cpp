@@ -224,7 +224,7 @@ bool MDL::Importer::read_material_block()
 	bool status = read_object_header(MDL::MATERIAL_BLOCK);
 	
 	if (status) {
-		status = read_string(m_Data->diffuse_texture);
+		status = read_string(m_Data->colour_texture);
 	}
 
 	if (status) {

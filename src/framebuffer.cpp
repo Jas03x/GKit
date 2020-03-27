@@ -121,7 +121,7 @@ Framebuffer::Framebuffer(unsigned int width, unsigned height, Attachment* colorA
 Framebuffer::~Framebuffer()
 {
     const RenderingContext* context = RenderingContext::GetInstance();
-    if((m_Handle != 0) && (context->IsFramebuffer(m_Handle) == true))
+    if((m_Handle != 0) && (context->IsFramebuffer(m_Handle) == GFX_TRUE))
     {
         context->DeleteFramebuffers(1, &m_Handle);
     }
