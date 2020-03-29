@@ -9,7 +9,11 @@ class Skybox
 private:
 	GFX_HANDLE m_Texture;
 
+protected:
+	bool Load(const char* textures[6]);
+
 public:
+	Skybox();
 	Skybox(const char* textures[6]); // +x, -x, +y, -y, +z, -z
 	~Skybox();
 

@@ -4,6 +4,20 @@
 
 Skybox::Skybox(const char* textures[6])
 {
+	this->Load(textures);
+}
+
+Skybox::~Skybox()
+{
+	const RenderingContext* context = RenderingContext::GetInstance();
+	if (context->IsTexture(m_Texture) == GFX_TRUE)
+	{
+		context->DeleteTextures(1, &m_Texture);
+	}
+}
+
+bool Skybox::Load(const char* textures[6])
+{
 	TgaImage x_pos(textures[0]);
 	TgaImage x_neg(textures[1]);
 	// Y-axis swapped:
@@ -28,15 +42,8 @@ Skybox::Skybox(const char* textures[6])
 	context->SetTextureParameter(GFX_TEXTURE_CUBE_MAP, GFX_TEXTURE_WRAP_S, GFX_CLAMP_TO_EDGE);
 	context->SetTextureParameter(GFX_TEXTURE_CUBE_MAP, GFX_TEXTURE_WRAP_T, GFX_CLAMP_TO_EDGE);
 	context->SetTextureParameter(GFX_TEXTURE_CUBE_MAP, GFX_TEXTURE_WRAP_R, GFX_CLAMP_TO_EDGE);
-}
 
-Skybox::~Skybox()
-{
-	const RenderingContext* context = RenderingContext::GetInstance();
-	if (context->IsTexture(m_Texture) == GFX_TRUE)
-	{
-		context->DeleteTextures(1, &m_Texture);
-	}
+	return true;
 }
 
 void Skybox::Bind(unsigned int uniform, int target) const
