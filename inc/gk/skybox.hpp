@@ -3,6 +3,7 @@
 
 #include <gk/graphics.hpp>
 #include <gk/texture.hpp>
+#include <gk/bitmap.hpp>
 
 class Skybox
 {
@@ -10,7 +11,7 @@ private:
 	GFX_HANDLE m_Texture;
 
 protected:
-	bool Load(const char* textures[6]);
+	bool Load(const Bitmap* bitmaps); // +x, -x, +y, -y, +z, -z
 
 public:
 	Skybox();

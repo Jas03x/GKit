@@ -217,6 +217,9 @@
     <ClInclude Include="inc\gk\filesystem.hpp">
       <Filter>inc\gk</Filter>
     </ClInclude>
+    <ClInclude Include="inc\gk\bitmap.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\collada_parser.cpp">
@@ -346,6 +349,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\filesystem.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bitmap.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

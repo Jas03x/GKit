@@ -170,6 +170,7 @@
     <Text Include="Todo.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\gk\bitmap.hpp" />
     <ClInclude Include="inc\gk\blur_shader.hpp" />
     <ClInclude Include="inc\gk\bone.hpp" />
     <ClInclude Include="inc\gk\camera_2d.hpp" />
@@ -221,6 +222,7 @@
     <ClInclude Include="inc\gk\xml.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\bitmap.cpp" />
     <ClCompile Include="src\blur_shader.cpp" />
     <ClCompile Include="src\bone.cpp" />
     <ClCompile Include="src\camera_2d.cpp" />

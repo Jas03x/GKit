@@ -99,8 +99,8 @@ void StaticMesh::Load(const MeshData& data, const std::string& texture_directory
 
 	delete[] vertex_buffer;
 
-	TgaImage image((texture_directory + data.colour_texture).c_str());
-	m_DiffuseTexture = new Texture(image.HasAlpha() ? GFX_RGBA : GFX_RGB, image.GetWidth(), image.GetHeight(), GFX_TYPE_UNSIGNED_BYTE, image.GetPixels(), GFX_LINEAR, GFX_CLAMP_TO_EDGE);
+	Bitmap image((texture_directory + data.colour_texture).c_str());
+	m_DiffuseTexture = new Texture(image.has_alpha ? GFX_RGBA : GFX_RGB, image.width, image.height, GFX_TYPE_UNSIGNED_BYTE, image.pixels, GFX_LINEAR, GFX_CLAMP_TO_EDGE);
 }
 
 StaticMesh::~StaticMesh()

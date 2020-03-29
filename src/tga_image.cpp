@@ -29,7 +29,7 @@ typedef struct TGA_Header
 	uint8_t image_desc;
 } TGA_Header;
 
-TgaImage::TgaImage(const char* path)
+bool ReadTGA(const char* path, Bitmap& bitmap)
 {
 	File file(path, File::READ_BINARY);
 
@@ -38,18 +38,18 @@ TgaImage::TgaImage(const char* path)
 	
 	assert(memcmp(CMP_TGA_HDR, &header, sizeof(CMP_TGA_HDR)) == 0);
 
-	m_Width = header.width[1] * 256 + header.width[0];
-	m_Height = header.height[1] * 256 + header.height[0];
+	bitmap.width = header.width[1] * 256 + header.width[0];
+	bitmap.height = header.height[1] * 256 + header.height[0];
 	uint32_t bpp = header.bpp;
-	m_HasAlpha = (bpp == 32);
+	bitmap.has_alpha = (bpp == 32);
 
-	assert((m_Width > 0) && (m_Height > 0) && ((bpp == 24) || (bpp == 32)));
+	assert((bitmap.width > 0) && (bitmap.height > 0) && ((bpp == 24) || (bpp == 32)));
 
 	uint32_t pixel_size = bpp / 8;
-	uint32_t pixel_count = m_Width * m_Height;
+	uint32_t pixel_count = bitmap.width * bitmap.height;
 	uint8_t* pixel = new uint8_t[pixel_size];
 	
-	m_Pixels = new uint8_t[pixel_size * pixel_count];
+	bitmap.pixels = new uint8_t[pixel_size * pixel_count];
 
 	for (uint32_t p = 0; p < pixel_count; )
 	{
@@ -61,12 +61,12 @@ TgaImage::TgaImage(const char* path)
 			for (uint32_t i = 0; i <= chunk_header; i++)
 			{
 				file.Read(pixel, pixel_size, 1);
-				m_Pixels[p * pixel_size + 0] = pixel[2];
-				m_Pixels[p * pixel_size + 1] = pixel[1];
-				m_Pixels[p * pixel_size + 2] = pixel[0];
-				if (m_HasAlpha)
+				bitmap.pixels[p * pixel_size + 0] = pixel[2];
+				bitmap.pixels[p * pixel_size + 1] = pixel[1];
+				bitmap.pixels[p * pixel_size + 2] = pixel[0];
+				if (bitmap.has_alpha)
 				{
-					m_Pixels[p * pixel_size + 3] = pixel[3];
+					bitmap.pixels[p * pixel_size + 3] = pixel[3];
 				}
 				p ++;
 			}
@@ -77,12 +77,12 @@ TgaImage::TgaImage(const char* path)
 			file.Read(pixel, pixel_size, 1);
 			for (uint32_t i = 0; i <= chunk_header; i++)
 			{
-				m_Pixels[p * pixel_size + 0] = pixel[2];
-				m_Pixels[p * pixel_size + 1] = pixel[1];
-				m_Pixels[p * pixel_size + 2] = pixel[0];
-				if (m_HasAlpha)
+				bitmap.pixels[p * pixel_size + 0] = pixel[2];
+				bitmap.pixels[p * pixel_size + 1] = pixel[1];
+				bitmap.pixels[p * pixel_size + 2] = pixel[0];
+				if (bitmap.has_alpha)
 				{
-					m_Pixels[p * pixel_size + 3] = pixel[3];
+					bitmap.pixels[p * pixel_size + 3] = pixel[3];
 				}
 				p++;
 			}
@@ -90,28 +90,5 @@ TgaImage::TgaImage(const char* path)
 	}
 
 	delete[] pixel;
-}
-
-TgaImage::~TgaImage()
-{
-	if (m_Pixels)
-	{
-		delete[] m_Pixels;
-	}
-}
-
-uint8_t* TgaImage::GetPixels() {
-	return m_Pixels;
-}
-
-uint32_t TgaImage::GetWidth() {
-	return m_Width;
-}
-
-uint32_t TgaImage::GetHeight() {
-	return m_Height;
-}
-
-bool TgaImage::HasAlpha() {
-	return (m_HasAlpha == 1);
+	return true;
 }
