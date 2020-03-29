@@ -2,6 +2,10 @@
 
 #include <gk/tga_image.hpp>
 
+Skybox::Skybox()
+{
+}
+
 Skybox::Skybox(const char* textures[6])
 {
 	this->Load(textures);
