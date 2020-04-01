@@ -5,117 +5,37 @@
 
 #include <memory>
 
-Framebuffer::Attachment::Attachment(unsigned int width, unsigned int height, unsigned int format)
-{
-    m_Type = BUFFER;
-
-    const RenderingContext* context = RenderingContext::GetInstance();
-    context->CreateRenderbuffers(1, &m_Handle);
-    context->BindRenderbuffer(GFX_RENDERBUFFER, m_Handle);
-    context->RenderbufferStorage(GFX_RENDERBUFFER, format, width, height);
-}
-
-Framebuffer::Attachment::Attachment(unsigned int width, unsigned int height, unsigned int component_format, unsigned int component_type, unsigned int filter, unsigned int wrap_mode)
-{
-    m_Type = TEXTURE;
-
-    const RenderingContext* context = RenderingContext::GetInstance();
-    context->CreateTextures(1, &m_Handle);
-    context->BindTexture(GFX_TEXTURE_2D, m_Handle);
-    context->CreateTexture2D(GFX_TEXTURE_2D, 0, component_format, width, height, 0, component_format, component_type, NULL);
-    
-    context->SetTextureParameter(GFX_TEXTURE_2D, GFX_TEXTURE_MAG_FILTER, filter);
-    context->SetTextureParameter(GFX_TEXTURE_2D, GFX_TEXTURE_MIN_FILTER, filter);
-    context->SetTextureParameter(GFX_TEXTURE_2D, GFX_TEXTURE_WRAP_S, wrap_mode);
-	context->SetTextureParameter(GFX_TEXTURE_2D, GFX_TEXTURE_WRAP_T, wrap_mode);
-}
-
-Framebuffer::Attachment::~Attachment()
-{
-    const RenderingContext* context = RenderingContext::GetInstance();
-
-    switch(m_Type)
-    {
-        case BUFFER:
-        {
-            if(context->IsRenderbuffer(m_Handle) == GFX_TRUE)
-            {
-                context->DeleteRenderbuffers(1, &m_Handle);
-            }
-            break;
-        }
-
-        case TEXTURE:
-        {
-            if(context->IsTexture(m_Handle) == GFX_TRUE)
-            {
-                context->DeleteTextures(1, &m_Handle);
-            }
-            break;
-        }
-
-        default:
-        {
-            printf("ERROR: Invalid framebuffer attachment type\n");
-            break;
-        }
-    }
-}
-
-Framebuffer::Attachment::ATTACHMENT_TYPE Framebuffer::Attachment::GetType()
-{
-    return m_Type;
-}
-
-GFX_HANDLE Framebuffer::Attachment::GetHandle()
-{
-    return m_Handle;
-}
-
-void Framebuffer::Attachment::Bind(GFX_HANDLE target, GFX_HANDLE attachment)
-{
-    const RenderingContext* context = RenderingContext::GetInstance();
-
-    switch(m_Type)
-    {
-        case BUFFER:
-        {
-            context->SetFramebufferRenderbuffer(target, attachment, GFX_RENDERBUFFER, m_Handle);
-            break;
-        }
-
-        case TEXTURE:
-        {
-            context->SetFramebufferTexture2D(target, attachment, GFX_TEXTURE_2D, m_Handle, 0);
-            break;
-        }
-
-        default:
-        {
-            printf("Framebuffer invalid storage type\n");
-            break;
-        }
-    }
-}
-
-Framebuffer::Framebuffer(unsigned int width, unsigned height, Attachment* colorAttachment, Attachment* depthAttachment)
+Framebuffer::Framebuffer(unsigned int width, unsigned int height)
 {
     m_Width  = width;
     m_Height = height;
     const RenderingContext* context = RenderingContext::GetInstance();
 
     context->CreateFramebuffers(1, &m_Handle);
-    context->BindFramebuffer(GFX_FRAMEBUFFER, m_Handle);
+}
 
-    depthAttachment->Bind(GFX_FRAMEBUFFER, GFX_DEPTH_ATTACHMENT);
-    colorAttachment->Bind(GFX_FRAMEBUFFER, GFX_COLOR_ATTACHMENT0);
-    
-    GFX_HANDLE DrawBuffers[1] = { GFX_COLOR_ATTACHMENT0 };
-    context->BindDrawBuffers(1, DrawBuffers);
+void Framebuffer::Attach(CubeMap* attachment, GFX_HANDLE face, GFX_HANDLE target)
+{
+    const RenderingContext* context = RenderingContext::GetInstance();
+    context->SetFramebufferTexture2D(GFX_FRAMEBUFFER, target, face, attachment->GetHandle(), 0);
+}
 
-    assert(context->GetFramebufferStatus(GFX_FRAMEBUFFER) == GFX_COMPLETE_FRAMEBUFFER);
+void Framebuffer::Attach(Texture* attachment, GFX_HANDLE target)
+{
+    const RenderingContext* context = RenderingContext::GetInstance();
+    context->SetFramebufferTexture2D(GFX_FRAMEBUFFER, target, GFX_TEXTURE_2D, attachment->GetHandle(), 0);
+}
 
-    context->BindFramebuffer(GFX_FRAMEBUFFER, 0);
+void Framebuffer::Attach(RenderBuffer* attachment, GFX_HANDLE target)
+{
+    const RenderingContext* context = RenderingContext::GetInstance();
+    context->SetFramebufferRenderbuffer(GFX_FRAMEBUFFER, target, GFX_RENDERBUFFER, attachment->GetHandle());
+}
+
+bool Framebuffer::IsValid()
+{
+    const RenderingContext* context = RenderingContext::GetInstance();
+    return context->GetFramebufferStatus(GFX_FRAMEBUFFER) == GFX_COMPLETE_FRAMEBUFFER;
 }
 
 Framebuffer::~Framebuffer()

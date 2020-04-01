@@ -15,10 +15,10 @@ public:
     GFX_HANDLE GetHandle();
 
     void Bind();
-    void EnableVertexAttribute(unsigned intindex);
+    void EnableVertexAttribute(unsigned int index);
     void DisableVertexAttribute(unsigned int index);
-    void SetVertexAttributeLayout(unsigned int index, unsigned int size, unsigned int type, uint32_t stride, const void* offset);
-    void SetVertexAttributeLayout(unsigned int index, unsigned int size, unsigned int type, uint8_t normalized, uint32_t stride, const void* offset);
+    void SetVertexAttributeLayoutI(unsigned int index, unsigned int size, unsigned int type, uint32_t stride, const void* offset);
+    void SetVertexAttributeLayoutF(unsigned int index, unsigned int size, unsigned int type, uint8_t normalized, uint32_t stride, const void* offset);
 };
 
 #endif // GK_VERTEX_ARRAY_H

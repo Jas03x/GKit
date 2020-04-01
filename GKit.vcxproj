@@ -181,6 +181,7 @@
     <ClInclude Include="inc\gk\collada_parser.hpp" />
     <ClInclude Include="inc\gk\config.hpp" />
     <ClInclude Include="inc\gk\context.hpp" />
+    <ClInclude Include="inc\gk\cubemap.hpp" />
     <ClInclude Include="inc\gk\data_types.hpp" />
     <ClInclude Include="inc\gk\dynamic_mesh.hpp" />
     <ClInclude Include="inc\gk\dynamic_mesh_renderer.hpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="inc\gk\particle_renderer_3d.hpp" />
     <ClInclude Include="inc\gk\quad.hpp" />
     <ClInclude Include="inc\gk\random.hpp" />
+    <ClInclude Include="inc\gk\render_buffer.hpp" />
     <ClInclude Include="inc\gk\shader.hpp" />
     <ClInclude Include="inc\gk\shader_source.hpp" />
     <ClInclude Include="inc\gk\skybox.hpp" />
@@ -220,6 +222,7 @@
     <ClInclude Include="inc\gk\vertex_buffer.hpp" />
     <ClInclude Include="inc\gk\view.hpp" />
     <ClInclude Include="inc\gk\xml.hpp" />
+    <ClInclude Include="src\render_buffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\bitmap.cpp" />
@@ -232,6 +235,7 @@
     <ClCompile Include="src\collada_importer.cpp" />
     <ClCompile Include="src\collada_parser.cpp" />
     <ClCompile Include="src\context.cpp" />
+    <ClCompile Include="src\cubemap.cpp" />
     <ClCompile Include="src\dynamic_mesh.cpp" />
     <ClCompile Include="src\dynamic_mesh_renderer.cpp" />
     <ClCompile Include="src\file.cpp" />

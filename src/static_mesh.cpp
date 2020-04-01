@@ -70,6 +70,7 @@ void StaticMesh::Load(const MeshData& data, const std::string& texture_directory
 	m_VAO->Bind();
 
 	m_VBO = new VertexBuffer(GFX_ARRAY_BUFFER);
+	m_VBO->Bind();
 	m_VBO->Allocate(sizeof(StaticMesh::Vertex) * data.vertices.size(), vertex_buffer, GFX_STATIC_DRAW);
 
 	m_VAO->EnableVertexAttribute(VertexAttributes::VERTEX);
@@ -82,6 +83,7 @@ void StaticMesh::Load(const MeshData& data, const std::string& texture_directory
 	context->SetVertexAttributeLayoutI(VertexAttributes::NODE, 1, GFX_TYPE_UNSIGNED_BYTE, sizeof(StaticMesh::Vertex), (void*)offsetof(StaticMesh::Vertex, node));
 
 	m_IBO = new VertexBuffer(GFX_ELEMENT_BUFFER);
+	m_IBO->Bind();
 	m_IBO->Allocate(sizeof(unsigned short) * data.index_count, nullptr, GFX_STATIC_DRAW);
 
 	size_t offset = 0;

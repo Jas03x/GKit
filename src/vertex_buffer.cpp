@@ -47,14 +47,12 @@ void VertexBuffer::Bind()
 void VertexBuffer::Allocate(int64_t size, const void* data, uint32_t usage)
 {
     const RenderingContext* context = RenderingContext::GetInstance();
-    context->BindAllocation(m_Type, m_Handle);
     context->CreateBuffer(m_Type, size, data, usage);
 }
 
 void VertexBuffer::Update(int64_t offset, int64_t size, const void* data)
 {
     const RenderingContext* context = RenderingContext::GetInstance();
-    context->BindAllocation(m_Type, m_Handle);
     context->UpdateBuffer(m_Type, offset, size, data);
 }
 

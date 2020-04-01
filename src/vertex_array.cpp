@@ -35,12 +35,12 @@ void VertexArray::DisableVertexAttribute(unsigned int index)
     RenderingContext::GetInstance()->DisableVertexAttribute(index);
 }
 
-void VertexArray::SetVertexAttributeLayout(unsigned int index, unsigned int size, unsigned int type, uint32_t stride, const void* offset)
+void VertexArray::SetVertexAttributeLayoutI(unsigned int index, unsigned int size, unsigned int type, uint32_t stride, const void* offset)
 {
     RenderingContext::GetInstance()->SetVertexAttributeLayoutI(index, size, type, stride, offset);
 }
 
-void VertexArray::SetVertexAttributeLayout(unsigned int index, unsigned int size, unsigned int type, uint8_t normalized, uint32_t stride, const void* offset)
+void VertexArray::SetVertexAttributeLayoutF(unsigned int index, unsigned int size, unsigned int type, uint8_t normalized, uint32_t stride, const void* offset)
 {
     RenderingContext::GetInstance()->SetVertexAttributeLayoutF(index, size, type, normalized, stride, offset);
 }

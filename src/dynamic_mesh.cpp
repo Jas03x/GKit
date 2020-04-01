@@ -6,6 +6,7 @@
 #include <utility>
 
 #include <gk/tga_image.hpp>
+#include <gk/blur_shader.hpp>
 
 DynamicMesh::DynamicMesh() : RootNode("Root", Matrix4F(1.0f))
 {
@@ -93,8 +94,9 @@ void DynamicMesh::Load(const MeshData& data, const std::string& texture_director
 	m_VAO->Bind();
 
 	m_VBO = new VertexBuffer(GFX_ARRAY_BUFFER);
+	m_VBO->Bind();
 	m_VBO->Allocate(sizeof(DynamicMesh::Vertex) * data.vertices.size(), vertex_buffer, GFX_STATIC_DRAW);
-
+	
 	m_VAO->EnableVertexAttribute(VertexAttributes::VERTEX);
 	m_VAO->EnableVertexAttribute(VertexAttributes::NORMAL);
 	m_VAO->EnableVertexAttribute(VertexAttributes::UV);
@@ -109,6 +111,7 @@ void DynamicMesh::Load(const MeshData& data, const std::string& texture_director
 	context->SetVertexAttributeLayoutF(VertexAttributes::BONE_WEIGHT, 4, GFX_TYPE_FLOAT, GFX_FALSE, sizeof(DynamicMesh::Vertex), (void*)offsetof(DynamicMesh::Vertex, bone_weights));
 
 	m_IBO = new VertexBuffer(GFX_ELEMENT_BUFFER);
+	m_IBO->Bind();
 	m_IBO->Allocate(sizeof(unsigned short) * data.index_count, nullptr, GFX_STATIC_DRAW);
 
 	size_t offset = 0;

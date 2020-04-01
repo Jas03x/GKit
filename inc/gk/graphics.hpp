@@ -19,6 +19,7 @@ enum GFX_TEXTURE_SLOT
 
 enum GFX_COLOR
 {
+    GFX_RED             = 0x1903,
 	GFX_RGB             = 0x1907,
 	GFX_RGBA            = 0x1908,
 	GFX_DEPTH_16        = 0x81A5,
@@ -50,7 +51,7 @@ enum GFX_SETTING
 	GFX_FACE_CULL	 = 0x0B44,
 	GFX_DEPTH_TEST   = 0x0B71,
 	GFX_STENCIL_TEST = 0x0B90,
-	GFX_BLENDING     = 0x0BE2
+	GFX_BLEND        = 0x0BE2
 };
 
 enum GFX_BLEND_OP
