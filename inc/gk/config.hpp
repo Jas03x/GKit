@@ -1,7 +1,7 @@
 #ifndef GK_CONFIG_HPP
 #define GK_CONFIG_HPP
 
-#define SHADER_BASE "C:/Users/Jas/Projects/GKit/shdr/"
+#define SHADER_BASE "/Users/jas/Projects/GKit/shdr/"
 
 #define STATIC_MESH_NODE_LIMIT 32
 

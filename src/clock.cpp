@@ -7,6 +7,13 @@ uint32_t Clock::GetTime()
 	return Context::GetTime();
 }
 
+Timer::Timer()
+{
+    m_Previous = 0;
+    m_Current = 0;
+    m_Period = 0;
+}
+
 Timer::Timer(uint32_t period)
 {
 	uint32_t time = Clock::GetTime();
@@ -36,6 +43,11 @@ float Timer::GetDelta()
 	float d = static_cast<float>(m_Period);
 	
 	return n / d;
+}
+
+CallbackTimer::CallbackTimer() : Timer()
+{
+    m_Callback = nullptr;
 }
 
 CallbackTimer::CallbackTimer(uint32_t period, void(*callback)()) : Timer(period)

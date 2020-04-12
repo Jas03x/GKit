@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+// NOTE: all functions are in milliseconds
+
 class Clock
 {
 public:
@@ -17,6 +19,7 @@ private:
 	uint32_t m_Period;
 
 public:
+    Timer();
 	Timer(uint32_t period);
 
 	bool  Tick();
@@ -29,6 +32,7 @@ private:
 	void (*m_Callback)();
 
 public:
+    CallbackTimer();
 	CallbackTimer(uint32_t period, void (*callback)());
 
 	void Tick();

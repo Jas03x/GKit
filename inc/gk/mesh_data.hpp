@@ -1,6 +1,7 @@
 #ifndef MESH_DATA_HPP
 #define MESH_DATA_HPP
 
+#include <map>
 #include <string>
 #include <vector>
 
@@ -58,6 +59,13 @@ struct MeshData
 
     unsigned int index_count;
     std::vector<Mesh> meshes;
+
+    // vertex comparator function:
+    struct VertexComparator
+    {
+        bool operator()(const MeshData::Vertex& v0, const MeshData::Vertex& v1) const;
+    };
+    typedef std::map<Vertex, unsigned short, VertexComparator> VertexMap;
 };
 
 #endif // MESH_DATA_HPP

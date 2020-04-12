@@ -2,7 +2,6 @@
 
 #include <math.h>
 
-#include <functional>
 #include <utility>
 
 #include <gk/collada_parser.hpp>
@@ -333,61 +332,11 @@ bool Collada::Importer::process_geometry(const Geometry* obj)
     return status;
 }
 
-bool CompareVertex(const MeshData::Vertex& v0, const MeshData::Vertex& v1)
-{
-    bool ret = false;
-    #define CMP(a, b) if((a) < (b)) { ret = true; } else if((a) == (b))
-    CMP(v0.position, v1.position)
-    {
-        CMP(v0.normal, v1.normal)
-        {
-            CMP(v0.uv, v1.uv)
-            {
-                CMP(v0.node_index, v1.node_index)
-                {
-                    CMP(v0.bone_count, v1.bone_count)
-                    {
-                        Vector4F v0_indices(v0.bone_indices[0], v0.bone_indices[1], v0.bone_indices[2], v0.bone_indices[3]);
-                        Vector4F v1_indices(v1.bone_indices[0], v1.bone_indices[1], v1.bone_indices[2], v1.bone_indices[3]);
-                        CMP(v0_indices, v1_indices)
-                        {
-                            for (unsigned int i = 0; i < 4; i++)
-                            {
-                                float a = v0.bone_weights[i];
-                                float b = v1.bone_weights[i];
-                                if (a < b)
-                                {
-                                    ret = true;
-                                    break;
-                                }
-                                else if (b < a)
-                                {
-                                    ret = false;
-                                    break;
-                                }
-                                else
-                                {
-                                    continue;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    #undef CMP
-    return ret;
-}
-
 bool Collada::Importer::process_mesh_data(MeshData& data)
 {
     bool status = true;
 
-    typedef std::function<bool(const MeshData::Vertex&, const MeshData::Vertex&)> VertexComparator;
-    typedef std::map<MeshData::Vertex, unsigned int, VertexComparator> VertexMap;
-
-    VertexMap vertex_map(CompareVertex);
+    MeshData::VertexMap vertex_map;
 
     data.index_count = 0;
 
@@ -418,7 +367,7 @@ bool Collada::Importer::process_mesh_data(MeshData& data)
 
             unsigned int vertex_index = 0;
 
-            VertexMap::const_iterator it = vertex_map.find(vertex);
+            MeshData::VertexMap::const_iterator it = vertex_map.find(vertex);
             if (it == vertex_map.end())
             {
                 vertex_index = (unsigned int) data.vertices.size();
