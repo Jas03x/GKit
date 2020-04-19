@@ -7,13 +7,16 @@
 
 #include <assert.h>
 
+#include "../shdr/static_mesh_pixel_shader.hpp"
+#include "../shdr/static_mesh_vertex_shader.hpp"
+
 StaticMeshRenderer* StaticMeshRenderer::Instance = nullptr;
 
 StaticMeshRenderer::StaticMeshRenderer()
 {
 	Shader::Load(
-		ShaderSource::FromFile(SHADER_BASE "static_mesh_renderer.vert"),
-		ShaderSource::FromFile(SHADER_BASE "static_mesh_renderer.frag"),
+		STATIC_MESH_VERTEX_SHADER,
+		STATIC_MESH_PIXEL_SHADER,
 		[](GFX_HANDLE id)
 		{
 			const RenderingContext* context = RenderingContext::GetInstance();

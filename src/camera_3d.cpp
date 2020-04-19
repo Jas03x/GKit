@@ -10,6 +10,9 @@ Camera3D::Camera3D()
 
 Camera3D::Camera3D(float fov, float width, float height, float zNear, float zFar)
 {
+	m_NearPlane = zNear;
+	m_FarPlane = zFar;
+
 	Projection = Matrix4F::Project(fov * M_PI / 180.0f, width, height, zNear, zFar);
 	View = Matrix4F();
 }
@@ -41,3 +44,12 @@ const Matrix4F& Camera3D::GetViewMatrix() const
 	return View;
 }
 
+float Camera3D::GetNearPlane() const
+{
+	return m_NearPlane;
+}
+
+float Camera3D::GetFarPlane() const
+{
+	return m_FarPlane;
+}

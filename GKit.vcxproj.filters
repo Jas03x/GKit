@@ -21,50 +21,50 @@
     <None Include="tools\mdl_exporter.py">
       <Filter>tools</Filter>
     </None>
-    <None Include="shdr\dynamic_mesh_renderer.frag">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\dynamic_mesh_renderer.vert">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\frame_renderer.frag">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\frame_renderer.vert">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\gaussian_blur.frag">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\gaussian_blur.vert">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\particle.frag">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\particle.vert">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\skybox_renderer.frag">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\skybox_renderer.vert">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\sprite_renderer.frag">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\sprite_renderer.vert">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\static_mesh_renderer.frag">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\static_mesh_renderer.vert">
-      <Filter>shdr</Filter>
-    </None>
     <None Include="makefile.win" />
     <None Include="makefile.osx" />
+    <None Include="shdr\particle_vertex_shader.hpp">
+      <Filter>shdr</Filter>
+    </None>
+    <None Include="shdr\particle_pixel_shader.hpp">
+      <Filter>shdr</Filter>
+    </None>
+    <None Include="shdr\gaussian_blur_vertex_shader.hpp">
+      <Filter>shdr</Filter>
+    </None>
+    <None Include="shdr\gaussian_blur_pixel_shader.hpp">
+      <Filter>shdr</Filter>
+    </None>
+    <None Include="shdr\dynamic_mesh_pixel_shader.hpp">
+      <Filter>shdr</Filter>
+    </None>
+    <None Include="shdr\dynamic_mesh_vertex_shader.hpp">
+      <Filter>shdr</Filter>
+    </None>
+    <None Include="shdr\skybox_pixel_shader.hpp">
+      <Filter>shdr</Filter>
+    </None>
+    <None Include="shdr\skybox_vertex_shader.hpp">
+      <Filter>shdr</Filter>
+    </None>
+    <None Include="shdr\sprite_pixel_shader.hpp">
+      <Filter>shdr</Filter>
+    </None>
+    <None Include="shdr\sprite_vertex_shader.hpp">
+      <Filter>shdr</Filter>
+    </None>
+    <None Include="shdr\static_mesh_pixel_shader.hpp">
+      <Filter>shdr</Filter>
+    </None>
+    <None Include="shdr\static_mesh_vertex_shader.hpp">
+      <Filter>shdr</Filter>
+    </None>
+    <None Include="shdr\frame_vertex_shader.hpp">
+      <Filter>shdr</Filter>
+    </None>
+    <None Include="shdr\frame_pixel_shader.hpp">
+      <Filter>shdr</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Todo.txt" />
@@ -211,9 +211,6 @@
     <ClInclude Include="inc\gk\static_mesh_renderer.hpp">
       <Filter>inc\gk</Filter>
     </ClInclude>
-    <ClInclude Include="inc\gk\shader_source.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
     <ClInclude Include="inc\gk\filesystem.hpp">
       <Filter>inc\gk</Filter>
     </ClInclude>
@@ -352,9 +349,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\collada_importer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\shader_source.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\filesystem.cpp">

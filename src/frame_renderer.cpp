@@ -6,13 +6,16 @@
 #include <gk/file.hpp>
 #include <gk/quad.hpp>
 
+#include "../shdr/frame_pixel_shader.hpp"
+#include "../shdr/frame_vertex_shader.hpp"
+
 FrameRenderer* FrameRenderer::Instance = nullptr;
 
 FrameRenderer::FrameRenderer()
 {
     Shader::Load(
-		ShaderSource::FromFile(SHADER_BASE "frame_renderer.vert"),
-		ShaderSource::FromFile(SHADER_BASE "frame_renderer.frag"),
+		FRAME_VERTEX_SHADER,
+		FRAME_PIXEL_SHADER,
 		[](GFX_HANDLE id) {
 			RenderingContext::GetInstance()->SetAttributeLocation(id, Quad::VertexAttributes::VERTEX, "vertex");
 		}

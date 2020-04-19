@@ -7,13 +7,16 @@
 #include <gk/view.hpp>
 #include <gk/camera_3d.hpp>
 
+#include "../shdr/particle_pixel_shader.hpp"
+#include "../shdr/particle_vertex_shader.hpp"
+
 ParticleRenderer3D* ParticleRenderer3D::Instance = nullptr;
 
 ParticleRenderer3D::ParticleRenderer3D()
 {
     Shader::Load(
-		ShaderSource::FromFile(SHADER_BASE "particle.vert"),
-		ShaderSource::FromFile(SHADER_BASE "particle.frag"),
+		PARTICLE_VERTEX_SHADER,
+		PARTICLE_PIXEL_SHADER,
 		[](GFX_HANDLE id) {
 			const RenderingContext* context = RenderingContext::GetInstance();
 			context->SetAttributeLocation(id, ParticleArray::VertexAttributes::POSITION, "position");

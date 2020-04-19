@@ -7,13 +7,16 @@
 #include <gk/quad.hpp>
 #include <gk/matrix.hpp>
 
+#include "../shdr/gaussian_blur_pixel_shader.hpp"
+#include "../shdr/gaussian_blur_vertex_shader.hpp"
+
 BlurShader* BlurShader::Instance = nullptr;
 
 BlurShader::BlurShader()
 {
     Shader::Load(
-		ShaderSource::FromFile(SHADER_BASE "gaussian_blur.vert"),
-		ShaderSource::FromFile(SHADER_BASE "gaussian_blur.frag"),
+		GAUSSIAN_BLUR_VERTEX_SHADER,
+		GAUSSIAN_BLUR_PIXEL_SHADER,
 		[](GFX_HANDLE id) {
 			RenderingContext::GetInstance()->SetAttributeLocation(id, Quad::VertexAttributes::VERTEX, "vertex");
 		}

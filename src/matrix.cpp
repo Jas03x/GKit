@@ -538,11 +538,11 @@ Matrix4F Matrix4F::Translate(const Vector3F& v) { return Matrix4F(X_AXIS, Y_AXIS
 Matrix4F Matrix4F::Project(float fov, float width, float height, float near, float far)
 {
     float aspect = width / height;
-    float angle = tanf(fov / 2.0f);
+    float half_angle = tanf(fov / 2.0f);
 
     Matrix4F matrix(0.0f);
-    matrix[0][0] = 1.0f / (aspect * angle);
-    matrix[1][1] = 1.0f / angle;
+    matrix[0][0] = 1.0f / (aspect * half_angle);
+    matrix[1][1] = 1.0f / half_angle;
     matrix[2][2] = -(far + near) / (far - near);
     matrix[2][3] = -1.0f;
     matrix[3][2] = -(2.0f * far * near) / (far - near);

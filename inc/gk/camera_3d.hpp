@@ -8,6 +8,9 @@ class Camera3D
 private:
 	static Camera3D* Instance;
 
+	float m_NearPlane;
+	float m_FarPlane;
+
 	Matrix4F Projection;
 
 public:
@@ -24,6 +27,9 @@ public:
 	Matrix4F GetMatrix() const;
 	const Matrix4F& GetViewMatrix() const;
 	const Matrix4F& GetProjectionMatrix() const;
+
+	float GetNearPlane() const;
+	float GetFarPlane() const;
 };
 
 #endif // GK_CAMERA_3D_H

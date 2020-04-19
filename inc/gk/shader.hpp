@@ -2,7 +2,6 @@
 #define GK_SHADER_H
 
 #include <gk/graphics.hpp>
-#include <gk/shader_source.hpp>
 
 class Shader
 {
@@ -10,7 +9,7 @@ private:
 	GFX_HANDLE m_Handle;
 
 protected:
-	bool Load(const ShaderSource& vsrc, const ShaderSource& fsrc, void(*pfn_bind)(GFX_HANDLE));
+	bool Load(const char* vsrc, const char* fsrc, void(*pfn_bind)(GFX_HANDLE));
 
 public:
 	Shader();

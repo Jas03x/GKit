@@ -78,17 +78,12 @@ Shader::~Shader()
 	destroy_program(m_Handle);
 }
 
-bool Shader::Load(const ShaderSource& vsrc, const ShaderSource& fsrc, void(*pfn_bind)(GFX_HANDLE))
+bool Shader::Load(const char* vsrc, const char* fsrc, void(*pfn_bind)(GFX_HANDLE))
 {
-	if (!vsrc.IsValid() || !fsrc.IsValid())
-	{
-		return false;
-	}
-
 	const RenderingContext* context = RenderingContext::GetInstance();
 
-	GFX_HANDLE vshdr = create_shader(GFX_VERTEX_SHADER, vsrc.GetData());
-	GFX_HANDLE fshdr = create_shader(GFX_FRAGMENT_SHADER, fsrc.GetData());
+	GFX_HANDLE vshdr = create_shader(GFX_VERTEX_SHADER, vsrc);
+	GFX_HANDLE fshdr = create_shader(GFX_FRAGMENT_SHADER, fsrc);
 
 	if (!check_shader(vshdr) || !check_shader(fshdr))
 	{

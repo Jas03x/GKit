@@ -71,22 +71,25 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <NMakeIncludeSearchPath>C:\Dev\Libraries\SDL2\include;C:\Users\Jas\Projects\GKit\inc</NMakeIncludeSearchPath>
+    <NMakeIncludeSearchPath>C:\Dev\Lib\SDL2\include;E:\Projects\GKit\inc</NMakeIncludeSearchPath>
+    <NMakePreprocessorDefinitions>_USE_MATH_DEFINES</NMakePreprocessorDefinitions>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <NMakeIncludeSearchPath>C:\Dev\Lib\SDL2\include;C:\Users\Jas\Projects\GKit\inc</NMakeIncludeSearchPath>
-    <IncludePath>C:\Users\Jas\Projects\GKit\inc;C:\Dev\Libraries\SDL2\include;$(IncludePath)</IncludePath>
+    <NMakeIncludeSearchPath>C:\Dev\Lib\SDL2\include;E:\Projects\GKit\inc</NMakeIncludeSearchPath>
+    <IncludePath>E:\Projects\GKit\inc;C:\Dev\Lib\SDL2\include;$(IncludePath)</IncludePath>
     <NMakePreprocessorDefinitions>_USE_MATH_DEFINES</NMakePreprocessorDefinitions>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <NMakeIncludeSearchPath>C:\Dev\Libraries\SDL2\include;C:\Users\Jas\Projects\GKit\inc</NMakeIncludeSearchPath>
+    <NMakeIncludeSearchPath>C:\Dev\Lib\SDL2\include;E:\Projects\GKit\inc</NMakeIncludeSearchPath>
+    <NMakePreprocessorDefinitions>_USE_MATH_DEFINES</NMakePreprocessorDefinitions>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <NMakeIncludeSearchPath>C:\Dev\Libraries\SDL2\include;C:\Users\Jas\Projects\GKit\inc</NMakeIncludeSearchPath>
-    <IncludePath>C:\Users\Jas\Projects\GKit\inc;C:\Dev\Libraries\SDL2\include;$(IncludePath)</IncludePath>
+    <NMakeIncludeSearchPath>C:\Dev\Lib\SDL2\include;E:\Projects\GKit\inc</NMakeIncludeSearchPath>
+    <IncludePath>E:\Projects\GKit\inc;C:\Dev\Lib\SDL2\include;$(IncludePath)</IncludePath>
+    <NMakePreprocessorDefinitions>_USE_MATH_DEFINES</NMakePreprocessorDefinitions>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -94,7 +97,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Projects\GKit\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Projects\GKit\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -107,7 +110,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Jas\Documents\GKit\inc;C:\Users\Jas\Documents\Libraries\SDL2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Projects\GKit\inc;C:\Dev\Lib\SDL2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -138,7 +141,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Jas\Documents\GKit\inc;C:\Users\Jas\Documents\Libraries\SDL2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Projects\GKit\inc;C:\Dev\Lib\SDL2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,20 +153,20 @@
   <ItemGroup>
     <None Include="makefile.osx" />
     <None Include="makefile.win" />
-    <None Include="shdr\dynamic_mesh_renderer.frag" />
-    <None Include="shdr\dynamic_mesh_renderer.vert" />
-    <None Include="shdr\frame_renderer.frag" />
-    <None Include="shdr\frame_renderer.vert" />
-    <None Include="shdr\gaussian_blur.frag" />
-    <None Include="shdr\gaussian_blur.vert" />
-    <None Include="shdr\particle.frag" />
-    <None Include="shdr\particle.vert" />
-    <None Include="shdr\skybox_renderer.frag" />
-    <None Include="shdr\skybox_renderer.vert" />
-    <None Include="shdr\sprite_renderer.frag" />
-    <None Include="shdr\sprite_renderer.vert" />
-    <None Include="shdr\static_mesh_renderer.frag" />
-    <None Include="shdr\static_mesh_renderer.vert" />
+    <None Include="shdr\dynamic_mesh_pixel_shader.hpp" />
+    <None Include="shdr\dynamic_mesh_vertex_shader.hpp" />
+    <None Include="shdr\frame_pixel_shader.hpp" />
+    <None Include="shdr\frame_vertex_shader.hpp" />
+    <None Include="shdr\gaussian_blur_pixel_shader.hpp" />
+    <None Include="shdr\gaussian_blur_vertex_shader.hpp" />
+    <None Include="shdr\particle_pixel_shader.hpp" />
+    <None Include="shdr\particle_vertex_shader.hpp" />
+    <None Include="shdr\skybox_pixel_shader.hpp" />
+    <None Include="shdr\skybox_vertex_shader.hpp" />
+    <None Include="shdr\sprite_pixel_shader.hpp" />
+    <None Include="shdr\sprite_vertex_shader.hpp" />
+    <None Include="shdr\static_mesh_pixel_shader.hpp" />
+    <None Include="shdr\static_mesh_vertex_shader.hpp" />
     <None Include="tools\mdl_exporter.py" />
   </ItemGroup>
   <ItemGroup>
@@ -204,7 +207,6 @@
     <ClInclude Include="inc\gk\random.hpp" />
     <ClInclude Include="inc\gk\render_buffer.hpp" />
     <ClInclude Include="inc\gk\shader.hpp" />
-    <ClInclude Include="inc\gk\shader_source.hpp" />
     <ClInclude Include="inc\gk\skybox.hpp" />
     <ClInclude Include="inc\gk\skybox_renderer.hpp" />
     <ClInclude Include="inc\gk\sprite.hpp" />
@@ -253,7 +255,6 @@
     <ClCompile Include="src\quad.cpp" />
     <ClCompile Include="src\random.cpp" />
     <ClCompile Include="src\shader.cpp" />
-    <ClCompile Include="src\shader_source.cpp" />
     <ClCompile Include="src\skybox.cpp" />
     <ClCompile Include="src\skybox_renderer.cpp" />
     <ClCompile Include="src\sprite.cpp" />

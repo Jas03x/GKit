@@ -8,13 +8,16 @@
 #include <gk/quad.hpp>
 #include <gk/camera_3d.hpp>
 
+#include "../shdr/skybox_pixel_shader.hpp"
+#include "../shdr/skybox_vertex_shader.hpp"
+
 SkyboxRenderer* SkyboxRenderer::Instance = nullptr;
 
 SkyboxRenderer::SkyboxRenderer()
 {
 	Shader::Load(
-		ShaderSource::FromFile(SHADER_BASE "skybox_renderer.vert"),
-		ShaderSource::FromFile(SHADER_BASE "skybox_renderer.frag"),
+		SKYBOX_VERTEX_SHADER,
+		SKYBOX_PIXEL_SHADER,
 		[](GFX_HANDLE id) {
 			RenderingContext::GetInstance()->SetAttributeLocation(id, Quad::VertexAttributes::VERTEX, "vertex");
 		}
