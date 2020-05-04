@@ -6,9 +6,13 @@
 
 // bmp file format: https://en.wikipedia.org/wiki/BMP_file_format
 
-const uint32_t BMP_SIGNATURE = 0x4D42;
+const uint16_t BMP_SIGNATURE = 0x4D42;
+const uint32_t BMP_CMP_BITFIELD = 0x3;
 
 // https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapfileheader
+#ifdef _WIN32 
+    #pragma pack(push, 1)
+#endif
 struct BMP_HDR
 {
     uint16_t type; // 'BM'
@@ -16,7 +20,13 @@ struct BMP_HDR
     uint16_t reserved1;
     uint16_t reserved2;
     uint32_t offset; // offset to pixel data
-};
+}
+#ifdef _WIN32 
+    ;
+    #pragma pack(pop)
+#else
+    __attribute__((packed));
+#endif
 
 // https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapv5header
 struct BMP_DESC
@@ -88,20 +98,56 @@ bool BMP_Reader::Read(const char* path, Bitmap& bitmap)
             status = false;
             printf("unsupported bitmap file\n");
         }
+        else if(desc.compression != BMP_CMP_BITFIELD)
+        {
+            status = false;
+            printf("invalid compression\n");
+        }
     }
 
-    if(status)
-    {
-    }
-
-    printf("Header size = %lu\n", sizeof(BMP_HDR));
-    printf("Descriptor size = %lu\n", sizeof(BMP_DESC));
-    printf("Combined size = %lu\n", sizeof(BMP_HDR) + sizeof(BMP_DESC));
+    /*
+    printf("Header size = %zu\n", sizeof(BMP_HDR));
+    printf("Descriptor size = %zu\n", sizeof(BMP_DESC));
+    printf("Combined size = %zu\n", sizeof(BMP_HDR) + sizeof(BMP_DESC));
 
     printf("\nHDR:\n");
     printf("Type: 0x%hX\n", hdr.type);
     printf("Size: 0x%u\n", hdr.size);
     printf("Offset: 0x%X\n", hdr.offset);
+
+    printf("\nDESC:\n");
+    printf("Type: %u\n", desc.type);
+    printf("Width: %u\n", desc.width);
+    printf("Height: %u\n", desc.height);
+    printf("Planes: %hu\n", desc.planes);
+    printf("BPP: %hu\n", desc.bpp);
+    printf("Compression: %u\n", desc.compression);
+    printf("Size: %u\n", desc.size);
+    */
+
+    if(status)
+    {
+        size_t pixel_count = desc.width * desc.height * (desc.bpp / 8);
+        
+        uint8_t* pixels = new uint8_t[pixel_count];
+        if(!file.Read(pixels, sizeof(uint8_t), pixel_count))
+        {
+            status = false;
+            printf("error reading pixel data\n");
+        }
+
+        if(status)
+        {
+            bitmap.width = desc.width;
+            bitmap.height = desc.height;
+            bitmap.pixels = pixels;
+            bitmap.has_alpha = (desc.bpp == 32) ? 1 : 0;
+        }
+        else
+        {
+            delete[] pixels;
+        }
+    }
 
     return status;
 }
