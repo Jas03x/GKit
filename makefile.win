@@ -19,9 +19,10 @@ LIBS = SDL2.lib SDL2main.lib opengl32.lib
 BIN = ./bin
 SRC = ./src
 
+PDB = GKit.pdb
 OUTPUT = GKit.lib
 
-CC_OPTIONS = -std:c++17 -D_AMD64_ -D_USE_MATH_DEFINES  -D_HAS_EXCEPTIONS=0
+CC_OPTIONS = -Zi -std:c++17 -D_AMD64_ -D_USE_MATH_DEFINES -D_HAS_EXCEPTIONS=0 -Fd:$(BIN)/$(PDB)
 LINK_OPTIONS = -IGNORE:4006
 
 OBJECTS = $(patsubst $(SRC)/%.cpp, $(BIN)/%.o, $(wildcard $(SRC)/*.cpp))
