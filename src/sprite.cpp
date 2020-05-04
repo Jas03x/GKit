@@ -1,6 +1,6 @@
 #include <gk/sprite.hpp>
 
-#include <gk/tga_image.hpp>
+#include <gk/bitmap.hpp>
 
 Sprite::Sprite()
 {

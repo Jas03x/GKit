@@ -1,6 +1,6 @@
 #include <gk/bitmap.hpp>
 
-#include <gk/tga_image.hpp>
+#include <gk/tga_reader.hpp>
 
 Bitmap::Bitmap()
 {
@@ -12,7 +12,7 @@ Bitmap::Bitmap()
 
 Bitmap::Bitmap(const char* path)
 {
-	ReadTGA(path, *this);
+	TGA_Reader::Read(path, *this);
 }
 
 Bitmap::~Bitmap()

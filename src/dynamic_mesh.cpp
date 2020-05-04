@@ -5,7 +5,7 @@
 #include <map>
 #include <utility>
 
-#include <gk/tga_image.hpp>
+#include <gk/bitmap.hpp>
 #include <gk/blur_shader.hpp>
 
 DynamicMesh::DynamicMesh() : RootNode("Root", Matrix4F(1.0f))

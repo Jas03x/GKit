@@ -1,4 +1,4 @@
-#include <gk/tga_image.hpp>
+#include <gk/tga_reader.hpp>
 
 #include <assert.h>
 #include <string.h>
@@ -29,7 +29,7 @@ typedef struct TGA_Header
 	uint8_t image_desc;
 } TGA_Header;
 
-bool ReadTGA(const char* path, Bitmap& bitmap)
+bool TGA_Reader::Read(const char* path, Bitmap& bitmap)
 {
 	File file(path, File::READ_BINARY);
 

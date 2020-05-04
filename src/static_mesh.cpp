@@ -5,7 +5,7 @@
 
 #include <map>
 
-#include <gk/tga_image.hpp>
+#include <gk/bitmap.hpp>
 
 StaticMesh::StaticMesh() : RootNode("Root", Matrix4F(1.0f))
 {

@@ -1,6 +1,6 @@
 #include <gk/cubemap.hpp>
 
-#include <gk/tga_image.hpp>
+#include <gk/bitmap.hpp>
 
 CubeMap::CubeMap()
 {
