@@ -82,9 +82,6 @@
     <ClInclude Include="inc\gk\texture.hpp">
       <Filter>inc\gk</Filter>
     </ClInclude>
-    <ClInclude Include="inc\gk\tga_image.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
     <ClInclude Include="inc\gk\transform_2d.hpp">
       <Filter>inc\gk</Filter>
     </ClInclude>
@@ -226,6 +223,12 @@
     <ClInclude Include="src\render_buffer.cpp">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="inc\gk\bmp_reader.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\tga_reader.hpp">
+      <Filter>inc\gk</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\collada_parser.cpp">
@@ -309,9 +312,6 @@
     <ClCompile Include="src\texture.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\tga_image.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\transform_2d.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -358,6 +358,12 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\cubemap.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bmp_reader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tga_reader.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

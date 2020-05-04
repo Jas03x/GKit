@@ -77,7 +77,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <NMakeIncludeSearchPath>C:\Users\Jas\Projects\GKit\inc;C:\Dev\Lib\SDL2\include</NMakeIncludeSearchPath>
-    <IncludePath>E:\Projects\GKit\inc;C:\Dev\Lib\SDL2\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Jas\Projects\GKit\inc;C:\Dev\Lib\SDL2\include;$(IncludePath)</IncludePath>
     <NMakePreprocessorDefinitions>_USE_MATH_DEFINES</NMakePreprocessorDefinitions>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -88,7 +88,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <NMakeIncludeSearchPath>C:\Users\Jas\Projects\GKit\inc;C:\Dev\Lib\SDL2\include</NMakeIncludeSearchPath>
-    <IncludePath>E:\Projects\GKit\inc;C:\Dev\Lib\SDL2\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Jas\Projects\GKit\inc;C:\Dev\Lib\SDL2\include;$(IncludePath)</IncludePath>
     <NMakePreprocessorDefinitions>_USE_MATH_DEFINES</NMakePreprocessorDefinitions>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -97,7 +97,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\Projects\GKit\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Jas\Projects\GKit\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -110,7 +110,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\Projects\GKit\inc;C:\Dev\Lib\SDL2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Jas\Projects\GKit\inc;C:\Dev\Lib\SDL2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,7 +141,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\Projects\GKit\inc;C:\Dev\Lib\SDL2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Jas\Projects\GKit\inc;C:\Dev\Lib\SDL2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -175,6 +175,7 @@
   <ItemGroup>
     <ClInclude Include="inc\gk\bitmap.hpp" />
     <ClInclude Include="inc\gk\blur_shader.hpp" />
+    <ClInclude Include="inc\gk\bmp_reader.hpp" />
     <ClInclude Include="inc\gk\bone.hpp" />
     <ClInclude Include="inc\gk\camera_2d.hpp" />
     <ClInclude Include="inc\gk\camera_3d.hpp" />
@@ -217,7 +218,7 @@
     <ClInclude Include="inc\gk\string_buffer.hpp" />
     <ClInclude Include="inc\gk\sun.hpp" />
     <ClInclude Include="inc\gk\texture.hpp" />
-    <ClInclude Include="inc\gk\tga_image.hpp" />
+    <ClInclude Include="inc\gk\tga_reader.hpp" />
     <ClInclude Include="inc\gk\transform_2d.hpp" />
     <ClInclude Include="inc\gk\transform_3d.hpp" />
     <ClInclude Include="inc\gk\vertex_array.hpp" />
@@ -229,6 +230,7 @@
   <ItemGroup>
     <ClCompile Include="src\bitmap.cpp" />
     <ClCompile Include="src\blur_shader.cpp" />
+    <ClCompile Include="src\bmp_reader.cpp" />
     <ClCompile Include="src\bone.cpp" />
     <ClCompile Include="src\camera_2d.cpp" />
     <ClCompile Include="src\camera_3d.cpp" />
@@ -264,7 +266,7 @@
     <ClCompile Include="src\string_buffer.cpp" />
     <ClCompile Include="src\sun.cpp" />
     <ClCompile Include="src\texture.cpp" />
-    <ClCompile Include="src\tga_image.cpp" />
+    <ClCompile Include="src\tga_reader.cpp" />
     <ClCompile Include="src\transform_2d.cpp" />
     <ClCompile Include="src\transform_3d.cpp" />
     <ClCompile Include="src\vertex_array.cpp" />

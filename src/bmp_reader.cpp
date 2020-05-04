@@ -1,5 +1,7 @@
 #include <gk/bmp_reader.hpp>
 
+#include <stdint.h>
+
 #include <gk/file.hpp>
 
 // bmp file format: https://en.wikipedia.org/wiki/BMP_file_format
