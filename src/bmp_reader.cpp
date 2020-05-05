@@ -127,13 +127,33 @@ bool BMP_Reader::Read(const char* path, Bitmap& bitmap)
 
     if(status)
     {
-        size_t pixel_count = desc.width * desc.height * (desc.bpp / 8);
+        bool has_alpha = (desc.bpp == 32);
+
+        uint32_t pixel_size = desc.bpp / 8;
+        uint32_t pixel_count = desc.width * desc.height;
         
-        uint8_t* pixels = new uint8_t[pixel_count];
-        if(!file.Read(pixels, sizeof(uint8_t), pixel_count))
+        uint8_t* pixels = new uint8_t[pixel_count * pixel_size];
+
+        union { 
+            struct { uint8_t r, g, b, a; };
+            uint8_t data[4];
+        } buffer;
+
+        for (unsigned int i = 0; status && (i < pixel_count); i++)
         {
-            status = false;
-            printf("error reading pixel data\n");
+            if (!file.Read(buffer.data, pixel_size))
+            {
+                status = false;
+                printf("error reading pixel data\n");
+            }
+
+            pixels[i * pixel_size + 0] = buffer.b;
+            pixels[i * pixel_size + 1] = buffer.g;
+            pixels[i * pixel_size + 2] = buffer.r;
+            if (has_alpha)
+            {
+                pixels[i * pixel_size + 3] = buffer.a;
+            }
         }
 
         if(status)
@@ -141,7 +161,7 @@ bool BMP_Reader::Read(const char* path, Bitmap& bitmap)
             bitmap.width = desc.width;
             bitmap.height = desc.height;
             bitmap.pixels = pixels;
-            bitmap.has_alpha = (desc.bpp == 32) ? 1 : 0;
+            bitmap.has_alpha = has_alpha ? 1 : 0;
         }
         else
         {
