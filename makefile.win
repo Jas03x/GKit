@@ -1,20 +1,23 @@
 
-PATH = /mnt/c/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.26.28801/bin/Hostx64/x64
+MSVC = Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.26.28801
 
-CC   = "$(PATH)/cl.exe"
-LINK = "$(PATH)/lib.exe"
+WIN_SDK_INC = C:/Program Files (x86)/Windows Kits/10/Include/10.0.18362.0
+WIN_SDK_LIB = C:/Program Files (x86)/Windows Kits/10/Lib/10.0.18362.0
 
-INC_PATH += -I "C:/Program Files (x86)/Windows Kits/10/Include/10.0.18362.0/um"
-INC_PATH += -I "C:/Program Files (x86)/Windows Kits/10/Include/10.0.18362.0/ucrt"
-INC_PATH += -I "C:/Program Files (x86)/Windows Kits/10/Include/10.0.18362.0/shared"
-INC_PATH += -I "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.26.28801/include"
+CC = "/mnt/c/$(MSVC)/bin/Hostx64/x64/cl.exe"
+LINKER = "/mnt/c/$(MSVC)/bin/Hostx64/x64/lib.exe"
+
+INC_PATH += -I "$(WIN_SDK_INC)/um"
+INC_PATH += -I "$(WIN_SDK_INC)/ucrt"
+INC_PATH += -I "$(WIN_SDK_INC)/shared"
+INC_PATH += -I "C:/$(MSVC)/include"
 INC_PATH += -I "C:/Dev/Lib/SDL2/include"
-INC_PATH += -I ./inc/
+INC_PATH += -I "./inc/"
 
-LIB_PATH += -LIBPATH:"C:/Program Files (x86)/Windows Kits/10/Lib/10.0.18362.0/um/x64"
+LIB_PATH += -LIBPATH:"$(WIN_SDK_LIB)/um/x64"
 LIB_PATH += -LIBPATH:"C:/Dev/Lib/SDL2/lib/x64"
 
-LIBS = SDL2.lib SDL2main.lib opengl32.lib
+# LIBS = SDL2.lib SDL2main.lib opengl32.lib
 
 BIN = ./bin
 SRC = ./src
@@ -23,7 +26,7 @@ PDB = GKit.pdb
 OUTPUT = GKit.lib
 
 CC_OPTIONS = -Zi -std:c++17 -D_AMD64_ -D_USE_MATH_DEFINES -D_HAS_EXCEPTIONS=0 -Fd:$(BIN)/$(PDB)
-LINK_OPTIONS = -IGNORE:4006
+# LINKER_OPTIONS = -IGNORE:4006
 
 OBJECTS = $(patsubst $(SRC)/%.cpp, $(BIN)/%.o, $(wildcard $(SRC)/*.cpp))
 
@@ -31,7 +34,7 @@ $(BIN)/%.o: $(SRC)/%.cpp
 	$(CC) $(CC_OPTIONS) $(INC_PATH) -Fo:$@ -c $^
 
 $(OUTPUT): $(OBJECTS)
-	$(LINK) $(LINK_OPTIONS) $(LIB_PATH) $(LIBS) $^ -OUT:$(BIN)/$@
+	$(LINKER) $(LINKER_OPTIONS) $(LIB_PATH) $(LIBS) $^ -OUT:$(BIN)/$@
 
 .PHONY: clean
 clean:
