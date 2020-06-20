@@ -1,5 +1,5 @@
 
-PATH = /mnt/c/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.25.28610/bin/Hostx64/x64
+PATH = /mnt/c/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.26.28801/bin/Hostx64/x64
 
 CC   = "$(PATH)/cl.exe"
 LINK = "$(PATH)/lib.exe"
@@ -7,7 +7,7 @@ LINK = "$(PATH)/lib.exe"
 INC_PATH += -I "C:/Program Files (x86)/Windows Kits/10/Include/10.0.18362.0/um"
 INC_PATH += -I "C:/Program Files (x86)/Windows Kits/10/Include/10.0.18362.0/ucrt"
 INC_PATH += -I "C:/Program Files (x86)/Windows Kits/10/Include/10.0.18362.0/shared"
-INC_PATH += -I "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.25.28610/include"
+INC_PATH += -I "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.26.28801/include"
 INC_PATH += -I "C:/Dev/Lib/SDL2/include"
 INC_PATH += -I ./inc/
 
