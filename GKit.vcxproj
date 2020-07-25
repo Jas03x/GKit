@@ -73,22 +73,24 @@
     <LinkIncremental>true</LinkIncremental>
     <NMakeIncludeSearchPath>C:\Users\Jas\Documents\Projects\GKit\inc;C:\Libraries\SDL2\include</NMakeIncludeSearchPath>
     <NMakePreprocessorDefinitions>_USE_MATH_DEFINES</NMakePreprocessorDefinitions>
+    <IncludePath>C:\Users\Jas\Documents\Projects\GKit\inc;C:\Libraries\SDL2\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <NMakeIncludeSearchPath>C:\Users\Jas\Documents\Projects\GKit\inc;C:\Libraries\SDL2\include</NMakeIncludeSearchPath>
-    <IncludePath>C:\Users\Jas\Projects\GKit\inc;C:\Dev\Lib\SDL2\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Jas\Documents\Projects\GKit\inc;C:\Libraries\SDL2\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <NMakePreprocessorDefinitions>_USE_MATH_DEFINES</NMakePreprocessorDefinitions>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <NMakeIncludeSearchPath>C:\Users\Jas\Documents\Projects\GKit\inc;C:\Libraries\SDL2\include</NMakeIncludeSearchPath>
     <NMakePreprocessorDefinitions>_USE_MATH_DEFINES</NMakePreprocessorDefinitions>
+    <IncludePath>C:\Users\Jas\Documents\Projects\GKit\inc;C:\Libraries\SDL2\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <NMakeIncludeSearchPath>C:\Users\Jas\Documents\Projects\GKit\inc;C:\Libraries\SDL2\include</NMakeIncludeSearchPath>
-    <IncludePath>C:\Users\Jas\Projects\GKit\inc;C:\Dev\Lib\SDL2\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Jas\Documents\Projects\GKit\inc;C:\Libraries\SDL2\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <NMakePreprocessorDefinitions>_USE_MATH_DEFINES</NMakePreprocessorDefinitions>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
