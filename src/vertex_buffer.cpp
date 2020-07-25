@@ -28,7 +28,7 @@ VertexBuffer::VertexBuffer(unsigned int type)
 VertexBuffer::~VertexBuffer()
 {
     const RenderingContext* context = RenderingContext::GetInstance();
-    if(context->IsAllocation(m_Handle) == true)
+    if(context->IsAllocation(m_Handle) == GFX_TRUE)
     {
         context->DeleteAllocations(1, &m_Handle);
     }
