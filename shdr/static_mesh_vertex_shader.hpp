@@ -29,6 +29,6 @@ static const char* STATIC_MESH_VERTEX_SHADER =
 																							\n\
 		af = 0.5;																			\n\
 		df = clamp(dot(_normal, _light_ray), 0.0, 1.0);										\n\
-		sf = clamp(dot(_camera_ray, reflect(-_light_ray, _normal)), 0.0, 1.0) * 0.1;		\n\
+		sf = clamp(dot(_camera_ray, reflect(-_light_ray, _normal)), 0.0, 1.0);				\n\
 	}																						\n\
 ";
