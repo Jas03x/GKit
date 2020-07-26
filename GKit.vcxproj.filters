@@ -366,5 +366,8 @@
     <ClCompile Include="src\tga_reader.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\mesh_data.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
