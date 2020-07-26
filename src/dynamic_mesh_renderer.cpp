@@ -106,8 +106,8 @@ void DynamicMeshRenderer::Render(const DynamicMesh& mesh)
 	Matrix4F mvp = Camera3D::GetInstance()->GetProjectionMatrix() * v_matrix;// *mesh.RootNode.GetLocalMatrix();
 	context->LoadConstantMatrix4F(Instance->m_ProjectionMatrix, 1, GFX_FALSE, &mvp[0][0]);
 
-	//Vector3F sun_position = (v_matrix * Vector4F(Sun::Position, 1.0f)).xyz();
-	context->LoadConstantArray3F(Instance->m_SunPosition, 1, &Sun::Position[0]);
+	Vector3F sun_position = (v_matrix * Vector4F(Sun::Position, 0.0f)).xyz();
+	context->LoadConstantArray3F(Instance->m_SunPosition, 1, &sun_position[0]);
 	context->LoadConstantArray3F(Instance->m_SunColor, 1, &Sun::Color[0]);
 
 	mesh.GetDiffuseTexture()->Bind(Instance->m_DiffuseTexture, 0);
