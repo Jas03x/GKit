@@ -9,8 +9,9 @@ static const char* DYNAMIC_MESH_PIXEL_SHADER =
 	uniform vec3 sun_color;																	\n\
 	uniform sampler2D diffuse_texture;														\n\
 																							\n\
-	float SUN_POWER = 0.8; // TODO: MAKE THIS A CONFIGURABLE UNIFORM IN SHADER LATER ON		\n\
-	// WE CAN MAKE THIS SHADER LEVEL OR GLOBAL LEVEL IN SUN NAMESPACE						\n\
+	float AMBIENT_FACTOR = 0.5;																\n\
+	float DIFFUSE_FACTOR = 0.5;																\n\
+	float SPECULAR_FACTOR = 0.1;															\n\
 																							\n\
 	out vec4 fragment_color;																\n\
 																							\n\
@@ -18,12 +19,12 @@ static const char* DYNAMIC_MESH_PIXEL_SHADER =
 	{																						\n\
 		vec3 color = texture(diffuse_texture, _uv).rgb;										\n\
 																							\n\
-		vec3 ambient = color * af;															\n\
-		vec3 diffuse = color * df;															\n\
-		vec3 specular = sun_color * sf;														\n\
+		vec3 ambient = color * af * AMBIENT_FACTOR;											\n\
+		vec3 diffuse = color * df * DIFFUSE_FACTOR;											\n\
+		vec3 specular = sun_color * sf * SPECULAR_FACTOR;									\n\
 		vec3 pixel = ambient + diffuse + specular;											\n\
 																							\n\
-		fragment_color = vec4(pixel * SUN_POWER, 1.0);										\n\
+		fragment_color = vec4(pixel, 1.0);													\n\
 		//fragment_color = vec4(1,0,0,1);													\n\
 	}																						\n\
 ";
