@@ -38,7 +38,7 @@ static const char* DYNAMIC_MESH_VERTEX_SHADER =
 		_uv = uv;																					\n\
 		vec3 _normal = normalize(vec3(normal_matrix * vec4(normal, 0.0)));							\n\
 		vec3 _camera_ray = normalize(vec3(0.0) - vertex_position);									\n\
-		vec3 _light_ray = normalize(sun_position + _camera_ray);									\n\
+		vec3 _light_ray = normalize(sun_position - vertex_position);								\n\
 																									\n\
 		af = 0.5;																					\n\
 		df = clamp(dot(_normal, _light_ray), 0.0, 1.0);												\n\

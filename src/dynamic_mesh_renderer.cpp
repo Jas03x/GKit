@@ -96,17 +96,17 @@ void DynamicMeshRenderer::Render(const DynamicMesh& mesh)
 
 	for (unsigned int i = 0; i < mesh.Bones.size(); i++)
 	{
-		vertex_matrices[i] = global_transforms[mesh.Bones[i].GetNodeID()] * mesh.Bones[i].GetBindPoseMatrix();
+		vertex_matrices[i] = v_matrix * global_transforms[mesh.Bones[i].GetNodeID()] * mesh.Bones[i].GetBindPoseMatrix();
 		normal_matrices[i] = Matrix::Inverse(Matrix::Transpose(vertex_matrices[i]));
 	}
 
 	context->LoadConstantMatrix4F(Instance->m_VertexMatricies, mesh.Bones.size(), GFX_FALSE, &vertex_matrices[0][0][0]);
 	context->LoadConstantMatrix4F(Instance->m_NormalMatricies, mesh.Bones.size(), GFX_FALSE, &normal_matrices[0][0][0]);
 
-	Matrix4F mvp = Camera3D::GetInstance()->GetProjectionMatrix() * v_matrix;// *mesh.RootNode.GetLocalMatrix();
+	Matrix4F mvp = Camera3D::GetInstance()->GetProjectionMatrix(); // *mesh.RootNode.GetLocalMatrix();
 	context->LoadConstantMatrix4F(Instance->m_ProjectionMatrix, 1, GFX_FALSE, &mvp[0][0]);
 
-	Vector3F sun_position = (v_matrix * Vector4F(Sun::Position, 0.0f)).xyz();
+	Vector3F sun_position = (v_matrix * Vector4F(Sun::Position, 1.0f)).xyz();
 	context->LoadConstantArray3F(Instance->m_SunPosition, 1, &sun_position[0]);
 	context->LoadConstantArray3F(Instance->m_SunColor, 1, &Sun::Color[0]);
 
