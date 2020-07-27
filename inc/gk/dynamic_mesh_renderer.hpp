@@ -17,6 +17,8 @@ private:
 	unsigned int m_DiffuseTexture;
 	unsigned int m_SunPosition;
 	unsigned int m_SunColor;
+	unsigned int m_CameraPosition;
+
 
 private:
 	DynamicMeshRenderer();

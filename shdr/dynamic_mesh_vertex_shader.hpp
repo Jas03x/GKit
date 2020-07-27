@@ -9,6 +9,7 @@ static const char* DYNAMIC_MESH_VERTEX_SHADER =
 	in vec4  bone_weights;																			\n\
 																									\n\
 	uniform vec3 sun_position;																		\n\
+	uniform vec3 camera_position;																	\n\
 																									\n\
 	uniform mat4 projection_matrix;																	\n\
 	uniform mat4 vertex_matrices[32]; // includes the bone matrices									\n\
@@ -37,7 +38,7 @@ static const char* DYNAMIC_MESH_VERTEX_SHADER =
 																									\n\
 		_uv = uv;																					\n\
 		vec3 _normal = normalize(vec3(normal_matrix * vec4(normal, 0.0)));							\n\
-		vec3 _camera_ray = normalize(vec3(0.0) - vertex_position);									\n\
+		vec3 _camera_ray = normalize(camera_position - vertex_position);							\n\
 		vec3 _light_ray = normalize(sun_position - vertex_position);								\n\
 																									\n\
 		af = 0.5;																					\n\

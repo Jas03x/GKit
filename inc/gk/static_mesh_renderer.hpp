@@ -17,6 +17,7 @@ private:
 	unsigned int m_DiffuseTexture;
 	unsigned int m_SunPosition;
 	unsigned int m_SunColor;
+	unsigned int m_CameraPosition;
 
 private:
 	StaticMeshRenderer();
@@ -28,8 +29,6 @@ public:
 
 	static void Bind();
 	static void Render(const StaticMesh& mesh);
-	static void Render(const StaticMesh& mesh, const std::vector<Transform3D>& transforms, bool useParentTransform = false);
-	static void Render(const StaticMesh& mesh, const Transform3D* transforms, unsigned int count, bool useParentTransform = false);
 };
 
 #endif // GK_STATIC_MESH_RENDERER_H

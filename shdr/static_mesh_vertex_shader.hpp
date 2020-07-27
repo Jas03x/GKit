@@ -7,6 +7,7 @@ static const char* STATIC_MESH_VERTEX_SHADER =
 	in int node;																			\n\
 																							\n\
 	uniform vec3 sun_position;																\n\
+	uniform vec3 camera_position;															\n\
 																							\n\
 	uniform mat4 projection_matrix;															\n\
 	uniform mat4 vertex_matrices[32];														\n\
@@ -24,7 +25,7 @@ static const char* STATIC_MESH_VERTEX_SHADER =
 																							\n\
 		_uv = uv;																			\n\
 		vec3 _normal = normalize(vec3(normal_matrices[node] * vec4(normal, 0.0)));			\n\
-		vec3 _camera_ray = normalize(vec3(0.0) - vertex_world);								\n\
+		vec3 _camera_ray = normalize(camera_position - vertex_world);						\n\
 		vec3 _light_ray = normalize(sun_position - vertex_world);							\n\
 																							\n\
 		af = 0.5;																			\n\
