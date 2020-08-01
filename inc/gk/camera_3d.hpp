@@ -5,6 +5,12 @@
 
 class Camera3D
 {
+public:
+	enum FOV : int {
+		THIRD_PERSON = 60,
+		FIRST_PERSON = 90
+	};
+
 private:
 	static Camera3D* Instance;
 
