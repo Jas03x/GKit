@@ -331,7 +331,7 @@ void Collada::Parser::read_accessor(const XML::Node* node, Accessor& accessor)
         const XML::ChildList* params = find_children(node, "param");
         if(m_status)
         {
-            unsigned int num_params = params->size();
+            unsigned long num_params = params->size();
 
             if(num_params <= accessor.params.size())
             {
@@ -365,7 +365,7 @@ Collada::Source* Collada::Parser::read_source(const XML::Node* node)
     source->id = find_attribute(node, "id");
     if(m_status)
     {
-        unsigned int elements_read = 0;
+        unsigned long elements_read = 0;
         const XML::Node* array = node->find_child("float_array");
         if(array != nullptr)
         {
@@ -459,7 +459,7 @@ void Collada::Parser::read_triangle_array(const XML::Node* node, TriangleArray* 
         const XML::ChildList* inputs = find_children(node, "input");
         if(m_status)
         {
-            unsigned int num_inputs = inputs->size();
+            unsigned int num_inputs = static_cast<unsigned int>(inputs->size());
 
             if(num_inputs <= array->inputs.size())
             {
@@ -485,7 +485,7 @@ void Collada::Parser::read_triangle_array(const XML::Node* node, TriangleArray* 
             parse_ushort_array(indices->text);
             if(m_status)
             {
-                unsigned int num_elements = m_ushort_buffer.size();
+                unsigned int num_elements = static_cast<unsigned int>(m_ushort_buffer.size());
                 unsigned int num_vertices = num_elements / array->num_inputs;
                 unsigned int num_triangles = num_vertices / 3;
                 if(num_triangles == array->count)
@@ -551,7 +551,7 @@ void Collada::Parser::read_mesh(const XML::Node* node, Mesh& mesh)
         const XML::ChildList* triangle_arrays = find_children(node, "triangles");
         if(m_status)
         {
-            unsigned int num_arrays = triangle_arrays->size();
+            unsigned int num_arrays = static_cast<unsigned int>(triangle_arrays->size());
 
             mesh.num_triangle_arrays = num_arrays;
             mesh.triangle_arrays = new TriangleArray[num_arrays];

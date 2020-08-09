@@ -98,8 +98,8 @@ void StaticMeshRenderer::Render(const StaticMesh& mesh)
 		normal_matrices[i] = Matrix::Inverse(Matrix::Transpose(vertex_matrices[i]));
 	}
 
-	context->LoadConstantMatrix4F(Instance->m_VertexMatricies, mesh.Nodes.size(), GFX_FALSE, &vertex_matrices[0][0][0]);
-	context->LoadConstantMatrix4F(Instance->m_NormalMatricies, mesh.Nodes.size(), GFX_FALSE, &normal_matrices[0][0][0]);
+	context->LoadConstantMatrix4F(Instance->m_VertexMatricies, static_cast<unsigned int>(mesh.Nodes.size()), GFX_FALSE, &vertex_matrices[0][0][0]);
+	context->LoadConstantMatrix4F(Instance->m_NormalMatricies, static_cast<unsigned int>(mesh.Nodes.size()), GFX_FALSE, &normal_matrices[0][0][0]);
 	context->LoadConstantMatrix4F(Instance->m_ProjectionMatrix, 1, GFX_FALSE, &Camera3D::GetInstance()->GetProjectionMatrix()[0][0]);
 
 	Vector3F sun_position = (v_matrix * Vector4F(Sun::Position, 1.0f)).xyz();

@@ -6,7 +6,7 @@
 
 void Random::Seed()
 {
-    srand(time(NULL));
+    srand(static_cast<unsigned int>(time(NULL)));
 }
 
 bool Random::Boolean()

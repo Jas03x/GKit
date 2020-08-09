@@ -101,8 +101,8 @@ void DynamicMeshRenderer::Render(const DynamicMesh& mesh)
 		normal_matrices[i] = Matrix::Inverse(Matrix::Transpose(vertex_matrices[i]));
 	}
 
-	context->LoadConstantMatrix4F(Instance->m_VertexMatricies, mesh.Bones.size(), GFX_FALSE, &vertex_matrices[0][0][0]);
-	context->LoadConstantMatrix4F(Instance->m_NormalMatricies, mesh.Bones.size(), GFX_FALSE, &normal_matrices[0][0][0]);
+	context->LoadConstantMatrix4F(Instance->m_VertexMatricies, static_cast<unsigned int>(mesh.Bones.size()), GFX_FALSE, &vertex_matrices[0][0][0]);
+	context->LoadConstantMatrix4F(Instance->m_NormalMatricies, static_cast<unsigned int>(mesh.Bones.size()), GFX_FALSE, &normal_matrices[0][0][0]);
 
 	Matrix4F mvp = Camera3D::GetInstance()->GetProjectionMatrix(); // *mesh.RootNode.GetLocalMatrix();
 	context->LoadConstantMatrix4F(Instance->m_ProjectionMatrix, 1, GFX_FALSE, &mvp[0][0]);

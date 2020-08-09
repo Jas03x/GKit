@@ -94,7 +94,7 @@ bool Collada::Importer::process_controller_library(const Collada::Parser::Contro
 {
     bool status = true;
 
-    unsigned int num_controllers = library.size();
+    unsigned long num_controllers = library.size();
     if (num_controllers > 1)
     {
         status = false;
@@ -241,7 +241,7 @@ bool Collada::Importer::process_node(const Collada::Node* node, MeshData& mesh_d
         printf("warning: bone node \"%s\" has a non-zero roll value of %f\n", node->name->c_str(), node->extra.technique.roll);
     }
 
-    m_node_map[n.name] = m_node_map.size();
+    m_node_map[n.name] = static_cast<unsigned int>(m_node_map.size());
 
     return status;
 }
