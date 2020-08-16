@@ -6,8 +6,19 @@
 
 // bmp file format: https://en.wikipedia.org/wiki/BMP_file_format
 
-const uint16_t BMP_SIGNATURE = 0x4D42;
-const uint32_t BMP_CMP_BITFIELD = 0x3;
+enum : uint16_t { BMP_SIGNATURE = 0x4D42 };
+
+enum : uint32_t
+{
+    BMP_RGB = 0x0,
+    BMP_BITFIELD = 0x3
+};
+
+enum : uint32_t
+{
+    BMP_V4_HDR = 0x6C,
+    BMP_V5_HDR = 0x7C
+};
 
 // https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapfileheader
 #ifdef _WIN32 
@@ -28,10 +39,9 @@ struct BMP_HDR
     __attribute__((packed));
 #endif
 
-// https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapv5header
-struct BMP_DESC
+// https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapv4header
+struct BMP_DESC_V4
 {
-    uint32_t type; // type (based off size of this descriptor) = 124
     uint32_t width; // width of this image
     uint32_t height; // height of this image
     uint16_t planes; // number of planes = 1
@@ -47,7 +57,7 @@ struct BMP_DESC
     uint32_t blue_mask;
     uint32_t alpha_mask;
     uint32_t color_space_type;
-    struct{
+    struct {
         struct { uint32_t x, y, z; } red;
         struct { uint32_t x, y, z; } green;
         struct { uint32_t x, y, z; } blue;
@@ -55,6 +65,13 @@ struct BMP_DESC
     uint32_t gamma_red;
     uint32_t gamma_green;
     uint32_t gamma_blue;
+};
+
+// https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapv5header
+struct BMP_DESC_V5
+{
+    BMP_DESC_V4 v4;
+
     uint32_t intent;
     uint32_t profile_data;
     uint32_t profile_size;
@@ -66,7 +83,8 @@ bool BMP_Reader::Read(const char* path, Bitmap& bitmap)
     bool status = true;
 
     File file(path, File::READ_BINARY);
-    if(!file.IsOpen()) {
+    if(!file.IsOpen())
+    {
         status = false;
     }
 
@@ -76,63 +94,52 @@ bool BMP_Reader::Read(const char* path, Bitmap& bitmap)
         status = file.Read(&hdr, sizeof(BMP_HDR), 1);
     }
 
+    if(status && (hdr.type != BMP_SIGNATURE))
+    {
+        status = false;
+        printf("file is not a bitmap file\n");
+    }
+
+    uint32_t hdr_ver = 0;
     if(status)
     {
-        if(hdr.type != BMP_SIGNATURE)
+        status = file.Read(&hdr_ver, 1);
+    }
+
+    BMP_DESC_V5 desc = {};
+    if(status)
+    {
+        if(hdr_ver == BMP_V4_HDR)
         {
-            status = false;
-            printf("file is not a bitmap file\n");
+            status = file.Read(&desc.v4, sizeof(BMP_V4_HDR), 1);
         }
-    }
-
-    BMP_DESC desc = {};
-    if(status)
-    {
-        status = file.Read(&desc, sizeof(BMP_DESC), 1);
-    }
-
-    if(status)
-    {
-        if(desc.type != 0x7C)
+        else if(hdr_ver == BMP_V5_HDR)
+        {
+            status = file.Read(&desc, sizeof(BMP_V5_HDR), 1);
+        }
+        else
         {
             status = false;
             printf("unsupported bitmap file\n");
         }
-        else if(desc.compression != BMP_CMP_BITFIELD)
+    }
+
+    if(status)
+    {
+        if((desc.v4.compression != BMP_RGB) && (desc.v4.compression != BMP_BITFIELD))
         {
             status = false;
             printf("invalid compression\n");
         }
     }
 
-    /*
-    printf("Header size = %zu\n", sizeof(BMP_HDR));
-    printf("Descriptor size = %zu\n", sizeof(BMP_DESC));
-    printf("Combined size = %zu\n", sizeof(BMP_HDR) + sizeof(BMP_DESC));
-
-    printf("\nHDR:\n");
-    printf("Type: 0x%hX\n", hdr.type);
-    printf("Size: 0x%u\n", hdr.size);
-    printf("Offset: 0x%X\n", hdr.offset);
-
-    printf("\nDESC:\n");
-    printf("Type: %u\n", desc.type);
-    printf("Width: %u\n", desc.width);
-    printf("Height: %u\n", desc.height);
-    printf("Planes: %hu\n", desc.planes);
-    printf("BPP: %hu\n", desc.bpp);
-    printf("Compression: %u\n", desc.compression);
-    printf("Size: %u\n", desc.size);
-    */
-
+    uint8_t* pixels = nullptr;
     if(status)
     {
-        bool has_alpha = (desc.bpp == 32);
-
-        uint32_t pixel_size = desc.bpp / 8;
-        uint32_t pixel_count = desc.width * desc.height;
+        uint32_t pixel_size = (desc.v4.bpp / 8);
+        uint32_t pixel_count = desc.v4.width * desc.v4.height;
         
-        uint8_t* pixels = new uint8_t[pixel_count * pixel_size];
+        pixels = new uint8_t[pixel_count * pixel_size];
 
         union { 
             struct { uint8_t r, g, b, a; };
@@ -150,24 +157,17 @@ bool BMP_Reader::Read(const char* path, Bitmap& bitmap)
             pixels[i * pixel_size + 0] = buffer.b;
             pixels[i * pixel_size + 1] = buffer.g;
             pixels[i * pixel_size + 2] = buffer.r;
-            if (has_alpha)
+            if (bitmap.has_alpha)
             {
                 pixels[i * pixel_size + 3] = buffer.a;
             }
         }
-
-        if(status)
-        {
-            bitmap.width = desc.width;
-            bitmap.height = desc.height;
-            bitmap.pixels = pixels;
-            bitmap.has_alpha = has_alpha ? 1 : 0;
-        }
-        else
-        {
-            delete[] pixels;
-        }
     }
+
+    bitmap.width = desc.v4.width;
+    bitmap.height = desc.v4.height;
+    bitmap.has_alpha = (desc.v4.bpp == 32);
+    bitmap.pixels = pixels;
 
     return status;
 }
