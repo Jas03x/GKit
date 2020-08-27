@@ -1,5 +1,5 @@
 
-MSVC = Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.26.28801
+MSVC = Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.27.29110
 
 LIB_SDL = "C:/Libraries/SDL2"
 WIN_SDK_INC = C:/Program Files (x86)/Windows Kits/10/Include/10.0.18362.0

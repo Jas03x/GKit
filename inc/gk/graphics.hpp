@@ -62,12 +62,6 @@ enum GFX_BLEND_OP
 	GFX_BLEND_DST_ALPHA           = 0x0304
 };
 
-enum GFX_COMPARISON
-{
-	GFX_ALWAYS = 0x0207,
-	GFX_LESS   = 0x0201
-};
-
 enum GFX_BUFFER
 {
 	GFX_DEPTH_BUFFER_BIT    = 0x00000100,
@@ -150,6 +144,18 @@ enum GFX_TEXTURE_PARAMETER
 	GFX_CLAMP_TO_EDGE           = 0x812F
 };
 
+enum GFX_DEPTH_FUNCTION
+{
+    GFX_NEVER    = 0x0200,
+    GFX_LESS     = 0x0201,
+    GFX_EQUAL    = 0x0202,
+    GFX_LEQUAL   = 0x0203,
+    GFX_GREATER  = 0x0204,
+    GFX_NOTEQUAL = 0x0205,
+    GFX_GEQUAL   = 0x0206,
+    GFX_ALWAYS   = 0x0207
+};
+
 typedef void     (*GFX_PFN_ActiveTexture)(uint32_t);
 typedef void     (*GFX_PFN_AttachShader)(uint32_t, uint32_t);
 typedef void     (*GFX_PFN_DetachShader)(uint32_t, uint32_t);
@@ -177,6 +183,7 @@ typedef void     (*GFX_PFN_DeleteTextures)(int32_t, const uint32_t*);
 typedef void     (*GFX_PFN_DeleteVertexArrays)(int32_t, const uint32_t*);
 typedef void     (*GFX_PFN_DepthFunc)(uint32_t);
 typedef void     (*GFX_PFN_DepthMask)(uint8_t);
+typedef void     (*GFX_PFN_DepthRange)(double, double);
 typedef void     (*GFX_PFN_Disable)(uint32_t);
 typedef void     (*GFX_PFN_DrawBuffer)(uint32_t);
 typedef void     (*GFX_PFN_DrawBuffers)(int32_t, const uint32_t*);
@@ -212,6 +219,7 @@ typedef uint8_t  (*GFX_PFN_IsTexture)(uint32_t);
 typedef uint8_t  (*GFX_PFN_IsVertexArray)(uint32_t);
 typedef void     (*GFX_PFN_LinkProgram)(uint32_t);
 typedef void     (*GFX_PFN_RenderbufferStorage)(uint32_t, uint32_t, int32_t, int32_t);
+typedef void     (*GFX_PFN_ShaderSource)(uint32_t, int32_t, const char* const*, const int32_t*);
 typedef void     (*GFX_PFN_TexImage2D)(uint32_t, int32_t, int32_t, int32_t, int32_t, int32_t, uint32_t, uint32_t, const void*);
 typedef void     (*GFX_PFN_TexParameterI)(uint32_t, uint32_t, int32_t);
 typedef void     (*GFX_PFN_Uniform1F)(int32_t, float);
@@ -241,11 +249,10 @@ typedef void     (*GFX_PFN_Uniform4UIV)(int32_t, int32_t, const uint32_t*);
 typedef void     (*GFX_PFN_UniformMatrix2FV)(int32_t, int32_t, uint8_t, const float*);
 typedef void     (*GFX_PFN_UniformMatrix3FV)(int32_t, int32_t, uint8_t, const float*);
 typedef void     (*GFX_PFN_UniformMatrix4FV)(int32_t, int32_t, uint8_t, const float*);
+typedef void     (*GFX_PFN_UseProgram)(uint32_t);
 typedef void     (*GFX_PFN_VertexAttribFPointer)(uint32_t, int32_t, uint32_t, uint8_t, int32_t, const void*);
 typedef void     (*GFX_PFN_VertexAttribIPointer)(uint32_t, int32_t, uint32_t, int32_t, const void*);
 typedef void     (*GFX_PFN_Viewport)(int32_t, int32_t, int32_t, int32_t);
-typedef void     (*GFX_PFN_ShaderSource)(uint32_t, int32_t, const char* const*, const int32_t*);
-typedef void     (*GFX_PFN_UseProgram)(uint32_t);
 
 class RenderingContext
 {
@@ -349,6 +356,7 @@ public:
     GFX_PFN_Viewport                  SetViewport;
     GFX_PFN_ShaderSource              SetShaderSource;
     GFX_PFN_UseProgram                BindProgram;
+    GFX_PFN_DepthRange                SetDepthRange;
 
 private:
 	bool Initialize();

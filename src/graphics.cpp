@@ -148,6 +148,7 @@ bool RenderingContext::Initialize()
     if(status) LinkProgram                  = reinterpret_cast<GFX_PFN_LinkProgram>              (GetFunctionAddress(glLinkProgram, &status));
     if(status) BindProgram                  = reinterpret_cast<GFX_PFN_UseProgram>               (GetFunctionAddress(glUseProgram, &status));
     if(status) ErrorCheck                   = reinterpret_cast<GFX_PFN_GetError>                 (GetFunctionAddress(glGetError, &status));
+    if(status) SetDepthRange                = reinterpret_cast<GFX_PFN_DepthRange>               (GetFunctionAddress(glDepthRange, &status));
 	
 	if (!status)
 	{
