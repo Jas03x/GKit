@@ -37,6 +37,8 @@ StaticMeshRenderer::StaticMeshRenderer()
 	m_NormalMatricies = Shader::GetUniformLocation("normal_matrices");
 	m_ProjectionMatrix = Shader::GetUniformLocation("projection_matrix");
 	m_CameraPosition = Shader::GetUniformLocation("camera_position");
+
+	m_RenderMode = GFX_TRIANGLES;
 }
 
 StaticMeshRenderer::~StaticMeshRenderer()
@@ -67,6 +69,12 @@ void StaticMeshRenderer::Bind()
 {
 	assert(Instance != nullptr);
 	Instance->Shader::Bind();
+}
+
+void StaticMeshRenderer::SetRenderMode(unsigned int mode)
+{
+	assert(Instance != nullptr);
+	Instance->m_RenderMode = mode;
 }
 
 void StaticMeshRenderer::Render(const StaticMesh& mesh)
@@ -109,6 +117,5 @@ void StaticMeshRenderer::Render(const StaticMesh& mesh)
 
 	mesh.GetDiffuseTexture()->Bind(Instance->m_DiffuseTexture, 0);
 
-	//glDrawArrays(GL_TRIANGLES, 0, mesh.GetVertexCount());
-	context->DrawElements(GFX_TRIANGLES, mesh.GetElementCount(), GFX_TYPE_UNSIGNED_SHORT, reinterpret_cast<void*>(0));
+	context->DrawElements(Instance->m_RenderMode, mesh.GetElementCount(), GFX_TYPE_UNSIGNED_SHORT, reinterpret_cast<void*>(0));
 }

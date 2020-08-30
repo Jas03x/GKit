@@ -19,6 +19,8 @@ private:
 	unsigned int m_SunColor;
 	unsigned int m_CameraPosition;
 
+	unsigned int m_RenderMode;
+
 private:
 	StaticMeshRenderer();
 	~StaticMeshRenderer();
@@ -29,6 +31,8 @@ public:
 
 	static void Bind();
 	static void Render(const StaticMesh& mesh);
+
+	static void SetRenderMode(unsigned int mode);
 };
 
 #endif // GK_STATIC_MESH_RENDERER_H
