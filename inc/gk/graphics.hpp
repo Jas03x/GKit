@@ -129,6 +129,17 @@ enum GFX_DRAW_MODE
 	GFX_TRIANGLES = 0x0004
 };
 
+enum GFX_POLYGON_FACE
+{
+    GFX_FRONT_AND_BACK = 0x0408
+};
+
+enum GFX_POLYGON_MODE
+{
+    GFX_LINE = 0x1B01,
+    GFX_FILL = 0x1B02
+};
+
 enum GFX_TEXTURE_PARAMETER
 {
 	GFX_TEXTURE_MAG_FILTER      = 0x2800,
@@ -219,6 +230,7 @@ typedef uint8_t  (*GFX_PFN_IsShader)(uint32_t);
 typedef uint8_t  (*GFX_PFN_IsTexture)(uint32_t);
 typedef uint8_t  (*GFX_PFN_IsVertexArray)(uint32_t);
 typedef void     (*GFX_PFN_LinkProgram)(uint32_t);
+typedef void     (*GFX_PFN_PolygonMode)(uint32_t, uint32_t);
 typedef void     (*GFX_PFN_RenderbufferStorage)(uint32_t, uint32_t, int32_t, int32_t);
 typedef void     (*GFX_PFN_ShaderSource)(uint32_t, int32_t, const char* const*, const int32_t*);
 typedef void     (*GFX_PFN_TexImage2D)(uint32_t, int32_t, int32_t, int32_t, int32_t, int32_t, uint32_t, uint32_t, const void*);
@@ -322,6 +334,7 @@ public:
     GFX_PFN_IsTexture                 IsTexture;
     GFX_PFN_IsVertexArray             IsVertexArray;
     GFX_PFN_LinkProgram               LinkProgram;
+    GFX_PFN_PolygonMode               SetPolygonMode;
     GFX_PFN_RenderbufferStorage       RenderbufferStorage;
     GFX_PFN_TexImage2D                CreateTexture2D;
     GFX_PFN_TexParameterI             SetTextureParameter;
