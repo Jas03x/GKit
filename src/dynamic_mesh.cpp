@@ -55,7 +55,7 @@ void DynamicMesh::Load(const MeshData& data, const std::string& texture_director
 		this->RootNode.SetOffsetMatrix(Quaternion(-M_PI / 2.0f, 0.0f, 0.0f).matrix());
 	}
 
-	DynamicMesh::Vertex* vertex_buffer = new DynamicMesh::Vertex[data.vertices.size()];
+	std::vector<DynamicMesh::Vertex> vertex_buffer(data.vertices.size());
 	for (unsigned int i = 0; i < data.vertices.size(); i++)
 	{
 		const MeshData::Vertex& v = data.vertices[i];
@@ -95,7 +95,7 @@ void DynamicMesh::Load(const MeshData& data, const std::string& texture_director
 
 	m_VBO = new VertexBuffer(GFX_ARRAY_BUFFER);
 	m_VBO->Bind();
-	m_VBO->Allocate(sizeof(DynamicMesh::Vertex) * data.vertices.size(), vertex_buffer, GFX_STATIC_DRAW);
+	m_VBO->Allocate(sizeof(DynamicMesh::Vertex) * data.vertices.size(), vertex_buffer.data(), GFX_STATIC_DRAW);
 	
 	m_VAO->EnableVertexAttribute(VertexAttributes::VERTEX);
 	m_VAO->EnableVertexAttribute(VertexAttributes::NORMAL);
@@ -126,8 +126,6 @@ void DynamicMesh::Load(const MeshData& data, const std::string& texture_director
 	}
 
 	m_ElementCount = data.index_count;
-
-	delete[] vertex_buffer;
 
 	Bitmap image((texture_directory + data.colour_texture).c_str());
 	m_DiffuseTexture = new Texture(image.has_alpha ? GFX_RGBA : GFX_RGB, image.width, image.height, GFX_TYPE_UNSIGNED_BYTE, image.pixels, GFX_LINEAR, GFX_CLAMP_TO_EDGE);
