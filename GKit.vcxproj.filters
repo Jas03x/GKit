@@ -1,373 +1,360 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="src">
-      <UniqueIdentifier>{f6cb8a59-b157-483c-82b1-1eafff9d208a}</UniqueIdentifier>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="inc">
-      <UniqueIdentifier>{9e943241-e625-4d83-b73d-512860378ea1}</UniqueIdentifier>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="shdr">
-      <UniqueIdentifier>{f37d08f8-c15d-4164-9081-2bc7bde2434d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="tools">
-      <UniqueIdentifier>{da6864f0-c92e-4e66-9dc1-55456dc88058}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="inc\gk">
-      <UniqueIdentifier>{752fa83b-29e7-4691-8806-079379fbf35e}</UniqueIdentifier>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="tools\mdl_exporter.py">
-      <Filter>tools</Filter>
-    </None>
-    <None Include="makefile.win" />
-    <None Include="makefile.osx" />
-    <None Include="shdr\particle_vertex_shader.hpp">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\particle_pixel_shader.hpp">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\gaussian_blur_vertex_shader.hpp">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\gaussian_blur_pixel_shader.hpp">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\dynamic_mesh_pixel_shader.hpp">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\dynamic_mesh_vertex_shader.hpp">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\skybox_pixel_shader.hpp">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\skybox_vertex_shader.hpp">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\sprite_pixel_shader.hpp">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\sprite_vertex_shader.hpp">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\static_mesh_pixel_shader.hpp">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\static_mesh_vertex_shader.hpp">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\frame_vertex_shader.hpp">
-      <Filter>shdr</Filter>
-    </None>
-    <None Include="shdr\frame_pixel_shader.hpp">
-      <Filter>shdr</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Todo.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="inc\gk\string.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\string_buffer.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\sun.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\texture.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\transform_2d.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\transform_3d.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\vertex_array.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\vertex_buffer.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\view.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\xml.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\blur_shader.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\bone.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\camera_2d.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\camera_3d.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\clock.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\collada_format.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\collada_importer.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\collada_parser.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\config.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\context.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\data_types.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\dynamic_mesh.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\dynamic_mesh_renderer.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\file.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\frame_renderer.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\framebuffer.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\graphics.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\matrix.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\mdl_format.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\mdl_importer.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\mesh.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\mesh_data.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\mesh_util.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\node.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\particle.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\particle_array.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\particle_renderer_3d.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\quad.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\random.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\shader.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\skybox.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\skybox_renderer.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\sprite.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\sprite_renderer.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\static_mesh.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\static_mesh_renderer.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\filesystem.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\bitmap.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\cubemap.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\render_buffer.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="src\render_buffer.cpp">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\bmp_reader.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gk\tga_reader.hpp">
-      <Filter>inc\gk</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\collada_parser.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\context.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dynamic_mesh.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dynamic_mesh_renderer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\file.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\frame_renderer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\framebuffer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\matrix.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\mdl_importer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\mesh.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\mesh_util.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\node.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\particle_array.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\particle_renderer_3d.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\quad.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\random.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\shader.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\skybox.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\skybox_renderer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sprite.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sprite_renderer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\static_mesh.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\static_mesh_renderer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\string_buffer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sun.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\texture.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\transform_2d.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\transform_3d.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\vertex_array.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\vertex_buffer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\view.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\xml.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\blur_shader.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\bone.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\camera_2d.cpp">
-      <Filter>src</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="src\camera_3d.cpp">
-      <Filter>src</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="src\clock.cpp">
-      <Filter>src</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="src\collada_format.cpp">
-      <Filter>src</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="src\collada_importer.cpp">
-      <Filter>src</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\filesystem.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\collada_parser.cpp">
+      <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\bitmap.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\context.cpp">
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="src\cubemap.cpp">
-      <Filter>src</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\bmp_reader.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\dynamic_mesh.cpp">
+      <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\tga_reader.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\dynamic_mesh_renderer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\file.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\filesystem.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\frame_renderer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\framebuffer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\matrix.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mdl_importer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mesh.cpp">
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="src\mesh_data.cpp">
-      <Filter>src</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="src\mesh_util.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\node.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particle_array.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particle_renderer_3d.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\quad.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\random.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\render_buffer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shader.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skybox.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skybox_renderer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite_renderer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\static_mesh.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\static_mesh_renderer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\string_buffer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sun.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\texture.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tga_reader.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\transform_2d.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\transform_3d.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vertex_array.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vertex_buffer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\view.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\xml.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bitmap.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\blur_shader.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bmp_reader.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bone.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\gk\bitmap.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\blur_shader.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\bmp_reader.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\bone.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\camera_2d.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\camera_3d.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\clock.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\collada_format.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\collada_importer.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\collada_parser.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\config.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\context.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\cubemap.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\data_types.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\dynamic_mesh.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\dynamic_mesh_renderer.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\file.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\filesystem.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\framebuffer.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\frame_renderer.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\graphics.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\matrix.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\mdl_format.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\mdl_importer.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\mesh.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\mesh_data.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\mesh_util.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\node.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\particle.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\particle_array.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\particle_renderer_3d.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\quad.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\random.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\render_buffer.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\shader.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\skybox.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\skybox_renderer.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\sprite.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\sprite_renderer.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\static_mesh.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\static_mesh_renderer.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\string.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\string_buffer.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\sun.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\texture.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\tga_reader.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\transform_2d.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\transform_3d.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\vertex_array.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\vertex_buffer.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\view.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\xml.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\gaussian_blur_pixel_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\gaussian_blur_vertex_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\particle_pixel_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\particle_vertex_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\skybox_pixel_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\skybox_vertex_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\sprite_pixel_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\sprite_vertex_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\static_mesh_pixel_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\static_mesh_vertex_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\dynamic_mesh_pixel_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\dynamic_mesh_vertex_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\frame_pixel_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\frame_vertex_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

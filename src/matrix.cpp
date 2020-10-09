@@ -138,10 +138,12 @@ template <typename T> T Vector::Distance(const Vector4<T>& v0, const Vector4<T>&
 // ------------------------------ Vector Instantiations ------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------
 
-#define INSTANTIATE_VECTOR_TEMPLATE(x)                                                  \
+#define INSTANTIATE_VECTOR_TEMPLATES(x)                                                 \
     template struct Vector2<x>;                                                         \
     template struct Vector3<x>;                                                         \
     template struct Vector4<x>;                                                         \
+
+#define INSTANTIATE_VECTOR_FUNCTION_TEMPLATES(x)                                        \
     template x Vector::Length(const Vector2<x>& v);                                     \
     template x Vector::Length(const Vector3<x>& v);                                     \
     template x Vector::Length(const Vector4<x>& v);                                     \
@@ -156,17 +158,19 @@ template <typename T> T Vector::Distance(const Vector4<T>& v0, const Vector4<T>&
     template Vector3<x> Vector::Normalize(const Vector3<x>& v0);                        \
     template Vector4<x> Vector::Normalize(const Vector4<x>& v0);                        \
 
+INSTANTIATE_VECTOR_TEMPLATES(char);
+INSTANTIATE_VECTOR_TEMPLATES(short);
+INSTANTIATE_VECTOR_TEMPLATES(int);
+INSTANTIATE_VECTOR_TEMPLATES(long);
+INSTANTIATE_VECTOR_TEMPLATES(unsigned char);
+INSTANTIATE_VECTOR_TEMPLATES(unsigned short);
+INSTANTIATE_VECTOR_TEMPLATES(unsigned int);
+INSTANTIATE_VECTOR_TEMPLATES(unsigned long);
+INSTANTIATE_VECTOR_TEMPLATES(float);
+INSTANTIATE_VECTOR_TEMPLATES(double);
 
-INSTANTIATE_VECTOR_TEMPLATE(char);
-INSTANTIATE_VECTOR_TEMPLATE(short);
-INSTANTIATE_VECTOR_TEMPLATE(int);
-INSTANTIATE_VECTOR_TEMPLATE(long);
-INSTANTIATE_VECTOR_TEMPLATE(unsigned char);
-INSTANTIATE_VECTOR_TEMPLATE(unsigned short);
-INSTANTIATE_VECTOR_TEMPLATE(unsigned int);
-INSTANTIATE_VECTOR_TEMPLATE(unsigned long);
-INSTANTIATE_VECTOR_TEMPLATE(float);
-INSTANTIATE_VECTOR_TEMPLATE(double);
+INSTANTIATE_VECTOR_FUNCTION_TEMPLATES(float);
+INSTANTIATE_VECTOR_FUNCTION_TEMPLATES(double);
 
 // -----------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------ Matrix 2 -------------------------------------------------------------------------------------------
