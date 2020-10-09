@@ -135,6 +135,15 @@
     <ClInclude Include="shdr\static_mesh_pixel_shader.hpp" />
     <ClInclude Include="shdr\static_mesh_vertex_shader.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitattributes" />
+    <None Include=".gitignore" />
+    <None Include="makefile.osx" />
+    <None Include="makefile.win" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Todo.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
