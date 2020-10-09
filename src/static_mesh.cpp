@@ -24,11 +24,11 @@ void StaticMesh::Load(const MeshData& data, const std::string& texture_directory
 	std::map<std::string, unsigned int> node_map;
 
 	// initialize nodes
-	Nodes.reserve(NODE_LIMIT);
+	Nodes.resize(data.nodes.size());
 	for (unsigned int i = 0; i < data.nodes.size(); i++)
 	{
 		const MeshData::Node& node = data.nodes[i];
-		Nodes.push_back(Node(node.name, node.offset_matrix));
+		Nodes[i] = Node(node.name, node.offset_matrix);
 		node_map[node.name] = i;
 	}
 
