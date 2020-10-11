@@ -59,6 +59,7 @@
     <ClCompile Include="src\string_buffer.cpp" />
     <ClCompile Include="src\sun.cpp" />
     <ClCompile Include="src\texture.cpp" />
+    <ClCompile Include="src\texture_manager.cpp" />
     <ClCompile Include="src\tga_reader.cpp" />
     <ClCompile Include="src\transform_2d.cpp" />
     <ClCompile Include="src\transform_3d.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="inc\gk\string_buffer.hpp" />
     <ClInclude Include="inc\gk\sun.hpp" />
     <ClInclude Include="inc\gk\texture.hpp" />
+    <ClInclude Include="inc\gk\texture_manager.hpp" />
     <ClInclude Include="inc\gk\tga_reader.hpp" />
     <ClInclude Include="inc\gk\transform_2d.hpp" />
     <ClInclude Include="inc\gk\transform_3d.hpp" />

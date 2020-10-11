@@ -5,8 +5,8 @@
 #include <map>
 #include <utility>
 
-#include <gk/bitmap.hpp>
 #include <gk/blur_shader.hpp>
+#include <gk/texture_manager.hpp>
 
 DynamicMesh::DynamicMesh() : RootNode("Root", Matrix4F(1.0f))
 {
@@ -127,8 +127,7 @@ void DynamicMesh::Load(const MeshData& data, const std::string& texture_director
 
 	m_ElementCount = data.index_count;
 
-	Bitmap image((texture_directory + data.colour_texture).c_str());
-	m_DiffuseTexture = new Texture(image.has_alpha ? GFX_RGBA : GFX_RGB, image.width, image.height, GFX_TYPE_UNSIGNED_BYTE, image.pixels, GFX_LINEAR, GFX_CLAMP_TO_EDGE);
+	m_DiffuseTexture = TextureManager::Load(data.colour_texture);
 }
 
 DynamicMesh::~DynamicMesh()
@@ -137,11 +136,6 @@ DynamicMesh::~DynamicMesh()
 
 void DynamicMesh::Destroy()
 {
-	if (m_DiffuseTexture != nullptr) {
-		delete m_DiffuseTexture;
-		m_DiffuseTexture = nullptr;
-	}
-
 	Mesh::Destroy();
 }
 

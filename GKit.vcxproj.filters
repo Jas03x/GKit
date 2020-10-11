@@ -156,6 +156,9 @@
     <ClCompile Include="src\bone.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="src\texture_manager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\gk\bitmap.hpp">
@@ -355,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="shdr\frame_vertex_shader.hpp">
       <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gk\texture_manager.hpp">
+      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

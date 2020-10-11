@@ -5,7 +5,7 @@
 
 #include <map>
 
-#include <gk/bitmap.hpp>
+#include <gk/texture_manager.hpp>
 
 StaticMesh::StaticMesh() : RootNode("Root", Matrix4F(1.0f))
 {
@@ -96,8 +96,7 @@ void StaticMesh::Load(const MeshData& data, const std::string& texture_directory
 
 	m_ElementCount = data.index_count;
 
-	Bitmap image((texture_directory + data.colour_texture).c_str());
-	m_DiffuseTexture = new Texture(image.has_alpha ? GFX_RGBA : GFX_RGB, image.width, image.height, GFX_TYPE_UNSIGNED_BYTE, image.pixels, GFX_LINEAR, GFX_CLAMP_TO_EDGE);
+	m_DiffuseTexture = TextureManager::Load(data.colour_texture);
 }
 
 StaticMesh::~StaticMesh()
@@ -106,11 +105,6 @@ StaticMesh::~StaticMesh()
 
 void StaticMesh::Destroy()
 {
-	if (m_DiffuseTexture != nullptr) {
-		delete m_DiffuseTexture;
-		m_DiffuseTexture = nullptr;
-	}
-
 	Mesh::Destroy();
 }
 
