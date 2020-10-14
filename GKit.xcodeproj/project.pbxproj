@@ -121,6 +121,9 @@
 		411D8B2D24E06EF500895E4C /* static_mesh_pixel_shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 411D8B1F24E06EF400895E4C /* static_mesh_pixel_shader.hpp */; };
 		411D8B2E24E06EF500895E4C /* frame_pixel_shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 411D8B2024E06EF500895E4C /* frame_pixel_shader.hpp */; };
 		4145BB0B24E07FAF001B072D /* libGKit.a in CopyFiles */ = {isa = PBXBuildFile; fileRef = 41755D1C24E06D1F000B6282 /* libGKit.a */; };
+		41F195182536DCF300921925 /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41F195172536DCF300921925 /* texture.cpp */; };
+		41F1951B2536DD0500921925 /* texture_manager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 41F1951A2536DD0500921925 /* texture_manager.hpp */; };
+		41F195202536DD3F00921925 /* texture_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41F1951F2536DD3F00921925 /* texture_manager.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -251,6 +254,9 @@
 		411D8B1F24E06EF400895E4C /* static_mesh_pixel_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = static_mesh_pixel_shader.hpp; path = shdr/static_mesh_pixel_shader.hpp; sourceTree = "<group>"; };
 		411D8B2024E06EF500895E4C /* frame_pixel_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = frame_pixel_shader.hpp; path = shdr/frame_pixel_shader.hpp; sourceTree = "<group>"; };
 		41755D1C24E06D1F000B6282 /* libGKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		41F195172536DCF300921925 /* texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = texture.cpp; path = src/texture.cpp; sourceTree = "<group>"; };
+		41F1951A2536DD0500921925 /* texture_manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = texture_manager.hpp; path = inc/gk/texture_manager.hpp; sourceTree = "<group>"; };
+		41F1951F2536DD3F00921925 /* texture_manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = texture_manager.cpp; path = src/texture_manager.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +273,7 @@
 		411D8A4824E06E9600895E4C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				41F195172536DCF300921925 /* texture.cpp */,
 				411D8AC924E06ECF00895E4C /* bitmap.cpp */,
 				411D8AE024E06ED100895E4C /* blur_shader.cpp */,
 				411D8AD324E06ED000895E4C /* bmp_reader.cpp */,
@@ -298,6 +305,7 @@
 				411D8AC124E06ECF00895E4C /* random.cpp */,
 				411D8ABA24E06ECF00895E4C /* render_buffer.cpp */,
 				411D8AD224E06ED000895E4C /* shader.cpp */,
+				41F1951F2536DD3F00921925 /* texture_manager.cpp */,
 				411D8ACB24E06ECF00895E4C /* skybox_renderer.cpp */,
 				411D8AD424E06ED000895E4C /* skybox.cpp */,
 				411D8ABB24E06ECF00895E4C /* sprite_renderer.cpp */,
@@ -364,6 +372,7 @@
 				411D8A6F24E06EBE00895E4C /* random.hpp */,
 				411D8A7224E06EBF00895E4C /* render_buffer.hpp */,
 				411D8A7924E06EBF00895E4C /* shader.hpp */,
+				41F1951A2536DD0500921925 /* texture_manager.hpp */,
 				411D8A6924E06EBE00895E4C /* skybox_renderer.hpp */,
 				411D8A5624E06EBD00895E4C /* skybox.hpp */,
 				411D8A7324E06EBF00895E4C /* sprite_renderer.hpp */,
@@ -470,6 +479,7 @@
 				411D8A8624E06EBF00895E4C /* particle_array.hpp in Headers */,
 				411D8B2C24E06EF500895E4C /* dynamic_mesh_pixel_shader.hpp in Headers */,
 				411D8A8E24E06EBF00895E4C /* context.hpp in Headers */,
+				41F1951B2536DD0500921925 /* texture_manager.hpp in Headers */,
 				411D8AA824E06EBF00895E4C /* data_types.hpp in Headers */,
 				411D8AA024E06EBF00895E4C /* bone.hpp in Headers */,
 				411D8B2524E06EF500895E4C /* static_mesh_vertex_shader.hpp in Headers */,
@@ -588,6 +598,7 @@
 				411D8AFB24E06ED100895E4C /* sun.cpp in Sources */,
 				411D8AFD24E06ED100895E4C /* frame_renderer.cpp in Sources */,
 				411D8AFF24E06ED100895E4C /* vertex_buffer.cpp in Sources */,
+				41F195202536DD3F00921925 /* texture_manager.cpp in Sources */,
 				411D8B0C24E06ED100895E4C /* camera_2d.cpp in Sources */,
 				411D8AFE24E06ED100895E4C /* vertex_array.cpp in Sources */,
 				411D8AF524E06ED100895E4C /* view.cpp in Sources */,
@@ -611,6 +622,7 @@
 				411D8B0824E06ED100895E4C /* mdl_importer.cpp in Sources */,
 				411D8AEE24E06ED100895E4C /* filesystem.cpp in Sources */,
 				411D8AEF24E06ED100895E4C /* mesh_util.cpp in Sources */,
+				41F195182536DCF300921925 /* texture.cpp in Sources */,
 				411D8AEC24E06ED100895E4C /* cubemap.cpp in Sources */,
 				411D8AF024E06ED100895E4C /* random.cpp in Sources */,
 			);
@@ -671,7 +683,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				"HEADER_SEARCH_PATHS[arch=*]" = (
-					/Users/Jas/Projects/GKit/inc,
+					/Users/Jas/Documents/GKit/inc,
 					/usr/local/include,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
@@ -728,7 +740,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				"HEADER_SEARCH_PATHS[arch=*]" = (
-					/Users/Jas/Projects/GKit/inc,
+					/Users/Jas/Documents/GKit/inc,
 					/usr/local/include,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
