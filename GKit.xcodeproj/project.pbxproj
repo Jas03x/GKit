@@ -121,7 +121,6 @@
 		411D8B2D24E06EF500895E4C /* static_mesh_pixel_shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 411D8B1F24E06EF400895E4C /* static_mesh_pixel_shader.hpp */; };
 		411D8B2E24E06EF500895E4C /* frame_pixel_shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 411D8B2024E06EF500895E4C /* frame_pixel_shader.hpp */; };
 		4145BB0B24E07FAF001B072D /* libGKit.a in CopyFiles */ = {isa = PBXBuildFile; fileRef = 41755D1C24E06D1F000B6282 /* libGKit.a */; };
-		41F195182536DCF300921925 /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41F195172536DCF300921925 /* texture.cpp */; };
 		41F1951B2536DD0500921925 /* texture_manager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 41F1951A2536DD0500921925 /* texture_manager.hpp */; };
 		41F195202536DD3F00921925 /* texture_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41F1951F2536DD3F00921925 /* texture_manager.cpp */; };
 /* End PBXBuildFile section */
@@ -622,7 +621,6 @@
 				411D8B0824E06ED100895E4C /* mdl_importer.cpp in Sources */,
 				411D8AEE24E06ED100895E4C /* filesystem.cpp in Sources */,
 				411D8AEF24E06ED100895E4C /* mesh_util.cpp in Sources */,
-				41F195182536DCF300921925 /* texture.cpp in Sources */,
 				411D8AEC24E06ED100895E4C /* cubemap.cpp in Sources */,
 				411D8AF024E06ED100895E4C /* random.cpp in Sources */,
 			);
@@ -683,7 +681,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				"HEADER_SEARCH_PATHS[arch=*]" = (
-					/Users/Jas/Documents/GKit/inc,
+					/Users/Jas/Projects/GKit/inc,
 					/usr/local/include,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
@@ -740,7 +738,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				"HEADER_SEARCH_PATHS[arch=*]" = (
-					/Users/Jas/Documents/GKit/inc,
+					/Users/Jas/Projects/GKit/inc,
 					/usr/local/include,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
