@@ -31,7 +31,8 @@ template <typename T> Vector2<T>::Vector2(T _x, T _y) { x = _x; y = _y; }
 template <typename T> T&       Vector2<T>::operator [] (unsigned int i)       { return values[i]; }
 template <typename T> const T& Vector2<T>::operator [] (unsigned int i) const { return values[i]; }
 
-template <typename T> Vector2<T> Vector2<T>::operator - () const { return (Vector2<T>(*this) * -1); }
+template <typename T> Vector2<T> Vector2<T>::operator - () const { return ((*this) * -1); }
+template <typename T> Vector2<T> Vector2<T>::operator + () const { return ((*this) * +1); }
 
 template <typename T> Vector2<T>  Vector2<T>::operator +  (const Vector2<T>& v) const { return Vector2<T>(x + v.x, y + v.y); }
 template <typename T> Vector2<T>  Vector2<T>::operator -  (const Vector2<T>& v) const { return Vector2<T>(x - v.x, y - v.y); }
@@ -61,7 +62,8 @@ template <typename T> Vector2<T> Vector3<T>::xy() const { return Vector2<T>(x, y
 template <typename T> T&        Vector3<T>::operator [] (unsigned int i)       { return values[i]; }
 template <typename T> const T&  Vector3<T>::operator [] (unsigned int i) const { return values[i]; }
 
-template <typename T> Vector3<T> Vector3<T>::operator - () const { return (Vector3<T>(*this) * -1); }
+template <typename T> Vector3<T> Vector3<T>::operator - () const { return ((*this) * -1); }
+template <typename T> Vector3<T> Vector3<T>::operator + () const { return ((*this) * +1); }
 
 template <typename T> Vector3<T>  Vector3<T>::operator +  (const Vector3<T>& v) const { return Vector3<T>(x + v.x, y + v.y, z + v.z); }
 template <typename T> Vector3<T>  Vector3<T>::operator -  (const Vector3<T>& v) const { return Vector3<T>(x - v.x, y - v.y, z - v.z); }
@@ -91,7 +93,8 @@ template <typename T> Vector3<T> Vector4<T>::xyz() const { return Vector3<T>(x, 
 template <typename T> T&        Vector4<T>::operator [] (unsigned int i)       { return values[i]; }
 template <typename T> const T&  Vector4<T>::operator [] (unsigned int i) const { return values[i]; }
 
-template <typename T> Vector4<T> Vector4<T>::operator - () const { return (Vector4<T>(*this) * -1); }
+template <typename T> Vector4<T> Vector4<T>::operator - () const { return ((*this) * -1); }
+template <typename T> Vector4<T> Vector4<T>::operator + () const { return ((*this) * +1); }
 
 template <typename T> Vector4<T>  Vector4<T>::operator +  (const Vector4& v) const { return Vector4(x + v.x, y + v.y, z + v.z, w + v.w); }
 template <typename T> Vector4<T>  Vector4<T>::operator -  (const Vector4& v) const { return Vector4(x - v.x, y - v.y, z - v.z, w - v.w); }

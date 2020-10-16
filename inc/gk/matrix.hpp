@@ -31,6 +31,7 @@ struct Vector2
     const T& operator [] (unsigned int i) const;
 
     Vector2<T> operator - () const;
+    Vector2<T> operator + () const;
 
     Vector2<T>  operator +  (const Vector2<T>& v) const;
     Vector2<T>  operator -  (const Vector2<T>& v) const;
@@ -66,6 +67,7 @@ struct Vector3
     const T&  operator [] (unsigned int i) const;
 
     Vector3<T> operator - () const;
+    Vector3<T> operator + () const;
 
     Vector3<T>  operator +  (const Vector3<T>& v) const;
     Vector3<T>  operator -  (const Vector3<T>& v) const;
@@ -101,6 +103,7 @@ struct Vector4
     const T&  operator [] (unsigned int i) const;
 
     Vector4<T> operator - () const;
+    Vector4<T> operator + () const;
 
     Vector4<T>  operator +  (const Vector4<T>& v) const;
     Vector4<T>  operator -  (const Vector4<T>& v) const;
