@@ -2,7 +2,9 @@
 CC = g++
 LINK = ar
 
-INC_PATH += -I ./inc
+SDL = /Library/Frameworks/SDL2.framework/Versions/A/
+
+INCS += -I ./inc -I $(SDL)/Headers/
 
 BIN = ./bin
 SRC = ./src
@@ -14,7 +16,7 @@ CC_OPTIONS = -std=c++17 -g -Wall -Werror
 OBJECTS = $(patsubst $(SRC)/%.cpp, $(BIN)/%.o, $(wildcard $(SRC)/*.cpp))
 
 $(BIN)/%.o: $(SRC)/%.cpp
-	$(CC) $(CC_OPTIONS) $(INC_PATH) -c $^ -o $@
+	$(CC) $(CC_OPTIONS) $(INCS) -c $^ -o $@
 
 $(BIN)/$(OUTPUT): $(OBJECTS)
 	$(LINK) rcs $@ $^
@@ -23,4 +25,3 @@ $(BIN)/$(OUTPUT): $(OBJECTS)
 clean:
 	rm -f $(BIN)/*.o
 	rm -f $(BIN)/$(OUTPUT)
-

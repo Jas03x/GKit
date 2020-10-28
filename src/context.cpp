@@ -7,7 +7,7 @@
 #include <gk/context.hpp>
 #include <gk/graphics.hpp>
 
-#define HAVE_M_PI
+// #define HAVE_M_PI
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 
