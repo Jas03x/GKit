@@ -1,6 +1,6 @@
 #include <gk/particle_renderer_3d.hpp>
 
-#include <assert.h>
+#include <cassert>
 
 #include <gk/config.hpp>
 #include <gk/file.hpp>

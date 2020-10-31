@@ -1,6 +1,6 @@
 #include <gk/blur_shader.hpp>
 
-#include <assert.h>
+#include <cassert>
 
 #include <gk/config.hpp>
 #include <gk/file.hpp>

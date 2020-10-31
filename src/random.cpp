@@ -1,8 +1,8 @@
 #include <gk/random.hpp>
 
-#include <math.h>
-#include <time.h>
-#include <stdlib.h>
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
 
 void Random::Seed()
 {

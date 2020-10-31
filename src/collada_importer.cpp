@@ -1,6 +1,6 @@
 #include <gk/collada_importer.hpp>
 
-#include <math.h>
+#include <cmath>
 
 #include <utility>
 

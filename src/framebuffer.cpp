@@ -1,7 +1,7 @@
 #include <gk/framebuffer.hpp>
 
-#include <assert.h>
-#include <stdio.h>
+#include <cassert>
+#include <cstdio>
 
 #include <memory>
 

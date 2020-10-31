@@ -1,7 +1,7 @@
 #include <gk/view.hpp>
 
-#include <assert.h>
-#include <stdio.h>
+#include <cassert>
+#include <cstdio>
 
 View* View::Instance = NULL;
 

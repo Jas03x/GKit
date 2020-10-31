@@ -1,7 +1,7 @@
 #include <gk/xml.hpp>
 
-#include <stdarg.h>
-#include <string.h>
+#include <cstdarg>
+#include <cstring>
 
 #include <vector>
 

@@ -1,6 +1,6 @@
 #include <gk/file.hpp>
 
-#include <assert.h>
+#include <cassert>
 
 File::File(const char* path, unsigned int mode)
 {

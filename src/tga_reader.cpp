@@ -1,7 +1,7 @@
 #include <gk/tga_reader.hpp>
 
-#include <assert.h>
-#include <string.h>
+#include <cassert>
+#include <cstring>
 
 #include <gk/file.hpp>
 

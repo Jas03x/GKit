@@ -1,7 +1,7 @@
 #include <gk/matrix.hpp>
 
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 
 #include <algorithm>
 

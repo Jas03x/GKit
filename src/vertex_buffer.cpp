@@ -1,7 +1,7 @@
 #include <gk/vertex_buffer.hpp>
 
-#include <assert.h>
-#include <stdio.h>
+#include <cassert>
+#include <cstdio>
 
 VertexBuffer::VertexBuffer(unsigned int type)
 {

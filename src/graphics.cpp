@@ -1,7 +1,7 @@
 #include <gk/graphics.hpp>
 
-#include <assert.h>
-#include <stdio.h>
+#include <cassert>
+#include <cstdio>
 
 #if defined(_WIN32)
 	#include <WinDef.h>

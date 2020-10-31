@@ -1,8 +1,8 @@
 #include <gk/context.hpp>
 
-#include <assert.h>
-#include <stdio.h>
-#include <string.h>
+#include <cassert>
+#include <cstdio>
+#include <cstring>
 
 #include <gk/context.hpp>
 #include <gk/graphics.hpp>

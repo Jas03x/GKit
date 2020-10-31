@@ -1,7 +1,7 @@
 #include <gk/bitmap.hpp>
 
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 
 #include <gk/bmp_reader.hpp>
 #include <gk/tga_reader.hpp>

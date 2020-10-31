@@ -5,7 +5,7 @@
 #include <gk/file.hpp>
 #include <gk/camera_3d.hpp>
 
-#include <assert.h>
+#include <cassert>
 
 #include "../shdr/static_mesh_pixel_shader.hpp"
 #include "../shdr/static_mesh_vertex_shader.hpp"

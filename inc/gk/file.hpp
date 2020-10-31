@@ -5,8 +5,8 @@
 #define FILE_CUR SEEK_CUR
 #define FILE_END SEEK_END
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 
 #include <string>
 #include <utility>

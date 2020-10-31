@@ -1,7 +1,7 @@
 #include <gk/sprite_renderer.hpp>
 
-#include <assert.h>
-#include <stdio.h>
+#include <cassert>
+#include <cstdio>
 
 #include <gk/config.hpp>
 #include <gk/file.hpp>

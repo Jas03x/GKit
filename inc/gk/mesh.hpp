@@ -1,7 +1,7 @@
 #ifndef GK_MESH_H
 #define GK_MESH_H
 
-#include <stddef.h>
+#include <cstddef>
 
 #include <gk/graphics.hpp>
 #include <gk/vertex_array.hpp>

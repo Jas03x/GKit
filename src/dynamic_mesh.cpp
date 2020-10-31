@@ -1,6 +1,6 @@
 #include <gk/dynamic_mesh.hpp>
 
-#include <assert.h>
+#include <cassert>
 
 #include <map>
 #include <utility>

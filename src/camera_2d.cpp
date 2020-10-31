@@ -1,7 +1,7 @@
 #include <gk/camera_2d.hpp>
 
-#include <assert.h>
-#include <stdio.h>
+#include <cassert>
+#include <cstdio>
 
 Camera2D* Camera2D::Instance = NULL;
 

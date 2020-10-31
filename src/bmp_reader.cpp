@@ -1,6 +1,6 @@
 #include <gk/bmp_reader.hpp>
 
-#include <stdint.h>
+#include <cstdint>
 
 #include <gk/file.hpp>
 

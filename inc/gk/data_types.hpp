@@ -1,8 +1,8 @@
 #ifndef GK_DATA_TYPES_H
 #define GK_DATA_TYPES_H
 
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 
 typedef unsigned char byte;
 

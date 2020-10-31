@@ -1,6 +1,6 @@
 #include <gk/mesh_util.hpp>
 
-#include <math.h>
+#include <cmath>
 
 /*
 

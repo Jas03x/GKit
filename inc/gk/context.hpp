@@ -1,7 +1,7 @@
 #ifndef GK_CONTEXT_H
 #define GK_CONTEXT_H
 
-#include <stdint.h>
+#include <cstdint>
 
 enum KEY_CODE
 {

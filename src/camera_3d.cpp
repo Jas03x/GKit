@@ -1,6 +1,6 @@
 #include <gk/camera_3d.hpp>
 
-#include <assert.h>
+#include <cassert>
 
 Camera3D* Camera3D::Instance = nullptr;
 

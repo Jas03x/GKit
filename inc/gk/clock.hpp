@@ -1,7 +1,7 @@
 #ifndef GK_CLOCK_H
 #define GK_CLOCK_H
 
-#include <stdint.h>
+#include <cstdint>
 
 // NOTE: all functions are in milliseconds
 

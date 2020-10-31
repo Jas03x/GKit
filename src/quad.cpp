@@ -1,6 +1,6 @@
 #include <gk/quad.hpp>
 
-#include <assert.h>
+#include <cassert>
 
 /*
 
