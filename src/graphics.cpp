@@ -146,6 +146,7 @@ bool RenderingContext::Initialize()
     if(status) SetViewport                  = reinterpret_cast<GFX_PFN_Viewport>                 (GetFunctionAddress(glViewport, &status));
     if(status) SetShaderSource              = reinterpret_cast<GFX_PFN_ShaderSource>             (GetFunctionAddress(glShaderSource, &status));
     if(status) LinkProgram                  = reinterpret_cast<GFX_PFN_LinkProgram>              (GetFunctionAddress(glLinkProgram, &status));
+    if(status) DrawElementArrays            = reinterpret_cast<GFX_PFN_MultiDrawElements>        (GetFunctionAddress(glMultiDrawElements, &status));
     if(status) SetPolygonMode               = reinterpret_cast<GFX_PFN_PolygonMode>              (GetFunctionAddress(glPolygonMode, &status));
     if(status) BindProgram                  = reinterpret_cast<GFX_PFN_UseProgram>               (GetFunctionAddress(glUseProgram, &status));
     if(status) ErrorCheck                   = reinterpret_cast<GFX_PFN_GetError>                 (GetFunctionAddress(glGetError, &status));

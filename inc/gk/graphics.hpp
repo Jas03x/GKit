@@ -230,6 +230,7 @@ typedef uint8_t  (*GFX_PFN_IsShader)(uint32_t);
 typedef uint8_t  (*GFX_PFN_IsTexture)(uint32_t);
 typedef uint8_t  (*GFX_PFN_IsVertexArray)(uint32_t);
 typedef void     (*GFX_PFN_LinkProgram)(uint32_t);
+typedef void     (*GFX_PFN_MultiDrawElements)(uint32_t, const int32_t*, uint32_t, const void* const*, int32_t);
 typedef void     (*GFX_PFN_PolygonMode)(uint32_t, uint32_t);
 typedef void     (*GFX_PFN_RenderbufferStorage)(uint32_t, uint32_t, int32_t, int32_t);
 typedef void     (*GFX_PFN_ShaderSource)(uint32_t, int32_t, const char* const*, const int32_t*);
@@ -334,6 +335,7 @@ public:
     GFX_PFN_IsTexture                 IsTexture;
     GFX_PFN_IsVertexArray             IsVertexArray;
     GFX_PFN_LinkProgram               LinkProgram;
+    GFX_PFN_MultiDrawElements         DrawElementArrays;
     GFX_PFN_PolygonMode               SetPolygonMode;
     GFX_PFN_RenderbufferStorage       RenderbufferStorage;
     GFX_PFN_TexImage2D                CreateTexture2D;
