@@ -11,27 +11,43 @@
 #elif defined(__APPLE__)
 	#define GL_SILENCE_DEPRECATION
 	#include <OpenGL/gl3.h>
+#else
+    #include <GL/gl.h>
+    #include <GL/glx.h>
 #endif
 
 #if defined(_WIN32)
-void* __GetFunctionAddress(const char* name, HMODULE module, bool* status)
-{
-    #define INVALID_PFN(p) ((p == (void*) 0x0) || (p == (void*) 0x1) || (p == (void*) 0x2) || (p == (void*) 0x3) || (p == (void*) -1))
-
-    void* func = (void*) wglGetProcAddress(name);
-    if(INVALID_PFN(func))
+    void* __GetFunctionAddress(const char* name, HMODULE module, bool* status)
     {
-        func = (void*) GetProcAddress(module, name);
-    }
+        #define INVALID_PFN(p) ((p == (void*) 0x0) || (p == (void*) 0x1) || (p == (void*) 0x2) || (p == (void*) 0x3) || (p == (void*) -1))
 
-    if(INVALID_PFN(func))
-    {
-        printf("Error: Could not find the function address of %s\n", name);
-        *status = false;
+        void* func = (void*) wglGetProcAddress(name);
+        if(INVALID_PFN(func))
+        {
+            func = (void*) GetProcAddress(module, name);
+        }
+
+        if(INVALID_PFN(func))
+        {
+            printf("Error: Could not find the function address of %s\n", name);
+            *status = false;
+        }
+        
+        return func;
     }
-    
-    return func;
-}
+#elif defined(__linux__) || defined(__unix__)
+    void* __GetFunctionAddress(const char* name, bool* status)
+    {
+        void* func = (void*) glXGetProcAddress((const GLubyte*) name);
+
+        if(func == nullptr)
+        {
+            printf("error: could not find the function address of opengl function \"%s\"\n", name);
+            *status = false;
+        }
+
+        return func;
+    }
 #endif
 
 RenderingContext* RenderingContext::Instance = nullptr;
@@ -39,15 +55,16 @@ RenderingContext* RenderingContext::Instance = nullptr;
 bool RenderingContext::Initialize()
 {
     #ifdef _WIN32
-    #define GetFunctionAddress(name, status) __GetFunctionAddress(#name, module, status)
+        #define GetFunctionAddress(name, status) __GetFunctionAddress(#name, module, status)
 
-    assert(wglGetCurrentContext() != 0);
+        assert(wglGetCurrentContext() != 0);
 
-    HMODULE module = LoadLibraryA("opengl32.dll");
-    assert(module != 0);
-
+        HMODULE module = LoadLibraryA("opengl32.dll");
+        assert(module != 0);
     #elif defined(__APPLE__)
         #define GetFunctionAddress(name, status) name
+    #elif defined(__linux__) || defined(__unix__)
+        #define glXGetProcAddressARB(name, status) __GetFunctionAddress(#name, (status))
     #endif
 
     bool status = true;

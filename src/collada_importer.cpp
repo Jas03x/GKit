@@ -142,6 +142,10 @@ bool Collada::Importer::process_controller_library(const Collada::Parser::Contro
             }
         }
 
+        // fix un-used variable error
+        (void) joint_offset;
+        (void) weight_offset;
+
         const VertexWeights& vertex_weights = skin.vertex_weights;
         const float* v_weights = vertex_weights.weights->array.float_array;
         const unsigned short* v_indices = vertex_weights.v_index_array.data();
