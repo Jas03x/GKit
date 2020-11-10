@@ -38,7 +38,7 @@
 #elif defined(__linux__) || defined(__unix__)
     void* __GetFunctionAddress(const char* name, bool* status)
     {
-        void* func = (void*) glXGetProcAddress((const GLubyte*) name);
+        void* func = (void*) glXGetProcAddressARB((const GLubyte*) name);
 
         if(func == nullptr)
         {
@@ -64,7 +64,7 @@ bool RenderingContext::Initialize()
     #elif defined(__APPLE__)
         #define GetFunctionAddress(name, status) name
     #elif defined(__linux__) || defined(__unix__)
-        #define glXGetProcAddressARB(name, status) __GetFunctionAddress(#name, (status))
+        #define GetFunctionAddress(name, status) __GetFunctionAddress(#name, (status))
     #endif
 
     bool status = true;

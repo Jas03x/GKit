@@ -2,7 +2,7 @@
 CC = g++
 LINK = ar
 
-INCS += -I ./inc -I $(SDL)/Headers/
+INCS += -I ./inc
 
 BIN = ./bin
 SRC = ./src
