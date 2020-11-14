@@ -12,6 +12,8 @@ Notes:
 - All matrices are column major (just like OpenGL)
 */
 
+#define INF INFINITY
+
 float clamp(float val, float min, float max);
 
 template <typename T>

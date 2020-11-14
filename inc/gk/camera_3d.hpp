@@ -1,6 +1,7 @@
 #ifndef GK_CAMERA_3D_H
 #define GK_CAMERA_3D_H
 
+#include <gk/frustum.hpp>
 #include <gk/matrix.hpp>
 
 class Camera3D
@@ -10,22 +11,6 @@ public:
 		THIRD_PERSON = 60,
 		FIRST_PERSON = 90
 	};
-
-    struct Frustum
-    {
-        struct Plane
-        {
-            Vector3F point;
-            Vector3F normal;
-        };
-
-        Plane front;
-        Plane back;
-        Plane top;
-        Plane bottom;
-        Plane right;
-        Plane left;
-    };
 
 private:
 	static Camera3D* Instance;

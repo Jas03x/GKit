@@ -67,7 +67,7 @@ float Camera3D::GetFarPlane() const
 	return m_FarPlane;
 }
 
-Camera3D::Frustum Camera3D::GetViewFrustum() const
+Frustum Camera3D::GetViewFrustum() const
 {
     float half_angle = tanf(m_FOV / 2.0f);
 
