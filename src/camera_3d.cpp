@@ -97,17 +97,17 @@ Frustum Camera3D::GetViewFrustum() const
     {
         Frustum::Plane plane;
         plane.point = (points[0] + points[1] + points[2] + points[3]) * 0.25f;
-        plane.normal = Vector::Cross(points[1] - points[0], points[2] - points[0]);
+        plane.normal = Vector::Normalize(Vector::Cross(points[1] - points[0], points[2] - points[0]));
         return plane;
     };
 
     Frustum frustum = {};
-    frustum.front  = CalculatePlane({ ftl, ftr, fbl, ftl });
-    frustum.back   = CalculatePlane({ ntl, ntr, nbl, ntl });
-    frustum.top    = CalculatePlane({ ntl, ntr, ftl, ftr });
-    frustum.bottom = CalculatePlane({ nbl, nbr, fbl, fbr });
-    frustum.left   = CalculatePlane({ ntl, nbl, ftl, fbl });
-    frustum.right  = CalculatePlane({ ntr, nbr, ftr, fbr });
+    frustum.planes[Frustum::FAR_P]  = CalculatePlane({ ftl, ftr, fbl, ftl });
+    frustum.planes[Frustum::NEAR_P] = CalculatePlane({ ntl, ntr, nbl, ntl });
+    frustum.planes[Frustum::TOP]    = CalculatePlane({ ntl, ntr, ftl, ftr });
+    frustum.planes[Frustum::BOTTOM] = CalculatePlane({ nbl, nbr, fbl, fbr });
+    frustum.planes[Frustum::LEFT]   = CalculatePlane({ ntl, nbl, ftl, fbl });
+    frustum.planes[Frustum::RIGHT]  = CalculatePlane({ ntr, nbr, ftr, fbr });
 
     return frustum;
 }
