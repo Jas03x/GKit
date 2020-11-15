@@ -8,8 +8,8 @@ struct Frustum
 {
     enum
     {
-        NEAR_P = 0,
-        FAR_P  = 1,
+        NEAR   = 0,
+        FAR    = 1,
         TOP    = 2,
         BOTTOM = 3,
         LEFT   = 4,

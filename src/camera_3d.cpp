@@ -67,8 +67,8 @@ void Camera3D::Update()
         return p;
     };
 
-    m_Frustum.planes[Frustum::FAR_P]  = CalculatePlane({ ftl, ftr, fbl, fbr });
-    m_Frustum.planes[Frustum::NEAR_P] = CalculatePlane({ nbl, ntr, ntl, nbr });
+    m_Frustum.planes[Frustum::FAR]    = CalculatePlane({ ftl, ftr, fbl, fbr });
+    m_Frustum.planes[Frustum::NEAR]   = CalculatePlane({ nbl, ntr, ntl, nbr });
     m_Frustum.planes[Frustum::TOP]    = CalculatePlane({ ntl, ntr, ftl, ftr });
     m_Frustum.planes[Frustum::BOTTOM] = CalculatePlane({ nbl, nbr, fbl, fbr });
     m_Frustum.planes[Frustum::LEFT]   = CalculatePlane({ ntl, nbl, ftl, fbl });
