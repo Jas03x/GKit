@@ -78,7 +78,7 @@ Frustum Camera3D::GetViewFrustum() const
     float w_far = m_AspectRatio * h_far;       // width far plane
 
     Vector3F cf = Vector::Normalize(Target - Position);     // camera forward vector
-    Vector3F cu = UpVector;                                 // camera up vector
+    Vector3F cu = Vector::Normalize(UpVector);              // camera up vector
     Vector3F cr = Vector::Normalize(Vector::Cross(cf, cu)); // camera right vector
 
     Vector3F npc = Position + cf * m_NearPlane;                         // near-plane, center
@@ -95,10 +95,10 @@ Frustum Camera3D::GetViewFrustum() const
 
     auto CalculatePlane = [](const std::array<Vector3F, 4>& points) -> Frustum::Plane
     {
-        Frustum::Plane plane;
-        plane.point = (points[0] + points[1] + points[2] + points[3]) * 0.25f;
-        plane.normal = Vector::Normalize(Vector::Cross(points[1] - points[0], points[2] - points[0]));
-        return plane;
+        Frustum::Plane p;
+        p.n = Vector::Normalize(Vector::Cross(points[1] - points[0], points[2] - points[0]));
+        p.d = Vector::Dot(p.n, points[3]);
+        return p;
     };
 
     Frustum frustum = {};

@@ -19,8 +19,8 @@ struct Frustum
 
     struct Plane
     {
-        Vector3F point;
-        Vector3F normal;
+        Vector3F n;
+        float    d;
     };
 
     Plane planes[COUNT];
