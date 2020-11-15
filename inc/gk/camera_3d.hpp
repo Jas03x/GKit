@@ -23,6 +23,8 @@ private:
     Matrix4F m_View;
 	Matrix4F m_Projection;
 
+	Frustum m_Frustum;
+
 public:
     Vector3F UpVector;
     Vector3F Position;
@@ -43,7 +45,7 @@ public:
 
 	float GetNearPlane() const;
 	float GetFarPlane() const;
-    Frustum GetViewFrustum() const;
+    const Frustum& GetViewFrustum() const;
 };
 
 #endif // GK_CAMERA_3D_H

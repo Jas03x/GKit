@@ -2,7 +2,7 @@
 
 bool Frustum::InView(const AABB& aabb) const
 {
-    bool in_view = false;
+    bool in_view = true;
 
     for(unsigned int i = 0; i < COUNT; i++)
     {
@@ -10,9 +10,9 @@ bool Frustum::InView(const AABB& aabb) const
         float radius = Vector::Length(aabb.length);
 
         // sphere test
-        if(Vector::Dot(aabb.origin, p.n) - p.d <= radius)
+        if(Vector::Dot(aabb.origin, p.n) + p.d < -radius)
         {
-            in_view = true;
+            in_view = false;
             break;
         }
     }

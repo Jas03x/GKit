@@ -33,6 +33,48 @@ void Camera3D::Bind()
 void Camera3D::Update()
 {
     m_View = Matrix4F::View(Position, Target, UpVector);
+
+    float half_angle = tanf(m_FOV / 2.0f);
+
+    float h_near = 2 * half_angle * m_NearPlane; // height near plane
+    float w_near = m_AspectRatio * h_near;       // width near plane
+
+    float h_far = 2 * half_angle * m_FarPlane; // height far plane
+    float w_far = m_AspectRatio * h_far;       // width far plane
+
+    Vector3F cf = Vector::Normalize(Target - Position);     // camera forward vector
+    Vector3F cu = Vector::Normalize(UpVector);              // camera up vector
+    Vector3F cr = Vector::Normalize(Vector::Cross(cf, cu)); // camera right vector
+
+    Vector3F npc = Position + cf * m_NearPlane;                         // near-plane, center
+    Vector3F ntl = npc + (+cu * h_near * 0.5f) + (-cr * w_near * 0.5f); // near-plane, top-left
+    Vector3F ntr = npc + (+cu * h_near * 0.5f) + (+cr * w_near * 0.5f); // near-plane, top-right
+    Vector3F nbl = npc + (-cu * h_near * 0.5f) + (-cr * w_near * 0.5f); // near-plane, bottom-left
+    Vector3F nbr = npc + (-cu * h_near * 0.5f) + (+cr * w_near * 0.5f); // near-plane, bottom-right
+
+    Vector3F fpc = Position + cf * m_FarPlane;                        // far-plane, center
+    Vector3F ftl = fpc + (+cu * h_far * 0.5f) + (-cr * w_far * 0.5f); // far-plane, top-left
+    Vector3F ftr = fpc + (+cu * h_far * 0.5f) + (+cr * w_far * 0.5f); // far-plane, top-right
+    Vector3F fbl = fpc + (-cu * h_far * 0.5f) + (-cr * w_far * 0.5f); // far-plane, bottom-left
+    Vector3F fbr = fpc + (-cu * h_far * 0.5f) + (+cr * w_far * 0.5f); // far-plane, bottom-rights
+
+    auto CalculatePlane = [](const std::array<Vector3F, 4>& points) -> Frustum::Plane
+    {
+        Frustum::Plane p;
+        p.n = Vector::Normalize(Vector::Cross(points[1] - points[0], points[2] - points[0]));
+        p.d = Vector::Dot(p.n, points[3]);
+        printf("plane: n=(%f, %f, %f) d=%f\n", p.n.x, p.n.y, p.n.z, p.d);
+        return p;
+    };
+
+    m_Frustum.planes[Frustum::FAR_P]  = CalculatePlane({ ftl, ftr, fbl, fbr });
+    m_Frustum.planes[Frustum::NEAR_P] = CalculatePlane({ nbl, ntr, ntl, nbr });
+    m_Frustum.planes[Frustum::TOP]    = CalculatePlane({ ntl, ntr, ftl, ftr });
+    m_Frustum.planes[Frustum::BOTTOM] = CalculatePlane({ nbl, nbr, fbl, fbr });
+    m_Frustum.planes[Frustum::LEFT]   = CalculatePlane({ ntl, nbl, ftl, fbl });
+    m_Frustum.planes[Frustum::RIGHT]  = CalculatePlane({ ntr, nbr, ftr, fbr });
+
+    printf("\n");
 }
 
 Camera3D* Camera3D::GetInstance()
@@ -67,48 +109,8 @@ float Camera3D::GetFarPlane() const
 	return m_FarPlane;
 }
 
-Frustum Camera3D::GetViewFrustum() const
+const Frustum& Camera3D::GetViewFrustum() const
 {
-    float half_angle = tanf(m_FOV / 2.0f);
-
-    float h_near = 2 * half_angle * m_NearPlane; // height near plane
-    float w_near = m_AspectRatio * h_near;       // width near plane
-
-    float h_far = 2 * half_angle * m_FarPlane; // height far plane
-    float w_far = m_AspectRatio * h_far;       // width far plane
-
-    Vector3F cf = Vector::Normalize(Target - Position);     // camera forward vector
-    Vector3F cu = Vector::Normalize(UpVector);              // camera up vector
-    Vector3F cr = Vector::Normalize(Vector::Cross(cf, cu)); // camera right vector
-
-    Vector3F npc = Position + cf * m_NearPlane;                         // near-plane, center
-    Vector3F ntl = npc + (+cu * h_near * 0.5f) + (-cr * w_near * 0.5f); // near-plane, top-left
-    Vector3F ntr = npc + (+cu * h_near * 0.5f) + (+cr * w_near * 0.5f); // near-plane, top-right
-    Vector3F nbl = npc + (-cu * h_near * 0.5f) + (-cr * w_near * 0.5f); // near-plane, bottom-left
-    Vector3F nbr = npc + (-cu * h_near * 0.5f) + (+cr * w_near * 0.5f); // near-plane, bottom-right
-
-    Vector3F fpc = Position + cf * m_FarPlane;                        // far-plane, center
-    Vector3F ftl = fpc + (+cu * h_far * 0.5f) + (-cr * w_far * 0.5f); // far-plane, top-left
-    Vector3F ftr = fpc + (+cu * h_far * 0.5f) + (+cr * w_far * 0.5f); // far-plane, top-right
-    Vector3F fbl = fpc + (-cu * h_far * 0.5f) + (-cr * w_far * 0.5f); // far-plane, bottom-left
-    Vector3F fbr = fpc + (-cu * h_far * 0.5f) + (+cr * w_far * 0.5f); // far-plane, bottom-right
-
-    auto CalculatePlane = [](const std::array<Vector3F, 4>& points) -> Frustum::Plane
-    {
-        Frustum::Plane p;
-        p.n = Vector::Normalize(Vector::Cross(points[1] - points[0], points[2] - points[0]));
-        p.d = Vector::Dot(p.n, points[3]);
-        return p;
-    };
-
-    Frustum frustum = {};
-    frustum.planes[Frustum::FAR_P]  = CalculatePlane({ ftl, ftr, fbl, ftl });
-    frustum.planes[Frustum::NEAR_P] = CalculatePlane({ ntl, ntr, nbl, ntl });
-    frustum.planes[Frustum::TOP]    = CalculatePlane({ ntl, ntr, ftl, ftr });
-    frustum.planes[Frustum::BOTTOM] = CalculatePlane({ nbl, nbr, fbl, fbr });
-    frustum.planes[Frustum::LEFT]   = CalculatePlane({ ntl, nbl, ftl, fbl });
-    frustum.planes[Frustum::RIGHT]  = CalculatePlane({ ntr, nbr, ftr, fbr });
-
-    return frustum;
+    return m_Frustum;
 }
 
