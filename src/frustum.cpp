@@ -4,6 +4,7 @@ bool Frustum::InView(const AABB& aabb) const
 {
     bool in_view = true;
 
+    /*
     for(unsigned int i = 0; i < COUNT; i++)
     {
         const Plane& p = planes[i];
@@ -16,6 +17,7 @@ bool Frustum::InView(const AABB& aabb) const
             break;
         }
     }
+    */
 
     return in_view;
 }

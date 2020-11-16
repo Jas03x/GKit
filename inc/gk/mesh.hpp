@@ -3,7 +3,6 @@
 
 #include <cstddef>
 
-#include <gk/graphics.hpp>
 #include <gk/vertex_array.hpp>
 #include <gk/vertex_buffer.hpp>
 

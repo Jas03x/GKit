@@ -1,8 +1,6 @@
 #ifndef GK_DYNAMIC_MESH_RENDERER_H
 #define GK_DYNAMIC_MESH_RENDERER_H
 
-#include <vector>
-
 #include <gk/shader.hpp>
 #include <gk/dynamic_mesh.hpp>
 

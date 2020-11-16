@@ -1,8 +1,6 @@
 #ifndef GK_STATIC_MESH_RENDERER_H
 #define GK_STATIC_MESH_RENDERER_H
 
-#include <vector>
-
 #include <gk/shader.hpp>
 #include <gk/static_mesh.hpp>
 
