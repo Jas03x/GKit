@@ -102,7 +102,7 @@ void DebugDrawer::Render()
         Matrix4F matrix = Camera3D::GetInstance()->GetMatrix();
         context->LoadConstantMatrix4F(Instance->m_Matrix, 1, GFX_FALSE, &matrix[0][0]);
 
-        context->DrawArray(GFX_TRIANGLES, 0, num_lines);
+        context->DrawArray(GFX_LINES, 0, num_lines);
 
         Instance->m_Lines.clear();
     }
