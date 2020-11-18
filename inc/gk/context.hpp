@@ -34,6 +34,15 @@ struct Event
 	uint8_t type;
 };
 
+struct MouseState
+{
+	int  x_offset;
+	int  y_offset;
+	bool l_button;
+	bool m_button;
+	bool r_button;
+};
+
 class Context
 {
 public:
@@ -42,6 +51,9 @@ public:
 
 	static void Update();
 	static bool PollEvent(Event& e);
+	
+	static void GetMouseState(MouseState& state);
+	static bool SetRelativeMouseMode(bool enabled);
 
 	static uint32_t GetTime();
 	static bool GetKeyState(KEY_CODE code);

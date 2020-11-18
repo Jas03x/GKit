@@ -63,7 +63,7 @@ void Camera3D::Update()
         Frustum::Plane p;
         p.n = Vector::Normalize(Vector::Cross(points[1] - points[0], points[2] - points[0]));
         p.d = Vector::Dot(p.n, points[3]);
-        printf("plane: n=(%f, %f, %f) d=%f\n", p.n.x, p.n.y, p.n.z, p.d);
+        // printf("plane: n=(%f, %f, %f) d=%f\n", p.n.x, p.n.y, p.n.z, p.d);
         return p;
     };
 
@@ -74,7 +74,7 @@ void Camera3D::Update()
     m_Frustum.planes[Frustum::LEFT]   = CalculatePlane({ ntl, nbl, ftl, fbl });
     m_Frustum.planes[Frustum::RIGHT]  = CalculatePlane({ ntr, nbr, ftr, fbr });
 
-    printf("\n");
+    // printf("\n");
 }
 
 Camera3D* Camera3D::GetInstance()

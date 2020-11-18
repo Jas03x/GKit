@@ -14,7 +14,11 @@ Notes:
 
 #define INF INFINITY
 
-float clamp(float val, float min, float max);
+template <typename T>
+T step(T v0, T v1, T step);
+
+template <typename T>
+T clamp(T val, T min, T max);
 
 template <typename T>
 struct Vector2

@@ -113,6 +113,20 @@ bool Context::PollEvent(Event& e)
 	return false;
 }
 
+void Context::GetMouseState(MouseState& state)
+{
+	uint32_t b = SDL_GetRelativeMouseState(&state.x_offset, &state.y_offset);
+	state.l_button = (b & SDL_BUTTON_LMASK) != 0;
+	state.m_button = (b & SDL_BUTTON_MMASK) != 0;
+	state.r_button = (b & SDL_BUTTON_RMASK) != 0;
+}
+
+bool Context::SetRelativeMouseMode(bool enabled)
+{
+	SDL_bool b = enabled ? SDL_TRUE : SDL_FALSE;
+	return (SDL_SetRelativeMouseMode(b) == 0);
+}
+
 uint32_t Context::GetTime()
 {
 	return SDL_GetTicks();

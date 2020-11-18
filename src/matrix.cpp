@@ -14,10 +14,33 @@
 // ------------------------------ Scalar ---------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------
 
-float clamp(float val, float min, float max)
+template <typename T>
+T step(T v0, T v1, T step)
+{
+    T d = v1 - v0;
+    return (abs(d) > step) ? (v0 + copysign(step, d)) : v1;
+}
+
+template <typename T>
+T clamp(T val, T min, T max)
 {
     return std::max(std::min(val, max), min);
 }
+
+#define INSTANTIATE_SCALAR_FUNCTION_TEMPLATES(x) \
+    template x step(x v0, x v1, x step);         \
+    template x clamp(x val, x min, x max);       \
+
+INSTANTIATE_SCALAR_FUNCTION_TEMPLATES(char);
+INSTANTIATE_SCALAR_FUNCTION_TEMPLATES(short);
+INSTANTIATE_SCALAR_FUNCTION_TEMPLATES(int);
+INSTANTIATE_SCALAR_FUNCTION_TEMPLATES(long);
+INSTANTIATE_SCALAR_FUNCTION_TEMPLATES(unsigned char);
+INSTANTIATE_SCALAR_FUNCTION_TEMPLATES(unsigned short);
+INSTANTIATE_SCALAR_FUNCTION_TEMPLATES(unsigned int);
+INSTANTIATE_SCALAR_FUNCTION_TEMPLATES(unsigned long);
+INSTANTIATE_SCALAR_FUNCTION_TEMPLATES(float);
+INSTANTIATE_SCALAR_FUNCTION_TEMPLATES(double);
 
 // -----------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------ Vector 2 -------------------------------------------------------------------------------------------
