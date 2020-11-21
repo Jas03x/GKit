@@ -5,22 +5,23 @@
 
 enum KEY_CODE
 {
-	KEY_UNKNOWN	= 0x0,
-	KEY_UP		= 0x1,
-	KEY_DOWN	= 0x2,
-	KEY_LEFT	= 0x3,
-	KEY_RIGHT	= 0x4,
-	KEY_W		= 0x5,
-	KEY_A		= 0x6,
-	KEY_S		= 0x7,
-	KEY_D		= 0x8,
-	KEY_Q		= 0x9,
-	KEY_E		= 0xA,
-	KEY_T       = 0xB,
-	KEY_RETURN	= 0xC,
-	KEY_ESCAPE  = 0xD,
-	KEY_SPACE   = 0xE,
-	KEY_COUNT   = 0xF
+	KEY_UNKNOWN	= 0x00,
+	KEY_UP		= 0x01,
+	KEY_DOWN	= 0x02,
+	KEY_LEFT	= 0x03,
+	KEY_RIGHT	= 0x04,
+	KEY_W		= 0x05,
+	KEY_A		= 0x06,
+	KEY_S		= 0x07,
+	KEY_D		= 0x08,
+	KEY_Q		= 0x09,
+	KEY_E		= 0x0A,
+	KEY_T       = 0x0B,
+	KEY_Y       = 0x0C,
+	KEY_RETURN	= 0x0D,
+	KEY_ESCAPE  = 0x0E,
+	KEY_SPACE   = 0x0F,
+	KEY_COUNT   = 0x10
 };
 
 enum EVENT_TYPE
