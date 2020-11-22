@@ -76,10 +76,25 @@ void Camera3D::Update()
 
     if(DebugDrawEnabled())
     {
+        // near plane
         DrawLine(ntl, nbl, Colour::WHITE);
         DrawLine(ntr, nbr, Colour::WHITE);
         DrawLine(ntl, ntr, Colour::WHITE);
         DrawLine(nbl, nbr, Colour::WHITE);
+
+        // far plane
+        DrawLine(ftl, fbl, Colour::WHITE);
+        DrawLine(ftr, fbr, Colour::WHITE);
+        DrawLine(ftl, ftr, Colour::WHITE);
+        DrawLine(fbl, fbr, Colour::WHITE);
+
+        // top
+        DrawLine(ntl, ftl, Colour::WHITE);
+        DrawLine(ntr, ftr, Colour::WHITE);
+
+        // bottom
+        DrawLine(nbl, fbl, Colour::WHITE);
+        DrawLine(nbr, fbr, Colour::WHITE);
     }
 
     // printf("\n");

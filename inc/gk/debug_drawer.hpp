@@ -48,9 +48,9 @@ public:
 
     static void Enable();
     static void Disable();
-
     static bool Enabled();
     
+    static void Clear();
     static void DrawLine(const Vertex& v0, const Vertex& v1);
 
 	static void Render();

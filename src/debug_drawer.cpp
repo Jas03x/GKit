@@ -93,6 +93,12 @@ void DebugDrawer::DrawLine(const Vertex& v0, const Vertex& v1)
     }
 }
 
+void DebugDrawer::Clear()
+{
+    assert(Instance != nullptr);
+    Instance->m_Lines.clear();
+}
+
 void DebugDrawer::Render()
 {
     assert(Instance != nullptr);
@@ -113,7 +119,5 @@ void DebugDrawer::Render()
         context->LoadConstantMatrix4F(Instance->m_Matrix, 1, GFX_FALSE, &matrix[0][0]);
 
         context->DrawArray(GFX_LINES, 0, num_lines);
-
-        Instance->m_Lines.clear();
     }
 }
