@@ -78,7 +78,7 @@ void Camera3D::Update()
         p.d = Vector::Dot(p.n, points[3]);
 
         float f = 1.0f / Vector::Length(p.n);
-        p.n *= f;
+        p.n *= -f;
         p.d *= f;
 
         DrawNormal(points, p.n);
