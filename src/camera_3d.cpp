@@ -62,10 +62,12 @@ void Camera3D::Update()
     {
         Vector3F v0 = (points[0] + points[1] + points[2] + points[3]) * 0.25f;
         Vector3F v1 = v0 + normal * 100;
+        Vector3F v2 = v1 + normal * 10;
 
         if(DebugDrawEnabled())
         {
             DrawLine(v0, v1, Colour::BLUE);
+            DrawLine(v1, v2, Colour::RED);
         }
     };
 
@@ -84,8 +86,8 @@ void Camera3D::Update()
     m_Frustum.planes[Frustum::FAR]    = CalculatePlane({ ftl, ftr, fbl, fbr });
     m_Frustum.planes[Frustum::NEAR]   = CalculatePlane({ nbl, ntr, ntl, nbr });
     m_Frustum.planes[Frustum::TOP]    = CalculatePlane({ ntl, ntr, ftl, ftr });
-    m_Frustum.planes[Frustum::BOTTOM] = CalculatePlane({ nbl, nbr, fbl, fbr });
-    m_Frustum.planes[Frustum::LEFT]   = CalculatePlane({ ntl, nbl, ftl, fbl });
+    m_Frustum.planes[Frustum::BOTTOM] = CalculatePlane({ fbl, nbr, nbl, fbr });
+    m_Frustum.planes[Frustum::LEFT]   = CalculatePlane({ ftl, nbl, ntl, fbl });
     m_Frustum.planes[Frustum::RIGHT]  = CalculatePlane({ ntr, nbr, ftr, fbr });
 
     if(DebugDrawEnabled())
