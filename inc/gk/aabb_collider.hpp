@@ -6,7 +6,7 @@
 struct AABB
 {
     Vector3F origin;
-    Vector3F length;
+    Vector3F radius;
 };
 
 #endif // GK_AABB_COLLIDER_HPP

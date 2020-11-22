@@ -3,6 +3,7 @@
 
 #include <cstdint>
 
+#include <gk/aabb_collider.hpp>
 #include <gk/matrix.hpp>
 
 class DebugDrawInterface
@@ -23,6 +24,7 @@ private:
 protected:
     DebugDrawInterface();
 
+    void DrawAABB(const AABB& aabb, Colour colour);
     void DrawLine(const Vector3F& v0, const Vector3F& v1, Colour colour);
 
 public:

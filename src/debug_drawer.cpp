@@ -1,6 +1,7 @@
 #include <gk/debug_drawer.hpp>
 
 #include <cassert>
+#include <cstdio>
 
 #include <gk/camera_3d.hpp>
 
@@ -9,7 +10,7 @@
 
 DebugDrawer* DebugDrawer::Instance = nullptr;
 
-DebugDrawer::DebugDrawer(unsigned int line_limit)
+DebugDrawer::DebugDrawer(unsigned int vertex_limit)
 {
     Shader::Load(
         DEBUG_VERTEX_SHADER,
@@ -23,7 +24,7 @@ DebugDrawer::DebugDrawer(unsigned int line_limit)
     );
 
     m_Enabled = false;
-    m_LineLimit = line_limit;
+    m_VertexLimit = vertex_limit;
     
     const RenderingContext* context = RenderingContext::GetInstance();
 
@@ -32,7 +33,7 @@ DebugDrawer::DebugDrawer(unsigned int line_limit)
 
     m_VBO = new VertexBuffer(GFX_ARRAY_BUFFER);
     m_VBO->Bind();
-    m_VBO->Allocate(m_LineLimit * sizeof(Vertex), nullptr, GFX_DYNAMIC_DRAW);
+    m_VBO->Allocate(m_VertexLimit * sizeof(Vertex), nullptr, GFX_DYNAMIC_DRAW);
 
     m_VAO->EnableVertexAttribute(VertexAttributes::VERTEX);
     m_VAO->EnableVertexAttribute(VertexAttributes::COLOUR);
@@ -88,36 +89,44 @@ void DebugDrawer::DrawLine(const Vertex& v0, const Vertex& v1)
     assert(Instance != nullptr);
     if(Instance->m_Enabled)
     {
-        Instance->m_Lines.push_back(v0);
-        Instance->m_Lines.push_back(v1);
+        Instance->m_LineBuffer.push_back(v0);
+        Instance->m_LineBuffer.push_back(v1);
     }
 }
 
 void DebugDrawer::Clear()
 {
     assert(Instance != nullptr);
-    Instance->m_Lines.clear();
+    Instance->m_LineBuffer.clear();
 }
 
 void DebugDrawer::Render()
 {
     assert(Instance != nullptr);
-    unsigned int num_lines = Instance->m_Lines.size();
+    unsigned int num_vertices = Instance->m_LineBuffer.size();
 
     const RenderingContext* context = RenderingContext::GetInstance();
 
-    if(Instance->m_Enabled && (num_lines > 0))
+    if(Instance->m_Enabled && (num_vertices > 0))
     {
-        Instance->Shader::Bind();
+        if(num_vertices < Instance->m_VertexLimit)
+        {
+            Instance->Shader::Bind();
 
-        Instance->m_VBO->Bind();
-        Instance->m_VBO->Update(0, num_lines * sizeof(Vertex), Instance->m_Lines.data());
+            Instance->m_VBO->Bind();
+            Instance->m_VBO->Update(0, num_vertices * sizeof(Vertex), Instance->m_LineBuffer.data());
 
-        Instance->m_VAO->Bind();
+            Instance->m_VAO->Bind();
 
-        Matrix4F matrix = Camera3D::GetInstance()->GetMatrix();
-        context->LoadConstantMatrix4F(Instance->m_Matrix, 1, GFX_FALSE, &matrix[0][0]);
+            Matrix4F matrix = Camera3D::GetInstance()->GetMatrix();
+            context->LoadConstantMatrix4F(Instance->m_Matrix, 1, GFX_FALSE, &matrix[0][0]);
 
-        context->DrawArray(GFX_LINES, 0, num_lines);
+            context->DrawArray(GFX_LINES, 0, num_vertices);
+        }
+        else
+        {
+            printf("error: vertex count %u exceeds limit %u\n", num_vertices, Instance->m_VertexLimit);
+        }
+        
     }
 }

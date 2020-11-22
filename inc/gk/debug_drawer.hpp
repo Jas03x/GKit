@@ -29,21 +29,21 @@ private:
 
 private:
     bool m_Enabled;
-    unsigned int m_LineLimit;
+    unsigned int m_VertexLimit;
 
 	unsigned int m_Matrix;
 
     VertexArray  *m_VAO;
 	VertexBuffer *m_VBO;
 
-    std::vector<Vertex> m_Lines;
+    std::vector<Vertex> m_LineBuffer;
 
 private:
 	DebugDrawer(unsigned int line_limit);
 	~DebugDrawer();
     
 public:
-	static void CreateInstance(unsigned int line_limit);
+	static void CreateInstance(unsigned int vertex_limit);
 	static void DeleteInstance();
 
     static void Enable();
