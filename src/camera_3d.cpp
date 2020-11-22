@@ -58,12 +58,26 @@ void Camera3D::Update()
     Vector3F fbl = fpc + (-cu * h_far * 0.5f) + (-cr * w_far * 0.5f); // far-plane, bottom-left
     Vector3F fbr = fpc + (-cu * h_far * 0.5f) + (+cr * w_far * 0.5f); // far-plane, bottom-rights
 
-    auto CalculatePlane = [](const std::array<Vector3F, 4>& points) -> Frustum::Plane
+    auto DrawNormal = [this](const std::array<Vector3F, 4>& points, const Vector3F& normal) -> void
+    {
+        Vector3F v0 = (points[0] + points[1] + points[2] + points[3]) * 0.25f;
+        Vector3F v1 = v0 + normal * 100;
+
+        if(DebugDrawEnabled())
+        {
+            DrawLine(v0, v1, Colour::BLUE);
+        }
+    };
+
+    auto CalculatePlane = [DrawNormal](const std::array<Vector3F, 4>& points) -> Frustum::Plane
     {
         Frustum::Plane p;
         p.n = Vector::Normalize(Vector::Cross(points[1] - points[0], points[2] - points[0]));
         p.d = Vector::Dot(p.n, points[3]);
+
+        DrawNormal(points, p.n);
         // printf("plane: n=(%f, %f, %f) d=%f\n", p.n.x, p.n.y, p.n.z, p.d);
+        
         return p;
     };
 
