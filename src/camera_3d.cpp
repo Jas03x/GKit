@@ -74,8 +74,12 @@ void Camera3D::Update()
     auto CalculatePlane = [DrawNormal](const std::array<Vector3F, 4>& points) -> Frustum::Plane
     {
         Frustum::Plane p;
-        p.n = Vector::Normalize(Vector::Cross(points[1] - points[0], points[2] - points[0]));
+        p.n = Vector::Cross(points[1] - points[0], points[2] - points[0]);
         p.d = Vector::Dot(p.n, points[3]);
+
+        float f = 1.0f / Vector::Length(p.n);
+        p.n *= f;
+        p.d *= f;
 
         DrawNormal(points, p.n);
         // printf("plane: n=(%f, %f, %f) d=%f\n", p.n.x, p.n.y, p.n.z, p.d);
