@@ -83,6 +83,16 @@ bool DebugDrawer::Enabled()
     return Instance->m_Enabled;
 }
 
+void DebugDrawer::DrawLine(const Vertex& v0, const Vertex& v1)
+{
+    assert(Instance != nullptr);
+    if(Instance->m_Enabled)
+    {
+        Instance->m_Lines.push_back(v0);
+        Instance->m_Lines.push_back(v1);
+    }
+}
+
 void DebugDrawer::Render()
 {
     assert(Instance != nullptr);

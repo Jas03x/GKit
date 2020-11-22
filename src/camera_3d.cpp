@@ -74,6 +74,14 @@ void Camera3D::Update()
     m_Frustum.planes[Frustum::LEFT]   = CalculatePlane({ ntl, nbl, ftl, fbl });
     m_Frustum.planes[Frustum::RIGHT]  = CalculatePlane({ ntr, nbr, ftr, fbr });
 
+    if(DebugDrawEnabled())
+    {
+        DrawLine(ntl, nbl, Colour::WHITE);
+        DrawLine(ntr, nbr, Colour::WHITE);
+        DrawLine(ntl, ntr, Colour::WHITE);
+        DrawLine(nbl, nbr, Colour::WHITE);
+    }
+
     // printf("\n");
 }
 

@@ -1,10 +1,11 @@
 #ifndef GK_CAMERA_3D_H
 #define GK_CAMERA_3D_H
 
+#include <gk/debug_draw_interface.hpp>
 #include <gk/frustum.hpp>
 #include <gk/matrix.hpp>
 
-class Camera3D
+class Camera3D : public DebugDrawInterface
 {
 public:
 	enum FOV : int {

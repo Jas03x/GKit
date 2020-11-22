@@ -3,29 +3,21 @@
 
 #include <vector>
 
+#include <gk/matrix.hpp>
+#include <gk/shader.hpp>
 #include <gk/vertex_array.hpp>
 #include <gk/vertex_buffer.hpp>
-#include <gk/shader.hpp>
 
 class DebugDrawer : public Shader
 {
 public:
-    enum Color
-    {
-        BLACK = 0,
-        WHITE = 1,
-        BLUE  = 2,
-        RED   = 3,
-        GREEN = 4
-    };
-
-private:
     typedef struct Vertex
 	{
-		float vertex[3];
-        unsigned char colour;
+		Vector3F vertex;
+        uint8_t  colour;
 	} Vertex;
 
+private:
     typedef enum
 	{
 		VERTEX = 0,
@@ -59,6 +51,8 @@ public:
 
     static bool Enabled();
     
+    static void DrawLine(const Vertex& v0, const Vertex& v1);
+
 	static void Render();
 };
 
