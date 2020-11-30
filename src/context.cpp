@@ -157,6 +157,10 @@ bool Context::SetMouseMode(MOUSE_MODE mode)
 		case MOUSE_MODE::DISABLED:
 		{
 			g_MouseMode = MOUSE_MODE::DISABLED;
+			if(SDL_GetRelativeMouseMode() == SDL_TRUE)
+			{
+				status = (SDL_SetRelativeMouseMode(SDL_FALSE) == 0);
+			}
 			break;
 		}
 		case MOUSE_MODE::ABSOLUTE:
