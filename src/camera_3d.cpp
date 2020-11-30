@@ -83,8 +83,8 @@ void Camera3D::UpdateFrustum()
 		p.d = Vector::Dot(p.n, points[3]);
 
 		float f = 1.0f / Vector::Length(p.n);
-		p.n *= f;
-		p.d *= f;
+		p.n *= -f; // negative because the normal points *inwards* inside the frustum
+		p.d *= +f;
 
 		DrawNormal(points, p.n);
 		// printf("plane: n=(%f, %f, %f) d=%f\n", p.n.x, p.n.y, p.n.z, p.d);
