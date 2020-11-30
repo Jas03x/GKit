@@ -10,7 +10,7 @@ Camera3D::Camera3D()
 {
 }
 
-Camera3D::Camera3D(float fov, float width, float height, float zNear, float zFar)
+Camera3D::Camera3D(float fov, float width, float height, float zNear, float zFar) : Camera3D()
 {
     m_FOV = fov * M_PI / 180.0f;
 	m_NearPlane = zNear;
@@ -32,92 +32,97 @@ void Camera3D::Bind()
 
 void Camera3D::Update()
 {
-    m_View = Matrix4F::View(Position, Target, UpVector);
+	m_View = Matrix4F::View(Position, Target, UpVector);
 
-    float half_angle = tanf(m_FOV / 2.0f);
+    UpdateFrustum();
+}
 
-    float h_near = 2 * half_angle * m_NearPlane; // height near plane
-    float w_near = m_AspectRatio * h_near;       // width near plane
+void Camera3D::UpdateFrustum()
+{
+	float half_angle = tanf(m_FOV / 2.0f);
 
-    float h_far = 2 * half_angle * m_FarPlane; // height far plane
-    float w_far = m_AspectRatio * h_far;       // width far plane
+	float h_near = 2 * half_angle * m_NearPlane; // height near plane
+	float w_near = m_AspectRatio * h_near;       // width near plane
 
-    Vector3F cf = Vector::Normalize(Target - Position);     // camera forward vector
-    Vector3F cu = Vector::Normalize(UpVector);              // camera up vector
-    Vector3F cr = Vector::Normalize(Vector::Cross(cf, cu)); // camera right vector
+	float h_far = 2 * half_angle * m_FarPlane; // height far plane
+	float w_far = m_AspectRatio * h_far;       // width far plane
 
-    Vector3F npc = Position + cf * m_NearPlane;                         // near-plane, center
-    Vector3F ntl = npc + (+cu * h_near * 0.5f) + (-cr * w_near * 0.5f); // near-plane, top-left
-    Vector3F ntr = npc + (+cu * h_near * 0.5f) + (+cr * w_near * 0.5f); // near-plane, top-right
-    Vector3F nbl = npc + (-cu * h_near * 0.5f) + (-cr * w_near * 0.5f); // near-plane, bottom-left
-    Vector3F nbr = npc + (-cu * h_near * 0.5f) + (+cr * w_near * 0.5f); // near-plane, bottom-right
+	Vector3F cf = Vector::Normalize(Target - Position);     // camera forward vector
+	Vector3F cu = Vector::Normalize(UpVector);              // camera up vector
+	Vector3F cr = Vector::Normalize(Vector::Cross(cf, cu)); // camera right vector
 
-    Vector3F fpc = Position + cf * m_FarPlane;                        // far-plane, center
-    Vector3F ftl = fpc + (+cu * h_far * 0.5f) + (-cr * w_far * 0.5f); // far-plane, top-left
-    Vector3F ftr = fpc + (+cu * h_far * 0.5f) + (+cr * w_far * 0.5f); // far-plane, top-right
-    Vector3F fbl = fpc + (-cu * h_far * 0.5f) + (-cr * w_far * 0.5f); // far-plane, bottom-left
-    Vector3F fbr = fpc + (-cu * h_far * 0.5f) + (+cr * w_far * 0.5f); // far-plane, bottom-rights
+	Vector3F npc = Position + cf * m_NearPlane;                         // near-plane, center
+	Vector3F ntl = npc + (+cu * h_near * 0.5f) + (-cr * w_near * 0.5f); // near-plane, top-left
+	Vector3F ntr = npc + (+cu * h_near * 0.5f) + (+cr * w_near * 0.5f); // near-plane, top-right
+	Vector3F nbl = npc + (-cu * h_near * 0.5f) + (-cr * w_near * 0.5f); // near-plane, bottom-left
+	Vector3F nbr = npc + (-cu * h_near * 0.5f) + (+cr * w_near * 0.5f); // near-plane, bottom-right
 
-    auto DrawNormal = [this](const std::array<Vector3F, 4>& points, const Vector3F& normal) -> void
-    {
-        Vector3F v0 = (points[0] + points[1] + points[2] + points[3]) * 0.25f;
-        Vector3F v1 = v0 + normal * 100;
-        Vector3F v2 = v1 + normal * 10;
+	Vector3F fpc = Position + cf * m_FarPlane;                        // far-plane, center
+	Vector3F ftl = fpc + (+cu * h_far * 0.5f) + (-cr * w_far * 0.5f); // far-plane, top-left
+	Vector3F ftr = fpc + (+cu * h_far * 0.5f) + (+cr * w_far * 0.5f); // far-plane, top-right
+	Vector3F fbl = fpc + (-cu * h_far * 0.5f) + (-cr * w_far * 0.5f); // far-plane, bottom-left
+	Vector3F fbr = fpc + (-cu * h_far * 0.5f) + (+cr * w_far * 0.5f); // far-plane, bottom-rights
 
-        if(DebugDrawEnabled())
-        {
-            DrawLine(v0, v1, Colour::BLUE);
-            DrawLine(v1, v2, Colour::RED);
-        }
-    };
+	auto DrawNormal = [this](const std::array<Vector3F, 4>& points, const Vector3F& normal) -> void
+	{
+		Vector3F v0 = (points[0] + points[1] + points[2] + points[3]) * 0.25f;
+		Vector3F v1 = v0 + normal * 100;
+		Vector3F v2 = v1 + normal * 10;
 
-    auto CalculatePlane = [DrawNormal](const std::array<Vector3F, 4>& points) -> Frustum::Plane
-    {
-        Frustum::Plane p;
-        p.n = Vector::Cross(points[1] - points[0], points[2] - points[0]);
-        p.d = Vector::Dot(p.n, points[3]);
+		if(DebugDrawEnabled())
+		{
+			DrawLine(v0, v1, Colour::BLUE);
+			DrawLine(v1, v2, Colour::RED);
+		}
+	};
 
-        float f = 1.0f / Vector::Length(p.n);
-        p.n *= -f;
-        p.d *= f;
+	auto CalculatePlane = [DrawNormal](const std::array<Vector3F, 4>& points) -> Frustum::Plane
+	{
+		Frustum::Plane p;
+		p.n = Vector::Cross(points[1] - points[0], points[2] - points[0]);
+		p.d = Vector::Dot(p.n, points[3]);
 
-        DrawNormal(points, p.n);
-        // printf("plane: n=(%f, %f, %f) d=%f\n", p.n.x, p.n.y, p.n.z, p.d);
-        
-        return p;
-    };
+		float f = 1.0f / Vector::Length(p.n);
+		p.n *= -f;
+		p.d *= f;
 
-    m_Frustum.planes[Frustum::FAR]    = CalculatePlane({ ftl, ftr, fbl, fbr });
-    m_Frustum.planes[Frustum::NEAR]   = CalculatePlane({ nbl, ntr, ntl, nbr });
-    m_Frustum.planes[Frustum::TOP]    = CalculatePlane({ ntl, ntr, ftl, ftr });
-    m_Frustum.planes[Frustum::BOTTOM] = CalculatePlane({ fbl, nbr, nbl, fbr });
-    m_Frustum.planes[Frustum::LEFT]   = CalculatePlane({ ftl, nbl, ntl, fbl });
-    m_Frustum.planes[Frustum::RIGHT]  = CalculatePlane({ ntr, nbr, ftr, fbr });
+		DrawNormal(points, p.n);
+		// printf("plane: n=(%f, %f, %f) d=%f\n", p.n.x, p.n.y, p.n.z, p.d);
 
-    if(DebugDrawEnabled())
-    {
-        // near plane
-        DrawLine(ntl, nbl, Colour::WHITE);
-        DrawLine(ntr, nbr, Colour::WHITE);
-        DrawLine(ntl, ntr, Colour::WHITE);
-        DrawLine(nbl, nbr, Colour::WHITE);
+		return p;
+	};
 
-        // far plane
-        DrawLine(ftl, fbl, Colour::WHITE);
-        DrawLine(ftr, fbr, Colour::WHITE);
-        DrawLine(ftl, ftr, Colour::WHITE);
-        DrawLine(fbl, fbr, Colour::WHITE);
+	m_Frustum.planes[Frustum::FAR]    = CalculatePlane({ ftl, ftr, fbl, fbr });
+	m_Frustum.planes[Frustum::NEAR]   = CalculatePlane({ nbl, ntr, ntl, nbr });
+	m_Frustum.planes[Frustum::TOP]    = CalculatePlane({ ntl, ntr, ftl, ftr });
+	m_Frustum.planes[Frustum::BOTTOM] = CalculatePlane({ fbl, nbr, nbl, fbr });
+	m_Frustum.planes[Frustum::LEFT]   = CalculatePlane({ ftl, nbl, ntl, fbl });
+	m_Frustum.planes[Frustum::RIGHT]  = CalculatePlane({ ntr, nbr, ftr, fbr });
 
-        // top
-        DrawLine(ntl, ftl, Colour::WHITE);
-        DrawLine(ntr, ftr, Colour::WHITE);
+	if(DebugDrawEnabled())
+	{
+		// near plane
+		DrawLine(ntl, nbl, Colour::WHITE);
+		DrawLine(ntr, nbr, Colour::WHITE);
+		DrawLine(ntl, ntr, Colour::WHITE);
+		DrawLine(nbl, nbr, Colour::WHITE);
 
-        // bottom
-        DrawLine(nbl, fbl, Colour::WHITE);
-        DrawLine(nbr, fbr, Colour::WHITE);
-    }
+		// far plane
+		DrawLine(ftl, fbl, Colour::WHITE);
+		DrawLine(ftr, fbr, Colour::WHITE);
+		DrawLine(ftl, ftr, Colour::WHITE);
+		DrawLine(fbl, fbr, Colour::WHITE);
 
-    // printf("\n");
+		// top
+		DrawLine(ntl, ftl, Colour::WHITE);
+		DrawLine(ntr, ftr, Colour::WHITE);
+
+		// bottom
+		DrawLine(nbl, fbl, Colour::WHITE);
+		DrawLine(nbr, fbr, Colour::WHITE);
+	}
+
+	// printf("\n");
 }
 
 Camera3D* Camera3D::GetInstance()
@@ -152,8 +157,7 @@ float Camera3D::GetFarPlane() const
 	return m_FarPlane;
 }
 
-const Frustum& Camera3D::GetViewFrustum() const
+ViewFrustum& Camera3D::GetFrustum()
 {
-    return m_Frustum;
+	return m_Frustum;
 }
-

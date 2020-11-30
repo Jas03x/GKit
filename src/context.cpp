@@ -36,10 +36,11 @@ const uint16_t g_KeyMap[KEY_COUNT] =
 	SDL_SCANCODE_SPACE
 };
 
+MOUSE_MODE g_MouseMode = MOUSE_MODE::DISABLED;
+
 void SDL_ERROR(const char* msg) {
 	printf("%s:\n%s\n", msg, SDL_GetError());
 }
-
 
 bool Context::CreateInstance(const char* title, unsigned int width, unsigned int height)
 {
@@ -117,16 +118,74 @@ bool Context::PollEvent(Event& e)
 
 void Context::GetMouseState(MouseState& state)
 {
-	uint32_t b = SDL_GetRelativeMouseState(&state.x_offset, &state.y_offset);
-	state.l_button = (b & SDL_BUTTON_LMASK) != 0;
-	state.m_button = (b & SDL_BUTTON_MMASK) != 0;
-	state.r_button = (b & SDL_BUTTON_RMASK) != 0;
+	uint32_t buttons = 0;
+
+	switch(g_MouseMode)
+	{
+		case MOUSE_MODE::ABSOLUTE:
+		{
+			buttons = SDL_GetMouseState(&state.x_offset, &state.y_offset);
+			break;
+		}
+		case MOUSE_MODE::RELATIVE:
+		{
+			buttons = SDL_GetRelativeMouseState(&state.x_offset, &state.y_offset);
+			break;
+		}
+		default:
+		{
+			break;
+		}
+	}
+
+	state.l_button = (buttons & SDL_BUTTON_LMASK) != 0;
+	state.m_button = (buttons & SDL_BUTTON_MMASK) != 0;
+	state.r_button = (buttons & SDL_BUTTON_RMASK) != 0;
 }
 
-bool Context::SetRelativeMouseMode(bool enabled)
+MOUSE_MODE Context::GetMouseMode()
 {
-	SDL_bool b = enabled ? SDL_TRUE : SDL_FALSE;
-	return (SDL_SetRelativeMouseMode(b) == 0);
+	return g_MouseMode;
+}
+
+bool Context::SetMouseMode(MOUSE_MODE mode)
+{
+	bool status = true;
+
+	switch(mode)
+	{
+		case MOUSE_MODE::DISABLED:
+		{
+			g_MouseMode = MOUSE_MODE::DISABLED;
+			break;
+		}
+		case MOUSE_MODE::ABSOLUTE:
+		{
+			g_MouseMode = MOUSE_MODE::ABSOLUTE;
+			if(SDL_GetRelativeMouseMode() == SDL_TRUE)
+			{
+				status = (SDL_SetRelativeMouseMode(SDL_FALSE) == 0);
+			}
+			break;
+		}
+		case MOUSE_MODE::RELATIVE:
+		{
+			g_MouseMode = MOUSE_MODE::RELATIVE;
+			if(SDL_GetRelativeMouseMode() != SDL_TRUE)
+			{
+				status = (SDL_SetRelativeMouseMode(SDL_TRUE) == 0);
+			}
+			break;
+		}
+		default:
+		{
+			status = false;
+			printf("error: invalid mouse mode (0x%hhX)\n", mode);
+			break;
+		}
+	}
+
+	return status;
 }
 
 uint32_t Context::GetTime()

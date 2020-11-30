@@ -45,6 +45,13 @@ struct MouseState
 	bool r_button;
 };
 
+enum MOUSE_MODE : uint8_t
+{
+	DISABLED = 0,
+	ABSOLUTE = 1,
+	RELATIVE = 2
+};
+
 class Context
 {
 public:
@@ -54,8 +61,10 @@ public:
 	static void Update();
 	static bool PollEvent(Event& e);
 	
+	static MOUSE_MODE GetMouseMode();
+	static bool       SetMouseMode(MOUSE_MODE mode);
+
 	static void GetMouseState(MouseState& state);
-	static bool SetRelativeMouseMode(bool enabled);
 
 	static uint32_t GetTime();
 	static bool GetKeyState(KEY_CODE code);
