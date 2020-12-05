@@ -7,7 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		41B10A97254930CF00E656B2 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B10A96254930CF00E656B2 /* SDL2.framework */; };
+		41383B48257B2CC200597BA9 /* frustum.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 41383B47257B2CC200597BA9 /* frustum.hpp */; };
+		41383B4B257B2CE600597BA9 /* frustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41383B4A257B2CE600597BA9 /* frustum.cpp */; };
+		41A345F0257B2BCF0079DA4F /* debug_drawer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 41A345EE257B2BCF0079DA4F /* debug_drawer.hpp */; };
+		41A345F1257B2BCF0079DA4F /* debug_draw_interface.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 41A345EF257B2BCF0079DA4F /* debug_draw_interface.hpp */; };
+		41A345F5257B2BEB0079DA4F /* debug_drawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41A345F3257B2BEB0079DA4F /* debug_drawer.cpp */; };
+		41A345F6257B2BEB0079DA4F /* debug_draw_interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41A345F4257B2BEB0079DA4F /* debug_draw_interface.cpp */; };
+		41A345FA257B2C050079DA4F /* view_frustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41A345F9257B2C050079DA4F /* view_frustum.cpp */; };
+		41A345FD257B2C1A0079DA4F /* view_frustum.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 41A345FC257B2C1A0079DA4F /* view_frustum.hpp */; };
 		41D14CA625492F9900290ACA /* mesh.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 41D14C7125492F9700290ACA /* mesh.hpp */; };
 		41D14CA725492F9900290ACA /* mdl_importer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 41D14C7225492F9700290ACA /* mdl_importer.hpp */; };
 		41D14CA825492F9900290ACA /* texture_manager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 41D14C7325492F9700290ACA /* texture_manager.hpp */; };
@@ -126,7 +133,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		41383B47257B2CC200597BA9 /* frustum.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = frustum.hpp; path = inc/gk/frustum.hpp; sourceTree = "<group>"; };
+		41383B4A257B2CE600597BA9 /* frustum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = frustum.cpp; path = src/frustum.cpp; sourceTree = "<group>"; };
 		417437D525492EC5001F7025 /* GKit.lib */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GKit.lib; sourceTree = BUILT_PRODUCTS_DIR; };
+		41A345EE257B2BCF0079DA4F /* debug_drawer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = debug_drawer.hpp; path = inc/gk/debug_drawer.hpp; sourceTree = "<group>"; };
+		41A345EF257B2BCF0079DA4F /* debug_draw_interface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = debug_draw_interface.hpp; path = inc/gk/debug_draw_interface.hpp; sourceTree = "<group>"; };
+		41A345F3257B2BEB0079DA4F /* debug_drawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = debug_drawer.cpp; path = src/debug_drawer.cpp; sourceTree = "<group>"; };
+		41A345F4257B2BEB0079DA4F /* debug_draw_interface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = debug_draw_interface.cpp; path = src/debug_draw_interface.cpp; sourceTree = "<group>"; };
+		41A345F9257B2C050079DA4F /* view_frustum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = view_frustum.cpp; path = src/view_frustum.cpp; sourceTree = "<group>"; };
+		41A345FC257B2C1A0079DA4F /* view_frustum.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = view_frustum.hpp; path = inc/gk/view_frustum.hpp; sourceTree = "<group>"; };
 		41B10A96254930CF00E656B2 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		41D14C7125492F9700290ACA /* mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = mesh.hpp; path = inc/gk/mesh.hpp; sourceTree = "<group>"; };
 		41D14C7225492F9700290ACA /* mdl_importer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = mdl_importer.hpp; path = inc/gk/mdl_importer.hpp; sourceTree = "<group>"; };
@@ -250,7 +265,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				41B10A97254930CF00E656B2 /* SDL2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,11 +274,11 @@
 		417437CC25492EC5001F7025 = {
 			isa = PBXGroup;
 			children = (
+				41B10A95254930CF00E656B2 /* Frameworks */,
 				41D14C6F25492F7F00290ACA /* Headers */,
+				417437D625492EC5001F7025 /* Products */,
 				41D14D3D25492FA700290ACA /* Shaders */,
 				41D14C7025492F8500290ACA /* Sources */,
-				417437D625492EC5001F7025 /* Products */,
-				41B10A95254930CF00E656B2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -287,6 +301,7 @@
 		41D14C6F25492F7F00290ACA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				41383B47257B2CC200597BA9 /* frustum.hpp */,
 				41D14C7925492F9800290ACA /* bitmap.hpp */,
 				41D14C7625492F9700290ACA /* blur_shader.hpp */,
 				41D14C8525492F9800290ACA /* bmp_reader.hpp */,
@@ -301,6 +316,8 @@
 				41D14C7E25492F9800290ACA /* context.hpp */,
 				41D14C8A25492F9800290ACA /* cubemap.hpp */,
 				41D14C9725492F9900290ACA /* data_types.hpp */,
+				41A345EF257B2BCF0079DA4F /* debug_draw_interface.hpp */,
+				41A345EE257B2BCF0079DA4F /* debug_drawer.hpp */,
 				41D14C7B25492F9800290ACA /* dynamic_mesh_renderer.hpp */,
 				41D14CA525492F9900290ACA /* dynamic_mesh.hpp */,
 				41D14CA225492F9900290ACA /* file.hpp */,
@@ -338,6 +355,7 @@
 				41D14C9C25492F9900290ACA /* transform_3d.hpp */,
 				41D14C9D25492F9900290ACA /* vertex_array.hpp */,
 				41D14C7725492F9800290ACA /* vertex_buffer.hpp */,
+				41A345FC257B2C1A0079DA4F /* view_frustum.hpp */,
 				41D14C8225492F9800290ACA /* view.hpp */,
 				41D14C9325492F9900290ACA /* xml.hpp */,
 			);
@@ -359,6 +377,8 @@
 				41D14D0125492FA400290ACA /* collada_parser.cpp */,
 				41D14D0425492FA400290ACA /* context.cpp */,
 				41D14CF125492FA400290ACA /* cubemap.cpp */,
+				41A345F4257B2BEB0079DA4F /* debug_draw_interface.cpp */,
+				41A345F3257B2BEB0079DA4F /* debug_drawer.cpp */,
 				41D14CE825492FA300290ACA /* dynamic_mesh_renderer.cpp */,
 				41D14CE725492FA300290ACA /* dynamic_mesh.cpp */,
 				41D14CEB25492FA300290ACA /* file.cpp */,
@@ -393,6 +413,7 @@
 				41D14CE225492FA300290ACA /* transform_3d.cpp */,
 				41D14CF525492FA400290ACA /* vertex_array.cpp */,
 				41D14D0225492FA400290ACA /* vertex_buffer.cpp */,
+				41A345F9257B2C050079DA4F /* view_frustum.cpp */,
 				41D14CE025492FA300290ACA /* view.cpp */,
 				41D14D0025492FA400290ACA /* xml.cpp */,
 			);
@@ -406,6 +427,7 @@
 				41D14D4725492FB200290ACA /* dynamic_mesh_vertex_shader.hpp */,
 				41D14D4825492FB200290ACA /* frame_pixel_shader.hpp */,
 				41D14D3F25492FB200290ACA /* frame_vertex_shader.hpp */,
+				41383B4A257B2CE600597BA9 /* frustum.cpp */,
 				41D14D4025492FB200290ACA /* gaussian_blur_pixel_shader.hpp */,
 				41D14D4925492FB300290ACA /* gaussian_blur_vertex_shader.hpp */,
 				41D14D4525492FB200290ACA /* particle_pixel_shader.hpp */,
@@ -453,9 +475,11 @@
 				41D14CB125492F9900290ACA /* graphics.hpp in Headers */,
 				41D14CCC25492F9900290ACA /* data_types.hpp in Headers */,
 				41D14D5525492FB300290ACA /* dynamic_mesh_vertex_shader.hpp in Headers */,
+				41A345FD257B2C1A0079DA4F /* view_frustum.hpp in Headers */,
 				41D14D5225492FB300290ACA /* dynamic_mesh_pixel_shader.hpp in Headers */,
 				41D14CC525492F9900290ACA /* mesh_util.hpp in Headers */,
 				41D14CCD25492F9900290ACA /* collada_format.hpp in Headers */,
+				41A345F0257B2BCF0079DA4F /* debug_drawer.hpp in Headers */,
 				41D14CA825492F9900290ACA /* texture_manager.hpp in Headers */,
 				41D14D5025492FB300290ACA /* static_mesh_vertex_shader.hpp in Headers */,
 				41D14CAB25492F9900290ACA /* blur_shader.hpp in Headers */,
@@ -464,7 +488,9 @@
 				41D14CB925492F9900290ACA /* node.hpp in Headers */,
 				41D14CBE25492F9900290ACA /* static_mesh.hpp in Headers */,
 				41D14CC825492F9900290ACA /* xml.hpp in Headers */,
+				41A345F1257B2BCF0079DA4F /* debug_draw_interface.hpp in Headers */,
 				41D14D5325492FB300290ACA /* particle_pixel_shader.hpp in Headers */,
+				41383B48257B2CC200597BA9 /* frustum.hpp in Headers */,
 				41D14D5425492FB300290ACA /* static_mesh_pixel_shader.hpp in Headers */,
 				41D14CC225492F9900290ACA /* static_mesh_renderer.hpp in Headers */,
 				41D14CAE25492F9900290ACA /* bitmap.hpp in Headers */,
@@ -561,6 +587,7 @@
 				41D14D3925492FA500290ACA /* blur_shader.cpp in Sources */,
 				41D14D1525492FA500290ACA /* particle_array.cpp in Sources */,
 				41D14D2D25492FA500290ACA /* sun.cpp in Sources */,
+				41A345F5257B2BEB0079DA4F /* debug_drawer.cpp in Sources */,
 				41D14D1425492FA500290ACA /* collada_format.cpp in Sources */,
 				41D14D1F25492FA500290ACA /* random.cpp in Sources */,
 				41D14D3125492FA500290ACA /* collada_parser.cpp in Sources */,
@@ -590,10 +617,13 @@
 				41D14D1925492FA500290ACA /* static_mesh_renderer.cpp in Sources */,
 				41D14D2825492FA500290ACA /* particle_renderer_3d.cpp in Sources */,
 				41D14D1025492FA500290ACA /* view.cpp in Sources */,
+				41383B4B257B2CE600597BA9 /* frustum.cpp in Sources */,
 				41D14D3625492FA500290ACA /* clock.cpp in Sources */,
 				41D14D2625492FA500290ACA /* framebuffer.cpp in Sources */,
 				41D14D0C25492FA500290ACA /* skybox.cpp in Sources */,
+				41A345F6257B2BEB0079DA4F /* debug_draw_interface.cpp in Sources */,
 				41D14D2A25492FA500290ACA /* quad.cpp in Sources */,
+				41A345FA257B2C050079DA4F /* view_frustum.cpp in Sources */,
 				41D14D2C25492FA500290ACA /* matrix.cpp in Sources */,
 				41D14D2525492FA500290ACA /* vertex_array.cpp in Sources */,
 				41D14D3525492FA500290ACA /* mdl_importer.cpp in Sources */,
@@ -728,7 +758,10 @@
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
 				);
-				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/inc";
+				HEADER_SEARCH_PATHS = (
+					"${PROJECT_DIR}/inc",
+					/Library/Frameworks/SDL2.framework/Headers,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -744,7 +777,10 @@
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
 				);
-				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/inc";
+				HEADER_SEARCH_PATHS = (
+					"${PROJECT_DIR}/inc",
+					/Library/Frameworks/SDL2.framework/Headers,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};

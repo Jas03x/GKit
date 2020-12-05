@@ -18,8 +18,11 @@ template <typename T>
 T step(T v0, T v1, T step)
 {
     T d = v1 - v0;
-    return (abs(d) > step) ? (v0 + copysign(step, d)) : v1;
+    return (std::abs(d) > step) ? (v0 + copysign(step, d)) : v1;
 }
+
+template float  step(float  v0, float  v1, float  step);
+template double step(double v0, double v1, double step);
 
 template <typename T>
 T clamp(T val, T min, T max)
@@ -28,7 +31,6 @@ T clamp(T val, T min, T max)
 }
 
 #define INSTANTIATE_SCALAR_FUNCTION_TEMPLATES(x) \
-    template x step(x v0, x v1, x step);         \
     template x clamp(x val, x min, x max);       \
 
 INSTANTIATE_SCALAR_FUNCTION_TEMPLATES(char);
