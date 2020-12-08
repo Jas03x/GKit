@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		410B541D257FE80500836327 /* frustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 410B541C257FE80500836327 /* frustum.cpp */; };
 		41383B48257B2CC200597BA9 /* frustum.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 41383B47257B2CC200597BA9 /* frustum.hpp */; };
-		41383B4B257B2CE600597BA9 /* frustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41383B4A257B2CE600597BA9 /* frustum.cpp */; };
 		41A345F0257B2BCF0079DA4F /* debug_drawer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 41A345EE257B2BCF0079DA4F /* debug_drawer.hpp */; };
 		41A345F1257B2BCF0079DA4F /* debug_draw_interface.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 41A345EF257B2BCF0079DA4F /* debug_draw_interface.hpp */; };
 		41A345F5257B2BEB0079DA4F /* debug_drawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41A345F3257B2BEB0079DA4F /* debug_drawer.cpp */; };
@@ -133,6 +133,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		410B541C257FE80500836327 /* frustum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = frustum.cpp; path = src/frustum.cpp; sourceTree = "<group>"; };
 		41383B47257B2CC200597BA9 /* frustum.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = frustum.hpp; path = inc/gk/frustum.hpp; sourceTree = "<group>"; };
 		41383B4A257B2CE600597BA9 /* frustum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = frustum.cpp; path = src/frustum.cpp; sourceTree = "<group>"; };
 		417437D525492EC5001F7025 /* GKit.lib */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GKit.lib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -385,6 +386,7 @@
 				41D14CF025492FA400290ACA /* filesystem.cpp */,
 				41D14D0725492FA500290ACA /* frame_renderer.cpp */,
 				41D14CF625492FA400290ACA /* framebuffer.cpp */,
+				410B541C257FE80500836327 /* frustum.cpp */,
 				41D14D0825492FA500290ACA /* graphics.cpp */,
 				41D14CFC25492FA400290ACA /* matrix.cpp */,
 				41D14D0525492FA400290ACA /* mdl_importer.cpp */,
@@ -617,7 +619,7 @@
 				41D14D1925492FA500290ACA /* static_mesh_renderer.cpp in Sources */,
 				41D14D2825492FA500290ACA /* particle_renderer_3d.cpp in Sources */,
 				41D14D1025492FA500290ACA /* view.cpp in Sources */,
-				41383B4B257B2CE600597BA9 /* frustum.cpp in Sources */,
+				410B541D257FE80500836327 /* frustum.cpp in Sources */,
 				41D14D3625492FA500290ACA /* clock.cpp in Sources */,
 				41D14D2625492FA500290ACA /* framebuffer.cpp in Sources */,
 				41D14D0C25492FA500290ACA /* skybox.cpp in Sources */,

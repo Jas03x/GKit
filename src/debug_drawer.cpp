@@ -103,7 +103,7 @@ void DebugDrawer::Clear()
 void DebugDrawer::Render()
 {
     assert(Instance != nullptr);
-    unsigned int num_vertices = Instance->m_LineBuffer.size();
+    unsigned int num_vertices = static_cast<unsigned int>(Instance->m_LineBuffer.size());
 
     const RenderingContext* context = RenderingContext::GetInstance();
 
