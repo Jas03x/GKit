@@ -19,56 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\bitmap.cpp" />
-    <ClCompile Include="src\blur_shader.cpp" />
-    <ClCompile Include="src\bmp_reader.cpp" />
-    <ClCompile Include="src\bone.cpp" />
-    <ClCompile Include="src\camera_2d.cpp" />
-    <ClCompile Include="src\camera_3d.cpp" />
-    <ClCompile Include="src\clock.cpp" />
-    <ClCompile Include="src\collada_format.cpp" />
-    <ClCompile Include="src\collada_importer.cpp" />
-    <ClCompile Include="src\collada_parser.cpp" />
-    <ClCompile Include="src\context.cpp" />
-    <ClCompile Include="src\cubemap.cpp" />
-    <ClCompile Include="src\dynamic_mesh.cpp" />
-    <ClCompile Include="src\dynamic_mesh_renderer.cpp" />
-    <ClCompile Include="src\file.cpp" />
-    <ClCompile Include="src\filesystem.cpp" />
-    <ClCompile Include="src\framebuffer.cpp" />
-    <ClCompile Include="src\frame_renderer.cpp" />
-    <ClCompile Include="src\graphics.cpp" />
-    <ClCompile Include="src\matrix.cpp" />
-    <ClCompile Include="src\mdl_importer.cpp" />
-    <ClCompile Include="src\mesh.cpp" />
-    <ClCompile Include="src\mesh_data.cpp" />
-    <ClCompile Include="src\mesh_util.cpp" />
-    <ClCompile Include="src\node.cpp" />
-    <ClCompile Include="src\particle_array.cpp" />
-    <ClCompile Include="src\particle_renderer_3d.cpp" />
-    <ClCompile Include="src\quad.cpp" />
-    <ClCompile Include="src\random.cpp" />
-    <ClCompile Include="src\render_buffer.cpp" />
-    <ClCompile Include="src\shader.cpp" />
-    <ClCompile Include="src\skybox.cpp" />
-    <ClCompile Include="src\skybox_renderer.cpp" />
-    <ClCompile Include="src\sprite.cpp" />
-    <ClCompile Include="src\sprite_renderer.cpp" />
-    <ClCompile Include="src\static_mesh.cpp" />
-    <ClCompile Include="src\static_mesh_renderer.cpp" />
-    <ClCompile Include="src\string_buffer.cpp" />
-    <ClCompile Include="src\sun.cpp" />
-    <ClCompile Include="src\texture.cpp" />
-    <ClCompile Include="src\texture_manager.cpp" />
-    <ClCompile Include="src\tga_reader.cpp" />
-    <ClCompile Include="src\transform_2d.cpp" />
-    <ClCompile Include="src\transform_3d.cpp" />
-    <ClCompile Include="src\vertex_array.cpp" />
-    <ClCompile Include="src\vertex_buffer.cpp" />
-    <ClCompile Include="src\view.cpp" />
-    <ClCompile Include="src\xml.cpp" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClInclude Include="inc\gk\aabb_collider.hpp" />
     <ClInclude Include="inc\gk\bitmap.hpp" />
     <ClInclude Include="inc\gk\blur_shader.hpp" />
     <ClInclude Include="inc\gk\bmp_reader.hpp" />
@@ -83,12 +34,15 @@
     <ClInclude Include="inc\gk\context.hpp" />
     <ClInclude Include="inc\gk\cubemap.hpp" />
     <ClInclude Include="inc\gk\data_types.hpp" />
+    <ClInclude Include="inc\gk\debug_drawer.hpp" />
+    <ClInclude Include="inc\gk\debug_draw_interface.hpp" />
     <ClInclude Include="inc\gk\dynamic_mesh.hpp" />
     <ClInclude Include="inc\gk\dynamic_mesh_renderer.hpp" />
     <ClInclude Include="inc\gk\file.hpp" />
     <ClInclude Include="inc\gk\filesystem.hpp" />
     <ClInclude Include="inc\gk\framebuffer.hpp" />
     <ClInclude Include="inc\gk\frame_renderer.hpp" />
+    <ClInclude Include="inc\gk\frustum.hpp" />
     <ClInclude Include="inc\gk\graphics.hpp" />
     <ClInclude Include="inc\gk\matrix.hpp" />
     <ClInclude Include="inc\gk\mdl_format.hpp" />
@@ -121,6 +75,7 @@
     <ClInclude Include="inc\gk\vertex_array.hpp" />
     <ClInclude Include="inc\gk\vertex_buffer.hpp" />
     <ClInclude Include="inc\gk\view.hpp" />
+    <ClInclude Include="inc\gk\view_frustum.hpp" />
     <ClInclude Include="inc\gk\xml.hpp" />
     <ClInclude Include="shdr\dynamic_mesh_pixel_shader.hpp" />
     <ClInclude Include="shdr\dynamic_mesh_vertex_shader.hpp" />
@@ -145,6 +100,60 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Todo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\bitmap.cpp" />
+    <ClCompile Include="src\blur_shader.cpp" />
+    <ClCompile Include="src\bmp_reader.cpp" />
+    <ClCompile Include="src\bone.cpp" />
+    <ClCompile Include="src\camera_2d.cpp" />
+    <ClCompile Include="src\camera_3d.cpp" />
+    <ClCompile Include="src\clock.cpp" />
+    <ClCompile Include="src\collada_format.cpp" />
+    <ClCompile Include="src\collada_importer.cpp" />
+    <ClCompile Include="src\collada_parser.cpp" />
+    <ClCompile Include="src\context.cpp" />
+    <ClCompile Include="src\cubemap.cpp" />
+    <ClCompile Include="src\debug_drawer.cpp" />
+    <ClCompile Include="src\debug_draw_interface.cpp" />
+    <ClCompile Include="src\dynamic_mesh.cpp" />
+    <ClCompile Include="src\dynamic_mesh_renderer.cpp" />
+    <ClCompile Include="src\file.cpp" />
+    <ClCompile Include="src\filesystem.cpp" />
+    <ClCompile Include="src\framebuffer.cpp" />
+    <ClCompile Include="src\frame_renderer.cpp" />
+    <ClCompile Include="src\frustum.cpp" />
+    <ClCompile Include="src\graphics.cpp" />
+    <ClCompile Include="src\matrix.cpp" />
+    <ClCompile Include="src\mdl_importer.cpp" />
+    <ClCompile Include="src\mesh.cpp" />
+    <ClCompile Include="src\mesh_data.cpp" />
+    <ClCompile Include="src\mesh_util.cpp" />
+    <ClCompile Include="src\node.cpp" />
+    <ClCompile Include="src\particle_array.cpp" />
+    <ClCompile Include="src\particle_renderer_3d.cpp" />
+    <ClCompile Include="src\quad.cpp" />
+    <ClCompile Include="src\random.cpp" />
+    <ClCompile Include="src\render_buffer.cpp" />
+    <ClCompile Include="src\shader.cpp" />
+    <ClCompile Include="src\skybox.cpp" />
+    <ClCompile Include="src\skybox_renderer.cpp" />
+    <ClCompile Include="src\sprite.cpp" />
+    <ClCompile Include="src\sprite_renderer.cpp" />
+    <ClCompile Include="src\static_mesh.cpp" />
+    <ClCompile Include="src\static_mesh_renderer.cpp" />
+    <ClCompile Include="src\string_buffer.cpp" />
+    <ClCompile Include="src\sun.cpp" />
+    <ClCompile Include="src\texture.cpp" />
+    <ClCompile Include="src\texture_manager.cpp" />
+    <ClCompile Include="src\tga_reader.cpp" />
+    <ClCompile Include="src\transform_2d.cpp" />
+    <ClCompile Include="src\transform_3d.cpp" />
+    <ClCompile Include="src\vertex_array.cpp" />
+    <ClCompile Include="src\vertex_buffer.cpp" />
+    <ClCompile Include="src\view.cpp" />
+    <ClCompile Include="src\view_frustum.cpp" />
+    <ClCompile Include="src\xml.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -256,7 +265,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)inc;C:/Libraries/SDL2/inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)inc;C:/Libraries/SDL2/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -275,7 +284,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)inc;C:/Libraries/SDL2/inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)inc;C:/Libraries/SDL2/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>

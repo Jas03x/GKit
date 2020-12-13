@@ -24,8 +24,10 @@ private:
 protected:
     DebugDrawInterface();
 
-    void DrawAABB(const AABB& aabb, Colour colour);
     void DrawLine(const Vector3F& v0, const Vector3F& v1, Colour colour);
+
+    void DrawAABB(const AABB& aabb, Colour colour);
+    void DrawSphere(const Vector3F& origin, float radius, Colour colour);
 
 public:
     void EnableDebugDraw(bool enabled);
