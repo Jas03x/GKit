@@ -79,12 +79,8 @@ void Camera3D::UpdateFrustum()
 	auto CalculatePlane = [DrawNormal](const std::array<Vector3F, 4>& points) -> Frustum::Plane
 	{
 		Frustum::Plane p;
-		p.n = Vector::Cross(points[1] - points[0], points[2] - points[0]);
-		p.d = Vector::Dot(p.n, points[3]);
-
-		float f = 1.0f / Vector::Length(p.n);
-		p.n *= f;
-		p.d *= f;
+		p.n = Vector::Normalize(Vector::Cross(points[1] - points[0], points[2] - points[0]));
+		p.d = Vector::Dot(-p.n, points[3]);
 
 		DrawNormal(points, p.n);
 		// printf("plane: n=(%f, %f, %f) d=%f\n", p.n.x, p.n.y, p.n.z, p.d);
@@ -92,14 +88,6 @@ void Camera3D::UpdateFrustum()
 		return p;
 	};
 
-#if 1
-	m_Frustum.planes[Frustum::FAR]    = CalculatePlane({ ftl, ftr, fbl, fbr });
-	m_Frustum.planes[Frustum::NEAR]   = CalculatePlane({ nbl, ntr, ntl, nbr });
-	m_Frustum.planes[Frustum::TOP]    = CalculatePlane({ ntl, ntr, ftl, ftr });
-	m_Frustum.planes[Frustum::BOTTOM] = CalculatePlane({ fbl, nbr, nbl, fbr });
-	m_Frustum.planes[Frustum::LEFT]   = CalculatePlane({ ftl, nbl, ntl, fbl });
-	m_Frustum.planes[Frustum::RIGHT]  = CalculatePlane({ ntr, nbr, ftr, fbr });
-#else
 	// NOTE: normals point *inwards* inside the frustum
 	m_Frustum.planes[Frustum::FAR]    = CalculatePlane({ fbl, ftr, ftl, fbr });
 	m_Frustum.planes[Frustum::NEAR]   = CalculatePlane({ ntl, ntr, nbl, nbr });
@@ -107,7 +95,6 @@ void Camera3D::UpdateFrustum()
 	m_Frustum.planes[Frustum::BOTTOM] = CalculatePlane({ nbl, nbr, fbl, fbr });
 	m_Frustum.planes[Frustum::LEFT]   = CalculatePlane({ ntl, nbl, ftl, fbl });
 	m_Frustum.planes[Frustum::RIGHT]  = CalculatePlane({ ftr, nbr, ntr, fbr });
-#endif
 
 	if(DebugDrawEnabled())
 	{
