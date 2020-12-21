@@ -1,7 +1,5 @@
 #include <gk/frustum.hpp>
 
-#include <stdio.h>
-
 bool Frustum::InView(const AABB& aabb) const
 {
     bool in_view = true;
