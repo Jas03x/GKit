@@ -89,12 +89,12 @@ void Camera3D::UpdateFrustum()
 	};
 
 	// NOTE: normals point *inwards* inside the frustum
-	m_Frustum.planes[Frustum::FAR]    = CalculatePlane({ fbl, ftr, ftl, fbr });
+	m_Frustum.planes[Frustum::FAR]    = CalculatePlane({ fbl, fbr, ftl, ftr });
 	m_Frustum.planes[Frustum::NEAR]   = CalculatePlane({ ntl, ntr, nbl, nbr });
-	m_Frustum.planes[Frustum::TOP]    = CalculatePlane({ ftl, ntr, ntl, ftr });
+	m_Frustum.planes[Frustum::TOP]    = CalculatePlane({ ftl, ftr, ntl, ntr });
 	m_Frustum.planes[Frustum::BOTTOM] = CalculatePlane({ nbl, nbr, fbl, fbr });
 	m_Frustum.planes[Frustum::LEFT]   = CalculatePlane({ ntl, nbl, ftl, fbl });
-	m_Frustum.planes[Frustum::RIGHT]  = CalculatePlane({ ftr, nbr, ntr, fbr });
+	m_Frustum.planes[Frustum::RIGHT]  = CalculatePlane({ ftr, fbr, ntr, nbr });
 
 	if(DebugDrawEnabled())
 	{
