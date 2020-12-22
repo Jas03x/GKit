@@ -65,51 +65,44 @@ void DebugDrawInterface::DrawSphere(const Vector3F& origin, float radius, Colour
 {
     if (m_Enabled && DebugDrawer::Enabled())
     {
-        const float step = M_PI / 4.0f;
-
-        for (int i = -1; i <= 1; i++)
+        const float step = M_PI / 8.0f;
+        for (float f = 0.0f; f < M_PI * 2.0f; f += step)
         {
-            float o = static_cast<float>(i) * (radius / 2.0f);
-            float r = sqrtf(powf(radius, 2.0f) - powf(o, 2.0f));
+            float c_0 = cosf(f);
+            float s_0 = sinf(f);
+            Matrix3F rot_x_0 = {
+                { 1,    0,    0 },
+                { 0,  c_0, -s_0 },
+                { 0,  s_0,  c_0 }
+            };
+            Matrix3F rot_z_0 = {
+                { c_0, -s_0, 0 },
+                { s_0,  c_0, 0 },
+                {    0,   0, 1}
+            };
 
-            for (float f = 0.0f; f < M_PI * 2.0f; f += step)
-            {
-                float c_0 = cosf(f);
-                float s_0 = sinf(f);
-                Matrix3F rot_x_0 = {
-                    { 1,    0,    0 },
-                    { 0,  c_0, -s_0 },
-                    { 0,  s_0,  c_0 }
-                };
-                Matrix3F rot_z_0 = {
-                    { c_0, -s_0, 0 },
-                    { s_0,  c_0, 0 },
-                    {    0,   0, 1}
-                };
+            float c_1 = cosf(f + step);
+            float s_1 = sinf(f + step);
+            Matrix3F rot_x_1 = {
+                { 1,    0,    0 },
+                { 0,  c_1, -s_1 },
+                { 0,  s_1,  c_1 }
+            };
+            Matrix3F rot_z_1 = {
+                { c_1, -s_1, 0 },
+                { s_1,  c_1, 0 },
+                {    0,   0, 1}
+            };
 
-                float c_1 = cosf(f + step);
-                float s_1 = sinf(f + step);
-                Matrix3F rot_x_1 = {
-                    { 1,    0,    0 },
-                    { 0,  c_1, -s_1 },
-                    { 0,  s_1,  c_1 }
-                };
-                Matrix3F rot_z_1 = {
-                    { c_1, -s_1, 0 },
-                    { s_1,  c_1, 0 },
-                    {    0,   0, 1}
-                };
+            DebugDrawer::DrawLine(
+                { origin + rot_x_0 * Vector3F(0, 0, radius), colour },
+                { origin + rot_x_1 * Vector3F(0, 0, radius), colour }
+            );
 
-                DebugDrawer::DrawLine(
-                    { origin + rot_x_0 * Vector3F(o, 0, r), colour },
-                    { origin + rot_x_1 * Vector3F(o, 0, r), colour }
-                );
-
-                DebugDrawer::DrawLine(
-                    { origin + rot_z_0 * Vector3F(r, 0, o), colour },
-                    { origin + rot_z_1 * Vector3F(r, 0, o), colour }
-                );
-            }
+            DebugDrawer::DrawLine(
+                { origin + rot_z_0 * Vector3F(radius, 0, 0), colour },
+                { origin + rot_z_1 * Vector3F(radius, 0, 0), colour }
+            );
         }
     }
 }
