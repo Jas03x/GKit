@@ -75,6 +75,11 @@ void DebugDrawInterface::DrawSphere(const Vector3F& origin, float radius, Colour
                 { 0,  c_0, -s_0 },
                 { 0,  s_0,  c_0 }
             };
+            Matrix3F rot_y_0 = {
+                {  c_0, 0, s_0 },
+                {    0, 1,   0 },
+                { -s_0, 0, c_0 }
+            };
             Matrix3F rot_z_0 = {
                 { c_0, -s_0, 0 },
                 { s_0,  c_0, 0 },
@@ -88,6 +93,11 @@ void DebugDrawInterface::DrawSphere(const Vector3F& origin, float radius, Colour
                 { 0,  c_1, -s_1 },
                 { 0,  s_1,  c_1 }
             };
+            Matrix3F rot_y_1 = {
+                {  c_1, 0, s_1 },
+                {    0, 1,   0 },
+                { -s_1, 0, c_1 }
+            };
             Matrix3F rot_z_1 = {
                 { c_1, -s_1, 0 },
                 { s_1,  c_1, 0 },
@@ -100,8 +110,13 @@ void DebugDrawInterface::DrawSphere(const Vector3F& origin, float radius, Colour
             );
 
             DebugDrawer::DrawLine(
-                { origin + rot_z_0 * Vector3F(radius, 0, 0), colour },
-                { origin + rot_z_1 * Vector3F(radius, 0, 0), colour }
+                { origin + rot_y_0 * Vector3F(radius, 0, 0), colour },
+                { origin + rot_y_1 * Vector3F(radius, 0, 0), colour }
+            );
+
+            DebugDrawer::DrawLine(
+                { origin + rot_z_0 * Vector3F(0, radius, 0), colour },
+                { origin + rot_z_1 * Vector3F(0, radius, 0), colour }
             );
         }
     }
