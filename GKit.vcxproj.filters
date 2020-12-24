@@ -204,9 +204,6 @@
     <ClInclude Include="inc\gk\view.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="inc\gk\view_frustum.hpp">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="inc\gk\xml.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
@@ -369,9 +366,6 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="src\view.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\view_frustum.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="src\xml.cpp">

@@ -75,7 +75,6 @@
     <ClInclude Include="inc\gk\vertex_array.hpp" />
     <ClInclude Include="inc\gk\vertex_buffer.hpp" />
     <ClInclude Include="inc\gk\view.hpp" />
-    <ClInclude Include="inc\gk\view_frustum.hpp" />
     <ClInclude Include="inc\gk\xml.hpp" />
     <ClInclude Include="shdr\dynamic_mesh_pixel_shader.hpp" />
     <ClInclude Include="shdr\dynamic_mesh_vertex_shader.hpp" />
@@ -152,7 +151,6 @@
     <ClCompile Include="src\vertex_array.cpp" />
     <ClCompile Include="src\vertex_buffer.cpp" />
     <ClCompile Include="src\view.cpp" />
-    <ClCompile Include="src\view_frustum.cpp" />
     <ClCompile Include="src\xml.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

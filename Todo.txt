@@ -1,3 +1,7 @@
 TODO:
 	- Support different properties/configurations in shaders
 	- Split code into Gfx2D and Gfx3D namespaces
+	- Make some sort of state tracking system, which contains the following objects
+		- Camera
+		- ViewFrustum
+		- etc.

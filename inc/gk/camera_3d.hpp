@@ -1,9 +1,9 @@
 #ifndef GK_CAMERA_3D_H
 #define GK_CAMERA_3D_H
 
+#include <gk/frustum.hpp>
 #include <gk/debug_draw_interface.hpp>
 #include <gk/matrix.hpp>
-#include <gk/view_frustum.hpp>
 
 class Camera3D : public DebugDrawInterface
 {
@@ -24,15 +24,10 @@ private:
     Matrix4F m_View;
 	Matrix4F m_Projection;
 
-	ViewFrustum m_Frustum;
-
 public:
     Vector3F UpVector;
     Vector3F Position;
     Vector3F Target;
-
-private:
-    void UpdateFrustum();
 
 public:
 	Camera3D();
@@ -43,14 +38,13 @@ public:
 	void Bind();
     void Update();
 	
-	Matrix4F GetMatrix() const;
-	const Matrix4F& GetViewMatrix() const;
-	const Matrix4F& GetProjectionMatrix() const;
-
+	void GetFrustum(Frustum& frustum);
 	float GetNearPlane() const;
 	float GetFarPlane() const;
 
-	ViewFrustum& GetFrustum();
+	Matrix4F GetMatrix() const;
+	const Matrix4F& GetViewMatrix() const;
+	const Matrix4F& GetProjectionMatrix() const;
 };
 
 #endif // GK_CAMERA_3D_H
