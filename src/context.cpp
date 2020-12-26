@@ -7,7 +7,9 @@
 #include <gk/context.hpp>
 #include <gk/graphics.hpp>
 
-#define HAVE_M_PI
+#if !defined(__APPLE__)
+	#define HAVE_M_PI
+#endif
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 

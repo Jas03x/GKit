@@ -2,9 +2,7 @@
 CC = g++
 LINK = ar
 
-SDL = /Library/Frameworks/SDL2.framework/Versions/A
-
-INCS += -I ./inc -I $(SDL)/Headers/
+INCS += -I ./inc
 
 BIN = ./bin
 SRC = ./src
