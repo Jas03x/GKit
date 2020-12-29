@@ -13,7 +13,7 @@ public:
 		FIRST_PERSON = 90
 	};
 
-private:
+protected:
 	static Camera3D* Instance;
 
     float m_FOV;
