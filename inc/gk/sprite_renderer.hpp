@@ -13,6 +13,7 @@ class SpriteRenderer : public Shader
 private:
 	static SpriteRenderer* Instance;
 
+private:
 	GFX_HANDLE m_MatrixLocation;
 	GFX_HANDLE m_SpriteLocation;
 
@@ -21,12 +22,15 @@ private:
 	~SpriteRenderer();
 
 public:
-	static void CreateInstance();
+	static SpriteRenderer* CreateInstance();
 	static void DeleteInstance();
+    
+    static SpriteRenderer* GetInstance();
 
-	static void Bind();
-	static void Render(const Sprite& sprite);
-	static void Render(const Sprite& sprite, const std::vector<Transform2D>& instances);
+public:
+	void Bind();
+	void Render(const Sprite& sprite);
+	void Render(const Sprite& sprite, const std::vector<Transform2D>& instances);
 };
 
 #endif // SPRITE_RENDERER_H

@@ -127,7 +127,7 @@ void DynamicMesh::Load(const MeshData& data, const std::string& texture_director
 
 	m_ElementCount = data.index_count;
 
-	m_DiffuseTexture = TextureManager::Load(data.colour_texture);
+	m_DiffuseTexture = TextureManager::GetInstance()->Load(data.colour_texture);
 }
 
 DynamicMesh::~DynamicMesh()

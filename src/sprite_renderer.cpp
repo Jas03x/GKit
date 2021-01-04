@@ -33,13 +33,14 @@ SpriteRenderer::~SpriteRenderer()
 
 }
 
-void SpriteRenderer::CreateInstance()
+SpriteRenderer* SpriteRenderer::CreateInstance()
 {
 	assert(Instance == nullptr);
 	if (Instance == nullptr)
 	{
 		Instance = new SpriteRenderer();
 	}
+    return Instance;
 }
 
 void SpriteRenderer::DeleteInstance()
@@ -52,12 +53,15 @@ void SpriteRenderer::DeleteInstance()
 	}
 }
 
+SpriteRenderer* SpriteRenderer::GetInstance()
+{
+    return Instance;
+}
+
 void SpriteRenderer::Bind()
 {
-	assert(Instance != nullptr);
-
-	Instance->Shader::Bind();
-	Quad::Bind();
+	Shader::Bind();
+	Quad::GetInstance()->Bind();
 }
 
 void SpriteRenderer::Render(const Sprite& sprite)
@@ -67,10 +71,10 @@ void SpriteRenderer::Render(const Sprite& sprite)
 	const RenderingContext* context = RenderingContext::GetInstance();
 	Matrix3F matrix = Camera2D::GetInstance()->GetMatrix() * sprite.Transform.ToMatrix();
 
-	context->LoadConstantMatrix3F(Instance->m_MatrixLocation, 1, GFX_FALSE, &matrix[0][0]);
-	sprite.Bind(Instance->m_SpriteLocation, 0);
+	context->LoadConstantMatrix3F(m_MatrixLocation, 1, GFX_FALSE, &matrix[0][0]);
+	sprite.Bind(m_SpriteLocation, 0);
 
-	context->DrawArray(GFX_TRIANGLES, 0, Quad::GetVertexCount());
+	context->DrawArray(GFX_TRIANGLES, 0, Quad::GetInstance()->GetVertexCount());
 }
 
 void SpriteRenderer::Render(const Sprite& sprite, const std::vector<Transform2D>& instances)
@@ -81,13 +85,13 @@ void SpriteRenderer::Render(const Sprite& sprite, const std::vector<Transform2D>
 	Matrix3F vp_matrix = Camera2D::GetInstance()->GetMatrix();
 	
 	const RenderingContext* context = RenderingContext::GetInstance();
-	sprite.Bind(Instance->m_SpriteLocation, 0);
+	sprite.Bind(m_SpriteLocation, 0);
 
 	for (unsigned int i = 0; i < instances.size(); i++)
 	{
 		matrix = vp_matrix * instances[i].ToMatrix();
-		context->LoadConstantMatrix3F(Instance->m_MatrixLocation, 1, GFX_FALSE, &matrix[0][0]);
+		context->LoadConstantMatrix3F(m_MatrixLocation, 1, GFX_FALSE, &matrix[0][0]);
 
-		context->DrawArray(GFX_TRIANGLES, 0, Quad::GetVertexCount());
+		context->DrawArray(GFX_TRIANGLES, 0, Quad::GetInstance()->GetVertexCount());
 	}
 }

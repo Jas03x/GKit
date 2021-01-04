@@ -32,20 +32,19 @@ BlurShader::~BlurShader()
 
 }
 
-void BlurShader::CreateInstance()
+BlurShader* BlurShader::CreateInstance()
 {
 	assert(Instance == nullptr);
-
     if (Instance == nullptr)
 	{
 		Instance = new BlurShader();
 	}
+    return Instance;
 }
 
 void BlurShader::DeleteInstance()
 {
 	assert(Instance != nullptr);
-	
     if (Instance)
 	{
 		delete Instance;
@@ -53,44 +52,43 @@ void BlurShader::DeleteInstance()
 	}
 }
 
+BlurShader* BlurShader::GetInstance()
+{
+    return Instance;
+}
+
 void BlurShader::Bind()
 {
-    assert(Instance != nullptr);
-    
-	Instance->Shader::Bind();
-	Quad::Bind();
+	Shader::Bind();
+	Quad::GetInstance()->Bind();
 }
 
 void BlurShader::VerticalBlur(GFX_HANDLE textureID, float height)
 {
-    assert(Instance != nullptr);
-	
 	const RenderingContext* context = RenderingContext::GetInstance();
 	const Vector2F direction = Vector2F(0.0f, 1.0f);
 
-	context->LoadConstantArray2F(Instance->m_Direction, 1, &direction[0]);
-	context->LoadConstant1F(Instance->m_Length, height);
+	context->LoadConstantArray2F(m_Direction, 1, &direction[0]);
+	context->LoadConstant1F(m_Length, height);
 	
 	context->ActivateTextureSlot(GFX_TEXTURE_SLOT0);
 	context->BindTexture(GFX_TEXTURE_2D, textureID);
-	context->LoadConstant1I(Instance->m_TextureID, 0);
+	context->LoadConstant1I(m_TextureID, 0);
 
-	context->DrawArray(GFX_TRIANGLES, 0, Quad::GetVertexCount());
+	context->DrawArray(GFX_TRIANGLES, 0, Quad::GetInstance()->GetVertexCount());
 }
 
 void BlurShader::HorizontalBlur(GFX_HANDLE textureID, float width)
 {
-    assert(Instance != nullptr);
-	
 	const RenderingContext* context = RenderingContext::GetInstance();
 	const Vector2F direction = Vector2F(1.0f, 0.0f);
 
-	context->LoadConstantArray2F(Instance->m_Direction, 1, &direction[0]);
-	context->LoadConstant1F(Instance->m_Length, width);
+	context->LoadConstantArray2F(m_Direction, 1, &direction[0]);
+	context->LoadConstant1F(m_Length, width);
 	
 	context->ActivateTextureSlot(GFX_TEXTURE_SLOT0);
 	context->BindTexture(GFX_TEXTURE_2D, textureID);
-	context->LoadConstant1I(Instance->m_TextureID, 0);
+	context->LoadConstant1I(m_TextureID, 0);
 
-	context->DrawArray(GFX_TRIANGLES, 0, Quad::GetVertexCount());
+	context->DrawArray(GFX_TRIANGLES, 0, Quad::GetInstance()->GetVertexCount());
 }

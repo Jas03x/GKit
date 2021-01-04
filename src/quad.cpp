@@ -61,13 +61,14 @@ Quad::~Quad()
 	}
 }
 
-void Quad::CreateInstance()
+Quad* Quad::CreateInstance()
 {
 	assert(Instance == nullptr);
 	if (Instance == nullptr)
 	{
 		Instance = new Quad();
 	}
+    return Instance;
 }
 
 void Quad::DeleteInstance()
@@ -80,14 +81,17 @@ void Quad::DeleteInstance()
 	}
 }
 
+Quad* Quad::GetInstance()
+{
+    return Instance;
+}
+
 void Quad::Bind()
 {
-	assert(Instance != nullptr);
-	RenderingContext::GetInstance()->BindVertexArray(Instance->m_VAO);
+	RenderingContext::GetInstance()->BindVertexArray(m_VAO);
 }
 
 unsigned int Quad::GetVertexCount()
 {
-	assert(Instance != nullptr);
 	return sizeof(QUAD_DATA) * 3 / sizeof(float);
 }

@@ -22,11 +22,14 @@ private:
 	~StaticMeshRenderer();
     
 public:
-	static void CreateInstance();
+	static StaticMeshRenderer* CreateInstance();
 	static void DeleteInstance();
+    
+    static StaticMeshRenderer* GetInstance();
 
-	static void Bind();
-	static void Render(const StaticMesh& mesh);
+public:
+	void Bind();
+	void Render(const StaticMesh& mesh);
 };
 
 #endif // GK_STATIC_MESH_RENDERER_H

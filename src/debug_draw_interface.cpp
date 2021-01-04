@@ -19,15 +19,17 @@ bool DebugDrawInterface::DebugDrawEnabled() const
 
 void DebugDrawInterface::DrawLine(const Vector3F& v0, const Vector3F& v1, Colour colour)
 {
-    if(m_Enabled && DebugDrawer::Enabled())
+    DebugDrawer* debug_drawer = DebugDrawer::GetInstance();
+    if(m_Enabled && debug_drawer->Enabled())
     {
-        DebugDrawer::DrawLine({ v0, colour }, { v1, colour });
+        debug_drawer->DrawLine({ v0, colour }, { v1, colour });
     }
 }
 
 void DebugDrawInterface::DrawAABB(const AABB& aabb, Colour colour)
 {
-    if (m_Enabled && DebugDrawer::Enabled())
+    DebugDrawer* debug_drawer = DebugDrawer::GetInstance();
+    if (m_Enabled && debug_drawer->Enabled())
     {
         Vector3F ftl = aabb.origin + Vector3F(+aabb.radius.x, +aabb.radius.y, +aabb.radius.z);
         Vector3F ftr = aabb.origin + Vector3F(-aabb.radius.x, +aabb.radius.y, +aabb.radius.z);
@@ -40,30 +42,31 @@ void DebugDrawInterface::DrawAABB(const AABB& aabb, Colour colour)
         Vector3F bbr = aabb.origin + Vector3F(-aabb.radius.x, -aabb.radius.y, -aabb.radius.z);
         
         // top face
-        DebugDrawer::DrawLine({ ftl, colour }, { ftr, colour });
-        DebugDrawer::DrawLine({ btl, colour }, { btr, colour });
-        DebugDrawer::DrawLine({ ftl, colour }, { btl, colour });
-        DebugDrawer::DrawLine({ ftr, colour }, { btr, colour });
+        debug_drawer->DrawLine({ ftl, colour }, { ftr, colour });
+        debug_drawer->DrawLine({ btl, colour }, { btr, colour });
+        debug_drawer->DrawLine({ ftl, colour }, { btl, colour });
+        debug_drawer->DrawLine({ ftr, colour }, { btr, colour });
 
         // bottom face
-        DebugDrawer::DrawLine({ fbl, colour }, { fbr, colour });
-        DebugDrawer::DrawLine({ bbl, colour }, { bbr, colour });
-        DebugDrawer::DrawLine({ fbl, colour }, { bbl, colour });
-        DebugDrawer::DrawLine({ fbr, colour }, { bbr, colour });
+        debug_drawer->DrawLine({ fbl, colour }, { fbr, colour });
+        debug_drawer->DrawLine({ bbl, colour }, { bbr, colour });
+        debug_drawer->DrawLine({ fbl, colour }, { bbl, colour });
+        debug_drawer->DrawLine({ fbr, colour }, { bbr, colour });
 
         // front face
-        DebugDrawer::DrawLine({ ftl, colour }, { fbl, colour });
-        DebugDrawer::DrawLine({ ftr, colour }, { fbr, colour });
+        debug_drawer->DrawLine({ ftl, colour }, { fbl, colour });
+        debug_drawer->DrawLine({ ftr, colour }, { fbr, colour });
 
         // back face
-        DebugDrawer::DrawLine({ btl, colour }, { bbl, colour });
-        DebugDrawer::DrawLine({ btr, colour }, { bbr, colour });
+        debug_drawer->DrawLine({ btl, colour }, { bbl, colour });
+        debug_drawer->DrawLine({ btr, colour }, { bbr, colour });
     }
 }
 
 void DebugDrawInterface::DrawSphere(const Vector3F& origin, float radius, Colour colour)
 {
-    if (m_Enabled && DebugDrawer::Enabled())
+    DebugDrawer* debug_drawer = DebugDrawer::GetInstance();
+    if (m_Enabled && debug_drawer->Enabled())
     {
         const float step = M_PI / 8.0f;
         for (float f = 0.0f; f < M_PI * 2.0f; f += step)
@@ -104,17 +107,17 @@ void DebugDrawInterface::DrawSphere(const Vector3F& origin, float radius, Colour
                 {    0,   0, 1}
             };
 
-            DebugDrawer::DrawLine(
+            debug_drawer->DrawLine(
                 { origin + rot_x_0 * Vector3F(0, 0, radius), colour },
                 { origin + rot_x_1 * Vector3F(0, 0, radius), colour }
             );
 
-            DebugDrawer::DrawLine(
+            debug_drawer->DrawLine(
                 { origin + rot_y_0 * Vector3F(radius, 0, 0), colour },
                 { origin + rot_y_1 * Vector3F(radius, 0, 0), colour }
             );
 
-            DebugDrawer::DrawLine(
+            debug_drawer->DrawLine(
                 { origin + rot_z_0 * Vector3F(0, radius, 0), colour },
                 { origin + rot_z_1 * Vector3F(0, radius, 0), colour }
             );

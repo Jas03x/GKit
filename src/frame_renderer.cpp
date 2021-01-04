@@ -30,13 +30,14 @@ FrameRenderer::~FrameRenderer()
 
 }
 
-void FrameRenderer::CreateInstance()
+FrameRenderer* FrameRenderer::CreateInstance()
 {
 	assert(Instance == nullptr);
     if (Instance == nullptr)
 	{
 		Instance = new FrameRenderer();
 	}
+    return Instance;
 }
 
 void FrameRenderer::DeleteInstance()
@@ -49,24 +50,26 @@ void FrameRenderer::DeleteInstance()
 	}
 }
 
+FrameRenderer* FrameRenderer::GetInstance()
+{
+    return Instance;
+}
+
 void FrameRenderer::Bind()
 {
-    assert(Instance != nullptr);
-    
-	Instance->Shader::Bind();
-	Quad::Bind();
+	Shader::Bind();
+	Quad::GetInstance()->Bind();
 }
 
 void FrameRenderer::Render(GFX_HANDLE textureID, float opacity)
 {
-    assert(Instance != nullptr);
 	const RenderingContext* context = RenderingContext::GetInstance();
 
-	context->LoadConstant1F(Instance->m_Opacity, opacity);
+	context->LoadConstant1F(m_Opacity, opacity);
 	
 	context->ActivateTextureSlot(GFX_TEXTURE_SLOT0);
 	context->BindTexture(GFX_TEXTURE_2D, textureID);
 	context->LoadConstant1I(Instance->m_TextureID, 0);
 
-	context->DrawArray(GFX_TRIANGLES, 0, Quad::GetVertexCount());
+	context->DrawArray(GFX_TRIANGLES, 0, Quad::GetInstance()->GetVertexCount());
 }

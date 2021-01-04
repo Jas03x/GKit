@@ -44,13 +44,14 @@ StaticMeshRenderer::~StaticMeshRenderer()
 
 }
 
-void StaticMeshRenderer::CreateInstance()
+StaticMeshRenderer* StaticMeshRenderer::CreateInstance()
 {
 	assert(Instance == nullptr);
 	if (Instance == nullptr)
 	{
 		Instance = new StaticMeshRenderer();
 	}
+    return Instance;
 }
 
 void StaticMeshRenderer::DeleteInstance()
@@ -63,16 +64,18 @@ void StaticMeshRenderer::DeleteInstance()
 	}
 }
 
+StaticMeshRenderer* StaticMeshRenderer::GetInstance()
+{
+    return Instance;
+}
+
 void StaticMeshRenderer::Bind()
 {
-	assert(Instance != nullptr);
-	Instance->Shader::Bind();
+	Shader::Bind();
 }
 
 void StaticMeshRenderer::Render(const StaticMesh& mesh)
 {
-	assert(Instance != nullptr);
-
 	const RenderingContext* context = RenderingContext::GetInstance();
 	mesh.Bind();
 
@@ -98,16 +101,16 @@ void StaticMeshRenderer::Render(const StaticMesh& mesh)
 		normal_matrices[i] = Matrix::Inverse(Matrix::Transpose(vertex_matrices[i]));
 	}
 
-	context->LoadConstantMatrix4F(Instance->m_VertexMatricies, static_cast<unsigned int>(mesh.Nodes.size()), GFX_FALSE, &vertex_matrices[0][0][0]);
-	context->LoadConstantMatrix4F(Instance->m_NormalMatricies, static_cast<unsigned int>(mesh.Nodes.size()), GFX_FALSE, &normal_matrices[0][0][0]);
-	context->LoadConstantMatrix4F(Instance->m_ProjectionMatrix, 1, GFX_FALSE, &Camera3D::GetInstance()->GetProjectionMatrix()[0][0]);
+	context->LoadConstantMatrix4F(m_VertexMatricies, static_cast<unsigned int>(mesh.Nodes.size()), GFX_FALSE, &vertex_matrices[0][0][0]);
+	context->LoadConstantMatrix4F(m_NormalMatricies, static_cast<unsigned int>(mesh.Nodes.size()), GFX_FALSE, &normal_matrices[0][0][0]);
+	context->LoadConstantMatrix4F(m_ProjectionMatrix, 1, GFX_FALSE, &Camera3D::GetInstance()->GetProjectionMatrix()[0][0]);
 
 	Vector3F sun_position = (v_matrix * Vector4F(Sun::Position, 1.0f)).xyz();
-	context->LoadConstantArray3F(Instance->m_SunPosition, 1, &sun_position[0]);
-	context->LoadConstantArray3F(Instance->m_SunColor, 1, &Sun::Color[0]);
-	context->LoadConstantArray3F(Instance->m_CameraPosition, 1, &Camera3D::GetInstance()->GetViewMatrix()[3][0]);
+	context->LoadConstantArray3F(m_SunPosition, 1, &sun_position[0]);
+	context->LoadConstantArray3F(m_SunColor, 1, &Sun::Color[0]);
+	context->LoadConstantArray3F(m_CameraPosition, 1, &Camera3D::GetInstance()->GetViewMatrix()[3][0]);
 
-	mesh.GetDiffuseTexture()->Bind(Instance->m_DiffuseTexture, 0);
+	mesh.GetDiffuseTexture()->Bind(m_DiffuseTexture, 0);
     
     context->DrawElements(GFX_TRIANGLES, mesh.GetElementCount(), GFX_TYPE_UNSIGNED_SHORT, reinterpret_cast<void*>(0));
 }

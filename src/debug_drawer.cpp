@@ -47,13 +47,14 @@ DebugDrawer::~DebugDrawer()
 {
 }
 
-void DebugDrawer::CreateInstance(unsigned int line_limit)
+DebugDrawer* DebugDrawer::CreateInstance(unsigned int line_limit)
 {
 	assert(Instance == nullptr);
 	if (Instance == nullptr)
 	{
 		Instance = new DebugDrawer(line_limit);
 	}
+    return Instance;
 }
 
 void DebugDrawer::DeleteInstance()
@@ -66,60 +67,59 @@ void DebugDrawer::DeleteInstance()
 	}
 }
 
+DebugDrawer* DebugDrawer::GetInstance()
+{
+    return Instance;
+}
+
 void DebugDrawer::Enable()
 {
-    assert(Instance != nullptr);
-    Instance->m_Enabled = true;
+    m_Enabled = true;
 }
 
 void DebugDrawer::Disable()
 {
-    assert(Instance != nullptr);
-    Instance->m_Enabled = false;
+    m_Enabled = false;
 }
 
 bool DebugDrawer::Enabled()
 {
-    assert(Instance != nullptr);
-    return Instance->m_Enabled;
+    return m_Enabled;
 }
 
 void DebugDrawer::DrawLine(const Vertex& v0, const Vertex& v1)
 {
-    assert(Instance != nullptr);
-    if(Instance->m_Enabled)
+    if(m_Enabled)
     {
-        Instance->m_LineBuffer.push_back(v0);
-        Instance->m_LineBuffer.push_back(v1);
+        m_LineBuffer.push_back(v0);
+        m_LineBuffer.push_back(v1);
     }
 }
 
 void DebugDrawer::Clear()
 {
-    assert(Instance != nullptr);
-    Instance->m_LineBuffer.clear();
+    m_LineBuffer.clear();
 }
 
 void DebugDrawer::Render()
 {
-    assert(Instance != nullptr);
-    unsigned int num_vertices = static_cast<unsigned int>(Instance->m_LineBuffer.size());
+    unsigned int num_vertices = static_cast<unsigned int>(m_LineBuffer.size());
 
     const RenderingContext* context = RenderingContext::GetInstance();
 
-    if(Instance->m_Enabled && (num_vertices > 0))
+    if(m_Enabled && (num_vertices > 0))
     {
-        if(num_vertices < Instance->m_VertexLimit)
+        if(num_vertices < m_VertexLimit)
         {
-            Instance->Shader::Bind();
+            Shader::Bind();
 
-            Instance->m_VBO->Bind();
-            Instance->m_VBO->Update(0, num_vertices * sizeof(Vertex), Instance->m_LineBuffer.data());
+            m_VBO->Bind();
+            m_VBO->Update(0, num_vertices * sizeof(Vertex), m_LineBuffer.data());
 
-            Instance->m_VAO->Bind();
+            m_VAO->Bind();
 
             Matrix4F matrix = Camera3D::GetInstance()->GetMatrix();
-            context->LoadConstantMatrix4F(Instance->m_Matrix, 1, GFX_FALSE, &matrix[0][0]);
+            context->LoadConstantMatrix4F(m_Matrix, 1, GFX_FALSE, &matrix[0][0]);
 
             context->DrawArray(GFX_LINES, 0, num_vertices);
         }

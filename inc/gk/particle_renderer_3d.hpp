@@ -10,6 +10,7 @@ class ParticleRenderer3D : public Shader
 private:
 	static ParticleRenderer3D* Instance;
 
+private:
 	unsigned int m_SpriteTexture;
 	unsigned int m_SpriteSize;
 	unsigned int m_ViewMatrix;
@@ -20,11 +21,14 @@ private:
 	~ParticleRenderer3D();
 
 public:
-	static void CreateInstance();
+	static ParticleRenderer3D* CreateInstance();
 	static void DeleteInstance();
-
-	static void Bind();
-	static void Render(const ParticleArray& particle_array);
+    
+    static ParticleRenderer3D* GetInstanace();
+    
+public:
+	void Bind();
+	void Render(const ParticleArray& particle_array);
 };
 
 #endif // GK_PARTICLE_RENDERER_H

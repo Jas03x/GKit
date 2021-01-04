@@ -45,13 +45,14 @@ DynamicMeshRenderer::~DynamicMeshRenderer()
 
 }
 
-void DynamicMeshRenderer::CreateInstance()
+DynamicMeshRenderer* DynamicMeshRenderer::CreateInstance()
 {
 	assert(Instance == nullptr);
 	if (Instance == nullptr)
 	{
 		Instance = new DynamicMeshRenderer();
 	}
+    return Instance;
 }
 
 void DynamicMeshRenderer::DeleteInstance()
@@ -64,16 +65,18 @@ void DynamicMeshRenderer::DeleteInstance()
 	}
 }
 
+DynamicMeshRenderer* DynamicMeshRenderer::GetInstance()
+{
+    return Instance;
+}
+
 void DynamicMeshRenderer::Bind()
 {
-	assert(Instance != nullptr);
-	Instance->Shader::Bind();
+	Shader::Bind();
 }
 
 void DynamicMeshRenderer::Render(const DynamicMesh& mesh)
 {
-	assert(Instance != nullptr);
-
 	const RenderingContext* context = RenderingContext::GetInstance();
 	mesh.Bind();
 
@@ -101,18 +104,18 @@ void DynamicMeshRenderer::Render(const DynamicMesh& mesh)
 		normal_matrices[i] = Matrix::Inverse(Matrix::Transpose(vertex_matrices[i]));
 	}
 
-	context->LoadConstantMatrix4F(Instance->m_VertexMatricies, static_cast<unsigned int>(mesh.Bones.size()), GFX_FALSE, &vertex_matrices[0][0][0]);
-	context->LoadConstantMatrix4F(Instance->m_NormalMatricies, static_cast<unsigned int>(mesh.Bones.size()), GFX_FALSE, &normal_matrices[0][0][0]);
+	context->LoadConstantMatrix4F(m_VertexMatricies, static_cast<unsigned int>(mesh.Bones.size()), GFX_FALSE, &vertex_matrices[0][0][0]);
+	context->LoadConstantMatrix4F(m_NormalMatricies, static_cast<unsigned int>(mesh.Bones.size()), GFX_FALSE, &normal_matrices[0][0][0]);
 
 	Matrix4F mvp = Camera3D::GetInstance()->GetProjectionMatrix(); // *mesh.RootNode.GetLocalMatrix();
-	context->LoadConstantMatrix4F(Instance->m_ProjectionMatrix, 1, GFX_FALSE, &mvp[0][0]);
+	context->LoadConstantMatrix4F(m_ProjectionMatrix, 1, GFX_FALSE, &mvp[0][0]);
 
 	Vector3F sun_position = (v_matrix * Vector4F(Sun::Position, 1.0f)).xyz();
-	context->LoadConstantArray3F(Instance->m_SunPosition, 1, &sun_position[0]);
-	context->LoadConstantArray3F(Instance->m_SunColor, 1, &Sun::Color[0]);
-	context->LoadConstantArray3F(Instance->m_CameraPosition, 1, &Camera3D::GetInstance()->GetViewMatrix()[3][0]);
+	context->LoadConstantArray3F(m_SunPosition, 1, &sun_position[0]);
+	context->LoadConstantArray3F(m_SunColor, 1, &Sun::Color[0]);
+	context->LoadConstantArray3F(m_CameraPosition, 1, &Camera3D::GetInstance()->GetViewMatrix()[3][0]);
 
-	mesh.GetDiffuseTexture()->Bind(Instance->m_DiffuseTexture, 0);
+	mesh.GetDiffuseTexture()->Bind(m_DiffuseTexture, 0);
 
 	//glDrawArrays(GL_TRIANGLES, 0, mesh.GetVertexCount());
 	context->DrawElements(GFX_TRIANGLES, mesh.GetElementCount(), GFX_TYPE_UNSIGNED_SHORT, reinterpret_cast<void*>(0));

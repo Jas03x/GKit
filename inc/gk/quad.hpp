@@ -7,7 +7,8 @@ class Quad
 {
 private:
 	static Quad* Instance;
-
+    
+private:
 	GFX_HANDLE m_VAO;
 	GFX_HANDLE m_VBO;
 
@@ -22,11 +23,14 @@ public:
 	} VertexAttributes;
 
 public:
-	static void CreateInstance();
+	static Quad* CreateInstance();
 	static void DeleteInstance();
+    
+    static Quad* GetInstance();
 
-	static void Bind();
-	static unsigned int GetVertexCount();
+public:
+	void Bind();
+	unsigned int GetVertexCount();
 };
 
 #endif // GK_QUAD_H

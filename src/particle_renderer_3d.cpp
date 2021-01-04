@@ -36,13 +36,14 @@ ParticleRenderer3D::~ParticleRenderer3D()
 
 }
 
-void ParticleRenderer3D::CreateInstance()
+ParticleRenderer3D* ParticleRenderer3D::CreateInstance()
 {
 	assert(Instance == nullptr);
     if (Instance == nullptr)
 	{
 		Instance = new ParticleRenderer3D();
 	}
+    return Instance;
 }
 
 void ParticleRenderer3D::DeleteInstance()
@@ -55,16 +56,18 @@ void ParticleRenderer3D::DeleteInstance()
 	}
 }
 
+ParticleRenderer3D* ParticleRenderer3D::GetInstanace()
+{
+    return Instance;
+}
+
 void ParticleRenderer3D::Bind()
 {
-	assert(Instance != nullptr);
-    Instance->Shader::Bind();
+    Shader::Bind();
 }
 
 void ParticleRenderer3D::Render(const ParticleArray& particle_array)
 {
-	assert(Instance != nullptr);
-	
 	const RenderingContext* context = RenderingContext::GetInstance();
 	
 	Camera3D* camera = Camera3D::GetInstance();
@@ -72,11 +75,11 @@ void ParticleRenderer3D::Render(const ParticleArray& particle_array)
 	Matrix4F projection_matrix = camera->GetProjectionMatrix();
 
 	particle_array.Bind();
-	particle_array.GetTexture()->Bind(Instance->m_SpriteTexture, 0);
+	particle_array.GetTexture()->Bind(m_SpriteTexture, 0);
 
-	context->LoadConstantArray2F(Instance->m_SpriteSize, 1, &particle_array.GetSpriteSize()[0]);
-	context->LoadConstantMatrix4F(Instance->m_ViewMatrix, 1, false, &view_matrix[0][0]);
-	context->LoadConstantMatrix4F(Instance->m_ProjectionMatrix, 1, false, &projection_matrix[0][0]);
+	context->LoadConstantArray2F(m_SpriteSize, 1, &particle_array.GetSpriteSize()[0]);
+	context->LoadConstantMatrix4F(m_ViewMatrix, 1, false, &view_matrix[0][0]);
+	context->LoadConstantMatrix4F(m_ProjectionMatrix, 1, false, &projection_matrix[0][0]);
 
 	context->DrawArray(GFX_POINTS, 0, particle_array.GetParticleCount());
 }

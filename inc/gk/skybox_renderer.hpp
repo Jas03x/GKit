@@ -9,6 +9,7 @@ class SkyboxRenderer : public Shader
 private:
 	static SkyboxRenderer* Instance;
 
+private:
 	GFX_HANDLE m_CubeMap;
 	GFX_HANDLE m_InverseViewProjectionMatrix;
 
@@ -17,11 +18,14 @@ private:
 	~SkyboxRenderer();
 
 public:
-	static void CreateInstance();
+	static SkyboxRenderer* CreateInstance();
 	static void DeleteInstance();
+    
+    static SkyboxRenderer* GetInstance();
 
-	static void Bind();
-	static void Render(const Skybox& skybox);
+public:
+	void Bind();
+	void Render(const Skybox& skybox);
 };
 
 #endif // GK_SKYBOX_RENDERER_H

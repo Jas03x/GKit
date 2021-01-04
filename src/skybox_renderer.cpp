@@ -32,13 +32,14 @@ SkyboxRenderer::~SkyboxRenderer()
 
 }
 
-void SkyboxRenderer::CreateInstance()
+SkyboxRenderer* SkyboxRenderer::CreateInstance()
 {
 	assert(Instance == nullptr);
 	if (Instance == nullptr)
 	{
 		Instance = new SkyboxRenderer();
 	}
+    return Instance;
 }
 
 void SkyboxRenderer::DeleteInstance()
@@ -51,21 +52,23 @@ void SkyboxRenderer::DeleteInstance()
 	}
 }
 
+SkyboxRenderer* SkyboxRenderer::GetInstance()
+{
+    return Instance;
+}
+
 void SkyboxRenderer::Bind()
 {
-	assert(Instance != nullptr);
-
 	const RenderingContext* context = RenderingContext::GetInstance();
 
-	Instance->Shader::Bind();
+	Shader::Bind();
 	context->SetDepthMask(GFX_FALSE);
 }
 
 void SkyboxRenderer::Render(const Skybox& skybox)
 {
-	Quad::Bind();
+    Quad::GetInstance()->Bind();
 
-	assert(Instance != nullptr);
 	const RenderingContext* context = RenderingContext::GetInstance();
 	
 	Matrix4F projection = Camera3D::GetInstance()->GetProjectionMatrix();
@@ -73,7 +76,7 @@ void SkyboxRenderer::Render(const Skybox& skybox)
 	view[3] = Vector4F(Vector3F(0.0f), 1.0f);
 	Matrix4F inv_vp = Matrix::Inverse(projection * view);
 
-	skybox.Bind(Instance->m_CubeMap, 0);
-	context->LoadConstantMatrix4F(Instance->m_InverseViewProjectionMatrix, 1, GFX_FALSE, &inv_vp[0][0]);
-	context->DrawArray(GFX_TRIANGLES, 0, Quad::GetVertexCount());
+	skybox.Bind(m_CubeMap, 0);
+	context->LoadConstantMatrix4F(m_InverseViewProjectionMatrix, 1, GFX_FALSE, &inv_vp[0][0]);
+	context->DrawArray(GFX_TRIANGLES, 0, Quad::GetInstance()->GetVertexCount());
 }
