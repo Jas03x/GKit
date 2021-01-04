@@ -54,20 +54,39 @@ enum MOUSE_MODE : uint8_t
 
 class Context
 {
+private:
+    static Context* Instance;
+    
+private:
+    void* m_hWindow;
+    void* m_hContext;
+    
+    MOUSE_MODE m_MouseMode;
+    const uint8_t* m_Keyboard;
+
+private:
+    Context();
+    ~Context();
+    
+    bool Initialize(const char* title, unsigned int width, unsigned int height);
+    
 public:
-	static bool CreateInstance(const char* title, unsigned int width, unsigned int height);
+	static Context* CreateInstance(const char* title, unsigned int width, unsigned int height);
 	static void DeleteInstance();
-
-	static void Update();
-	static bool PollEvent(Event& e);
+    
+    static Context* GetInstance();
+    
+public:
+	void Update();
+	bool PollEvent(Event& e);
 	
-	static MOUSE_MODE GetMouseMode();
-	static bool       SetMouseMode(MOUSE_MODE mode);
+	MOUSE_MODE GetMouseMode();
+	bool       SetMouseMode(MOUSE_MODE mode);
 
-	static void GetMouseState(MouseState& state);
+    void GetMouseState(MouseState& state);
 
-	static uint32_t GetTime();
-	static bool GetKeyState(KEY_CODE code);
+	uint32_t GetTime();
+	bool GetKeyState(KEY_CODE code);
 };
 
 #endif // GK_CONTEXT_H

@@ -13,11 +13,7 @@
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 
-SDL_Window* g_Window = nullptr;
-SDL_GLContext g_Context = nullptr;
-
-const uint8_t* g_Keyboard = nullptr;
-const uint16_t g_KeyMap[KEY_COUNT] =
+const uint16_t KEY_MAP[KEY_COUNT] =
 {
 	0x0,
 	SDL_SCANCODE_UP,
@@ -38,13 +34,39 @@ const uint16_t g_KeyMap[KEY_COUNT] =
 	SDL_SCANCODE_SPACE
 };
 
-MOUSE_MODE g_MouseMode = MOUSE_MODE::DISABLED;
-
 void SDL_ERROR(const char* msg) {
 	printf("%s:\n%s\n", msg, SDL_GetError());
 }
 
-bool Context::CreateInstance(const char* title, unsigned int width, unsigned int height)
+Context* Context::Instance = nullptr;
+
+Context::Context()
+{
+    m_Keyboard = nullptr;
+    m_MouseMode = MOUSE_MODE::DISABLED;
+}
+
+Context* Context::CreateInstance(const char* title, unsigned int width, unsigned int height)
+{
+    Instance = new Context();
+    if(Instance != nullptr)
+    {
+        if(!Instance->Initialize(title, width, height))
+        {
+            delete Instance;
+            Instance = nullptr;
+        }
+    }
+    return Instance;
+}
+
+void Context::DeleteInstance()
+{
+    delete Instance;
+    Instance = nullptr;
+}
+
+bool Context::Initialize(const char* title, unsigned int width, unsigned int height)
 {
     bool status = true;
     #define SDL_ASSERT(b, e) if(!(b)) { SDL_ERROR(e); status = false; }
@@ -57,37 +79,42 @@ bool Context::CreateInstance(const char* title, unsigned int width, unsigned int
 
     if(status)
     {
-        g_Window = SDL_CreateWindow(
+        m_hWindow = SDL_CreateWindow(
             title,
             SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
             width, height,
             SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
         );
-        SDL_ASSERT(g_Window != NULL, "SDL window creation failure");
+        SDL_ASSERT(m_hWindow != NULL, "SDL window creation failure");
     }
 
     if(status)
     {
-	    g_Context = SDL_GL_CreateContext(g_Window);
-    	SDL_ASSERT(g_Context != NULL, "SDL OpenGL context creation failure");
+        m_hContext = SDL_GL_CreateContext(reinterpret_cast<SDL_Window*>(m_hWindow));
+    	SDL_ASSERT(m_hContext != NULL, "SDL OpenGL context creation failure");
     }
 
     if(status)
     {
-    	g_Keyboard = SDL_GetKeyboardState(nullptr);
+    	m_Keyboard = SDL_GetKeyboardState(nullptr);
     }
 
     return status;
 }
 
-void Context::DeleteInstance()
+Context* Context::GetInstance()
 {
-	if (g_Context != nullptr) {
-		SDL_GL_DeleteContext(g_Context);
+    return Instance;
+}
+
+Context::~Context()
+{
+	if (m_hContext != nullptr) {
+		SDL_GL_DeleteContext(m_hContext);
 	}
 
-	if (g_Window != nullptr) {
-		SDL_DestroyWindow(g_Window);
+	if (m_hWindow != nullptr) {
+		SDL_DestroyWindow(reinterpret_cast<SDL_Window*>(m_hWindow));
 	}
 
 	SDL_Quit();
@@ -95,7 +122,7 @@ void Context::DeleteInstance()
 
 void Context::Update()
 {
-	SDL_GL_SwapWindow(g_Window);
+	SDL_GL_SwapWindow(reinterpret_cast<SDL_Window*>(m_hWindow));
 }
 
 bool Context::PollEvent(Event& e)
@@ -122,7 +149,7 @@ void Context::GetMouseState(MouseState& state)
 {
 	uint32_t buttons = 0;
 
-	switch(g_MouseMode)
+	switch(m_MouseMode)
 	{
 		case MOUSE_MODE::ABSOLUTE:
 		{
@@ -147,7 +174,7 @@ void Context::GetMouseState(MouseState& state)
 
 MOUSE_MODE Context::GetMouseMode()
 {
-	return g_MouseMode;
+	return m_MouseMode;
 }
 
 bool Context::SetMouseMode(MOUSE_MODE mode)
@@ -158,7 +185,7 @@ bool Context::SetMouseMode(MOUSE_MODE mode)
 	{
 		case MOUSE_MODE::DISABLED:
 		{
-			g_MouseMode = MOUSE_MODE::DISABLED;
+			m_MouseMode = MOUSE_MODE::DISABLED;
 			if(SDL_GetRelativeMouseMode() == SDL_TRUE)
 			{
 				status = (SDL_SetRelativeMouseMode(SDL_FALSE) == 0);
@@ -167,7 +194,7 @@ bool Context::SetMouseMode(MOUSE_MODE mode)
 		}
 		case MOUSE_MODE::ABSOLUTE:
 		{
-			g_MouseMode = MOUSE_MODE::ABSOLUTE;
+			m_MouseMode = MOUSE_MODE::ABSOLUTE;
 			if(SDL_GetRelativeMouseMode() == SDL_TRUE)
 			{
 				status = (SDL_SetRelativeMouseMode(SDL_FALSE) == 0);
@@ -176,7 +203,7 @@ bool Context::SetMouseMode(MOUSE_MODE mode)
 		}
 		case MOUSE_MODE::RELATIVE:
 		{
-			g_MouseMode = MOUSE_MODE::RELATIVE;
+			m_MouseMode = MOUSE_MODE::RELATIVE;
 			if(SDL_GetRelativeMouseMode() != SDL_TRUE)
 			{
 				status = (SDL_SetRelativeMouseMode(SDL_TRUE) == 0);
@@ -201,5 +228,5 @@ uint32_t Context::GetTime()
 
 bool Context::GetKeyState(KEY_CODE code)
 {
-	return (g_Keyboard[g_KeyMap[code]] != 0);
+	return (m_Keyboard[KEY_MAP[code]] != 0);
 }

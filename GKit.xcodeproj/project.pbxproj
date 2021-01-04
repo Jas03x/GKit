@@ -374,6 +374,7 @@
 				41BBE9C52597BBD100CF68C5 /* collada_format.cpp */,
 				41BBE9C02597BBD100CF68C5 /* collada_importer.cpp */,
 				41BBE9CC2597BBD200CF68C5 /* collada_parser.cpp */,
+				41D14D0425492FA400290ACA /* context.cpp */,
 				41BBE9E32597BBD300CF68C5 /* cubemap.cpp */,
 				41BBE9CA2597BBD200CF68C5 /* debug_draw_interface.cpp */,
 				41BBE9CD2597BBD200CF68C5 /* debug_drawer.cpp */,
@@ -414,7 +415,6 @@
 				41BBE9BF2597BBD100CF68C5 /* vertex_buffer.cpp */,
 				41BBE9D12597BBD200CF68C5 /* view.cpp */,
 				41BBE9C92597BBD200CF68C5 /* xml.cpp */,
-				41D14D0425492FA400290ACA /* context.cpp */,
 			);
 			name = Sources;
 			sourceTree = "<group>";

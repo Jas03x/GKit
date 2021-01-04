@@ -4,7 +4,7 @@
 
 uint32_t Clock::GetTime()
 {
-	return Context::GetTime();
+	return Context::GetInstance()->GetTime();
 }
 
 Timer::Timer()
