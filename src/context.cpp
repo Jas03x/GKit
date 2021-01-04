@@ -4,9 +4,6 @@
 #include <cstdio>
 #include <cstring>
 
-#include <gk/context.hpp>
-#include <gk/graphics.hpp>
-
 #if !defined(__APPLE__)
 	#define HAVE_M_PI
 #endif
