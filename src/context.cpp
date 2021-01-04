@@ -10,7 +10,7 @@
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 
-const uint16_t KEY_MAP[KEY_COUNT] =
+const uint16_t KEY_MAP[Context::KEY_COUNT] =
 {
 	0x0,
 	SDL_SCANCODE_UP,
@@ -169,7 +169,7 @@ void Context::GetMouseState(MouseState& state)
 	state.r_button = (buttons & SDL_BUTTON_RMASK) != 0;
 }
 
-MOUSE_MODE Context::GetMouseMode()
+Context::MOUSE_MODE Context::GetMouseMode()
 {
 	return m_MouseMode;
 }
