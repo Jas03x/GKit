@@ -758,7 +758,7 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/inc",
-					/usr/local/include,
+					/Library/Frameworks/SDL2.framework/Headers,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -777,7 +777,7 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/inc",
-					/usr/local/include,
+					/Library/Frameworks/SDL2.framework/Headers,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
