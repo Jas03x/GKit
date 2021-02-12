@@ -7,6 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		417B6E2125D6DCAE00DD1251 /* debug_vertex_shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 417B6E1125D6DCAD00DD1251 /* debug_vertex_shader.hpp */; };
+		417B6E2225D6DCAE00DD1251 /* static_mesh_pixel_shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 417B6E1225D6DCAD00DD1251 /* static_mesh_pixel_shader.hpp */; };
+		417B6E2325D6DCAE00DD1251 /* debug_pixel_shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 417B6E1325D6DCAD00DD1251 /* debug_pixel_shader.hpp */; };
+		417B6E2425D6DCAE00DD1251 /* gaussian_blur_pixel_shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 417B6E1425D6DCAD00DD1251 /* gaussian_blur_pixel_shader.hpp */; };
+		417B6E2525D6DCAE00DD1251 /* skybox_pixel_shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 417B6E1525D6DCAD00DD1251 /* skybox_pixel_shader.hpp */; };
+		417B6E2625D6DCAE00DD1251 /* skybox_vertex_shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 417B6E1625D6DCAD00DD1251 /* skybox_vertex_shader.hpp */; };
+		417B6E2725D6DCAE00DD1251 /* gaussian_blur_vertex_shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 417B6E1725D6DCAD00DD1251 /* gaussian_blur_vertex_shader.hpp */; };
+		417B6E2825D6DCAE00DD1251 /* sprite_pixel_shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 417B6E1825D6DCAD00DD1251 /* sprite_pixel_shader.hpp */; };
+		417B6E2925D6DCAE00DD1251 /* dynamic_mesh_pixel_shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 417B6E1925D6DCAD00DD1251 /* dynamic_mesh_pixel_shader.hpp */; };
+		417B6E2A25D6DCAE00DD1251 /* dynamic_mesh_vertex_shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 417B6E1A25D6DCAD00DD1251 /* dynamic_mesh_vertex_shader.hpp */; };
+		417B6E2B25D6DCAE00DD1251 /* static_mesh_vertex_shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 417B6E1B25D6DCAD00DD1251 /* static_mesh_vertex_shader.hpp */; };
+		417B6E2C25D6DCAE00DD1251 /* frame_vertex_shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 417B6E1C25D6DCAD00DD1251 /* frame_vertex_shader.hpp */; };
+		417B6E2D25D6DCAE00DD1251 /* particle_pixel_shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 417B6E1D25D6DCAD00DD1251 /* particle_pixel_shader.hpp */; };
+		417B6E2E25D6DCAE00DD1251 /* sprite_vertex_shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 417B6E1E25D6DCAE00DD1251 /* sprite_vertex_shader.hpp */; };
+		417B6E2F25D6DCAE00DD1251 /* frame_pixel_shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 417B6E1F25D6DCAE00DD1251 /* frame_pixel_shader.hpp */; };
+		417B6E3025D6DCAE00DD1251 /* particle_vertex_shader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 417B6E2025D6DCAE00DD1251 /* particle_vertex_shader.hpp */; };
 		4196DBB325D656B700B2B10F /* string.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4196DBB125D656B700B2B10F /* string.hpp */; };
 		4196DBB425D656B700B2B10F /* mesh_util.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4196DBB225D656B700B2B10F /* mesh_util.hpp */; };
 		4196DBB825D656C700B2B10F /* config.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4196DBB725D656C700B2B10F /* config.hpp */; };
@@ -119,6 +135,23 @@
 
 /* Begin PBXFileReference section */
 		417437D525492EC5001F7025 /* GKit.lib */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GKit.lib; sourceTree = BUILT_PRODUCTS_DIR; };
+		417B6E1125D6DCAD00DD1251 /* debug_vertex_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = debug_vertex_shader.hpp; path = shdr/debug_vertex_shader.hpp; sourceTree = "<group>"; };
+		417B6E1225D6DCAD00DD1251 /* static_mesh_pixel_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = static_mesh_pixel_shader.hpp; path = shdr/static_mesh_pixel_shader.hpp; sourceTree = "<group>"; };
+		417B6E1325D6DCAD00DD1251 /* debug_pixel_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = debug_pixel_shader.hpp; path = shdr/debug_pixel_shader.hpp; sourceTree = "<group>"; };
+		417B6E1425D6DCAD00DD1251 /* gaussian_blur_pixel_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = gaussian_blur_pixel_shader.hpp; path = shdr/gaussian_blur_pixel_shader.hpp; sourceTree = "<group>"; };
+		417B6E1525D6DCAD00DD1251 /* skybox_pixel_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = skybox_pixel_shader.hpp; path = shdr/skybox_pixel_shader.hpp; sourceTree = "<group>"; };
+		417B6E1625D6DCAD00DD1251 /* skybox_vertex_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = skybox_vertex_shader.hpp; path = shdr/skybox_vertex_shader.hpp; sourceTree = "<group>"; };
+		417B6E1725D6DCAD00DD1251 /* gaussian_blur_vertex_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = gaussian_blur_vertex_shader.hpp; path = shdr/gaussian_blur_vertex_shader.hpp; sourceTree = "<group>"; };
+		417B6E1825D6DCAD00DD1251 /* sprite_pixel_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = sprite_pixel_shader.hpp; path = shdr/sprite_pixel_shader.hpp; sourceTree = "<group>"; };
+		417B6E1925D6DCAD00DD1251 /* dynamic_mesh_pixel_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = dynamic_mesh_pixel_shader.hpp; path = shdr/dynamic_mesh_pixel_shader.hpp; sourceTree = "<group>"; };
+		417B6E1A25D6DCAD00DD1251 /* dynamic_mesh_vertex_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = dynamic_mesh_vertex_shader.hpp; path = shdr/dynamic_mesh_vertex_shader.hpp; sourceTree = "<group>"; };
+		417B6E1B25D6DCAD00DD1251 /* static_mesh_vertex_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = static_mesh_vertex_shader.hpp; path = shdr/static_mesh_vertex_shader.hpp; sourceTree = "<group>"; };
+		417B6E1C25D6DCAD00DD1251 /* frame_vertex_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = frame_vertex_shader.hpp; path = shdr/frame_vertex_shader.hpp; sourceTree = "<group>"; };
+		417B6E1D25D6DCAD00DD1251 /* particle_pixel_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = particle_pixel_shader.hpp; path = shdr/particle_pixel_shader.hpp; sourceTree = "<group>"; };
+		417B6E1E25D6DCAE00DD1251 /* sprite_vertex_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = sprite_vertex_shader.hpp; path = shdr/sprite_vertex_shader.hpp; sourceTree = "<group>"; };
+		417B6E1F25D6DCAE00DD1251 /* frame_pixel_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = frame_pixel_shader.hpp; path = shdr/frame_pixel_shader.hpp; sourceTree = "<group>"; };
+		417B6E2025D6DCAE00DD1251 /* particle_vertex_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = particle_vertex_shader.hpp; path = shdr/particle_vertex_shader.hpp; sourceTree = "<group>"; };
+		417B6E3325D6DCCB00DD1251 /* makefile.osx */ = {isa = PBXFileReference; lastKnownFileType = text; path = makefile.osx; sourceTree = "<group>"; };
 		4196DBB125D656B700B2B10F /* string.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = string.hpp; path = inc/gk/common/string.hpp; sourceTree = "<group>"; };
 		4196DBB225D656B700B2B10F /* mesh_util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = mesh_util.hpp; path = inc/gk/common/mesh_util.hpp; sourceTree = "<group>"; };
 		4196DBB725D656C700B2B10F /* config.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = config.hpp; path = inc/gk/config/config.hpp; sourceTree = "<group>"; };
@@ -252,6 +285,7 @@
 				417437D625492EC5001F7025 /* Products */,
 				41D14D3D25492FA700290ACA /* Shaders */,
 				41D14C7025492F8500290ACA /* Sources */,
+				417B6E3325D6DCCB00DD1251 /* makefile.osx */,
 				4196DCB225D6581A00B2B10F /* Todo.txt */,
 			);
 			sourceTree = "<group>";
@@ -567,6 +601,22 @@
 		41D14D3D25492FA700290ACA /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
+				417B6E1325D6DCAD00DD1251 /* debug_pixel_shader.hpp */,
+				417B6E1125D6DCAD00DD1251 /* debug_vertex_shader.hpp */,
+				417B6E1925D6DCAD00DD1251 /* dynamic_mesh_pixel_shader.hpp */,
+				417B6E1A25D6DCAD00DD1251 /* dynamic_mesh_vertex_shader.hpp */,
+				417B6E1F25D6DCAE00DD1251 /* frame_pixel_shader.hpp */,
+				417B6E1C25D6DCAD00DD1251 /* frame_vertex_shader.hpp */,
+				417B6E1425D6DCAD00DD1251 /* gaussian_blur_pixel_shader.hpp */,
+				417B6E1725D6DCAD00DD1251 /* gaussian_blur_vertex_shader.hpp */,
+				417B6E1D25D6DCAD00DD1251 /* particle_pixel_shader.hpp */,
+				417B6E2025D6DCAE00DD1251 /* particle_vertex_shader.hpp */,
+				417B6E1525D6DCAD00DD1251 /* skybox_pixel_shader.hpp */,
+				417B6E1625D6DCAD00DD1251 /* skybox_vertex_shader.hpp */,
+				417B6E1825D6DCAD00DD1251 /* sprite_pixel_shader.hpp */,
+				417B6E1E25D6DCAE00DD1251 /* sprite_vertex_shader.hpp */,
+				417B6E1225D6DCAD00DD1251 /* static_mesh_pixel_shader.hpp */,
+				417B6E1B25D6DCAD00DD1251 /* static_mesh_vertex_shader.hpp */,
 			);
 			name = Shaders;
 			sourceTree = "<group>";
@@ -580,36 +630,49 @@
 			files = (
 				4196DBCF25D656D600B2B10F /* skybox.hpp in Headers */,
 				4196DC2425D6573800B2B10F /* debug_drawer.hpp in Headers */,
+				417B6E2825D6DCAE00DD1251 /* sprite_pixel_shader.hpp in Headers */,
 				4196DBCE25D656D600B2B10F /* camera_3d.hpp in Headers */,
 				4196DBFB25D6570200B2B10F /* bitmap.hpp in Headers */,
 				4196DC2725D6573800B2B10F /* skybox_renderer.hpp in Headers */,
 				4196DBEB25D656F400B2B10F /* cubemap.hpp in Headers */,
 				4196DC2325D6573800B2B10F /* frame_renderer.hpp in Headers */,
+				417B6E2225D6DCAE00DD1251 /* static_mesh_pixel_shader.hpp in Headers */,
 				4196DC3525D6575600B2B10F /* string_buffer.hpp in Headers */,
 				4196DBCA25D656D600B2B10F /* sprite.hpp in Headers */,
 				4196DBE925D656F400B2B10F /* graphics.hpp in Headers */,
 				4196DC1225D6571E00B2B10F /* aabb.hpp in Headers */,
 				4196DBD025D656D600B2B10F /* static_mesh.hpp in Headers */,
+				417B6E2E25D6DCAE00DD1251 /* sprite_vertex_shader.hpp in Headers */,
 				4196DBF925D6570200B2B10F /* bmp_reader.hpp in Headers */,
 				4196DBEC25D656F400B2B10F /* render_buffer.hpp in Headers */,
 				4196DBFC25D6570200B2B10F /* mdl_format.hpp in Headers */,
+				417B6E2C25D6DCAE00DD1251 /* frame_vertex_shader.hpp in Headers */,
+				417B6E2525D6DCAE00DD1251 /* skybox_pixel_shader.hpp in Headers */,
 				4196DBCB25D656D600B2B10F /* view.hpp in Headers */,
 				4196DC3025D6574700B2B10F /* data_types.hpp in Headers */,
+				417B6E2625D6DCAE00DD1251 /* skybox_vertex_shader.hpp in Headers */,
 				4196DC1425D6571E00B2B10F /* transform_3d.hpp in Headers */,
 				4196DBE625D656F400B2B10F /* particle_array.hpp in Headers */,
+				417B6E2925D6DCAE00DD1251 /* dynamic_mesh_pixel_shader.hpp in Headers */,
 				4196DC2625D6573800B2B10F /* dynamic_mesh_renderer.hpp in Headers */,
+				417B6E2725D6DCAE00DD1251 /* gaussian_blur_vertex_shader.hpp in Headers */,
 				4196DBE225D656F400B2B10F /* framebuffer.hpp in Headers */,
 				4196DC3625D6575600B2B10F /* random.hpp in Headers */,
+				417B6E2F25D6DCAE00DD1251 /* frame_pixel_shader.hpp in Headers */,
 				4196DC2525D6573800B2B10F /* sprite_renderer.hpp in Headers */,
+				417B6E3025D6DCAE00DD1251 /* particle_vertex_shader.hpp in Headers */,
 				4196DBFF25D6570200B2B10F /* collada_parser.hpp in Headers */,
 				4196DBCC25D656D600B2B10F /* camera_2d.hpp in Headers */,
+				417B6E2325D6DCAE00DD1251 /* debug_pixel_shader.hpp in Headers */,
 				4196DC0025D6570200B2B10F /* collada_importer.hpp in Headers */,
 				4196DBE725D656F400B2B10F /* texture.hpp in Headers */,
+				417B6E2A25D6DCAE00DD1251 /* dynamic_mesh_vertex_shader.hpp in Headers */,
 				4196DC0725D6570F00B2B10F /* filesystem.hpp in Headers */,
 				4196DC2225D6573800B2B10F /* particle_renderer_3d.hpp in Headers */,
 				4196DBFA25D6570200B2B10F /* mesh_data.hpp in Headers */,
 				4196DC2F25D6574700B2B10F /* clock.hpp in Headers */,
 				4196DBC925D656D600B2B10F /* bone.hpp in Headers */,
+				417B6E2425D6DCAE00DD1251 /* gaussian_blur_pixel_shader.hpp in Headers */,
 				4196DBB825D656C700B2B10F /* config.hpp in Headers */,
 				4196DBB325D656B700B2B10F /* string.hpp in Headers */,
 				4196DBEA25D656F400B2B10F /* vertex_buffer.hpp in Headers */,
@@ -624,7 +687,9 @@
 				4196DBE825D656F400B2B10F /* vertex_array.hpp in Headers */,
 				4196DBE325D656F400B2B10F /* particle.hpp in Headers */,
 				4196DC1325D6571E00B2B10F /* linear.hpp in Headers */,
+				417B6E2D25D6DCAE00DD1251 /* particle_pixel_shader.hpp in Headers */,
 				4196DBE125D656F400B2B10F /* mesh.hpp in Headers */,
+				417B6E2125D6DCAE00DD1251 /* debug_vertex_shader.hpp in Headers */,
 				4196DBD125D656D600B2B10F /* sun.hpp in Headers */,
 				4196DC2825D6573800B2B10F /* blur_shader.hpp in Headers */,
 				4196DBE525D656F400B2B10F /* shader.hpp in Headers */,
@@ -634,6 +699,7 @@
 				4196DBD225D656D600B2B10F /* texture_manager.hpp in Headers */,
 				4196DBB425D656B700B2B10F /* mesh_util.hpp in Headers */,
 				4196DC1025D6571E00B2B10F /* frustum.hpp in Headers */,
+				417B6E2B25D6DCAE00DD1251 /* static_mesh_vertex_shader.hpp in Headers */,
 				4196DC1125D6571E00B2B10F /* transform_2d.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
