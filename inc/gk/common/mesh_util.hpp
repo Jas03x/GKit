@@ -10,8 +10,8 @@ namespace MeshUtil
 	float GetRadius(const MeshData& data);
 	float GetRadius(const MeshData::Mesh& mesh);
 
-	Vector3F  GetBoundingBox(const MeshData& data);
-	Vector3F  GetBoundingBox(const MeshData::Mesh& data);
+	Vector3F GetBoundingBox(const MeshData& data);
+	Vector3F GetBoundingBox(const MeshData::Mesh& data);
 }
 */
 
