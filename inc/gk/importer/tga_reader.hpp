@@ -1,7 +1,7 @@
 #ifndef GK_TGA_READER_H
 #define GK_TGA_READER_H
 
-#include <gk/bitmap.hpp>
+#include <gk/importer/bitmap.hpp>
 
 namespace TGA_Reader
 {

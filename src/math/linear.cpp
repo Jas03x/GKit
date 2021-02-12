@@ -1,4 +1,4 @@
-#include <gk/matrix.hpp>
+#include <gk/math/linear.hpp>
 
 #include <cstdio>
 #include <cstring>

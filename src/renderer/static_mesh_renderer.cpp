@@ -1,9 +1,9 @@
-#include <gk/static_mesh_renderer.hpp>
+#include <gk/renderer/static_mesh_renderer.hpp>
 
-#include <gk/config.hpp>
-#include <gk/sun.hpp>
-#include <gk/file.hpp>
-#include <gk/camera_3d.hpp>
+#include <gk/config/config.hpp>
+#include <gk/core/sun.hpp>
+#include <gk/core/camera_3d.hpp>
+#include <gk/io/file.hpp>
 
 #include <cassert>
 

@@ -1,4 +1,4 @@
-#include <gk/texture.hpp>
+#include <gk/graphics/texture.hpp>
 
 Texture::Texture()
 {

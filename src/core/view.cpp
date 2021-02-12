@@ -1,4 +1,4 @@
-#include <gk/view.hpp>
+#include <gk/core/view.hpp>
 
 #include <cassert>
 #include <cstdio>

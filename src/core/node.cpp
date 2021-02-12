@@ -1,4 +1,4 @@
-#include <gk/node.hpp>
+#include <gk/core/node.hpp>
 
 Node::Node() : Node("", Matrix4F(1.0f))
 {

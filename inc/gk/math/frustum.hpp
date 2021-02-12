@@ -1,8 +1,8 @@
 #ifndef GK_FRUSTUM_HPP
 #define GK_FRUSTUM_HPP
 
-#include <gk/aabb_collider.hpp>
-#include <gk/matrix.hpp>
+#include <gk/math/aabb.hpp>
+#include <gk/math/linear.hpp>
 
 struct Frustum
 {

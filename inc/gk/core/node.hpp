@@ -3,8 +3,8 @@
 
 #include <string>
 
-#include <gk/bone.hpp>
-#include <gk/transform_3d.hpp>
+#include <gk/core/bone.hpp>
+#include <gk/math/transform_3d.hpp>
 
 class Node
 {

@@ -1,13 +1,13 @@
-#include <gk/sprite_renderer.hpp>
+#include <gk/renderer/sprite_renderer.hpp>
 
 #include <cassert>
 #include <cstdio>
 
-#include <gk/config.hpp>
-#include <gk/file.hpp>
-#include <gk/quad.hpp>
-#include <gk/camera_2d.hpp>
-#include <gk/matrix.hpp>
+#include <gk/config/config.hpp>
+#include <gk/io/file.hpp>
+#include <gk/graphics/quad.hpp>
+#include <gk/core/camera_2d.hpp>
+#include <gk/math/linear.hpp>
 
 #include "../shdr/sprite_pixel_shader.hpp"
 #include "../shdr/sprite_vertex_shader.hpp"

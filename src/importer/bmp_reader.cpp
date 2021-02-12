@@ -1,8 +1,8 @@
-#include <gk/bmp_reader.hpp>
+#include <gk/importer/bmp_reader.hpp>
 
 #include <cstdint>
 
-#include <gk/file.hpp>
+#include <gk/io/file.hpp>
 
 // bmp file format: https://en.wikipedia.org/wiki/BMP_file_format
 

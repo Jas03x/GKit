@@ -4,11 +4,11 @@
 #include <string>
 #include <vector>
 
-#include <gk/file.hpp>
-#include <gk/data_types.hpp>
-#include <gk/matrix.hpp>
-#include <gk/mdl_format.hpp>
-#include <gk/mesh_data.hpp>
+#include <gk/io/file.hpp>
+#include <gk/system/data_types.hpp>
+#include <gk/math/linear.hpp>
+#include <gk/importer/mdl_format.hpp>
+#include <gk/importer/mesh_data.hpp>
 
 namespace MDL
 {

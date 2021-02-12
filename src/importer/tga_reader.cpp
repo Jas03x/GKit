@@ -1,9 +1,9 @@
-#include <gk/tga_reader.hpp>
+#include <gk/importer/tga_reader.hpp>
 
 #include <cassert>
 #include <cstring>
 
-#include <gk/file.hpp>
+#include <gk/io/file.hpp>
 
 // TGA Loader
 // ONLY SUPPORTS COMPRESSED TGA FILES

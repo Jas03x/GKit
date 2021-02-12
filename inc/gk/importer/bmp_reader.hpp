@@ -1,7 +1,7 @@
 #ifndef GK_BMP_READER_H
 #define GK_BMP_READER_H
 
-#include <gk/bitmap.hpp>
+#include <gk/importer/bitmap.hpp>
 
 namespace BMP_Reader
 {

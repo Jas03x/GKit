@@ -1,7 +1,7 @@
 #ifndef GK_GRAPHICS_H
 #define GK_GRAPHICS_H
 
-#include <gk/data_types.hpp>
+#include <gk/system/data_types.hpp>
 
 // Graphics Layer
 

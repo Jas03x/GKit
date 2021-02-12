@@ -1,6 +1,6 @@
-#include <gk/cubemap.hpp>
+#include <gk/graphics/cubemap.hpp>
 
-#include <gk/bitmap.hpp>
+#include <gk/importer/bitmap.hpp>
 
 CubeMap::CubeMap()
 {

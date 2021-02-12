@@ -1,6 +1,6 @@
-#include <gk/debug_draw_interface.hpp>
+#include <gk/core/debug_draw_interface.hpp>
 
-#include <gk/debug_drawer.hpp>
+#include <gk/renderer/debug_drawer.hpp>
 
 DebugDrawInterface::DebugDrawInterface()
 {

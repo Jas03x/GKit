@@ -3,8 +3,8 @@
 
 #include <cstdint>
 
-#include <gk/aabb_collider.hpp>
-#include <gk/matrix.hpp>
+#include <gk/math/aabb.hpp>
+#include <gk/math/linear.hpp>
 
 class DebugDrawInterface
 {

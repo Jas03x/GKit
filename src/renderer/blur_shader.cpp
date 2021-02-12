@@ -1,11 +1,11 @@
-#include <gk/blur_shader.hpp>
+#include <gk/renderer/blur_shader.hpp>
 
 #include <cassert>
 
-#include <gk/config.hpp>
-#include <gk/file.hpp>
-#include <gk/quad.hpp>
-#include <gk/matrix.hpp>
+#include <gk/config/config.hpp>
+#include <gk/io/file.hpp>
+#include <gk/graphics/quad.hpp>
+#include <gk/math/linear.hpp>
 
 #include "../shdr/gaussian_blur_pixel_shader.hpp"
 #include "../shdr/gaussian_blur_vertex_shader.hpp"

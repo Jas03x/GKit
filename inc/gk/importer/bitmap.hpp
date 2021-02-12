@@ -21,6 +21,9 @@ public:
 	};
 
 public:
+    static bool Load(const char* path, Bitmap& bitmap);
+    
+public:
 	Bitmap();
 	Bitmap(const char* path);
 	~Bitmap();

@@ -1,12 +1,12 @@
-#include <gk/skybox_renderer.hpp>
+#include <gk/renderer/skybox_renderer.hpp>
 
 #include <cassert>
 
-#include <gk/config.hpp>
-#include <gk/file.hpp>
-#include <gk/matrix.hpp>
-#include <gk/quad.hpp>
-#include <gk/camera_3d.hpp>
+#include <gk/config/config.hpp>
+#include <gk/core/camera_3d.hpp>
+#include <gk/graphics/quad.hpp>
+#include <gk/io/file.hpp>
+#include <gk/math/linear.hpp>
 
 #include "../shdr/skybox_pixel_shader.hpp"
 #include "../shdr/skybox_vertex_shader.hpp"

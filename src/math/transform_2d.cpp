@@ -1,4 +1,4 @@
-#include <gk/transform_2d.hpp>
+#include <gk/math/transform_2d.hpp>
 
 Transform2D::Transform2D() : Transform2D(Vector2F(0.0f), 0.0f, Vector2F(1.0f)) {}
 

@@ -1,11 +1,11 @@
-#include <gk/particle_renderer_3d.hpp>
+#include <gk/renderer/particle_renderer_3d.hpp>
 
 #include <cassert>
 
-#include <gk/config.hpp>
-#include <gk/file.hpp>
-#include <gk/view.hpp>
-#include <gk/camera_3d.hpp>
+#include <gk/config/config.hpp>
+#include <gk/core/view.hpp>
+#include <gk/core/camera_3d.hpp>
+#include <gk/io/file.hpp>
 
 #include "../shdr/particle_pixel_shader.hpp"
 #include "../shdr/particle_vertex_shader.hpp"

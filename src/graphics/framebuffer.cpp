@@ -1,4 +1,4 @@
-#include <gk/framebuffer.hpp>
+#include <gk/graphics/framebuffer.hpp>
 
 #include <cassert>
 #include <cstdio>

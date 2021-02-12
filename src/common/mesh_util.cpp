@@ -1,4 +1,4 @@
-#include <gk/mesh_util.hpp>
+#include <gk/common/mesh_util.hpp>
 
 #include <cmath>
 

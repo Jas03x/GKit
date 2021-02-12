@@ -1,10 +1,10 @@
-#include <gk/frame_renderer.hpp>
+#include <gk/renderer/frame_renderer.hpp>
 
 #include <cassert>
 
-#include <gk/config.hpp>
-#include <gk/file.hpp>
-#include <gk/quad.hpp>
+#include <gk/config/config.hpp>
+#include <gk/graphics/quad.hpp>
+#include <gk/io/file.hpp>
 
 #include "../shdr/frame_pixel_shader.hpp"
 #include "../shdr/frame_vertex_shader.hpp"

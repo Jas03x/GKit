@@ -1,4 +1,4 @@
-#include <gk/render_buffer.hpp>
+#include <gk/graphics/render_buffer.hpp>
 
 RenderBuffer::RenderBuffer(unsigned int width, unsigned int height, unsigned int format)
 {

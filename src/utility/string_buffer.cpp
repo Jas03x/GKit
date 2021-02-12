@@ -1,4 +1,4 @@
-#include <gk/string_buffer.hpp>
+#include <gk/utility/string_buffer.hpp>
 
 StringBuffer::StringBuffer()
 {

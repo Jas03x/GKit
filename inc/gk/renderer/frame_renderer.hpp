@@ -1,7 +1,7 @@
 #ifndef GK_FRAME_RENDERER_H
 #define GK_FRAME_RENDERER_H
 
-#include <gk/shader.hpp>
+#include <gk/graphics/shader.hpp>
 
 class FrameRenderer : public Shader
 {

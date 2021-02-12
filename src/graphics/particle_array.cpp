@@ -1,6 +1,6 @@
-#include <gk/particle_array.hpp>
+#include <gk/graphics/particle_array.hpp>
 
-#include <gk/bitmap.hpp>
+#include <gk/importer/bitmap.hpp>
 
 ParticleArray::ParticleArray(const char* texture_sheet, const Vector2F& dimensions, unsigned int particle_limit)
 {

@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include <gk/matrix.hpp>
+#include <gk/math/linear.hpp>
 
 struct MeshData
 {

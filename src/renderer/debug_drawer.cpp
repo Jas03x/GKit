@@ -1,9 +1,9 @@
-#include <gk/debug_drawer.hpp>
+#include <gk/renderer/debug_drawer.hpp>
 
 #include <cassert>
 #include <cstdio>
 
-#include <gk/camera_3d.hpp>
+#include <gk/core/camera_3d.hpp>
 
 #include "../shdr/debug_pixel_shader.hpp"
 #include "../shdr/debug_vertex_shader.hpp"

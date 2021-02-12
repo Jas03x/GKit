@@ -5,9 +5,9 @@
 #include <string>
 #include <vector>
 
-#include <gk/collada_parser.hpp>
-#include <gk/matrix.hpp>
-#include <gk/mesh_data.hpp>
+#include <gk/math/linear.hpp>
+#include <gk/importer/collada_parser.hpp>
+#include <gk/importer/mesh_data.hpp>
 
 namespace Collada
 {

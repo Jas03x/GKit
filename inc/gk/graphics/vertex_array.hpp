@@ -1,7 +1,7 @@
 #ifndef GK_VERTEX_ARRAY_H
 #define GK_VERTEX_ARRAY_H
 
-#include <gk/graphics.hpp>
+#include <gk/graphics/graphics.hpp>
 
 class VertexArray
 {

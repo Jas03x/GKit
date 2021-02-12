@@ -1,4 +1,4 @@
-#include <gk/bone.hpp>
+#include <gk/core/bone.hpp>
 
 Bone::Bone()
 {

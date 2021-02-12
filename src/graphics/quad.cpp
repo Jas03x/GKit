@@ -1,4 +1,4 @@
-#include <gk/quad.hpp>
+#include <gk/graphics/quad.hpp>
 
 #include <cassert>
 

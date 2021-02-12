@@ -1,13 +1,13 @@
-#include <gk/xml.hpp>
+#include <gk/io/xml.hpp>
 
 #include <cstdarg>
 #include <cstring>
 
 #include <vector>
 
-#include <gk/file.hpp>
-#include <gk/string.hpp>
-#include <gk/string_buffer.hpp>
+#include <gk/common/string.hpp>
+#include <gk/io/file.hpp>
+#include <gk/utility/string_buffer.hpp>
 
 class XML_Reader
 {

@@ -1,4 +1,4 @@
-#include <gk/vertex_buffer.hpp>
+#include <gk/graphics/vertex_buffer.hpp>
 
 #include <cassert>
 #include <cstdio>

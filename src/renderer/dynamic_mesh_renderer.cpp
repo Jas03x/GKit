@@ -1,8 +1,8 @@
-#include <gk/dynamic_mesh_renderer.hpp>
+#include <gk/renderer/dynamic_mesh_renderer.hpp>
 
-#include <gk/sun.hpp>
-#include <gk/file.hpp>
-#include <gk/camera_3d.hpp>
+#include <gk/core/camera_3d.hpp>
+#include <gk/core/sun.hpp>
+#include <gk/io/file.hpp>
 
 #include <cassert>
 

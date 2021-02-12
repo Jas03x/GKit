@@ -1,10 +1,10 @@
 #ifndef GK_COLLADA_PARSER_HPP
 #define GK_COLLADA_PARSER_HPP
 
-#include <gk/collada_format.hpp>
-#include <gk/string.hpp>
-#include <gk/string_buffer.hpp>
-#include <gk/xml.hpp>
+#include <gk/common/string.hpp>
+#include <gk/importer/collada_format.hpp>
+#include <gk/io/xml.hpp>
+#include <gk/utility/string_buffer.hpp>
 
 namespace Collada
 {

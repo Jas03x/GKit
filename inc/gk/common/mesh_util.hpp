@@ -1,8 +1,8 @@
 #ifndef GK_MESH_UTIL_H
 #define GK_MESH_UTIL_H
 
-#include <gk/matrix.hpp>
-#include <gk/mesh_data.hpp>
+#include <gk/math/linear.hpp>
+#include <gk/importer/mesh_data.hpp>
 
 /*
 namespace MeshUtil

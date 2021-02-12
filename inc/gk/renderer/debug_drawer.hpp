@@ -3,10 +3,10 @@
 
 #include <vector>
 
-#include <gk/matrix.hpp>
-#include <gk/shader.hpp>
-#include <gk/vertex_array.hpp>
-#include <gk/vertex_buffer.hpp>
+#include <gk/math/linear.hpp>
+#include <gk/graphics/shader.hpp>
+#include <gk/graphics/vertex_array.hpp>
+#include <gk/graphics/vertex_buffer.hpp>
 
 class DebugDrawer : public Shader
 {

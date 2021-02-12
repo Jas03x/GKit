@@ -1,4 +1,4 @@
-#include <gk/random.hpp>
+#include <gk/utility/random.hpp>
 
 #include <cmath>
 #include <ctime>

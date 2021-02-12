@@ -3,11 +3,11 @@
 
 #include <vector>
 
-#include <gk/data_types.hpp>
-#include <gk/graphics.hpp>
-#include <gk/matrix.hpp>
-#include <gk/texture.hpp>
-#include <gk/particle.hpp>
+#include <gk/system/data_types.hpp>
+#include <gk/math/linear.hpp>
+#include <gk/graphics/graphics.hpp>
+#include <gk/graphics/texture.hpp>
+#include <gk/graphics/particle.hpp>
 
 class ParticleArray
 {

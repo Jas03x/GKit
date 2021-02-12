@@ -1,6 +1,6 @@
-#include <gk/clock.hpp>
+#include <gk/system/clock.hpp>
 
-#include <gk/context.hpp>
+#include <gk/system/context.hpp>
 
 uint32_t Clock::GetTime()
 {

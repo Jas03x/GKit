@@ -3,13 +3,13 @@
 
 #include <string>
 
-#include <gk/bone.hpp>
-#include <gk/config.hpp>
-#include <gk/mesh.hpp>
-#include <gk/node.hpp>
-#include <gk/mesh_data.hpp>
-#include <gk/texture.hpp>
-#include <gk/transform_3d.hpp>
+#include <gk/config/config.hpp>
+#include <gk/core/bone.hpp>
+#include <gk/core/node.hpp>
+#include <gk/graphics/mesh.hpp>
+#include <gk/graphics/texture.hpp>
+#include <gk/importer/mesh_data.hpp>
+#include <gk/math/transform_3d.hpp>
 
 class DynamicMesh : public Mesh
 {

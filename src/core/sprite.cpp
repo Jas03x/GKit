@@ -1,6 +1,6 @@
-#include <gk/sprite.hpp>
+#include <gk/core/sprite.hpp>
 
-#include <gk/bitmap.hpp>
+#include <gk/importer/bitmap.hpp>
 
 Sprite::Sprite()
 {

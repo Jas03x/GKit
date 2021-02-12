@@ -1,9 +1,9 @@
-#include <gk/texture_manager.hpp>
+#include <gk/core/texture_manager.hpp>
 
 #include <cassert>
 
-#include <gk/bitmap.hpp>
-#include <gk/config.hpp>
+#include <gk/config/config.hpp>
+#include <gk/importer/bitmap.hpp>
 
 TextureManager* TextureManager::Instance = nullptr;
 

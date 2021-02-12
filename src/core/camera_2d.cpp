@@ -1,4 +1,4 @@
-#include <gk/camera_2d.hpp>
+#include <gk/core/camera_2d.hpp>
 
 #include <cassert>
 #include <cstdio>

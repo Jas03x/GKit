@@ -1,4 +1,4 @@
-#include <gk/graphics.hpp>
+#include <gk/graphics/graphics.hpp>
 
 #include <cassert>
 #include <cstdio>

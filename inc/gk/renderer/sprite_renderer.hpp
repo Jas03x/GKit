@@ -3,10 +3,10 @@
 
 #include <vector>
 
-#include <gk/graphics.hpp>
-#include <gk/shader.hpp>
-#include <gk/sprite.hpp>
-#include <gk/transform_2d.hpp>
+#include <gk/graphics/graphics.hpp>
+#include <gk/graphics/shader.hpp>
+#include <gk/core/sprite.hpp>
+#include <gk/math/transform_2d.hpp>
 
 class SpriteRenderer : public Shader
 {

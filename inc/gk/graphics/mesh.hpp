@@ -3,8 +3,8 @@
 
 #include <cstddef>
 
-#include <gk/vertex_array.hpp>
-#include <gk/vertex_buffer.hpp>
+#include <gk/graphics/vertex_array.hpp>
+#include <gk/graphics/vertex_buffer.hpp>
 
 class Mesh
 {
