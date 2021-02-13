@@ -151,7 +151,7 @@
 		417B6E1E25D6DCAE00DD1251 /* sprite_vertex_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = sprite_vertex_shader.hpp; path = shdr/sprite_vertex_shader.hpp; sourceTree = "<group>"; };
 		417B6E1F25D6DCAE00DD1251 /* frame_pixel_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = frame_pixel_shader.hpp; path = shdr/frame_pixel_shader.hpp; sourceTree = "<group>"; };
 		417B6E2025D6DCAE00DD1251 /* particle_vertex_shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = particle_vertex_shader.hpp; path = shdr/particle_vertex_shader.hpp; sourceTree = "<group>"; };
-		417B6E3325D6DCCB00DD1251 /* makefile.osx */ = {isa = PBXFileReference; lastKnownFileType = text; path = makefile.osx; sourceTree = "<group>"; };
+		417B6E3325D6DCCB00DD1251 /* makefile.osx */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; path = makefile.osx; sourceTree = "<group>"; };
 		4196DBB125D656B700B2B10F /* string.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = string.hpp; path = inc/gk/common/string.hpp; sourceTree = "<group>"; };
 		4196DBB225D656B700B2B10F /* mesh_util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = mesh_util.hpp; path = inc/gk/common/mesh_util.hpp; sourceTree = "<group>"; };
 		4196DBB725D656C700B2B10F /* config.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = config.hpp; path = inc/gk/config/config.hpp; sourceTree = "<group>"; };
