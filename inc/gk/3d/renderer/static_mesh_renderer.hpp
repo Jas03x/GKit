@@ -1,7 +1,7 @@
 #ifndef GK_STATIC_MESH_RENDERER_H
 #define GK_STATIC_MESH_RENDERER_H
 
-#include <gk/graphics/shader.hpp>
+#include <gk/core/graphics/shader.hpp>
 #include <gk/3d/core/static_mesh.hpp>
 
 class StaticMeshRenderer : public Shader

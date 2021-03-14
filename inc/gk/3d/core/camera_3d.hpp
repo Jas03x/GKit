@@ -1,9 +1,9 @@
 #ifndef GK_CAMERA_3D_H
 #define GK_CAMERA_3D_H
 
-#include <gk/math/frustum.hpp>
+#include <gk/core/math/frustum.hpp>
 #include <gk/3d/core/debug_draw_interface.hpp>
-#include <gk/math/linear.hpp>
+#include <gk/core/math/linear.hpp>
 
 class Camera3D : public DebugDrawInterface
 {

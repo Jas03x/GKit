@@ -4,10 +4,10 @@
 #include <cstdio>
 
 #include <gk/3d/config/config.hpp>
-#include <gk/io/file.hpp>
-#include <gk/graphics/quad.hpp>
+#include <gk/core/io/file.hpp>
+#include <gk/core/graphics/quad.hpp>
 #include <gk/3d/core/camera_2d.hpp>
-#include <gk/math/linear.hpp>
+#include <gk/core/math/linear.hpp>
 
 #include "../../shdr/sprite_pixel_shader.hpp"
 #include "../../shdr/sprite_vertex_shader.hpp"

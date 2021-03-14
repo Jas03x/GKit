@@ -1,7 +1,7 @@
 #ifndef GK_SKYBOX_H
 #define GK_SKYBOX_H
 
-#include <gk/graphics/cubemap.hpp>
+#include <gk/core/graphics/cubemap.hpp>
 
 class Skybox : public CubeMap
 {

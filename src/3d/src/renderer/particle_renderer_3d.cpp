@@ -5,7 +5,7 @@
 #include <gk/3d/config/config.hpp>
 #include <gk/3d/core/view.hpp>
 #include <gk/3d/core/camera_3d.hpp>
-#include <gk/io/file.hpp>
+#include <gk/core/io/file.hpp>
 
 #include "../../shdr/particle_pixel_shader.hpp"
 #include "../../shdr/particle_vertex_shader.hpp"

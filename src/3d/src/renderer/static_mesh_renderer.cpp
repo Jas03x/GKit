@@ -3,7 +3,7 @@
 #include <gk/3d/config/config.hpp>
 #include <gk/3d/core/sun.hpp>
 #include <gk/3d/core/camera_3d.hpp>
-#include <gk/io/file.hpp>
+#include <gk/core/io/file.hpp>
 
 #include <cassert>
 

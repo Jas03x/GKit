@@ -1,9 +1,9 @@
 #ifndef GK_PARTICLE_RENDERER_H
 #define GK_PARTICLE_RENDERER_H
 
-#include <gk/graphics/graphics.hpp>
-#include <gk/graphics/shader.hpp>
-#include <gk/graphics/particle_array.hpp>
+#include <gk/core/graphics/graphics.hpp>
+#include <gk/core/graphics/shader.hpp>
+#include <gk/core/graphics/particle_array.hpp>
 
 class ParticleRenderer3D : public Shader
 {

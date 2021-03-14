@@ -4,7 +4,7 @@
 #include <string>
 
 #include <gk/3d/core/bone.hpp>
-#include <gk/math/transform_3d.hpp>
+#include <gk/core/math/transform_3d.hpp>
 
 class Node
 {

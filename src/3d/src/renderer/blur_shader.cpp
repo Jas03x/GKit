@@ -3,9 +3,9 @@
 #include <cassert>
 
 #include <gk/3d/config/config.hpp>
-#include <gk/io/file.hpp>
-#include <gk/graphics/quad.hpp>
-#include <gk/math/linear.hpp>
+#include <gk/core/io/file.hpp>
+#include <gk/core/graphics/quad.hpp>
+#include <gk/core/math/linear.hpp>
 
 #include "../../shdr/gaussian_blur_pixel_shader.hpp"
 #include "../../shdr/gaussian_blur_vertex_shader.hpp"

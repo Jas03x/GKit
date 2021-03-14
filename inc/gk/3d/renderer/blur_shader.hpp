@@ -1,7 +1,7 @@
 #ifndef GK_BLUR_SHADER_H
 #define GK_BLUR_SHADER_H
 
-#include <gk/graphics/shader.hpp>
+#include <gk/core/graphics/shader.hpp>
 
 class BlurShader : public Shader
 {

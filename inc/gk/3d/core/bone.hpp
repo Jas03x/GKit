@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include <gk/math/linear.hpp>
+#include <gk/core/math/linear.hpp>
 
 class Bone
 {

@@ -1,7 +1,7 @@
 #ifndef GK_SUN_H
 #define GK_SUN_H
 
-#include <gk/math/linear.hpp>
+#include <gk/core/math/linear.hpp>
 
 namespace Sun
 {

@@ -3,8 +3,8 @@
 
 #include <cstdint>
 
-#include <gk/math/aabb.hpp>
-#include <gk/math/linear.hpp>
+#include <gk/core/math/aabb.hpp>
+#include <gk/core/math/linear.hpp>
 
 class DebugDrawInterface
 {

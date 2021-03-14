@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 
-#include <gk/graphics/texture.hpp>
+#include <gk/core/graphics/texture.hpp>
 
 class TextureManager
 {

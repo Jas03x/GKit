@@ -1,6 +1,6 @@
 #include <gk/3d/core/skybox.hpp>
 
-#include <gk/importer/bitmap.hpp>
+#include <gk/core/importer/bitmap.hpp>
 
 Skybox::Skybox() : CubeMap()
 {

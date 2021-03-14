@@ -6,10 +6,10 @@
 #include <gk/3d/config/config.hpp>
 #include <gk/3d/core/bone.hpp>
 #include <gk/3d/core/node.hpp>
-#include <gk/graphics/mesh.hpp>
-#include <gk/graphics/texture.hpp>
-#include <gk/importer/mesh_data.hpp>
-#include <gk/math/transform_3d.hpp>
+#include <gk/core/graphics/mesh.hpp>
+#include <gk/core/graphics/texture.hpp>
+#include <gk/core/importer/mesh_data.hpp>
+#include <gk/core/math/transform_3d.hpp>
 
 class DynamicMesh : public Mesh
 {
