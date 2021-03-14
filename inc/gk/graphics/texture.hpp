@@ -1,7 +1,7 @@
 #ifndef GK_TEXTURE_H
 #define GK_TEXTURE_H
 
-#include <gk/3d/graphics/graphics.hpp>
+#include <gk/graphics/graphics.hpp>
 
 class Texture
 {

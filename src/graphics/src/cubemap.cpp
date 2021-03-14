@@ -1,4 +1,4 @@
-#include <gk/3d/graphics/cubemap.hpp>
+#include <gk/graphics/cubemap.hpp>
 
 #include <gk/3d/importer/bitmap.hpp>
 

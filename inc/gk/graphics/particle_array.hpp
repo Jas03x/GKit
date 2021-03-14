@@ -5,9 +5,9 @@
 
 #include <gk/context/data_types.hpp>
 #include <gk/math/linear.hpp>
-#include <gk/3d/graphics/graphics.hpp>
-#include <gk/3d/graphics/texture.hpp>
-#include <gk/3d/graphics/particle.hpp>
+#include <gk/graphics/graphics.hpp>
+#include <gk/graphics/texture.hpp>
+#include <gk/graphics/particle.hpp>
 
 class ParticleArray
 {

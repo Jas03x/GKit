@@ -1,8 +1,8 @@
 #ifndef GK_CUBEMAP_H
 #define GK_CUBEMAP_H
 
-#include <gk/3d/graphics/graphics.hpp>
-#include <gk/3d/graphics/texture.hpp>
+#include <gk/graphics/graphics.hpp>
+#include <gk/graphics/texture.hpp>
 #include <gk/3d/importer/bitmap.hpp>
 
 class CubeMap

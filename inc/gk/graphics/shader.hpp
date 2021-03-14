@@ -1,7 +1,7 @@
 #ifndef GK_SHADER_H
 #define GK_SHADER_H
 
-#include <gk/3d/graphics/graphics.hpp>
+#include <gk/graphics/graphics.hpp>
 
 class Shader
 {

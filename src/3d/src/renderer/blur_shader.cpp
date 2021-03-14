@@ -4,7 +4,7 @@
 
 #include <gk/3d/config/config.hpp>
 #include <gk/3d/io/file.hpp>
-#include <gk/3d/graphics/quad.hpp>
+#include <gk/graphics/quad.hpp>
 #include <gk/math/linear.hpp>
 
 #include "../../shdr/gaussian_blur_pixel_shader.hpp"

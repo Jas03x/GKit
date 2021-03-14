@@ -3,8 +3,8 @@
 
 #include <vector>
 
-#include <gk/3d/graphics/graphics.hpp>
-#include <gk/3d/graphics/shader.hpp>
+#include <gk/graphics/graphics.hpp>
+#include <gk/graphics/shader.hpp>
 #include <gk/3d/core/sprite.hpp>
 #include <gk/math/transform_2d.hpp>
 

@@ -1,4 +1,4 @@
-#include <gk/3d/graphics/shader.hpp>
+#include <gk/graphics/shader.hpp>
 
 #include <cassert>
 #include <cstdio>

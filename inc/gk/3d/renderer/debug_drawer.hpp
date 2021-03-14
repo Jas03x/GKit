@@ -4,9 +4,9 @@
 #include <vector>
 
 #include <gk/math/linear.hpp>
-#include <gk/3d/graphics/shader.hpp>
-#include <gk/3d/graphics/vertex_array.hpp>
-#include <gk/3d/graphics/vertex_buffer.hpp>
+#include <gk/graphics/shader.hpp>
+#include <gk/graphics/vertex_array.hpp>
+#include <gk/graphics/vertex_buffer.hpp>
 
 class DebugDrawer : public Shader
 {

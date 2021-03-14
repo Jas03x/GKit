@@ -2,8 +2,8 @@
 #define GK_SPRITE_H
 
 #include <gk/math/linear.hpp>
-#include <gk/3d/graphics/graphics.hpp>
-#include <gk/3d/graphics/texture.hpp>
+#include <gk/graphics/graphics.hpp>
+#include <gk/graphics/texture.hpp>
 #include <gk/math/transform_2d.hpp>
 
 class Sprite : public Texture

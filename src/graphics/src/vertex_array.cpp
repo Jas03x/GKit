@@ -1,4 +1,4 @@
-#include <gk/3d/graphics/vertex_array.hpp>
+#include <gk/graphics/vertex_array.hpp>
 
 VertexArray::VertexArray()
 {

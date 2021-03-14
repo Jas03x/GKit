@@ -26,20 +26,6 @@ set(core_sources
     ../src/core/view.cpp
 )
 
-set(graphics_sources
-    ../src/graphics/cubemap.cpp
-    ../src/graphics/framebuffer.cpp
-    ../src/graphics/graphics.cpp
-    ../src/graphics/mesh.cpp
-    ../src/graphics/particle_array.cpp
-    ../src/graphics/quad.cpp
-    ../src/graphics/render_buffer.cpp
-    ../src/graphics/shader.cpp
-    ../src/graphics/texture.cpp
-    ../src/graphics/vertex_array.cpp
-    ../src/graphics/vertex_buffer.cpp
-)
-
 set(importer_sources
     ../src/importer/bitmap.cpp
     ../src/importer/bmp_reader.cpp
@@ -76,10 +62,9 @@ set(utility_sources
     ../src/utility/string_buffer.cpp
 )
 
-add_library(3D.lib STATIC
+add_library(graphics.lib STATIC
     ${common_sources}
     ${core_sources}
-    ${graphics_sources}
     ${importer_sources}
     ${io_sources}
     ${physics_sources}

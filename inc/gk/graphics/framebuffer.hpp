@@ -1,10 +1,10 @@
 #ifndef GK_FRAMEBUFFER_H
 #define GK_FRAMEBUFFER_H
 
-#include <gk/3d/graphics/graphics.hpp>
-#include <gk/3d/graphics/cubemap.hpp>
-#include <gk/3d/graphics/render_buffer.hpp>
-#include <gk/3d/graphics/texture.hpp>
+#include <gk/graphics/graphics.hpp>
+#include <gk/graphics/cubemap.hpp>
+#include <gk/graphics/render_buffer.hpp>
+#include <gk/graphics/texture.hpp>
 
 class Framebuffer
 {

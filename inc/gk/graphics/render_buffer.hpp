@@ -1,7 +1,7 @@
 #ifndef GK_RENDER_BUFFER_HPP
 #define GK_RENDER_BUFFER_HPP
 
-#include <gk/3d/graphics/graphics.hpp>
+#include <gk/graphics/graphics.hpp>
 
 class RenderBuffer
 {

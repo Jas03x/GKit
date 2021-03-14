@@ -1,4 +1,4 @@
-#include <gk/3d/graphics/mesh.hpp>
+#include <gk/graphics/mesh.hpp>
 
 Mesh::Mesh()
 {

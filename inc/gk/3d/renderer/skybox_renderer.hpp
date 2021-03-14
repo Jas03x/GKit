@@ -1,7 +1,7 @@
 #ifndef GK_SKYBOX_RENDERER_H
 #define GK_SKYBOX_RENDERER_H
 
-#include <gk/3d/graphics/shader.hpp>
+#include <gk/graphics/shader.hpp>
 #include <gk/3d/core/skybox.hpp>
 
 class SkyboxRenderer : public Shader

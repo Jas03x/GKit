@@ -1,4 +1,4 @@
-#include <gk/3d/graphics/particle_array.hpp>
+#include <gk/graphics/particle_array.hpp>
 
 #include <gk/3d/importer/bitmap.hpp>
 

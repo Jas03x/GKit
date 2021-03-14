@@ -1,7 +1,7 @@
 #ifndef GK_QUAD_H
 #define GK_QUAD_H
 
-#include <gk/3d/graphics/graphics.hpp>
+#include <gk/graphics/graphics.hpp>
 
 class Quad
 {

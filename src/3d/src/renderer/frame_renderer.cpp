@@ -3,7 +3,7 @@
 #include <cassert>
 
 #include <gk/3d/config/config.hpp>
-#include <gk/3d/graphics/quad.hpp>
+#include <gk/graphics/quad.hpp>
 #include <gk/3d/io/file.hpp>
 
 #include "../../shdr/frame_pixel_shader.hpp"
