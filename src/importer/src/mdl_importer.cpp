@@ -1,4 +1,4 @@
-#include <gk/3d/importer/mdl_importer.hpp>
+#include <gk/importer/mdl_importer.hpp>
 
 MDL::Importer::Importer()
 {

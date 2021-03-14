@@ -4,7 +4,7 @@
 
 #include <gk/3d/config/config.hpp>
 #include <gk/graphics/quad.hpp>
-#include <gk/3d/io/file.hpp>
+#include <gk/io/file.hpp>
 
 #include "../../shdr/frame_pixel_shader.hpp"
 #include "../../shdr/frame_vertex_shader.hpp"

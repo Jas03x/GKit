@@ -1,4 +1,4 @@
-#include <gk/3d/io/filesystem.hpp>
+#include <gk/io/filesystem.hpp>
 
 Filesystem::Path::Path(const std::string& path)
 {

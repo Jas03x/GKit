@@ -3,7 +3,7 @@
 #include <cassert>
 
 #include <gk/3d/config/config.hpp>
-#include <gk/3d/io/file.hpp>
+#include <gk/io/file.hpp>
 #include <gk/graphics/quad.hpp>
 #include <gk/math/linear.hpp>
 

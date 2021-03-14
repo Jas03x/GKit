@@ -1,4 +1,4 @@
-#include <gk/3d/io/file.hpp>
+#include <gk/io/file.hpp>
 
 #include <cassert>
 

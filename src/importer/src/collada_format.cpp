@@ -1,4 +1,4 @@
-#include <gk/3d/importer/collada_format.hpp>
+#include <gk/importer/collada_format.hpp>
 
 Collada::TriangleArray::~TriangleArray()
 {

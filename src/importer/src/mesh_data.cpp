@@ -1,4 +1,4 @@
-#include <gk/3d/importer/mesh_data.hpp>
+#include <gk/importer/mesh_data.hpp>
 
 bool MeshData::VertexComparator::operator()(const MeshData::Vertex& v0, const MeshData::Vertex& v1) const
 {

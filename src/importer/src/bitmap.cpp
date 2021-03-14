@@ -1,10 +1,10 @@
-#include <gk/3d/importer/bitmap.hpp>
+#include <gk/importer/bitmap.hpp>
 
 #include <cstdio>
 #include <cstring>
 
-#include <gk/3d/importer/bmp_reader.hpp>
-#include <gk/3d/importer/tga_reader.hpp>
+#include <gk/importer/bmp_reader.hpp>
+#include <gk/importer/tga_reader.hpp>
 
 bool Bitmap::Load(const char* path, Bitmap& bitmap)
 {

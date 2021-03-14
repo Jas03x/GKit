@@ -26,23 +26,6 @@ set(core_sources
     ../src/core/view.cpp
 )
 
-set(importer_sources
-    ../src/importer/bitmap.cpp
-    ../src/importer/bmp_reader.cpp
-    ../src/importer/collada_format.cpp
-    ../src/importer/collada_importer.cpp
-    ../src/importer/collada_parser.cpp
-    ../src/importer/mdl_importer.cpp
-    ../src/importer/mesh_data.cpp
-    ../src/importer/tga_reader.cpp
-)
-
-set(io_sources
-    ../src/io/file.cpp
-    ../src/io/filesystem.cpp
-    ../src/io/xml.cpp
-)
-
 set(physics_sources
 )
 
@@ -65,8 +48,6 @@ set(utility_sources
 add_library(graphics.lib STATIC
     ${common_sources}
     ${core_sources}
-    ${importer_sources}
-    ${io_sources}
     ${physics_sources}
     ${renderer_sources}
     ${utility_sources}

@@ -2,8 +2,8 @@
 #define GK_COLLADA_PARSER_HPP
 
 #include <gk/3d/common/string.hpp>
-#include <gk/3d/importer/collada_format.hpp>
-#include <gk/3d/io/xml.hpp>
+#include <gk/importer/collada_format.hpp>
+#include <gk/io/xml.hpp>
 #include <gk/3d/utility/string_buffer.hpp>
 
 namespace Collada

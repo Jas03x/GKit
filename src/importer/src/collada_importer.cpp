@@ -1,11 +1,11 @@
-#include <gk/3d/importer/collada_importer.hpp>
+#include <gk/importer/collada_importer.hpp>
 
 #include <cmath>
 
 #include <utility>
 
-#include <gk/3d/io/filesystem.hpp>
-#include <gk/3d/importer/collada_parser.hpp>
+#include <gk/io/filesystem.hpp>
+#include <gk/importer/collada_parser.hpp>
 
 Collada::Importer::Importer()
 {

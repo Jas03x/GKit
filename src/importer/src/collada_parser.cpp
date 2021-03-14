@@ -1,4 +1,4 @@
-#include <gk/3d/importer/collada_parser.hpp>
+#include <gk/importer/collada_parser.hpp>
 
 #include <cstdio>
 #include <cstring>

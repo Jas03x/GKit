@@ -3,7 +3,7 @@
 
 #include <gk/graphics/graphics.hpp>
 #include <gk/graphics/texture.hpp>
-#include <gk/3d/importer/bitmap.hpp>
+#include <gk/importer/bitmap.hpp>
 
 class CubeMap
 {

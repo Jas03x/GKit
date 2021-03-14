@@ -3,7 +3,7 @@
 #include <cassert>
 
 #include <gk/3d/config/config.hpp>
-#include <gk/3d/importer/bitmap.hpp>
+#include <gk/importer/bitmap.hpp>
 
 TextureManager* TextureManager::Instance = nullptr;
 

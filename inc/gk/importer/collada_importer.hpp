@@ -6,8 +6,8 @@
 #include <vector>
 
 #include <gk/math/linear.hpp>
-#include <gk/3d/importer/collada_parser.hpp>
-#include <gk/3d/importer/mesh_data.hpp>
+#include <gk/importer/collada_parser.hpp>
+#include <gk/importer/mesh_data.hpp>
 
 namespace Collada
 {

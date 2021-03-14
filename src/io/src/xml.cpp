@@ -1,4 +1,4 @@
-#include <gk/3d/io/xml.hpp>
+#include <gk/io/xml.hpp>
 
 #include <cstdarg>
 #include <cstring>
@@ -6,7 +6,7 @@
 #include <vector>
 
 #include <gk/3d/common/string.hpp>
-#include <gk/3d/io/file.hpp>
+#include <gk/io/file.hpp>
 #include <gk/3d/utility/string_buffer.hpp>
 
 class XML_Reader

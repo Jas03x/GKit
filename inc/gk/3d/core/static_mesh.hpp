@@ -5,7 +5,7 @@
 
 #include <gk/3d/config/config.hpp>
 #include <gk/3d/core/node.hpp>
-#include <gk/3d/importer/mesh_data.hpp>
+#include <gk/importer/mesh_data.hpp>
 #include <gk/graphics/mesh.hpp>
 #include <gk/graphics/texture.hpp>
 #include <gk/math/transform_3d.hpp>

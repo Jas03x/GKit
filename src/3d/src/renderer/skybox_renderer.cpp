@@ -5,7 +5,7 @@
 #include <gk/3d/config/config.hpp>
 #include <gk/3d/core/camera_3d.hpp>
 #include <gk/graphics/quad.hpp>
-#include <gk/3d/io/file.hpp>
+#include <gk/io/file.hpp>
 #include <gk/math/linear.hpp>
 
 #include "../../shdr/skybox_pixel_shader.hpp"
