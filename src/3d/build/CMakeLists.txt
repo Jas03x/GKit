@@ -40,15 +40,9 @@ set(renderer_sources
     ../src/renderer/static_mesh_renderer.cpp
 )
 
-set(utility_sources
-    ../src/utility/random.cpp
-    ../src/utility/string_buffer.cpp
-)
-
 add_library(graphics.lib STATIC
     ${common_sources}
     ${core_sources}
     ${physics_sources}
     ${renderer_sources}
-    ${utility_sources}
 )

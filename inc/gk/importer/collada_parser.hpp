@@ -4,7 +4,7 @@
 #include <gk/3d/common/string.hpp>
 #include <gk/importer/collada_format.hpp>
 #include <gk/io/xml.hpp>
-#include <gk/3d/utility/string_buffer.hpp>
+#include <gk/utility/string_buffer.hpp>
 
 namespace Collada
 {

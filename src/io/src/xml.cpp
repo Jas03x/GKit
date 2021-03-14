@@ -7,7 +7,7 @@
 
 #include <gk/3d/common/string.hpp>
 #include <gk/io/file.hpp>
-#include <gk/3d/utility/string_buffer.hpp>
+#include <gk/utility/string_buffer.hpp>
 
 class XML_Reader
 {
