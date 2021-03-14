@@ -1,7 +1,0 @@
-
-all:
-	cd ./3D && make -f makefile.osx
-
-.PHONY: clean
-clean:
-	cd ./3D && make -f makefile.osx clean
