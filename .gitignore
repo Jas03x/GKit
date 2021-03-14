@@ -5,3 +5,7 @@
 x64/**
 Debug/*
 Release/*
+3D/CMakeFiles/*
+3D/CMakeCache.txt
+3D/Makefile
+3D/cmake_install.cmake

@@ -1,0 +1,26 @@
+
+CC = g++
+LINK = ar
+
+INCS += -I ./inc
+INCS += -I /usr/local/include
+
+BIN = ./bin
+SRC = ./src
+
+OUTPUT = ../bin/GKit.lib
+
+CC_OPTIONS = -std=c++17 -g -Wall -Werror
+
+OBJECTS = $(patsubst $(SRC)/%.cpp, $(BIN)/%.o, $(shell find . -name "*.cpp"))
+
+%.o: %.cpp
+	$(CC) $(CC_OPTIONS) $(INCS) -c $^ -o $(BIN)/$@
+
+$(BIN)/$(OUTPUT): $(OBJECTS)
+	$(LINK) rcs $@ $^
+
+.PHONY: clean
+clean:
+	rm -f $(BIN)/*.o
+	rm -f $(OUTPUT)
