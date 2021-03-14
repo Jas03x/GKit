@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(3D)
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_STATIC_LIBRARY_PREFIX "")
 set(CMAKE_STATIC_LIBRARY_SUFFIX "")
