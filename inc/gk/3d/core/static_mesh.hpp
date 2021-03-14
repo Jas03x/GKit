@@ -8,7 +8,7 @@
 #include <gk/3d/importer/mesh_data.hpp>
 #include <gk/3d/graphics/mesh.hpp>
 #include <gk/3d/graphics/texture.hpp>
-#include <gk/3d/math/transform_3d.hpp>
+#include <gk/math/transform_3d.hpp>
 
 class StaticMesh : public Mesh
 {

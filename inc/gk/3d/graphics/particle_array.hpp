@@ -4,7 +4,7 @@
 #include <vector>
 
 #include <gk/3d/system/data_types.hpp>
-#include <gk/3d/math/linear.hpp>
+#include <gk/math/linear.hpp>
 #include <gk/3d/graphics/graphics.hpp>
 #include <gk/3d/graphics/texture.hpp>
 #include <gk/3d/graphics/particle.hpp>

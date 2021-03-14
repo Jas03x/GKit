@@ -1,10 +1,10 @@
 #ifndef GK_SPRITE_H
 #define GK_SPRITE_H
 
-#include <gk/3d/math/linear.hpp>
+#include <gk/math/linear.hpp>
 #include <gk/3d/graphics/graphics.hpp>
 #include <gk/3d/graphics/texture.hpp>
-#include <gk/3d/math/transform_2d.hpp>
+#include <gk/math/transform_2d.hpp>
 
 class Sprite : public Texture
 {

@@ -7,7 +7,7 @@
 #include <gk/3d/io/file.hpp>
 #include <gk/3d/graphics/quad.hpp>
 #include <gk/3d/core/camera_2d.hpp>
-#include <gk/3d/math/linear.hpp>
+#include <gk/math/linear.hpp>
 
 #include "../../shdr/sprite_pixel_shader.hpp"
 #include "../../shdr/sprite_vertex_shader.hpp"

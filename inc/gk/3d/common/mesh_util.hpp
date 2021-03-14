@@ -1,7 +1,7 @@
 #ifndef GK_MESH_UTIL_H
 #define GK_MESH_UTIL_H
 
-#include <gk/3d/math/linear.hpp>
+#include <gk/math/linear.hpp>
 #include <gk/3d/importer/mesh_data.hpp>
 
 /*

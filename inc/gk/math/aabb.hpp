@@ -1,7 +1,7 @@
 #ifndef GK_AABB_HPP
 #define GK_AABB_HPP
 
-#include <gk/3d/math/linear.hpp>
+#include <gk/math/linear.hpp>
 
 struct AABB
 {

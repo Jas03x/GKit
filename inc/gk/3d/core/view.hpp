@@ -1,7 +1,7 @@
 #ifndef GK_VIEW_H
 #define GK_VIEW_H
 
-#include <gk/3d/math/linear.hpp>
+#include <gk/math/linear.hpp>
 
 class View
 {

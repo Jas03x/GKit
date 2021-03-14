@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include <gk/3d/math/linear.hpp>
+#include <gk/math/linear.hpp>
 #include <gk/3d/importer/collada_parser.hpp>
 #include <gk/3d/importer/mesh_data.hpp>
 

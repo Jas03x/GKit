@@ -1,4 +1,4 @@
-#include <gk/3d/math/frustum.hpp>
+#include <gk/math/frustum.hpp>
 
 bool Frustum::InView(const AABB& aabb) const
 {

@@ -57,13 +57,6 @@ set(io_sources
     ../src/io/xml.cpp
 )
 
-set(math_sources
-    ../src/math/frustum.cpp
-    ../src/math/linear.cpp
-    ../src/math/transform_2d.cpp
-    ../src/math/transform_3d.cpp
-)
-
 set(physics_sources
 )
 
@@ -94,7 +87,6 @@ add_library(3D.lib STATIC
     ${graphics_sources}
     ${importer_sources}
     ${io_sources}
-    ${math_sources}
     ${physics_sources}
     ${renderer_sources}
     ${system_sources}

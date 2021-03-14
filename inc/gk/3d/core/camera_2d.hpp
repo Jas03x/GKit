@@ -1,7 +1,7 @@
 #ifndef GK_CAMERA_2D_H
 #define GK_CAMERA_2D_H
 
-#include <gk/3d/math/linear.hpp>
+#include <gk/math/linear.hpp>
 
 class Camera2D
 {

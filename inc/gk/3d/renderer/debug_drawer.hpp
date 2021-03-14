@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include <gk/3d/math/linear.hpp>
+#include <gk/math/linear.hpp>
 #include <gk/3d/graphics/shader.hpp>
 #include <gk/3d/graphics/vertex_array.hpp>
 #include <gk/3d/graphics/vertex_buffer.hpp>

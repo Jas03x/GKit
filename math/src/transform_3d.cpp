@@ -1,4 +1,4 @@
-#include <gk/3d/math/transform_3d.hpp>
+#include <gk/math/transform_3d.hpp>
 
 Transform3D::Transform3D() : Transform3D(Vector3F(0.0f), Quaternion(), Vector3F(1.0f)) {}
 

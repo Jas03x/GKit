@@ -1,4 +1,4 @@
-#include <gk/3d/math/linear.hpp>
+#include <gk/math/linear.hpp>
 
 #include <cstdio>
 #include <cstring>

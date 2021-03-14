@@ -1,7 +1,7 @@
 #ifndef GK_TRANSFORM_3D_H
 #define GK_TRANSFORM_3D_H
 
-#include <gk/3d/math/linear.hpp>
+#include <gk/math/linear.hpp>
 
 class Transform3D
 {
