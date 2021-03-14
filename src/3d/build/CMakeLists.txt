@@ -5,7 +5,7 @@ set(CMAKE_STATIC_LIBRARY_PREFIX "")
 set(CMAKE_STATIC_LIBRARY_SUFFIX "")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ../../../bin)
 
-include_directories("../../../inc/" "/usr/local/include/")
+include_directories("../../../inc/")
 
 set(common_sources
     ../src/common/mesh_util.cpp
@@ -71,11 +71,6 @@ set(renderer_sources
     ../src/renderer/static_mesh_renderer.cpp
 )
 
-set(system_sources
-    ../src/system/clock.cpp
-    ../src/system/context.cpp
-)
-
 set(utility_sources
     ../src/utility/random.cpp
     ../src/utility/string_buffer.cpp
@@ -89,6 +84,5 @@ add_library(3D.lib STATIC
     ${io_sources}
     ${physics_sources}
     ${renderer_sources}
-    ${system_sources}
     ${utility_sources}
 )

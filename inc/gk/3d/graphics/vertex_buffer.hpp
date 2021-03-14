@@ -1,7 +1,7 @@
 #ifndef GK_VERTEX_BUFFER_HPP
 #define GK_VERTEX_BUFFER_HPP
 
-#include <gk/3d/system/data_types.hpp>
+#include <gk/context/data_types.hpp>
 #include <gk/3d/graphics/graphics.hpp>
 
 class VertexBuffer

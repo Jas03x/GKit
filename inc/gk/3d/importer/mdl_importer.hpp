@@ -5,7 +5,7 @@
 #include <vector>
 
 #include <gk/3d/io/file.hpp>
-#include <gk/3d/system/data_types.hpp>
+#include <gk/context/data_types.hpp>
 #include <gk/math/linear.hpp>
 #include <gk/3d/importer/mdl_format.hpp>
 #include <gk/3d/importer/mesh_data.hpp>

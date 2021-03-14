@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include <gk/3d/system/data_types.hpp>
+#include <gk/context/data_types.hpp>
 #include <gk/math/linear.hpp>
 #include <gk/3d/graphics/graphics.hpp>
 #include <gk/3d/graphics/texture.hpp>
