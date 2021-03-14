@@ -21,4 +21,4 @@ set(graphics_sources
     ../src/vertex_buffer.cpp
 )
 
-add_library(3D.lib STATIC ${graphics_sources})
+add_library(graphics.lib STATIC ${graphics_sources})
