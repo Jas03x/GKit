@@ -2,7 +2,7 @@
 
 #include <cassert>
 
-#include <gk/3d/config/config.hpp>
+#include <gk/3d/config.hpp>
 #include <gk/core/io/file.hpp>
 #include <gk/core/graphics/quad.hpp>
 #include <gk/core/math/linear.hpp>

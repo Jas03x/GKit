@@ -1,4 +1,4 @@
-#include <gk/3d/core/sprite.hpp>
+#include <gk/3d/sprite.hpp>
 
 #include <gk/core/importer/bitmap.hpp>
 

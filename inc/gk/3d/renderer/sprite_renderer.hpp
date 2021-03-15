@@ -5,7 +5,7 @@
 
 #include <gk/core/graphics/graphics.hpp>
 #include <gk/core/graphics/shader.hpp>
-#include <gk/3d/core/sprite.hpp>
+#include <gk/3d/sprite.hpp>
 #include <gk/core/math/transform_2d.hpp>
 
 class SpriteRenderer : public Shader

@@ -3,7 +3,7 @@
 #include <cassert>
 #include <cstdio>
 
-#include <gk/3d/core/camera_3d.hpp>
+#include <gk/3d/camera_3d.hpp>
 
 #include "../../shdr/debug_pixel_shader.hpp"
 #include "../../shdr/debug_vertex_shader.hpp"

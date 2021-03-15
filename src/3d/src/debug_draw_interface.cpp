@@ -1,4 +1,4 @@
-#include <gk/3d/core/debug_draw_interface.hpp>
+#include <gk/3d/debug_draw_interface.hpp>
 
 #include <gk/3d/renderer/debug_drawer.hpp>
 

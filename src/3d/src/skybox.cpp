@@ -1,4 +1,4 @@
-#include <gk/3d/core/skybox.hpp>
+#include <gk/3d/skybox.hpp>
 
 #include <gk/core/importer/bitmap.hpp>
 

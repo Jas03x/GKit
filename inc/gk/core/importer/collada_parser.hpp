@@ -1,7 +1,7 @@
 #ifndef GK_COLLADA_PARSER_HPP
 #define GK_COLLADA_PARSER_HPP
 
-#include <gk/3d/common/string.hpp>
+#include <gk/core/common/string.hpp>
 #include <gk/core/importer/collada_format.hpp>
 #include <gk/core/io/xml.hpp>
 #include <gk/core/utility/string_buffer.hpp>

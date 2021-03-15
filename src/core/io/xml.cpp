@@ -5,7 +5,7 @@
 
 #include <vector>
 
-#include <gk/3d/common/string.hpp>
+#include <gk/core/common/string.hpp>
 #include <gk/core/io/file.hpp>
 #include <gk/core/utility/string_buffer.hpp>
 

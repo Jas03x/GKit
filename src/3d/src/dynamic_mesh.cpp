@@ -1,11 +1,11 @@
-#include <gk/3d/core/dynamic_mesh.hpp>
+#include <gk/3d/dynamic_mesh.hpp>
 
 #include <cassert>
 
 #include <map>
 #include <utility>
 
-#include <gk/3d/core/texture_manager.hpp>
+#include <gk/3d/texture_manager.hpp>
 
 DynamicMesh::DynamicMesh() : RootNode("Root", Matrix4F(1.0f))
 {

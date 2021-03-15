@@ -7,26 +7,20 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ../../../bin)
 
 include_directories("../../../inc/")
 
-set(common_sources
-    ../src/common/mesh_util.cpp
-)
-
-set(core_sources
-    ../src/core/bone.cpp
-    ../src/core/camera_2d.cpp
-    ../src/core/camera_3d.cpp
-    ../src/core/debug_draw_interface.cpp
-    ../src/core/dynamic_mesh.cpp
-    ../src/core/node.cpp
-    ../src/core/skybox.cpp
-    ../src/core/sprite.cpp
-    ../src/core/static_mesh.cpp
-    ../src/core/sun.cpp
-    ../src/core/texture_manager.cpp
-    ../src/core/view.cpp
-)
-
-set(physics_sources
+set(root_sources
+    ../src/bone.cpp
+    ../src/camera_2d.cpp
+    ../src/camera_3d.cpp
+    ../src/debug_draw_interface.cpp
+    ../src/dynamic_mesh.cpp
+    ../src/node.cpp
+    ../src/skybox.cpp
+    ../src/sprite.cpp
+    ../src/static_mesh.cpp
+    ../src/sun.cpp
+    ../src/texture_manager.cpp
+    ../src/view.cpp
+    ../src/mesh_util.cpp
 )
 
 set(renderer_sources
@@ -41,8 +35,6 @@ set(renderer_sources
 )
 
 add_library(GKit3D.lib STATIC
-    ${common_sources}
-    ${core_sources}
-    ${physics_sources}
+    ${root_sources}
     ${renderer_sources}
 )

@@ -1,8 +1,8 @@
 #include <gk/3d/renderer/static_mesh_renderer.hpp>
 
-#include <gk/3d/config/config.hpp>
-#include <gk/3d/core/sun.hpp>
-#include <gk/3d/core/camera_3d.hpp>
+#include <gk/3d/config.hpp>
+#include <gk/3d/sun.hpp>
+#include <gk/3d/camera_3d.hpp>
 #include <gk/core/io/file.hpp>
 
 #include <cassert>

@@ -3,10 +3,10 @@
 #include <cassert>
 #include <cstdio>
 
-#include <gk/3d/config/config.hpp>
+#include <gk/3d/config.hpp>
 #include <gk/core/io/file.hpp>
 #include <gk/core/graphics/quad.hpp>
-#include <gk/3d/core/camera_2d.hpp>
+#include <gk/3d/camera_2d.hpp>
 #include <gk/core/math/linear.hpp>
 
 #include "../../shdr/sprite_pixel_shader.hpp"

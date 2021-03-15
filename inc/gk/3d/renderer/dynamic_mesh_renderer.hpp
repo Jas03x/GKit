@@ -2,7 +2,7 @@
 #define GK_DYNAMIC_MESH_RENDERER_H
 
 #include <gk/core/graphics/shader.hpp>
-#include <gk/3d/core/dynamic_mesh.hpp>
+#include <gk/3d/dynamic_mesh.hpp>
 
 class DynamicMeshRenderer : public Shader
 {

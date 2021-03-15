@@ -1,4 +1,4 @@
-#include <gk/3d/core/view.hpp>
+#include <gk/3d/view.hpp>
 
 #include <cassert>
 #include <cstdio>

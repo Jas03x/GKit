@@ -1,11 +1,11 @@
-#include <gk/3d/core/static_mesh.hpp>
+#include <gk/3d/static_mesh.hpp>
 
 #include <cassert>
 #include <cstring>
 
 #include <map>
 
-#include <gk/3d/core/texture_manager.hpp>
+#include <gk/3d/texture_manager.hpp>
 
 StaticMesh::StaticMesh() : RootNode("Root", Matrix4F(1.0f))
 {

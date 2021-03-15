@@ -3,8 +3,8 @@
 
 #include <vector>
 
-#include <gk/3d/config/config.hpp>
-#include <gk/3d/core/node.hpp>
+#include <gk/3d/config.hpp>
+#include <gk/3d/node.hpp>
 #include <gk/core/importer/mesh_data.hpp>
 #include <gk/core/graphics/mesh.hpp>
 #include <gk/core/graphics/texture.hpp>
