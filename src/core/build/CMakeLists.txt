@@ -55,7 +55,7 @@ set(utility_sources
     ../utility/string_buffer.cpp
 )
 
-add_library(gk_core.lib STATIC
+add_library(gkit_core.lib STATIC
     ${context_sources}
     ${importer_sources}
     ${io_sources}
