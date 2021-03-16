@@ -8,138 +8,141 @@
       <UniqueIdentifier>{cc12460c-953b-4390-8b25-b8533ab640c6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sources\context">
-      <UniqueIdentifier>{e1bc7961-4c26-4839-a776-58617c13cb0c}</UniqueIdentifier>
+      <UniqueIdentifier>{50d960b2-8287-4616-a410-cdd406dcec4b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sources\graphics">
-      <UniqueIdentifier>{0505350f-8d6f-4ebf-98df-496acfaeb77b}</UniqueIdentifier>
+      <UniqueIdentifier>{75df29d8-89a5-4e9e-bdce-397224fae852}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sources\importer">
-      <UniqueIdentifier>{06d89ef2-8023-4f04-b9f8-a63ec071c37d}</UniqueIdentifier>
+      <UniqueIdentifier>{eb8d67c1-13ae-419c-929f-bde5c3772f05}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sources\io">
-      <UniqueIdentifier>{07dda359-e18b-401e-a881-2aae01937b98}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\utility">
-      <UniqueIdentifier>{b927b700-8ced-42e4-9f29-b49b075fe159}</UniqueIdentifier>
+      <UniqueIdentifier>{58500111-7cbe-4865-a5bf-4aaaaadb507b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sources\math">
-      <UniqueIdentifier>{143a504a-4ddd-4265-a800-885005a4b0b4}</UniqueIdentifier>
+      <UniqueIdentifier>{7945a17a-cc58-43d0-a151-428b69119947}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Includes\context">
-      <UniqueIdentifier>{a2e57aca-cd89-47be-adf9-05871ee7cae4}</UniqueIdentifier>
+    <Filter Include="Sources\utility">
+      <UniqueIdentifier>{2cb9f1e6-db3c-4d35-ae11-d56c449c8fd7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Includes\common">
-      <UniqueIdentifier>{b04a007d-71dd-47b1-aea4-93c0bf871da0}</UniqueIdentifier>
+      <UniqueIdentifier>{f043b85b-0a00-443c-8c8c-1c036107ed71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Includes\context">
+      <UniqueIdentifier>{30892dc7-d915-4087-b08a-8162a3ba5639}</UniqueIdentifier>
     </Filter>
     <Filter Include="Includes\graphics">
-      <UniqueIdentifier>{2eedcd79-7f43-4be1-ab5c-fe5bdc9d74ac}</UniqueIdentifier>
+      <UniqueIdentifier>{93559d4f-f002-423a-acbb-b273496ded68}</UniqueIdentifier>
     </Filter>
     <Filter Include="Includes\importer">
-      <UniqueIdentifier>{7ad8dd22-05fb-4c84-9d74-46c4047d12dc}</UniqueIdentifier>
+      <UniqueIdentifier>{4ff77dd2-c8b9-4eb5-b1b7-422d5c24c67c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Includes\io">
-      <UniqueIdentifier>{2133a3ce-6dfb-4ba4-a60d-3e32cf747bdd}</UniqueIdentifier>
+      <UniqueIdentifier>{ae6fd014-51e4-4414-b106-dc881efa925c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Includes\math">
-      <UniqueIdentifier>{e83efc37-f2a3-4eb3-88be-3e2b410ac5d8}</UniqueIdentifier>
+      <UniqueIdentifier>{181e50e2-85c6-4b3a-8d58-60ce59770efe}</UniqueIdentifier>
     </Filter>
     <Filter Include="Includes\utility">
-      <UniqueIdentifier>{148aeb18-f130-43d6-8d70-e5f14ddccc75}</UniqueIdentifier>
+      <UniqueIdentifier>{ae9d085c-d8ca-4683-9fcc-014325fbbf86}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="context\clock.cpp">
+    <ClCompile Include="src\context\context.cpp">
       <Filter>Sources\context</Filter>
     </ClCompile>
-    <ClCompile Include="context\context.cpp">
+    <ClCompile Include="src\context\clock.cpp">
       <Filter>Sources\context</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\particle_array.cpp">
+    <ClCompile Include="src\graphics\quad.cpp">
       <Filter>Sources\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\quad.cpp">
+    <ClCompile Include="src\graphics\render_buffer.cpp">
       <Filter>Sources\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\render_buffer.cpp">
+    <ClCompile Include="src\graphics\shader.cpp">
       <Filter>Sources\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\shader.cpp">
+    <ClCompile Include="src\graphics\texture.cpp">
       <Filter>Sources\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\texture.cpp">
+    <ClCompile Include="src\graphics\vertex_array.cpp">
       <Filter>Sources\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\vertex_array.cpp">
+    <ClCompile Include="src\graphics\vertex_buffer.cpp">
       <Filter>Sources\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\vertex_buffer.cpp">
+    <ClCompile Include="src\graphics\cubemap.cpp">
       <Filter>Sources\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\cubemap.cpp">
+    <ClCompile Include="src\graphics\framebuffer.cpp">
       <Filter>Sources\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\framebuffer.cpp">
+    <ClCompile Include="src\graphics\graphics.cpp">
       <Filter>Sources\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\graphics.cpp">
+    <ClCompile Include="src\graphics\mesh.cpp">
       <Filter>Sources\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\mesh.cpp">
+    <ClCompile Include="src\graphics\particle_array.cpp">
       <Filter>Sources\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="importer\collada_format.cpp">
+    <ClCompile Include="src\importer\collada_importer.cpp">
       <Filter>Sources\importer</Filter>
     </ClCompile>
-    <ClCompile Include="importer\collada_importer.cpp">
+    <ClCompile Include="src\importer\collada_parser.cpp">
       <Filter>Sources\importer</Filter>
     </ClCompile>
-    <ClCompile Include="importer\collada_parser.cpp">
+    <ClCompile Include="src\importer\mdl_importer.cpp">
       <Filter>Sources\importer</Filter>
     </ClCompile>
-    <ClCompile Include="importer\mdl_importer.cpp">
+    <ClCompile Include="src\importer\mesh_data.cpp">
       <Filter>Sources\importer</Filter>
     </ClCompile>
-    <ClCompile Include="importer\mesh_data.cpp">
+    <ClCompile Include="src\importer\tga_reader.cpp">
       <Filter>Sources\importer</Filter>
     </ClCompile>
-    <ClCompile Include="importer\tga_reader.cpp">
+    <ClCompile Include="src\importer\bitmap.cpp">
       <Filter>Sources\importer</Filter>
     </ClCompile>
-    <ClCompile Include="importer\bitmap.cpp">
+    <ClCompile Include="src\importer\bmp_reader.cpp">
       <Filter>Sources\importer</Filter>
     </ClCompile>
-    <ClCompile Include="importer\bmp_reader.cpp">
+    <ClCompile Include="src\importer\collada_format.cpp">
       <Filter>Sources\importer</Filter>
     </ClCompile>
-    <ClCompile Include="io\filesystem.cpp">
+    <ClCompile Include="src\io\filesystem.cpp">
       <Filter>Sources\io</Filter>
     </ClCompile>
-    <ClCompile Include="io\xml.cpp">
+    <ClCompile Include="src\io\xml.cpp">
       <Filter>Sources\io</Filter>
     </ClCompile>
-    <ClCompile Include="io\file.cpp">
+    <ClCompile Include="src\io\file.cpp">
       <Filter>Sources\io</Filter>
     </ClCompile>
-    <ClCompile Include="math\linear.cpp">
+    <ClCompile Include="src\math\linear.cpp">
       <Filter>Sources\math</Filter>
     </ClCompile>
-    <ClCompile Include="math\transform_2d.cpp">
+    <ClCompile Include="src\math\transform_2d.cpp">
       <Filter>Sources\math</Filter>
     </ClCompile>
-    <ClCompile Include="math\transform_3d.cpp">
+    <ClCompile Include="src\math\transform_3d.cpp">
       <Filter>Sources\math</Filter>
     </ClCompile>
-    <ClCompile Include="math\frustum.cpp">
+    <ClCompile Include="src\math\frustum.cpp">
       <Filter>Sources\math</Filter>
     </ClCompile>
-    <ClCompile Include="utility\string_buffer.cpp">
+    <ClCompile Include="src\utility\string_buffer.cpp">
       <Filter>Sources\utility</Filter>
     </ClCompile>
-    <ClCompile Include="utility\random.cpp">
+    <ClCompile Include="src\utility\random.cpp">
       <Filter>Sources\utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\inc\gk\core\common\string.hpp">
+      <Filter>Includes\common</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\context\context.hpp">
       <Filter>Includes\context</Filter>
     </ClInclude>
@@ -148,12 +151,6 @@
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\context\clock.hpp">
       <Filter>Includes\context</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\inc\gk\core\common\string.hpp">
-      <Filter>Includes\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\inc\gk\core\graphics\mesh.hpp">
-      <Filter>Includes\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\graphics\particle.hpp">
       <Filter>Includes\graphics</Filter>
@@ -188,6 +185,12 @@
     <ClInclude Include="..\..\inc\gk\core\graphics\graphics.hpp">
       <Filter>Includes\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\inc\gk\core\graphics\mesh.hpp">
+      <Filter>Includes\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\gk\core\importer\collada_format.hpp">
+      <Filter>Includes\importer</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\importer\collada_importer.hpp">
       <Filter>Includes\importer</Filter>
     </ClInclude>
@@ -210,9 +213,6 @@
       <Filter>Includes\importer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\importer\bmp_reader.hpp">
-      <Filter>Includes\importer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\inc\gk\core\importer\collada_format.hpp">
       <Filter>Includes\importer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\io\filesystem.hpp">
@@ -239,10 +239,10 @@
     <ClInclude Include="..\..\inc\gk\core\math\frustum.hpp">
       <Filter>Includes\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\inc\gk\core\utility\string_buffer.hpp">
+    <ClInclude Include="..\..\inc\gk\core\utility\random.hpp">
       <Filter>Includes\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\inc\gk\core\utility\random.hpp">
+    <ClInclude Include="..\..\inc\gk\core\utility\string_buffer.hpp">
       <Filter>Includes\utility</Filter>
     </ClInclude>
   </ItemGroup>
