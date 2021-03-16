@@ -1,249 +1,249 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Includes">
-      <UniqueIdentifier>{92165316-cadb-4da8-9430-fddcf8bcc3af}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources">
+    <Filter Include="Source Files">
       <UniqueIdentifier>{cc12460c-953b-4390-8b25-b8533ab640c6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\context">
+    <Filter Include="Source Files\context">
       <UniqueIdentifier>{50d960b2-8287-4616-a410-cdd406dcec4b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\graphics">
+    <Filter Include="Source Files\graphics">
       <UniqueIdentifier>{75df29d8-89a5-4e9e-bdce-397224fae852}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\importer">
+    <Filter Include="Source Files\importer">
       <UniqueIdentifier>{eb8d67c1-13ae-419c-929f-bde5c3772f05}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\io">
+    <Filter Include="Source Files\io">
       <UniqueIdentifier>{58500111-7cbe-4865-a5bf-4aaaaadb507b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\math">
+    <Filter Include="Source Files\math">
       <UniqueIdentifier>{7945a17a-cc58-43d0-a151-428b69119947}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\utility">
+    <Filter Include="Source Files\utility">
       <UniqueIdentifier>{2cb9f1e6-db3c-4d35-ae11-d56c449c8fd7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Includes\common">
+    <Filter Include="Include Files">
+      <UniqueIdentifier>{92165316-cadb-4da8-9430-fddcf8bcc3af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include Files\common">
       <UniqueIdentifier>{f043b85b-0a00-443c-8c8c-1c036107ed71}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Includes\context">
+    <Filter Include="Include Files\context">
       <UniqueIdentifier>{30892dc7-d915-4087-b08a-8162a3ba5639}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Includes\graphics">
+    <Filter Include="Include Files\graphics">
       <UniqueIdentifier>{93559d4f-f002-423a-acbb-b273496ded68}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Includes\importer">
+    <Filter Include="Include Files\importer">
       <UniqueIdentifier>{4ff77dd2-c8b9-4eb5-b1b7-422d5c24c67c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Includes\io">
+    <Filter Include="Include Files\io">
       <UniqueIdentifier>{ae6fd014-51e4-4414-b106-dc881efa925c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Includes\math">
+    <Filter Include="Include Files\math">
       <UniqueIdentifier>{181e50e2-85c6-4b3a-8d58-60ce59770efe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Includes\utility">
+    <Filter Include="Include Files\utility">
       <UniqueIdentifier>{ae9d085c-d8ca-4683-9fcc-014325fbbf86}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\context.cpp">
-      <Filter>Sources\context</Filter>
+      <Filter>Source Files\context</Filter>
     </ClCompile>
     <ClCompile Include="src\context\clock.cpp">
-      <Filter>Sources\context</Filter>
+      <Filter>Source Files\context</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\quad.cpp">
-      <Filter>Sources\graphics</Filter>
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\render_buffer.cpp">
-      <Filter>Sources\graphics</Filter>
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\shader.cpp">
-      <Filter>Sources\graphics</Filter>
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\texture.cpp">
-      <Filter>Sources\graphics</Filter>
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\vertex_array.cpp">
-      <Filter>Sources\graphics</Filter>
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\vertex_buffer.cpp">
-      <Filter>Sources\graphics</Filter>
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\cubemap.cpp">
-      <Filter>Sources\graphics</Filter>
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\framebuffer.cpp">
-      <Filter>Sources\graphics</Filter>
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\graphics.cpp">
-      <Filter>Sources\graphics</Filter>
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\mesh.cpp">
-      <Filter>Sources\graphics</Filter>
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\particle_array.cpp">
-      <Filter>Sources\graphics</Filter>
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\importer\collada_importer.cpp">
-      <Filter>Sources\importer</Filter>
+      <Filter>Source Files\importer</Filter>
     </ClCompile>
     <ClCompile Include="src\importer\collada_parser.cpp">
-      <Filter>Sources\importer</Filter>
+      <Filter>Source Files\importer</Filter>
     </ClCompile>
     <ClCompile Include="src\importer\mdl_importer.cpp">
-      <Filter>Sources\importer</Filter>
+      <Filter>Source Files\importer</Filter>
     </ClCompile>
     <ClCompile Include="src\importer\mesh_data.cpp">
-      <Filter>Sources\importer</Filter>
+      <Filter>Source Files\importer</Filter>
     </ClCompile>
     <ClCompile Include="src\importer\tga_reader.cpp">
-      <Filter>Sources\importer</Filter>
+      <Filter>Source Files\importer</Filter>
     </ClCompile>
     <ClCompile Include="src\importer\bitmap.cpp">
-      <Filter>Sources\importer</Filter>
+      <Filter>Source Files\importer</Filter>
     </ClCompile>
     <ClCompile Include="src\importer\bmp_reader.cpp">
-      <Filter>Sources\importer</Filter>
+      <Filter>Source Files\importer</Filter>
     </ClCompile>
     <ClCompile Include="src\importer\collada_format.cpp">
-      <Filter>Sources\importer</Filter>
+      <Filter>Source Files\importer</Filter>
     </ClCompile>
     <ClCompile Include="src\io\filesystem.cpp">
-      <Filter>Sources\io</Filter>
+      <Filter>Source Files\io</Filter>
     </ClCompile>
     <ClCompile Include="src\io\xml.cpp">
-      <Filter>Sources\io</Filter>
+      <Filter>Source Files\io</Filter>
     </ClCompile>
     <ClCompile Include="src\io\file.cpp">
-      <Filter>Sources\io</Filter>
+      <Filter>Source Files\io</Filter>
     </ClCompile>
     <ClCompile Include="src\math\linear.cpp">
-      <Filter>Sources\math</Filter>
+      <Filter>Source Files\math</Filter>
     </ClCompile>
     <ClCompile Include="src\math\transform_2d.cpp">
-      <Filter>Sources\math</Filter>
+      <Filter>Source Files\math</Filter>
     </ClCompile>
     <ClCompile Include="src\math\transform_3d.cpp">
-      <Filter>Sources\math</Filter>
+      <Filter>Source Files\math</Filter>
     </ClCompile>
     <ClCompile Include="src\math\frustum.cpp">
-      <Filter>Sources\math</Filter>
+      <Filter>Source Files\math</Filter>
     </ClCompile>
     <ClCompile Include="src\utility\string_buffer.cpp">
-      <Filter>Sources\utility</Filter>
+      <Filter>Source Files\utility</Filter>
     </ClCompile>
     <ClCompile Include="src\utility\random.cpp">
-      <Filter>Sources\utility</Filter>
+      <Filter>Source Files\utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\inc\gk\core\common\string.hpp">
-      <Filter>Includes\common</Filter>
+      <Filter>Include Files\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\context\context.hpp">
-      <Filter>Includes\context</Filter>
+      <Filter>Include Files\context</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\context\data_types.hpp">
-      <Filter>Includes\context</Filter>
+      <Filter>Include Files\context</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\context\clock.hpp">
-      <Filter>Includes\context</Filter>
+      <Filter>Include Files\context</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\graphics\particle.hpp">
-      <Filter>Includes\graphics</Filter>
+      <Filter>Include Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\graphics\particle_array.hpp">
-      <Filter>Includes\graphics</Filter>
+      <Filter>Include Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\graphics\quad.hpp">
-      <Filter>Includes\graphics</Filter>
+      <Filter>Include Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\graphics\render_buffer.hpp">
-      <Filter>Includes\graphics</Filter>
+      <Filter>Include Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\graphics\shader.hpp">
-      <Filter>Includes\graphics</Filter>
+      <Filter>Include Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\graphics\texture.hpp">
-      <Filter>Includes\graphics</Filter>
+      <Filter>Include Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\graphics\vertex_array.hpp">
-      <Filter>Includes\graphics</Filter>
+      <Filter>Include Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\graphics\vertex_buffer.hpp">
-      <Filter>Includes\graphics</Filter>
+      <Filter>Include Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\graphics\cubemap.hpp">
-      <Filter>Includes\graphics</Filter>
+      <Filter>Include Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\graphics\framebuffer.hpp">
-      <Filter>Includes\graphics</Filter>
+      <Filter>Include Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\graphics\graphics.hpp">
-      <Filter>Includes\graphics</Filter>
+      <Filter>Include Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\graphics\mesh.hpp">
-      <Filter>Includes\graphics</Filter>
+      <Filter>Include Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\importer\collada_format.hpp">
-      <Filter>Includes\importer</Filter>
+      <Filter>Include Files\importer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\importer\collada_importer.hpp">
-      <Filter>Includes\importer</Filter>
+      <Filter>Include Files\importer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\importer\collada_parser.hpp">
-      <Filter>Includes\importer</Filter>
+      <Filter>Include Files\importer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\importer\mdl_format.hpp">
-      <Filter>Includes\importer</Filter>
+      <Filter>Include Files\importer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\importer\mdl_importer.hpp">
-      <Filter>Includes\importer</Filter>
+      <Filter>Include Files\importer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\importer\mesh_data.hpp">
-      <Filter>Includes\importer</Filter>
+      <Filter>Include Files\importer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\importer\tga_reader.hpp">
-      <Filter>Includes\importer</Filter>
+      <Filter>Include Files\importer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\importer\bitmap.hpp">
-      <Filter>Includes\importer</Filter>
+      <Filter>Include Files\importer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\importer\bmp_reader.hpp">
-      <Filter>Includes\importer</Filter>
+      <Filter>Include Files\importer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\io\filesystem.hpp">
-      <Filter>Includes\io</Filter>
+      <Filter>Include Files\io</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\io\xml.hpp">
-      <Filter>Includes\io</Filter>
+      <Filter>Include Files\io</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\io\file.hpp">
-      <Filter>Includes\io</Filter>
+      <Filter>Include Files\io</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\math\linear.hpp">
-      <Filter>Includes\math</Filter>
+      <Filter>Include Files\math</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\math\transform_2d.hpp">
-      <Filter>Includes\math</Filter>
+      <Filter>Include Files\math</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\math\transform_3d.hpp">
-      <Filter>Includes\math</Filter>
+      <Filter>Include Files\math</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\math\aabb.hpp">
-      <Filter>Includes\math</Filter>
+      <Filter>Include Files\math</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\math\frustum.hpp">
-      <Filter>Includes\math</Filter>
+      <Filter>Include Files\math</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\utility\random.hpp">
-      <Filter>Includes\utility</Filter>
+      <Filter>Include Files\utility</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\utility\string_buffer.hpp">
-      <Filter>Includes\utility</Filter>
+      <Filter>Include Files\utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,150 +1,150 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Sources">
-      <UniqueIdentifier>{e8ccc491-1c54-4924-9485-568256c3c2c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Includes">
+    <Filter Include="Include Files">
       <UniqueIdentifier>{8b35f802-0efa-4398-ab96-6daed65a3088}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Includes\renderer">
+    <Filter Include="Include Files\renderer">
       <UniqueIdentifier>{568829cd-7109-4fd7-9cee-1cb3b622a28e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\renderer">
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{e8ccc491-1c54-4924-9485-568256c3c2c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\renderer">
       <UniqueIdentifier>{cdf22938-2c8d-4f94-a3d3-6f6dce0307cb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\debug_draw_interface.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\dynamic_mesh.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\mesh_util.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\node.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\skybox.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\sprite.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\static_mesh.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\sun.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\texture_manager.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\view.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\bone.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\camera_2d.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\camera_3d.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\renderer\dynamic_mesh_renderer.cpp">
-      <Filter>Sources\renderer</Filter>
+      <Filter>Source Files\renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\renderer\frame_renderer.cpp">
-      <Filter>Sources\renderer</Filter>
+      <Filter>Source Files\renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\renderer\particle_renderer_3d.cpp">
-      <Filter>Sources\renderer</Filter>
+      <Filter>Source Files\renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\renderer\skybox_renderer.cpp">
-      <Filter>Sources\renderer</Filter>
+      <Filter>Source Files\renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\renderer\sprite_renderer.cpp">
-      <Filter>Sources\renderer</Filter>
+      <Filter>Source Files\renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\renderer\static_mesh_renderer.cpp">
-      <Filter>Sources\renderer</Filter>
+      <Filter>Source Files\renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\renderer\blur_shader.cpp">
-      <Filter>Sources\renderer</Filter>
+      <Filter>Source Files\renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\renderer\debug_drawer.cpp">
-      <Filter>Sources\renderer</Filter>
+      <Filter>Source Files\renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\inc\gk\3d\camera_3d.hpp">
-      <Filter>Includes</Filter>
+      <Filter>Include Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\config.hpp">
-      <Filter>Includes</Filter>
+      <Filter>Include Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\debug_draw_interface.hpp">
-      <Filter>Includes</Filter>
+      <Filter>Include Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\dynamic_mesh.hpp">
-      <Filter>Includes</Filter>
+      <Filter>Include Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\mesh_util.hpp">
-      <Filter>Includes</Filter>
+      <Filter>Include Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\node.hpp">
-      <Filter>Includes</Filter>
+      <Filter>Include Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\skybox.hpp">
-      <Filter>Includes</Filter>
+      <Filter>Include Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\sprite.hpp">
-      <Filter>Includes</Filter>
+      <Filter>Include Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\static_mesh.hpp">
-      <Filter>Includes</Filter>
+      <Filter>Include Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\sun.hpp">
-      <Filter>Includes</Filter>
+      <Filter>Include Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\texture_manager.hpp">
-      <Filter>Includes</Filter>
+      <Filter>Include Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\view.hpp">
-      <Filter>Includes</Filter>
+      <Filter>Include Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\bone.hpp">
-      <Filter>Includes</Filter>
+      <Filter>Include Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\camera_2d.hpp">
-      <Filter>Includes</Filter>
+      <Filter>Include Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\renderer\frame_renderer.hpp">
-      <Filter>Includes\renderer</Filter>
+      <Filter>Include Files\renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\renderer\particle_renderer_3d.hpp">
-      <Filter>Includes\renderer</Filter>
+      <Filter>Include Files\renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\renderer\skybox_renderer.hpp">
-      <Filter>Includes\renderer</Filter>
+      <Filter>Include Files\renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\renderer\sprite_renderer.hpp">
-      <Filter>Includes\renderer</Filter>
+      <Filter>Include Files\renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\renderer\static_mesh_renderer.hpp">
-      <Filter>Includes\renderer</Filter>
+      <Filter>Include Files\renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\renderer\blur_shader.hpp">
-      <Filter>Includes\renderer</Filter>
+      <Filter>Include Files\renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\renderer\debug_drawer.hpp">
-      <Filter>Includes\renderer</Filter>
+      <Filter>Include Files\renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\renderer\dynamic_mesh_renderer.hpp">
-      <Filter>Includes\renderer</Filter>
+      <Filter>Include Files\renderer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
