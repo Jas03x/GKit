@@ -1,7 +1,5 @@
 #include <gk/core/importer/collada_importer.hpp>
 
-#include <cmath>
-
 #include <utility>
 
 #include <gk/core/io/filesystem.hpp>

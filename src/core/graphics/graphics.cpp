@@ -4,7 +4,6 @@
 #include <cstdio>
 
 #if defined(_WIN32)
-	#include <WinDef.h>
 	#include <Windows.h>
 	#include <wingdi.h> // for wglGet* functions
 	#include <libloaderapi.h>
