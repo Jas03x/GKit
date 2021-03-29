@@ -8,51 +8,51 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ../../../bin)
 include_directories("../../../inc/" "/usr/local/include/")
 
 set(context_sources
-    ../context/context.cpp
-    ../context/clock.cpp
+    ../src/context/context.cpp
+    ../src/context/clock.cpp
 )
 
 set(importer_sources
-    ../importer/bitmap.cpp
-    ../importer/mesh_data.cpp
-    ../importer/tga_reader.cpp
-    ../importer/collada_parser.cpp
-    ../importer/collada_importer.cpp
-    ../importer/mdl_importer.cpp
-    ../importer/collada_format.cpp
-    ../importer/bmp_reader.cpp
+    ../src/importer/bitmap.cpp
+    ../src/importer/mesh_data.cpp
+    ../src/importer/tga_reader.cpp
+    ../src/importer/collada_parser.cpp
+    ../src/importer/collada_importer.cpp
+    ../src/importer/mdl_importer.cpp
+    ../src/importer/collada_format.cpp
+    ../src/importer/bmp_reader.cpp
 )
 
 set(io_sources
-    ../io/filesystem.cpp
-    ../io/file.cpp
-    ../io/xml.cpp
+    ../src/io/filesystem.cpp
+    ../src/io/file.cpp
+    ../src/io/xml.cpp
 )
 
 set(graphics_sources
-    ../graphics/vertex_array.cpp
-    ../graphics/mesh.cpp
-    ../graphics/cubemap.cpp
-    ../graphics/render_buffer.cpp
-    ../graphics/framebuffer.cpp
-    ../graphics/texture.cpp
-    ../graphics/quad.cpp
-    ../graphics/vertex_buffer.cpp
-    ../graphics/shader.cpp
-    ../graphics/graphics.cpp
-    ../graphics/particle_array.cpp
+    ../src/graphics/vertex_array.cpp
+    ../src/graphics/mesh.cpp
+    ../src/graphics/cubemap.cpp
+    ../src/graphics/render_buffer.cpp
+    ../src/graphics/framebuffer.cpp
+    ../src/graphics/texture.cpp
+    ../src/graphics/quad.cpp
+    ../src/graphics/vertex_buffer.cpp
+    ../src/graphics/shader.cpp
+    ../src/graphics/graphics.cpp
+    ../src/graphics/particle_array.cpp
 )
 
 set(math_sources
-    ../math/linear.cpp
-    ../math/frustum.cpp
-    ../math/transform_3d.cpp
-    ../math/transform_2d.cpp
+    ../src/math/linear.cpp
+    ../src/math/frustum.cpp
+    ../src/math/transform_3d.cpp
+    ../src/math/transform_2d.cpp
 )
 
 set(utility_sources
-    ../utility/random.cpp
-    ../utility/string_buffer.cpp
+    ../src/utility/random.cpp
+    ../src/utility/string_buffer.cpp
 )
 
 add_library(GKitCore.lib STATIC
