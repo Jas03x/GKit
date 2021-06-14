@@ -140,6 +140,11 @@ enum GFX_POLYGON_MODE
     GFX_FILL = 0x1B02
 };
 
+enum GFX_QUERY
+{
+    GL_MAX_TEXTURE_SIZE = 0x0D33
+};
+
 enum GFX_TEXTURE_PARAMETER
 {
 	GFX_TEXTURE_MAG_FILTER      = 0x2800,
@@ -267,6 +272,7 @@ typedef void     (*GFX_PFN_UseProgram)(uint32_t);
 typedef void     (*GFX_PFN_VertexAttribFPointer)(uint32_t, int32_t, uint32_t, uint8_t, int32_t, const void*);
 typedef void     (*GFX_PFN_VertexAttribIPointer)(uint32_t, int32_t, uint32_t, int32_t, const void*);
 typedef void     (*GFX_PFN_Viewport)(int32_t, int32_t, int32_t, int32_t);
+typedef void     (*GFX_PFN_GetPropertyI)(uint32_t, int32_t*);
 
 class RenderingContext
 {
@@ -373,6 +379,7 @@ public:
     GFX_PFN_ShaderSource              SetShaderSource;
     GFX_PFN_UseProgram                BindProgram;
     GFX_PFN_DepthRange                SetDepthRange;
+    GFX_PFN_GetPropertyI              GetPropertyI;
 
 private:
 	bool Initialize();
