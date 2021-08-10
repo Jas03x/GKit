@@ -711,8 +711,6 @@ Matrix4F Matrix::Transpose(const Matrix4F& m)
 // ------------------------------ Quaternion -----------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------
 
-// Quaternion implemention based on glm (see https://glm.g-truc.net/)
-
 Quaternion::Quaternion() : Vector4F(0, 0, 0, 1) {}
 Quaternion::Quaternion(const Vector4F& v) : Quaternion(v.x, v.y, v.z, v.w) {}
 Quaternion::Quaternion(float _x, float _y, float _z) : Quaternion(Vector3F(_x, _y, _z)) {}
@@ -737,12 +735,12 @@ Quaternion::Quaternion(const Vector3F& v)
     z = c.x * c.y * s.z - s.x * s.y * c.z;
 }
 
-// https://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/
 Quaternion::Quaternion(const Matrix3F& matrix)
 {
-    if (matrix[0][0] + matrix[1][1] + matrix[2][2] > 0.0f)
+    float trace = matrix[0][0] + matrix[1][1] + matrix[2][2];
+    if (trace > 0.0f)
     {
-        float f = sqrt(1.0f + matrix[0][0] + matrix[1][1] + matrix[2][2]) * 2.0f;
+        float f = sqrt(1.0f + trace) * 2.0f;
         this->w = f * 0.25f;
         this->x = (matrix[1][2] - matrix[2][1]) / f;
         this->y = (matrix[2][0] - matrix[0][2]) / f;
@@ -855,26 +853,6 @@ Matrix4F Quaternion::matrix() const
     result[2][2] = 1.0f - 2.0f * (qxx +  qyy);
 
     return result;
-}
-
-// https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
-Vector3F Quaternion::euler_angles() const
-{
-    Vector3F euler;
-
-    euler.x = atan2f(2.0f * (x * w + y * z), 1.0f - 2.0f * (x * x + y * y));
-
-    float p = 2.0f * (y * w - x * z);
-    if (fabs(p) >= 1.0f) {
-        euler.y = copysign(M_PI / 2.0f, p);
-    }
-    else {
-        euler.y = asinf(p);
-    }
-
-    euler.z = atan2f(2.0f * (x * y + z * w), 1.0f - 2.0f * (y * y + z * z));
-
-    return euler;
 }
 
 const Vector4F ORIGIN     = Vector4F(0, 0, 0, 1);
