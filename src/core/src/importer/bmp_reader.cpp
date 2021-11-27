@@ -195,7 +195,7 @@ bool ReadDesc(File& file, BMP_DESC& data)
 
     if (status)
     {
-        if ((desc.v4.compression != BMP_RGB) && (desc.v4.compression != BMP_BITFIELD))
+        if ((data.compression != BMP_RGB) && (data.compression != BMP_BITFIELD))
         {
             status = false;
             printf("invalid compression\n");
