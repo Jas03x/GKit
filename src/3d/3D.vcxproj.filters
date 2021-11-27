@@ -13,6 +13,9 @@
     <Filter Include="Source Files\renderer">
       <UniqueIdentifier>{cdf22938-2c8d-4f94-a3d3-6f6dce0307cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{5c22c12a-3156-43ee-8ca3-241a16f5ff9c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\debug_draw_interface.cpp">
@@ -145,6 +148,54 @@
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\3d\renderer\dynamic_mesh_renderer.hpp">
       <Filter>Include Files\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\debug_vertex_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\dynamic_mesh_pixel_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\dynamic_mesh_vertex_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\frame_pixel_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\frame_vertex_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\gaussian_blur_pixel_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\gaussian_blur_vertex_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\particle_pixel_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\particle_vertex_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\skybox_pixel_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\skybox_vertex_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\sprite_pixel_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\sprite_vertex_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\static_mesh_pixel_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\static_mesh_vertex_shader.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="shdr\debug_pixel_shader.hpp">
+      <Filter>Shaders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

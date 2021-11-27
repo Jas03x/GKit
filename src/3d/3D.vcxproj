@@ -193,6 +193,22 @@
     <ClInclude Include="..\..\inc\gk\3d\sun.hpp" />
     <ClInclude Include="..\..\inc\gk\3d\texture_manager.hpp" />
     <ClInclude Include="..\..\inc\gk\3d\view.hpp" />
+    <ClInclude Include="shdr\debug_pixel_shader.hpp" />
+    <ClInclude Include="shdr\debug_vertex_shader.hpp" />
+    <ClInclude Include="shdr\dynamic_mesh_pixel_shader.hpp" />
+    <ClInclude Include="shdr\dynamic_mesh_vertex_shader.hpp" />
+    <ClInclude Include="shdr\frame_pixel_shader.hpp" />
+    <ClInclude Include="shdr\frame_vertex_shader.hpp" />
+    <ClInclude Include="shdr\gaussian_blur_pixel_shader.hpp" />
+    <ClInclude Include="shdr\gaussian_blur_vertex_shader.hpp" />
+    <ClInclude Include="shdr\particle_pixel_shader.hpp" />
+    <ClInclude Include="shdr\particle_vertex_shader.hpp" />
+    <ClInclude Include="shdr\skybox_pixel_shader.hpp" />
+    <ClInclude Include="shdr\skybox_vertex_shader.hpp" />
+    <ClInclude Include="shdr\sprite_pixel_shader.hpp" />
+    <ClInclude Include="shdr\sprite_vertex_shader.hpp" />
+    <ClInclude Include="shdr\static_mesh_pixel_shader.hpp" />
+    <ClInclude Include="shdr\static_mesh_vertex_shader.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
