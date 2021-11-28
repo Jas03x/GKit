@@ -47,9 +47,10 @@ struct MeshData
         UNKNOWN = 2
     };
 
-    std::string colour_texture;
+    std::string ambient_texture;
+    std::string diffuse_texture;
+    std::string specular_texture;
     std::string normal_texture;
-    std::string height_texture;
 
     std::vector<Bone> bones;
     std::vector<Node> nodes;

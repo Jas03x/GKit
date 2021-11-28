@@ -5,7 +5,7 @@
 ParticleArray::ParticleArray(const char* texture_sheet, const Vector2F& dimensions, unsigned int particle_limit)
 {
     Bitmap image(texture_sheet);
-    m_Texture = new Texture(image.has_alpha ? GFX_RGBA : GFX_RGB, image.width, image.height, GFX_TYPE_UNSIGNED_BYTE, image.pixels, GFX_LINEAR, GFX_CLAMP_TO_EDGE);
+    m_Texture = new Texture(image, GFX_LINEAR, GFX_CLAMP_TO_EDGE);
 
     m_SpriteSize = dimensions;
     m_ParticleCount = 0;

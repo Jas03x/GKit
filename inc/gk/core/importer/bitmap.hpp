@@ -6,19 +6,20 @@
 struct Bitmap
 {
 public:
+	enum Format : uint8_t
+	{
+		GREYSCALE = 0,
+		RGB		  = 1,
+		RGBA      = 2
+	};
+
+public:
 	uint32_t width;
 	uint32_t height;
+	uint8_t  bpp;
 	uint8_t* pixels;
 
-	union
-	{
-		struct
-		{
-			uint8_t has_alpha : 1;
-		};
-
-		uint8_t flags;
-	};
+	Format format;
 
 public:
     static bool Load(const char* path, Bitmap& bitmap);

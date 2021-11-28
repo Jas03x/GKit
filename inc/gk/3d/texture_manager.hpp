@@ -12,15 +12,14 @@ private:
     static TextureManager* Instance;
     
 private:
-    std::string m_TextureDirectory;
     std::map<std::string, Texture*> m_TextureMap;
     
 private:
-    TextureManager(const std::string& texture);
+    TextureManager();
     ~TextureManager();
     
 public:
-	static TextureManager* CreateInstance(const std::string& texture_directory);
+	static TextureManager* CreateInstance();
 	static void DeleteInstance();
     
     static TextureManager* GetInstance();

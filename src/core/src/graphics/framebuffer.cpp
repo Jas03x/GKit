@@ -17,7 +17,7 @@ Framebuffer::Framebuffer(unsigned int width, unsigned int height)
 void Framebuffer::Attach(CubeMap* attachment, GFX_HANDLE face, GFX_HANDLE target)
 {
     const RenderingContext* context = RenderingContext::GetInstance();
-    context->SetFramebufferTexture2D(GFX_FRAMEBUFFER, target, face, attachment->GetHandle(), 0);
+    context->SetFramebufferTexture2D(GFX_FRAMEBUFFER, target, face, attachment->GetTexture()->GetHandle(), 0);
 }
 
 void Framebuffer::Attach(Texture* attachment, GFX_HANDLE target)

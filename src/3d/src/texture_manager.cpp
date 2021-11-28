@@ -7,9 +7,8 @@
 
 TextureManager* TextureManager::Instance = nullptr;
 
-TextureManager::TextureManager(const std::string& texture_directory)
+TextureManager::TextureManager()
 {
-    m_TextureDirectory = texture_directory;
 }
 
 TextureManager::~TextureManager()
@@ -20,12 +19,12 @@ TextureManager::~TextureManager()
     }
 }
 
-TextureManager* TextureManager::CreateInstance(const std::string& texture_directory)
+TextureManager* TextureManager::CreateInstance()
 {
 	assert(Instance == nullptr);
 	if (Instance == nullptr)
 	{
-		Instance = new TextureManager(texture_directory);
+		Instance = new TextureManager();
 	}
     return Instance;
 }
@@ -57,8 +56,8 @@ Texture* TextureManager::Load(const std::string& texture)
     }
     else
     {
-        Bitmap image((m_TextureDirectory + texture).c_str());
-        ptr = new Texture(image.has_alpha ? GFX_RGBA : GFX_RGB, image.width, image.height, GFX_TYPE_UNSIGNED_BYTE, image.pixels, GFX_LINEAR, GFX_CLAMP_TO_EDGE);
+        Bitmap image(texture.c_str());
+        ptr = new Texture(image, GFX_LINEAR, GFX_CLAMP_TO_EDGE);
 
         m_TextureMap[texture] = ptr;
     }

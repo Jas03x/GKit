@@ -32,7 +32,9 @@ StaticMeshRenderer::StaticMeshRenderer()
 
 	m_SunColor = Shader::GetUniformLocation("sun_color");
 	m_SunPosition = Shader::GetUniformLocation("sun_position");
+	m_AmbientTexture = Shader::GetUniformLocation("ambient_texture");
 	m_DiffuseTexture = Shader::GetUniformLocation("diffuse_texture");
+	m_SpecularTexture = Shader::GetUniformLocation("specular_texture");
 	m_VertexMatricies = Shader::GetUniformLocation("vertex_matrices");
 	m_NormalMatricies = Shader::GetUniformLocation("normal_matrices");
 	m_ProjectionMatrix = Shader::GetUniformLocation("projection_matrix");
@@ -110,7 +112,9 @@ void StaticMeshRenderer::Render(const StaticMesh& mesh)
 	context->LoadConstantArray3F(m_SunColor, 1, &Sun::Color[0]);
 	context->LoadConstantArray3F(m_CameraPosition, 1, &Camera3D::GetInstance()->GetViewMatrix()[3][0]);
 
-	mesh.GetDiffuseTexture()->Bind(m_DiffuseTexture, 0);
+	mesh.GetAmbientTexture()->Bind(m_AmbientTexture, 0);
+	mesh.GetDiffuseTexture()->Bind(m_DiffuseTexture, 1);
+	mesh.GetSpecularTexture()->Bind(m_SpecularTexture, 2);
     
     context->DrawElements(GFX_TRIANGLES, mesh.GetElementCount(), GFX_TYPE_UNSIGNED_SHORT, reinterpret_cast<void*>(0));
 }

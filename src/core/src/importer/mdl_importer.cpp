@@ -1,5 +1,7 @@
 #include <gk/core/importer/mdl_importer.hpp>
 
+#include <gk/core/io/filesystem.hpp>
+
 MDL::Importer::Importer()
 {
 }
@@ -224,7 +226,15 @@ bool MDL::Importer::read_material_block()
 	bool status = read_object_header(MDL::MATERIAL_BLOCK);
 	
 	if (status) {
-		status = read_string(m_Data->colour_texture);
+		status = read_string(m_Data->ambient_texture);
+	}
+
+	if (status) {
+		status = read_string(m_Data->diffuse_texture);
+	}
+
+	if (status) {
+		status = read_string(m_Data->specular_texture);
 	}
 
 	if (status) {
@@ -329,6 +339,14 @@ bool MDL::Importer::Import(const char* path, MeshData& mesh_data)
 	{
 		MDL::Importer importer;
 		status = importer.import(&file, &mesh_data);
+	}
+
+	if (status)
+	{
+		Filesystem::Path p((std::string(path)));
+		mesh_data.ambient_texture = p.directory + mesh_data.ambient_texture;
+		mesh_data.diffuse_texture = p.directory + mesh_data.diffuse_texture;
+		mesh_data.specular_texture = p.directory + mesh_data.specular_texture;
 	}
 
 	if (status)

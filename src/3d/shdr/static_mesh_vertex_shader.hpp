@@ -14,9 +14,8 @@ static const char* STATIC_MESH_VERTEX_SHADER =
 	uniform mat4 normal_matrices[32];														\n\
 																							\n\
 	out vec2 _uv;																			\n\
-	out float af;																			\n\
-	out float df;																			\n\
-	out float sf;																			\n\
+	out float _df;																			\n\
+	out float _sf;																			\n\
 																							\n\
 	void main()																				\n\
 	{																						\n\
@@ -28,8 +27,7 @@ static const char* STATIC_MESH_VERTEX_SHADER =
 		vec3 _camera_ray = normalize(camera_position - vertex_world);						\n\
 		vec3 _light_ray = normalize(sun_position - vertex_world);							\n\
 																							\n\
-		af = 0.5;																			\n\
-		df = clamp(dot(_normal, _light_ray), 0.0, 1.0);										\n\
-		sf = clamp(dot(_camera_ray, reflect(-_light_ray, _normal)), 0.0, 1.0);				\n\
+		_df = clamp(dot(_normal, _light_ray), 0.0, 1.0);									\n\
+		_sf = clamp(dot(_camera_ray, reflect(-_light_ray, _normal)), 0.0, 1.0);				\n\
 	}																						\n\
 ";

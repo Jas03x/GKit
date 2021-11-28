@@ -238,32 +238,57 @@ bool BMP_Reader::Read(const char* path, Bitmap& bitmap)
         
         pixels = new uint8_t[pixel_count * pixel_size];
 
-        union { 
-            struct { uint8_t r, g, b, a; };
-            uint8_t data[4];
-        } buffer;
-
-        for (unsigned int i = 0; status && (i < pixel_count); i++)
+        if (pixel_size == 1)
         {
-            if (!file.Read(buffer.data, pixel_size))
+            if (!file.Read(pixels, pixel_count))
             {
                 status = false;
                 printf("error reading pixel data\n");
             }
+        }
+        else
+        {
+            union {
+                struct { uint8_t r, g, b, a; };
+                uint8_t data[4];
+            } buffer;
 
-            pixels[i * pixel_size + 0] = buffer.b;
-            pixels[i * pixel_size + 1] = buffer.g;
-            pixels[i * pixel_size + 2] = buffer.r;
-            if (bitmap.has_alpha)
+            bool has_alpha = (desc.bpp == 32);
+
+            for (unsigned int i = 0; status && (i < pixel_count); i++)
             {
-                pixels[i * pixel_size + 3] = buffer.a;
+                if (!file.Read(buffer.data, pixel_size))
+                {
+                    status = false;
+                    printf("error reading pixel data\n");
+                }
+
+                pixels[i * pixel_size + 0] = buffer.b;
+                pixels[i * pixel_size + 1] = buffer.g;
+                pixels[i * pixel_size + 2] = buffer.r;
+                if (has_alpha)
+                {
+                    pixels[i * pixel_size + 3] = buffer.a;
+                }
             }
         }
     }
 
     bitmap.width = desc.width;
     bitmap.height = desc.height;
-    bitmap.has_alpha = (desc.bpp == 32);
+    switch (desc.bpp)
+    {
+    case 8:
+        bitmap.format = Bitmap::Format::GREYSCALE;
+        break;
+    case 24:
+        bitmap.format = Bitmap::Format::RGB;
+        break;
+    case 32:
+        bitmap.format = Bitmap::Format::RGBA;
+        break;
+    }
+    bitmap.bpp = (desc.bpp / 8);
     bitmap.pixels = pixels;
 
     return status;

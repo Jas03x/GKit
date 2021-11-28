@@ -96,7 +96,9 @@ void StaticMesh::Load(const MeshData& data, const std::string& texture_directory
 
 	m_ElementCount = data.index_count;
 
-	m_DiffuseTexture = TextureManager::GetInstance()->Load(data.colour_texture);
+	m_AmbientTexture = TextureManager::GetInstance()->Load(data.ambient_texture);
+	m_DiffuseTexture = TextureManager::GetInstance()->Load(data.diffuse_texture);
+	m_SpecularTexture = TextureManager::GetInstance()->Load(data.specular_texture);
 }
 
 StaticMesh::~StaticMesh()
@@ -129,7 +131,17 @@ Node* StaticMesh::GetNode(const std::string& name)
 	return node;
 }
 
+const Texture* StaticMesh::GetAmbientTexture() const
+{
+	return m_AmbientTexture;
+}
+
 const Texture* StaticMesh::GetDiffuseTexture() const
 {
 	return m_DiffuseTexture;
+}
+
+const Texture* StaticMesh::GetSpecularTexture() const
+{
+	return m_SpecularTexture;
 }

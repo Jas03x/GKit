@@ -12,7 +12,9 @@ private:
 	unsigned int m_ProjectionMatrix;
 	unsigned int m_VertexMatricies;
 	unsigned int m_NormalMatricies;
+	unsigned int m_AmbientTexture;
 	unsigned int m_DiffuseTexture;
+	unsigned int m_SpecularTexture;
 	unsigned int m_SunPosition;
 	unsigned int m_SunColor;
 	unsigned int m_CameraPosition;

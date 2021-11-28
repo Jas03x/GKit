@@ -22,6 +22,7 @@
     <ClCompile Include="src\context\clock.cpp" />
     <ClCompile Include="src\context\context.cpp" />
     <ClCompile Include="src\graphics\cubemap.cpp" />
+    <ClCompile Include="src\graphics\cubemap_texture.cpp" />
     <ClCompile Include="src\graphics\framebuffer.cpp" />
     <ClCompile Include="src\graphics\graphics.cpp" />
     <ClCompile Include="src\graphics\mesh.cpp" />
@@ -39,7 +40,6 @@
     <ClCompile Include="src\importer\collada_parser.cpp" />
     <ClCompile Include="src\importer\mdl_importer.cpp" />
     <ClCompile Include="src\importer\mesh_data.cpp" />
-    <ClCompile Include="src\importer\tga_reader.cpp" />
     <ClCompile Include="src\io\file.cpp" />
     <ClCompile Include="src\io\filesystem.cpp" />
     <ClCompile Include="src\io\xml.cpp" />
@@ -56,6 +56,7 @@
     <ClInclude Include="..\..\inc\gk\core\context\context.hpp" />
     <ClInclude Include="..\..\inc\gk\core\context\data_types.hpp" />
     <ClInclude Include="..\..\inc\gk\core\graphics\cubemap.hpp" />
+    <ClInclude Include="..\..\inc\gk\core\graphics\cubemap_texture.hpp" />
     <ClInclude Include="..\..\inc\gk\core\graphics\framebuffer.hpp" />
     <ClInclude Include="..\..\inc\gk\core\graphics\graphics.hpp" />
     <ClInclude Include="..\..\inc\gk\core\graphics\mesh.hpp" />
@@ -75,7 +76,6 @@
     <ClInclude Include="..\..\inc\gk\core\importer\mdl_format.hpp" />
     <ClInclude Include="..\..\inc\gk\core\importer\mdl_importer.hpp" />
     <ClInclude Include="..\..\inc\gk\core\importer\mesh_data.hpp" />
-    <ClInclude Include="..\..\inc\gk\core\importer\tga_reader.hpp" />
     <ClInclude Include="..\..\inc\gk\core\io\file.hpp" />
     <ClInclude Include="..\..\inc\gk\core\io\filesystem.hpp" />
     <ClInclude Include="..\..\inc\gk\core\io\xml.hpp" />
@@ -192,6 +192,7 @@
       <PreprocessorDefinitions>_USE_MATH_DEFINES;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Libraries\SDL2\inc;$(ProjectDir)..\..\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -207,6 +208,7 @@
       <PreprocessorDefinitions>_USE_MATH_DEFINES;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Libraries\SDL2\inc;$(ProjectDir)..\..\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

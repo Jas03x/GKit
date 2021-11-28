@@ -99,9 +99,6 @@
     <ClCompile Include="src\importer\mesh_data.cpp">
       <Filter>Source Files\importer</Filter>
     </ClCompile>
-    <ClCompile Include="src\importer\tga_reader.cpp">
-      <Filter>Source Files\importer</Filter>
-    </ClCompile>
     <ClCompile Include="src\importer\bitmap.cpp">
       <Filter>Source Files\importer</Filter>
     </ClCompile>
@@ -137,6 +134,9 @@
     </ClCompile>
     <ClCompile Include="src\utility\random.cpp">
       <Filter>Source Files\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\cubemap_texture.cpp">
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -206,9 +206,6 @@
     <ClInclude Include="..\..\inc\gk\core\importer\mesh_data.hpp">
       <Filter>Include Files\importer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\inc\gk\core\importer\tga_reader.hpp">
-      <Filter>Include Files\importer</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\importer\bitmap.hpp">
       <Filter>Include Files\importer</Filter>
     </ClInclude>
@@ -244,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="..\..\inc\gk\core\utility\string_buffer.hpp">
       <Filter>Include Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\gk\core\graphics\cubemap_texture.hpp">
+      <Filter>Include Files\graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

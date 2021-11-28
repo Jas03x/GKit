@@ -35,7 +35,9 @@ public:
 	} VertexAttributes;
 
 protected:
+	Texture* m_AmbientTexture;
 	Texture* m_DiffuseTexture;
+	Texture* m_SpecularTexture;
 
 public:
 	Node RootNode;
@@ -51,8 +53,10 @@ public:
     
     void Destroy();
 
-	Node*           GetNode(const std::string& name);
-	const Texture*  GetDiffuseTexture() const;
+	Node*          GetNode(const std::string& name);
+	const Texture* GetAmbientTexture() const;
+	const Texture* GetDiffuseTexture() const;
+	const Texture* GetSpecularTexture() const;
 };
 
 #endif // STATIC_MESH_H

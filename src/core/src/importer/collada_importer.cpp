@@ -201,11 +201,9 @@ bool Collada::Importer::process_image_library(const Parser::ImageLibrary& librar
         const std::string& id = it->first;
         std::string texture = Filesystem::Path(*it->second->init_from.file_name).filename;
         if (id == "Colour") {
-            mesh_data.colour_texture = texture;
+            mesh_data.diffuse_texture = texture;
         } else if (id == "Normal") {
             mesh_data.normal_texture = texture;
-        } else if (id == "Height") {
-            mesh_data.height_texture = texture;
         }
     }
 

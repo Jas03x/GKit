@@ -4,7 +4,6 @@
 #include <cstring>
 
 #include <gk/core/importer/bmp_reader.hpp>
-#include <gk/core/importer/tga_reader.hpp>
 
 bool Bitmap::Load(const char* path, Bitmap& bitmap)
 {
@@ -29,9 +28,10 @@ bool Bitmap::Load(const char* path, Bitmap& bitmap)
         {
             status = BMP_Reader::Read(path, bitmap);
         }
-        else if(strcmp(type, ".tga") == 0)
+        else
         {
-            status = TGA_Reader::Read(path, bitmap);
+            status = false;
+            printf("unknown image format\n");
         }
     }
     
@@ -43,7 +43,8 @@ Bitmap::Bitmap()
 	width = 0;
 	height = 0;
 	pixels = nullptr;
-	flags = 0;
+    bpp = 0;
+    format = GREYSCALE;
 }
 
 Bitmap::Bitmap(const char* path)
