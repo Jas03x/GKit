@@ -240,6 +240,8 @@ bool BMP_Reader::Read(const char* path, Bitmap& bitmap)
 
         if (pixel_size == 1)
         {
+            file.Seek(FILE_SET, hdr.offset);
+
             if (!file.Read(pixels, pixel_count))
             {
                 status = false;
@@ -254,6 +256,8 @@ bool BMP_Reader::Read(const char* path, Bitmap& bitmap)
             } buffer;
 
             bool has_alpha = (desc.bpp == 32);
+
+            file.Seek(FILE_SET, hdr.offset);
 
             for (unsigned int i = 0; status && (i < pixel_count); i++)
             {
