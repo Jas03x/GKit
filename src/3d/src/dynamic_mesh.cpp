@@ -12,12 +12,12 @@ DynamicMesh::DynamicMesh() : RootNode("Root", Matrix4F(1.0f))
 	m_DiffuseTexture = nullptr;
 }
 
-DynamicMesh::DynamicMesh(const MeshData& data, const std::string& texture_directory) : RootNode("Root", Matrix4F(1.0f))
+DynamicMesh::DynamicMesh(const MeshData& data) : RootNode("Root", Matrix4F(1.0f))
 {
-	this->Load(data, texture_directory);
+	this->Load(data);
 }
 
-void DynamicMesh::Load(const MeshData& data, const std::string& texture_directory)
+void DynamicMesh::Load(const MeshData& data)
 {
 	assert((data.bones.size() <= BONE_LIMIT) && (data.nodes.size() <= NODE_LIMIT));
 
@@ -126,7 +126,7 @@ void DynamicMesh::Load(const MeshData& data, const std::string& texture_director
 
 	m_ElementCount = data.index_count;
 
-	m_DiffuseTexture = TextureManager::GetInstance()->Load(data.diffuse_texture);
+	m_DiffuseTexture = TextureManager::GetInstance()->Load(data.texture_directory + data.diffuse_texture);
 }
 
 DynamicMesh::~DynamicMesh()

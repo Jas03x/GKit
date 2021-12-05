@@ -344,9 +344,7 @@ bool MDL::Importer::Import(const char* path, MeshData& mesh_data)
 	if (status)
 	{
 		Filesystem::Path p((std::string(path)));
-		mesh_data.ambient_texture = p.directory + mesh_data.ambient_texture;
-		mesh_data.diffuse_texture = p.directory + mesh_data.diffuse_texture;
-		mesh_data.specular_texture = p.directory + mesh_data.specular_texture;
+		mesh_data.texture_directory = p.directory;
 	}
 
 	if (status)

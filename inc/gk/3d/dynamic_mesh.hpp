@@ -49,11 +49,11 @@ public:
     std::vector<Node> Nodes;
 
 protected:
-    void Load(const MeshData& data, const std::string& texture_directory);
+    void Load(const MeshData& data);
 
 public:
     DynamicMesh();
-    DynamicMesh(const MeshData& data, const std::string& texture_directory);
+    DynamicMesh(const MeshData& data);
     ~DynamicMesh();
 
     void Destroy();

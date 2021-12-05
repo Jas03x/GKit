@@ -44,11 +44,11 @@ public:
 	std::vector<Node> Nodes;
 
 protected:
-	void Load(const MeshData& data, const std::string& texture_directory);
+	void Load(const MeshData& data);
 
 public:
     StaticMesh();
-	StaticMesh(const MeshData& data, const std::string& texture_directory);
+	StaticMesh(const MeshData& data);
 	~StaticMesh();
     
     void Destroy();

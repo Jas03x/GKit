@@ -47,6 +47,7 @@ struct MeshData
         UNKNOWN = 2
     };
 
+    std::string texture_directory;
     std::string ambient_texture;
     std::string diffuse_texture;
     std::string specular_texture;

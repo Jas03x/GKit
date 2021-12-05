@@ -12,12 +12,12 @@ StaticMesh::StaticMesh() : RootNode("Root", Matrix4F(1.0f))
 	m_DiffuseTexture = nullptr;
 }
 
-StaticMesh::StaticMesh(const MeshData& data, const std::string& texture_directory) : RootNode("Root", Matrix4F(1.0f))
+StaticMesh::StaticMesh(const MeshData& data) : RootNode("Root", Matrix4F(1.0f))
 {
-	this->Load(data, texture_directory);
+	this->Load(data);
 }
 
-void StaticMesh::Load(const MeshData& data, const std::string& texture_directory)
+void StaticMesh::Load(const MeshData& data)
 {
 	assert(data.nodes.size() <= NODE_LIMIT);
 
@@ -96,9 +96,9 @@ void StaticMesh::Load(const MeshData& data, const std::string& texture_directory
 
 	m_ElementCount = data.index_count;
 
-	m_AmbientTexture = TextureManager::GetInstance()->Load(data.ambient_texture);
-	m_DiffuseTexture = TextureManager::GetInstance()->Load(data.diffuse_texture);
-	m_SpecularTexture = TextureManager::GetInstance()->Load(data.specular_texture);
+	m_AmbientTexture = TextureManager::GetInstance()->Load(data.texture_directory + data.ambient_texture);
+	m_DiffuseTexture = TextureManager::GetInstance()->Load(data.texture_directory + data.diffuse_texture);
+	m_SpecularTexture = TextureManager::GetInstance()->Load(data.texture_directory + data.specular_texture);
 }
 
 StaticMesh::~StaticMesh()
