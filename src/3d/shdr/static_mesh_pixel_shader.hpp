@@ -22,6 +22,6 @@ static const char* STATIC_MESH_PIXEL_SHADER =
 		vec3 pixel = ambient + diffuse + specular;											\n\
 																							\n\
 		fragment_color = vec4(pixel, 1.0);													\n\
-		//fragment_color = vec4(df,df,df,1);												\n\
+		//fragment_color = vec4(_df,_df,_df,1);												\n\
 	}																						\n\
 ";
