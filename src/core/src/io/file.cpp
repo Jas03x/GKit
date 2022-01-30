@@ -17,7 +17,8 @@ FILE* File::Open(const char* path, unsigned int mode)
 	static const char* MODE_TABLE[] =
 	{
 		"rb", // READ_BINARY (default)
-		"r"   // READ_TEXT
+		"r",  // READ_TEXT
+		"wb"  // WRITE_BINARY
 	};
 	static const unsigned int MODE_COUNT = sizeof(MODE_TABLE) / sizeof(const char*);
 
@@ -89,8 +90,15 @@ bool File::Read(T* value, unsigned int count)
 	return this->Read(value, sizeof(T), count);
 }
 
+template <typename T>
+bool File::Write(T* value, unsigned int count)
+{
+	return this->Write(value, sizeof(T), count);
+}
+
 // instantiate templates for supported data types
 template bool File::Read(char* value, unsigned int count);
+template bool File::Write(char* value, unsigned int count);
 
 template bool File::Read(int8_t*   value, unsigned int count);
 template bool File::Read(uint8_t*  value, unsigned int count);
@@ -103,11 +111,31 @@ template bool File::Read(uint64_t* value, unsigned int count);
 template bool File::Read(float*    value, unsigned int count);
 template bool File::Read(double*   value, unsigned int count);
 
+template bool File::Write(int8_t* value, unsigned int count);
+template bool File::Write(uint8_t* value, unsigned int count);
+template bool File::Write(int16_t* value, unsigned int count);
+template bool File::Write(uint16_t* value, unsigned int count);
+template bool File::Write(int32_t* value, unsigned int count);
+template bool File::Write(uint32_t* value, unsigned int count);
+template bool File::Write(int64_t* value, unsigned int count);
+template bool File::Write(uint64_t* value, unsigned int count);
+template bool File::Write(float* value, unsigned int count);
+template bool File::Write(double* value, unsigned int count);
+
 bool File::Read(void* buffer, size_t size, size_t count)
 {
 	bool result = (fread(buffer, size, count, m_Handle) == count);
 	if (!result) {
 		printf("fread failure\n");
+	}
+	return result;
+}
+
+bool File::Write(void* buffer, size_t size, size_t count)
+{
+	bool result = (fwrite(buffer, size, count, m_Handle) == count);
+	if (!result) {
+		printf("fwrite failure\n");
 	}
 	return result;
 }

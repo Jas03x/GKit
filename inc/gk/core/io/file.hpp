@@ -19,8 +19,9 @@ private:
 public:
 	enum
 	{
-		READ_BINARY = 0,
-		READ_TEXT   = 1
+		READ_BINARY  = 0,
+		READ_TEXT    = 1,
+		WRITE_BINARY = 2
 	};
 
 public:
@@ -42,6 +43,10 @@ public:
 	template <typename T>
 	bool Read(T* value, unsigned int count);
 	bool Read(void* buffer, size_t size, size_t count);
+
+	template <typename T>
+	bool Write(T* value, unsigned int count);
+	bool Write(void* buffer, size_t size, size_t count);
 
 public:
 	static FILE* Open(const char* path, unsigned int mode);
